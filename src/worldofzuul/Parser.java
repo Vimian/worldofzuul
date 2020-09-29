@@ -3,18 +3,29 @@ package worldofzuul;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class Parser 
+/**
+ * The type Parser.
+ */
+public class Parser
 {
     private CommandWords commands;
     private Scanner reader;
 
-    public Parser() 
+    /**
+     * Instantiates a new Parser.
+     */
+    public Parser()
     {
         commands = new CommandWords();
         reader = new Scanner(System.in);
     }
 
-    public Command getCommand() 
+    /**
+     * Reads inputLine for command
+     *
+     * @return the found command
+     */
+    public Command getCommand()
     {
         String inputLine;
         String word1 = null;
@@ -35,6 +46,9 @@ public class Parser
         return new Command(commands.getCommandWord(word1), word2);
     }
 
+    /**
+     * Shows all commands.
+     */
     public void showCommands()
     {
         commands.showAll();

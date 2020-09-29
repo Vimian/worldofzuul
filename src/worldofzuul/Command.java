@@ -19,32 +19,61 @@
 
 package worldofzuul;
 
+/**
+ * The type Command.
+ */
 public class Command
 {
     private CommandWord commandWord;
     private String secondWord;
 
+    /**
+     * Instantiates a new Command.
+     *
+     * @param commandWord the command word
+     * @param secondWord  the second word
+     */
     public Command(CommandWord commandWord, String secondWord)
     {
         this.commandWord = commandWord;
         this.secondWord = secondWord;
     }
 
+    /**
+     * Gets command word.
+     *
+     * @return returns command CommandWord
+     */
     public CommandWord getCommandWord()
     {
         return commandWord;
     }
 
+    /**
+     * Gets string associated to command.
+     *
+     * @return the second word
+     */
     public String getSecondWord()
     {
         return secondWord;
     }
 
+    /**
+     * Is command unknown.
+     *
+     * @return command unknown state
+     */
     public boolean isUnknown()
     {
         return (commandWord == CommandWord.UNKNOWN);
     }
 
+    /**
+     * Has second word.
+     *
+     * @return the boolean
+     */
     public boolean hasSecondWord()
     {
         return (secondWord != null);

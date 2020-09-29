@@ -1,12 +1,18 @@
 package worldofzuul;
 
-public class Game 
+/**
+ * The type Game.
+ */
+public class Game
 {
     private Parser parser;
     private Room currentRoom;
-        
 
-    public Game() 
+
+    /**
+     * Instantiates a new Game.
+     */
+    public Game()
     {
         createRooms();
         parser = new Parser();
@@ -39,7 +45,10 @@ public class Game
         currentRoom = outside;
     }
 
-    public void play() 
+    /**
+     * Starts the game sessions and activates the CLI parser
+     */
+    public void play()
     {            
         printWelcome();
 
