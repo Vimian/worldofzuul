@@ -8,7 +8,13 @@ import java.util.StringTokenizer;
  */
 public class Parser
 {
+    /**
+     * The Commands.
+     */
     private CommandWords commands;
+    /**
+     * The Reader.
+     */
     private Scanner reader;
 
     /**

@@ -5,7 +5,13 @@ package worldofzuul;
  */
 public class Game
 {
+    /**
+     * The Parser.
+     */
     private Parser parser;
+    /**
+     * The Current room.
+     */
     private Room currentRoom;
 
 
@@ -19,6 +25,9 @@ public class Game
     }
 
 
+    /**
+     * Create rooms.
+     */
     private void createRooms()
     {
         Room outside, theatre, pub, lab, office;
@@ -46,7 +55,7 @@ public class Game
     }
 
     /**
-     * Starts the game sessions and activates the CLI parser
+     * Starts the game session and activates the CLI.
      */
     public void play()
     {            
@@ -61,6 +70,9 @@ public class Game
         System.out.println("Thank you for playing.  Good bye.");
     }
 
+    /**
+     * Print welcome messages.
+     */
     private void printWelcome()
     {
         System.out.println();
@@ -71,7 +83,13 @@ public class Game
         System.out.println(currentRoom.getLongDescription());
     }
 
-    private boolean processCommand(Command command) 
+    /**
+     * Process all commands.
+     *
+     * @param command the command
+     * @return true if player wishes to exit game
+     */
+    private boolean processCommand(Command command)
     {
         boolean wantToQuit = false;
 
@@ -94,7 +112,10 @@ public class Game
         return wantToQuit;
     }
 
-    private void printHelp() 
+    /**
+     * Print help messages.
+     */
+    private void printHelp()
     {
         System.out.println("You are lost. You are alone. You wander");
         System.out.println("around at the university.");
@@ -103,7 +124,12 @@ public class Game
         parser.showCommands();
     }
 
-    private void goRoom(Command command) 
+    /**
+     * Attempts to go to a neighbor room by a direction specified by the Command argument.
+     *
+     * @param command the go command
+     */
+    private void goRoom(Command command)
     {
         if(!command.hasSecondWord()) {
             System.out.println("Go where?");
@@ -123,7 +149,13 @@ public class Game
         }
     }
 
-    private boolean quit(Command command) 
+    /**
+     * The quit command.
+     *
+     * @param command the command
+     * @return true if there is no command argument
+     */
+    private boolean quit(Command command)
     {
         if(command.hasSecondWord()) {
             System.out.println("Quit what?");

@@ -1,22 +1,3 @@
-/**
- * This class is part of the "World of Zuul" application. 
- * "World of Zuul" is a very simple, text based adventure game.  
- *
- * This class holds information about a command that was issued by the user.
- * A command currently consists of two parts: a CommandWord and a string
- * (for example, if the command was "take map", then the two parts
- * are TAKE and "map").
- * 
- * The way this is used is: Commands are already checked for being valid
- * command words. If the user entered an invalid command (a word that is not
- * known) then the CommandWord is UNKNOWN.
- *
- * If the command had only one word, then the second word is <null>.
- * 
- * @author  Michael Kolling and David J. Barnes
- * @version 2006.03.30
- */
-
 package worldofzuul;
 
 /**
@@ -24,14 +5,20 @@ package worldofzuul;
  */
 public class Command
 {
+    /**
+     * The command word.
+     */
     private CommandWord commandWord;
+    /**
+     * The command argument.
+     */
     private String secondWord;
 
     /**
      * Instantiates a new Command.
      *
      * @param commandWord the command word
-     * @param secondWord  the second word
+     * @param secondWord  the command argument
      */
     public Command(CommandWord commandWord, String secondWord)
     {
@@ -42,7 +29,7 @@ public class Command
     /**
      * Gets command word.
      *
-     * @return returns command CommandWord
+     * @return command word
      */
     public CommandWord getCommandWord()
     {
@@ -50,9 +37,9 @@ public class Command
     }
 
     /**
-     * Gets string associated to command.
+     * Gets command argument.
      *
-     * @return the second word
+     * @return the argument
      */
     public String getSecondWord()
     {
@@ -62,7 +49,7 @@ public class Command
     /**
      * Is command unknown.
      *
-     * @return command unknown state
+     * @return true if command is equal to the CommandWord.UNKNOWN enum
      */
     public boolean isUnknown()
     {
@@ -70,9 +57,9 @@ public class Command
     }
 
     /**
-     * Has second word.
+     * Has argument.
      *
-     * @return the boolean
+     * @return true if argument is not null
      */
     public boolean hasSecondWord()
     {

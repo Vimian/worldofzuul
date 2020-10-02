@@ -7,10 +7,13 @@ import java.util.HashMap;
  */
 public class CommandWords
 {
+    /**
+     * The valid commands and their string keys.
+     */
     private HashMap<String, CommandWord> validCommands;
 
     /**
-     * Instantiates a new Command words.
+     * Instantiates all commands specified in the CommandWord enum
      */
     public CommandWords()
     {
@@ -40,10 +43,10 @@ public class CommandWords
     }
 
     /**
-     * Is string a command
+     * Is string key a command
      *
      * @param aString command string key
-     * @return the boolean
+     * @return true if validCommands HashMap contains string key
      */
     public boolean isCommand(String aString)
     {

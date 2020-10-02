@@ -1,29 +1,28 @@
 package worldofzuul;
 
 /**
- * CommandWords and their respective string keys
+ * CommandWords and their respective string keys.
  */
 public enum CommandWord
 {
     /**
-     * Moves to selected room.
+     * All commands and their string key representations.
      */
     GO("go"),
-    /**
-     * Quits the game session.
-     */
     QUIT("quit"),
-    /**
-     * Prints help message.
-     */
     HELP("help"),
-    /**
-     * Unknown command word.
-     */
     UNKNOWN("?");
-    
+
+    /**
+     * The Command string key.
+     */
     private String commandString;
-    
+
+    /**
+     * Instantiates a new Command.
+     *
+     * @param commandString the command key string
+     */
     CommandWord(String commandString)
     {
         this.commandString = commandString;
