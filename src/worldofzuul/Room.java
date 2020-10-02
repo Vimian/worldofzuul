@@ -10,13 +10,19 @@ import java.util.Iterator;
  */
 public class Room
 {
+    /**
+     * The room description.
+     */
     private String description;
+    /**
+     * The neighbor rooms and their corresponding exit directions.
+     */
     private HashMap<String, Room> exits;
 
     /**
      * Instantiates a new Room.
      *
-     * @param description the room description
+     * @param description the room's description
      */
     public Room(String description)
     {
@@ -25,10 +31,10 @@ public class Room
     }
 
     /**
-     * Sets exit rooms.
+     * Sets a room to be at a specified direction.
      *
-     * @param direction the direction
-     * @param neighbor  the room neighbor
+     * @param direction the targeted direction to place room at
+     * @param neighbor  the room to set at the specified direction
      */
     public void setExit(String direction, Room neighbor)
     {
@@ -36,9 +42,9 @@ public class Room
     }
 
     /**
-     * Gets short description.
+     * Gets the specified room description
      *
-     * @return the short description
+     * @return the description
      */
     public String getShortDescription()
     {
@@ -46,15 +52,20 @@ public class Room
     }
 
     /**
-     * Gets long description.
+     * Gets the room description and room exit directions
      *
-     * @return the long description
+     * @return the room description and possible exit directions
      */
     public String getLongDescription()
     {
         return "You are " + description + ".\n" + getExitString();
     }
 
+    /**
+     * Gets the directions of room exits.
+     *
+     * @return string containing list of all the directions corresponding with a neighbor room
+     */
     private String getExitString()
     {
         String returnString = "Exits:";
@@ -66,10 +77,10 @@ public class Room
     }
 
     /**
-     * Gets room exit.
+     * Gets the room specified by a direction from the exits list.
      *
      * @param direction the exit direction
-     * @return the exit room
+     * @return the room specified by the direction
      */
     public Room getExit(String direction)
     {
