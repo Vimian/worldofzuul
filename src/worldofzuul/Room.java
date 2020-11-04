@@ -12,7 +12,7 @@ public class Room
 
     GameObject[][] roomGrid = new GameObject[10][10];
 
-    // method for adding GameObjects to roomGrid
+    // method for adding GameObjects to roomGrid, give positions as coordinate system.
     public void addToGrid(GameObject gameObject, int posX, int posY){
         roomGrid[posY][posX] = gameObject;
     }
