@@ -1,15 +1,22 @@
 package worldofzuul;
 
-public class Game 
+
+import java.awt.geom.Point2D;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
+public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private Player player;
         
 
     public Game() 
     {
         createRooms();
         parser = new Parser();
+
     }
 
 
@@ -82,6 +89,9 @@ public class Game
         else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
         }
+        else if (commandWord == CommandWord.MOVE) {
+            movePlayer(command);
+        }
         return wantToQuit;
     }
 
@@ -113,6 +123,67 @@ public class Game
             System.out.println(currentRoom.getLongDescription());
         }
     }
+
+    private void movePlayer(Command command)
+    {
+        if(!command.hasSecondWord()) {
+            System.out.println("Move where?");
+            return;
+        }
+
+        String secondWord = command.getSecondWord();
+        int x = (int) player.pos.getX();
+        int y = (int) player.pos.getY();
+
+
+        if(CommandWord.NORTH.name().toLowerCase().equals(secondWord)){
+            x--;
+        }
+        else if (CommandWord.SOUTH.name().toLowerCase().equals(secondWord))
+        {
+            x++;
+        }
+        else if (CommandWord.EAST.name().toLowerCase().equals(secondWord))
+        {
+            y++;
+        }
+        else if (CommandWord.WEST.name().toLowerCase().equals(secondWord))
+        {
+            y--;
+        } else {
+            System.out.println("Where do you want to go?");
+            return;
+        }
+
+        if(canPlayerMoveToPoint(x, y)){
+            System.out.println("You walked " + secondWord + ".");
+            player.pos.setLocation(x, y);
+        }
+
+    }
+
+    private boolean canPlayerMoveToPoint(int x, int y){
+
+        int roomDimensions = currentRoom.getRoomGrid().length;
+                
+        //Player exceeds bounds of array
+        if (x < 0 || y < 0 || x >= roomDimensions || y >= roomDimensions){
+            System.out.println("You can't walk there.");
+            return false;
+        }
+
+        GameObject targetPosition = currentRoom.getRoomGrid()[x][y];
+        if(targetPosition.colliding){
+            System.out.println("You can't walk through that.");
+            return false;
+        }
+        else{
+            return true;
+        }
+
+    }
+
+
 
     private boolean quit(Command command) 
     {
