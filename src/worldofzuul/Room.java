@@ -10,6 +10,13 @@ public class Room
     private String description;
     private HashMap<String, Room> exits;
 
+    GameObject[][] roomGrid = new GameObject[10][10];
+
+    // method for adding GameObjects to roomGrid
+    public void addToGrid(GameObject gameObject, int posX, int posY){
+        roomGrid[posY][posX] = gameObject;
+    }
+
     public Room(String description) 
     {
         this.description = description;
