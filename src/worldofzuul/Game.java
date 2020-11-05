@@ -1,5 +1,8 @@
 package worldofzuul;
 
+
+import worldofzuul.util.Vector;
+
 public class Game
 {
     private Parser parser;
@@ -11,7 +14,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-
+        player = new Player();
     }
 
 
@@ -90,6 +93,23 @@ public class Game
         return wantToQuit;
     }
 
+    private boolean processCommandInternal(Command command)
+    {
+
+        CommandWord commandWord = command.getCommandWord();
+
+        if(commandWord == CommandWord.UNKNOWN) {
+            System.out.println("I don't know what you mean...");
+            return false;
+        }
+
+        if (commandWord == CommandWord.TELEPORT) {
+            teleportPlayer(command);
+        }
+
+        return false;
+    }
+
     private void printHelp()
     {
         System.out.println("You are lost. You are alone. You wander");
@@ -152,8 +172,41 @@ public class Game
 
         if(canPlayerMoveToPoint(x, y)){
             System.out.println("You walked " + secondWord + ".");
-            player.pos = new Vector(x, y);
+            setPlayerPosition(new Vector(x, y));
         }
+    }
+    private void teleportPlayer(Command command)
+    {
+        if(!command.hasSecondWord()) {
+            System.out.println("Teleport where?");
+            return;
+        }
+
+        String secondWord = command.getSecondWord();
+        Vector pos = new Vector(secondWord);
+
+        if(canPlayerMoveToPoint(pos.x, pos.y)){
+            System.out.println("You were teleported to " + secondWord + ".");
+            setPlayerPosition(pos);
+        }
+    }
+    private void setPlayerPosition(Vector position){
+
+        GameObject currentTile = currentRoom.getGridGameObject(player.pos);
+        GameObject newTile = currentRoom.getGridGameObject(position);
+
+        currentTile.uponExit();
+        Command[] commands = newTile.uponEntry(currentTile);
+
+
+        if(commands != null){
+            for (Command command : commands) {
+                processCommandInternal(command);
+            }
+        }
+        
+        
+        player.pos = position;
     }
 
     private boolean canPlayerMoveToPoint(int x, int y){
@@ -166,7 +219,7 @@ public class Game
             return false;
         }
 
-        GameObject targetPosition = currentRoom.getRoomGrid()[y][x];
+        GameObject targetPosition = currentRoom.getGridGameObject(new Vector(x, y));
         if(targetPosition.colliding){
             System.out.println("You can't walk through that.");
         }

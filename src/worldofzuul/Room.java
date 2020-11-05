@@ -1,8 +1,9 @@
 package worldofzuul;
 
+import worldofzuul.util.Vector;
+
 import java.util.Set;
 import java.util.HashMap;
-import java.util.Iterator;
 
 
 public class Room 
@@ -56,6 +57,13 @@ public class Room
     public GameObject[][] getRoomGrid() {
         return roomGrid;
     }
+    public GameObject getGridGameObject(Vector pos) {
+        return getRoomGrid()[pos.y][pos.x];
+    }
+    public void setGridGameObject(GameObject gameObject, Vector pos) {
+        roomGrid[pos.y][pos.x] = gameObject;
+    }
+
 
     public void setRoomGrid(GameObject[][] roomGrid) {
         this.roomGrid = roomGrid;
