@@ -138,19 +138,19 @@ public class Game
 
 
         if(Direction.NORTH.name().toLowerCase().equals(secondWord)){
-            y++;
+            y--;
         }
         else if (Direction.SOUTH.name().toLowerCase().equals(secondWord))
         {
-            y--;
+            y++;
         }
         else if (Direction.EAST.name().toLowerCase().equals(secondWord))
         {
-            x--;
+            x++;
         }
         else if (Direction.WEST.name().toLowerCase().equals(secondWord))
         {
-            x++;
+            x--;
         } else {
             System.out.println("Where do you want to go?");
             return;
@@ -177,7 +177,7 @@ public class Game
             System.out.println("You can't walk through that.");
         }
 
-        return targetPosition.colliding;
+        return !targetPosition.colliding;
     }
 
 
