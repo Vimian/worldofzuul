@@ -87,6 +87,9 @@ public class Game
         else if (commandWord == CommandWord.MOVE) {
             movePlayer(command);
         }
+        else if (commandWord == CommandWord.TELEPORT) {
+            teleportPlayer(command);
+        }
         return wantToQuit;
     }
 
@@ -152,8 +155,33 @@ public class Game
 
         if(canPlayerMoveToPoint(x, y)){
             System.out.println("You walked " + secondWord + ".");
-            player.pos = new Vector(x, y);
+            setPlayerPosition(new Vector(x, y));
         }
+    }
+    private void teleportPlayer(Command command)
+    {
+        if(!command.hasSecondWord()) {
+            System.out.println("Teleport where?");
+            return;
+        }
+
+        String secondWord = command.getSecondWord();
+        Vector pos = new Vector(secondWord);
+
+        if(canPlayerMoveToPoint(pos.x, pos.y)){
+            System.out.println("You were teleported to " + secondWord + ".");
+            setPlayerPosition(pos);
+        }
+    }
+    private void setPlayerPosition(Vector position){
+
+        GameObject currentTile = currentRoom.getGridGameObject(player.pos);
+        GameObject newTile = currentRoom.getGridGameObject(position);
+
+        currentTile.uponExit();
+        newTile.uponEntry(currentTile);
+
+        player.pos = position;
     }
 
     private boolean canPlayerMoveToPoint(int x, int y){
@@ -166,7 +194,7 @@ public class Game
             return false;
         }
 
-        GameObject targetPosition = currentRoom.getRoomGrid()[y][x];
+        GameObject targetPosition = currentRoom.getGridGameObject(new Vector(x, y));
         if(targetPosition.colliding){
             System.out.println("You can't walk through that.");
         }
