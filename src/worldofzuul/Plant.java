@@ -22,21 +22,6 @@ public class Plant extends Item {
     public GrowthStage getState() {
         return state;
     }
-    public void setState(GrowthStage state) {
-        this.state = state;
-    }
-
-    public float getSeedQuality() {
-        return seedQuality;
-    }
-
-    public float getWaterNeeded() {
-        return waterNeeded;
-    }
-
-    public float getNutritionNeeded() {
-        return nutritionNeeded;
-    }
 
     public Disease getDisease() {
         return disease;
