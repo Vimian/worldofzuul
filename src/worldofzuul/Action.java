@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import java.util.Objects;
 
 public abstract class Action {
