@@ -1,8 +1,4 @@
-package worldofzuul;
-
-import jdk.jshell.execution.Util;
-
-import java.util.Arrays;
+package worldofzuul.util;
 
 public class Vector {
     private static final String delimiter = ",";
@@ -21,8 +17,8 @@ public class Vector {
             var vals = s.split(delimiter);
 
             if(vals.length == 2){
-                this.x = Utility.tryParse(vals[0], 0);
-                this.y = Utility.tryParse(vals[1], 0);
+                this.x = Math.tryParse(vals[0], 0);
+                this.y = Math.tryParse(vals[1], 0);
             }
         }
     }

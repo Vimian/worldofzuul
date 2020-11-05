@@ -1,6 +1,6 @@
-package worldofzuul;
+package worldofzuul.util;
 
-public class Utility {
+public class Math {
     public static int tryParse(String value, int defaultVal) {
         try {
             return Integer.parseInt(value);

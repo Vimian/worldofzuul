@@ -1,5 +1,7 @@
 package worldofzuul;
 
+import worldofzuul.util.Vector;
+
 public class Door extends GameObject {
     public String exit;
     public Vector linkedLocation;

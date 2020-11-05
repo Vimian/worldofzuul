@@ -1,6 +1,8 @@
 package worldofzuul;
 
 
+import worldofzuul.util.Vector;
+
 public class Game
 {
     private Parser parser;
