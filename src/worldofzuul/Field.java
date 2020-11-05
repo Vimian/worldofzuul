@@ -1,17 +1,33 @@
 package worldofzuul;
 
 public class Field extends GameObject {
-    private float fertilization;
+    private Fertilizer fertilizer;
+    private float water;
+    private Plant plant;
+    private Float nutrition;
 
-    public Field(float fertilization) {
-        this.fertilization = fertilization;
+    public Field(Fertilizer fertilizer) {
+        this.fertilizer = fertilizer;
     }
 
-    public float getFertilization() {
-        return this.fertilization;
+    public Field(Fertilizer fertilizer, float water) {
+        this(fertilizer);
+        this.water = water;
     }
 
-    public float setFertilization() {
-        return this.fertilization;
-    }
+    public Fertilizer getFertilizer() { return this.fertilizer; }
+
+    public void setFertilizer(Fertilizer fertilizer) { this.fertilizer = fertilizer; }
+
+    public float getWater() { return this.water; }
+
+    public void setWater(float water) { this.water = water; }
+
+    public Plant getPlant() { return this.plant; }
+
+    public void setPlant(Plant plant) { this.plant = plant; }
+
+    public float getNutrition() { return this.nutrition; }
+
+    public void setNutrition(float nutrition) { this.nutrition = nutrition; }
 }
