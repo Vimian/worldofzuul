@@ -12,7 +12,7 @@ public class Door extends GameObject {
     @Override
     public Command[] uponEntry(GameObject previousGameObject) {
 
-        if(Door.class.isAssignableFrom(previousGameObject.getClass())){
+        if(!Door.class.isAssignableFrom(previousGameObject.getClass())){
             return getCommands();
         }
 

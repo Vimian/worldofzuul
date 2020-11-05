@@ -1,5 +1,6 @@
 package worldofzuul;
 
+
 public class Game
 {
     private Parser parser;
@@ -11,7 +12,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-
+        player = new Player();
     }
 
 
@@ -179,8 +180,16 @@ public class Game
         GameObject newTile = currentRoom.getGridGameObject(position);
 
         currentTile.uponExit();
-        newTile.uponEntry(currentTile);
+        Command[] commands = newTile.uponEntry(currentTile);
 
+
+        if(commands != null){
+            for (Command command : commands) {
+                processCommand(command);
+            }
+        }
+        
+        
         player.pos = position;
     }
 
