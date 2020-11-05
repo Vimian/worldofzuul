@@ -88,10 +88,24 @@ public class Game
         else if (commandWord == CommandWord.MOVE) {
             movePlayer(command);
         }
-        else if (commandWord == CommandWord.TELEPORT) {
+        return wantToQuit;
+    }
+
+    private boolean processCommandInternal(Command command)
+    {
+
+        CommandWord commandWord = command.getCommandWord();
+
+        if(commandWord == CommandWord.UNKNOWN) {
+            System.out.println("I don't know what you mean...");
+            return false;
+        }
+
+        if (commandWord == CommandWord.TELEPORT) {
             teleportPlayer(command);
         }
-        return wantToQuit;
+
+        return false;
     }
 
     private void printHelp()
@@ -185,7 +199,7 @@ public class Game
 
         if(commands != null){
             for (Command command : commands) {
-                processCommand(command);
+                processCommandInternal(command);
             }
         }
         
