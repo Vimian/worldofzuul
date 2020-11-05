@@ -175,9 +175,14 @@ public class Game
     private boolean quit(Command command) 
 =======
     private void harvestObject(Command command) {
-        if (!command.hasSecondWord()){
+        if (!command.hasSecondWord()) {
             System.out.println("Harvest what?");
-        return;
+        }
+        if (Field.getPlant().equals(player.pos)){
+                Harvest.harvestPlantFromField();
+            } else {
+                System.out.println("Can not harvest that!");
+            }
         }
 }
 =======
