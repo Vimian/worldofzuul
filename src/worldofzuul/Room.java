@@ -9,11 +9,18 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;
+    private GameObject[][] roomGrid;
 
     public Room(String description) 
     {
         this.description = description;
         exits = new HashMap<String, Room>();
+    }
+
+    public Room(String description, GameObject[][] roomGrid)
+    {
+        this(description);
+        this.roomGrid = roomGrid;
     }
 
     public void setExit(String direction, Room neighbor) 
@@ -44,6 +51,14 @@ public class Room
     public Room getExit(String direction) 
     {
         return exits.get(direction);
+    }
+
+    public GameObject[][] getRoomGrid() {
+        return roomGrid;
+    }
+
+    public void setRoomGrid(GameObject[][] roomGrid) {
+        this.roomGrid = roomGrid;
     }
 }
 
