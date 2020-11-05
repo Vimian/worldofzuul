@@ -17,6 +17,12 @@ public class Room
         exits = new HashMap<String, Room>();
     }
 
+    public Room(String description, GameObject[][] roomGrid)
+    {
+        this(description);
+        this.roomGrid = roomGrid;
+    }
+
     public void setExit(String direction, Room neighbor) 
     {
         exits.put(direction, neighbor);

@@ -3,6 +3,7 @@ package worldofzuul;
 
 import java.awt.geom.Point2D;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Game
@@ -132,24 +133,24 @@ public class Game
         }
 
         String secondWord = command.getSecondWord();
-        int x = (int) player.pos.getX();
-        int y = (int) player.pos.getY();
+        int x = player.pos.x;
+        int y = player.pos.y;
 
 
-        if(CommandWord.NORTH.name().toLowerCase().equals(secondWord)){
-            x--;
-        }
-        else if (CommandWord.SOUTH.name().toLowerCase().equals(secondWord))
-        {
-            x++;
-        }
-        else if (CommandWord.EAST.name().toLowerCase().equals(secondWord))
-        {
+        if(Direction.NORTH.name().toLowerCase().equals(secondWord)){
             y++;
         }
-        else if (CommandWord.WEST.name().toLowerCase().equals(secondWord))
+        else if (Direction.SOUTH.name().toLowerCase().equals(secondWord))
         {
             y--;
+        }
+        else if (Direction.EAST.name().toLowerCase().equals(secondWord))
+        {
+            x--;
+        }
+        else if (Direction.WEST.name().toLowerCase().equals(secondWord))
+        {
+            x++;
         } else {
             System.out.println("Where do you want to go?");
             return;
@@ -157,20 +158,21 @@ public class Game
 
         if(canPlayerMoveToPoint(x, y)){
             System.out.println("You walked " + secondWord + ".");
-            player.pos.setLocation(x, y);
+            player.pos = new Vector(x, y);
         }
     }
 
     private boolean canPlayerMoveToPoint(int x, int y){
-        int roomDimensions = currentRoom.getRoomGrid().length;
+        int roomDimensionsY = currentRoom.getRoomGrid().length;
+        int roomDimensionsX = currentRoom.getRoomGrid()[0].length;
 
         //Player exceeds bounds of array
-        if (x < 0 || y < 0 || x >= roomDimensions || y >= roomDimensions){
+        if (x < 0 || y < 0 || x >= roomDimensionsX || y >= roomDimensionsY){
             System.out.println("You can't walk there.");
             return false;
         }
 
-        GameObject targetPosition = currentRoom.getRoomGrid()[x][y];
+        GameObject targetPosition = currentRoom.getRoomGrid()[y][x];
         if(targetPosition.colliding){
             System.out.println("You can't walk through that.");
         }

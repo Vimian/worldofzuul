@@ -5,9 +5,9 @@ import java.awt.geom.Point2D;
 public class Player {
 
     Player(){
-        pos = new Point2D.Double();
+        pos = new Vector();
     }
-    public Point2D pos;
+    public Vector pos;
     public Double balance;
     public Inventory inventory;
     public float Velocity;
