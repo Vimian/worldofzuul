@@ -5,7 +5,7 @@ public class Field extends GameObject {
     private float water;
     private Plant plant;
     private Float nutrition;
-    private Plant[] plants;
+    private static Plant[] plants;
 
     public Field(Fertilizer fertilizer) {
         this.fertilizer = fertilizer;
@@ -28,7 +28,7 @@ public class Field extends GameObject {
 
     public void setPlant(Plant plant) { this.plant = plant; }
 
-    public void removePlant(Plant()){ plants.remove(Plant); }
+    public static void removePlant(Plant){ plants.remove(Plant); }
 
     public float getNutrition() { return this.nutrition; }
 
