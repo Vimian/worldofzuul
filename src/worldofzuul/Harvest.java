@@ -8,10 +8,13 @@ public class Harvest extends Action {
     public Harvest(double harvestAmount){
         harvestAmount = this.harvestAmount;
     }
-    @Override
-    public Objects[] getItem(){
-        return this.Item;
-    }
     public double getHarvest(){
         return this.harvestAmount;
+    }
+    public void setHarvest(){
+        return this.harvestAmount = harvestAmount}
 }
+    public Field[] harvestPlantFromField(){
+        System.out.println(Field.removePlant());;
+        return plants;
+    }
