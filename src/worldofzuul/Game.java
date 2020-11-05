@@ -1,28 +1,30 @@
 package worldofzuul;
 
-public class Game 
+public class Game
 {
     private Parser parser;
     private Room currentRoom;
-        
+    private Player player;
 
-    public Game() 
+
+    public Game()
     {
         createRooms();
         parser = new Parser();
+
     }
 
 
     private void createRooms()
     {
         Room outside, theatre, pub, lab, office;
-      
+
         outside = new Room("outside the main entrance of the university");
         theatre = new Room("in a lecture theatre");
         pub = new Room("in the campus pub");
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
-        
+
         outside.setExit("east", theatre);
         outside.setExit("south", lab);
         outside.setExit("west", pub);
@@ -39,11 +41,11 @@ public class Game
         currentRoom = outside;
     }
 
-    public void play() 
-    {            
+    public void play()
+    {
         printWelcome();
 
-                
+
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
@@ -62,7 +64,7 @@ public class Game
         System.out.println(currentRoom.getLongDescription());
     }
 
-    private boolean processCommand(Command command) 
+    private boolean processCommand(Command command)
     {
         boolean wantToQuit = false;
 
@@ -82,13 +84,21 @@ public class Game
         else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
         }
+<<<<<<< HEAD
         else if (commandWord == commandWord.EXAMINE){
             examineObject(command);
+======= }
+        else if (commandWord == CommandWord.HARVEST){
+            harvestObject(command);
+    }
+        else if (commandWord == CommandWord.MOVE) {
+            movePlayer(command);
+>>>>>>> d59468a4cfdfd56d6fed58147a3280684b87f80d
         }
         return wantToQuit;
     }
 
-    private void printHelp() 
+    private void printHelp()
     {
         System.out.println("You are lost. You are alone. You wander");
         System.out.println("around at the university.");
@@ -97,7 +107,7 @@ public class Game
         parser.showCommands();
     }
 
-    private void goRoom(Command command) 
+    private void goRoom(Command command)
     {
         if(!command.hasSecondWord()) {
             System.out.println("Go where?");
@@ -117,6 +127,7 @@ public class Game
         }
     }
 
+<<<<<<< HEAD
     //Method for examining objects in room
     private void examineObject(Command command){
         if(!command.hasSecondWord()) {
@@ -126,6 +137,72 @@ public class Game
     }
 
     private boolean quit(Command command) 
+=======
+    private void harvestObject(Command command) {
+        if (!command.hasSecondWord()){
+            System.out.println("Harvest what?");
+        return;
+        }
+}
+    private void movePlayer(Command command)
+    {
+        if(!command.hasSecondWord()) {
+            System.out.println("Move where?");
+            return;
+        }
+
+        String secondWord = command.getSecondWord();
+        int x = player.pos.x;
+        int y = player.pos.y;
+
+
+        if(Direction.NORTH.name().toLowerCase().equals(secondWord)){
+            y--;
+        }
+        else if (Direction.SOUTH.name().toLowerCase().equals(secondWord))
+        {
+            y++;
+        }
+        else if (Direction.EAST.name().toLowerCase().equals(secondWord))
+        {
+            x++;
+        }
+        else if (Direction.WEST.name().toLowerCase().equals(secondWord))
+        {
+            x--;
+        } else {
+            System.out.println("Where do you want to go?");
+            return;
+        }
+
+        if(canPlayerMoveToPoint(x, y)){
+            System.out.println("You walked " + secondWord + ".");
+            player.pos = new Vector(x, y);
+        }
+    }
+
+    private boolean canPlayerMoveToPoint(int x, int y){
+        int roomDimensionsY = currentRoom.getRoomGrid().length;
+        int roomDimensionsX = currentRoom.getRoomGrid()[0].length;
+
+        //Player exceeds bounds of array
+        if (x < 0 || y < 0 || x >= roomDimensionsX || y >= roomDimensionsY){
+            System.out.println("You can't walk there.");
+            return false;
+        }
+
+        GameObject targetPosition = currentRoom.getRoomGrid()[y][x];
+        if(targetPosition.colliding){
+            System.out.println("You can't walk through that.");
+        }
+
+        return !targetPosition.colliding;
+    }
+
+
+
+    private boolean quit(Command command)
+>>>>>>> d59468a4cfdfd56d6fed58147a3280684b87f80d
     {
         if(command.hasSecondWord()) {
             System.out.println("Quit what?");
