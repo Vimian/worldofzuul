@@ -1,5 +1,11 @@
 package worldofzuul;
 
+<<<<<<< HEAD
+=======
+
+import worldofzuul.util.Vector;
+
+>>>>>>> ea5fc609804d0b00c065def805d60cce402eece3
 public class Game
 {
     private Parser parser;
@@ -11,7 +17,11 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+<<<<<<< HEAD
 
+=======
+        player = new Player();
+>>>>>>> ea5fc609804d0b00c065def805d60cce402eece3
     }
 
 
@@ -85,6 +95,7 @@ public class Game
             wantToQuit = quit(command);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
         else if (commandWord == commandWord.EXAMINE){
             examineObject(command);
 ======= }
@@ -94,10 +105,34 @@ public class Game
         else if (commandWord == CommandWord.MOVE) {
             movePlayer(command);
 >>>>>>> d59468a4cfdfd56d6fed58147a3280684b87f80d
+=======
+        else if (commandWord == CommandWord.MOVE) {
+            movePlayer(command);
+>>>>>>> ea5fc609804d0b00c065def805d60cce402eece3
         }
         return wantToQuit;
     }
 
+<<<<<<< HEAD
+=======
+    private boolean processCommandInternal(Command command)
+    {
+
+        CommandWord commandWord = command.getCommandWord();
+
+        if(commandWord == CommandWord.UNKNOWN) {
+            System.out.println("I don't know what you mean...");
+            return false;
+        }
+
+        if (commandWord == CommandWord.TELEPORT) {
+            teleportPlayer(command);
+        }
+
+        return false;
+    }
+
+>>>>>>> ea5fc609804d0b00c065def805d60cce402eece3
     private void printHelp()
     {
         System.out.println("You are lost. You are alone. You wander");
@@ -128,6 +163,7 @@ public class Game
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     //Method for examining objects in room
     private void examineObject(Command command){
         if(!command.hasSecondWord()) {
@@ -144,6 +180,8 @@ public class Game
         return;
         }
 }
+=======
+>>>>>>> ea5fc609804d0b00c065def805d60cce402eece3
     private void movePlayer(Command command)
     {
         if(!command.hasSecondWord()) {
@@ -177,8 +215,46 @@ public class Game
 
         if(canPlayerMoveToPoint(x, y)){
             System.out.println("You walked " + secondWord + ".");
+<<<<<<< HEAD
             player.pos = new Vector(x, y);
         }
+=======
+            setPlayerPosition(new Vector(x, y));
+        }
+    }
+    private void teleportPlayer(Command command)
+    {
+        if(!command.hasSecondWord()) {
+            System.out.println("Teleport where?");
+            return;
+        }
+
+        String secondWord = command.getSecondWord();
+        Vector pos = new Vector(secondWord);
+
+        if(canPlayerMoveToPoint(pos.x, pos.y)){
+            System.out.println("You were teleported to " + secondWord + ".");
+            setPlayerPosition(pos);
+        }
+    }
+    private void setPlayerPosition(Vector position){
+
+        GameObject currentTile = currentRoom.getGridGameObject(player.pos);
+        GameObject newTile = currentRoom.getGridGameObject(position);
+
+        currentTile.uponExit();
+        Command[] commands = newTile.uponEntry(currentTile);
+
+
+        if(commands != null){
+            for (Command command : commands) {
+                processCommandInternal(command);
+            }
+        }
+        
+        
+        player.pos = position;
+>>>>>>> ea5fc609804d0b00c065def805d60cce402eece3
     }
 
     private boolean canPlayerMoveToPoint(int x, int y){
@@ -191,7 +267,11 @@ public class Game
             return false;
         }
 
+<<<<<<< HEAD
         GameObject targetPosition = currentRoom.getRoomGrid()[y][x];
+=======
+        GameObject targetPosition = currentRoom.getGridGameObject(new Vector(x, y));
+>>>>>>> ea5fc609804d0b00c065def805d60cce402eece3
         if(targetPosition.colliding){
             System.out.println("You can't walk through that.");
         }
@@ -202,7 +282,10 @@ public class Game
 
 
     private boolean quit(Command command)
+<<<<<<< HEAD
 >>>>>>> d59468a4cfdfd56d6fed58147a3280684b87f80d
+=======
+>>>>>>> ea5fc609804d0b00c065def805d60cce402eece3
     {
         if(command.hasSecondWord()) {
             System.out.println("Quit what?");

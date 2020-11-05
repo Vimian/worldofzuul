@@ -1,12 +1,17 @@
-<<<<<<< HEAD
 package worldofzuul;
 
 public abstract class GameObject {
-}
-=======
-package worldofzuul;
-
-public class GameObject {
     public boolean colliding;
+
+    public void uponEntry(){
+
+    }
+    public Command[] uponEntry(GameObject previousGameObject) {
+        return null;
+    }
+
+    public void uponExit(){
+
+    }
 }
->>>>>>> d59468a4cfdfd56d6fed58147a3280684b87f80d
+>>>>>>> ea5fc609804d0b00c065def805d60cce402eece3
