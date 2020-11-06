@@ -1,10 +1,7 @@
 package worldofzuul.world;
 
-import worldofzuul.item.Seed;
+import worldofzuul.item.*;
 import worldofzuul.parsing.Command;
-import worldofzuul.item.Fertilizer;
-import worldofzuul.item.Item;
-import worldofzuul.item.Plant;
 
 public class Field extends GameObject {
     private Fertilizer fertilizer;
@@ -58,7 +55,10 @@ public class Field extends GameObject {
             System.out.println("You used a seed on the field.");
             return useSeed((Seed) item);
         }
-
+        else if(Harvester.class.isAssignableFrom(item.getClass())){
+            System.out.println("You tried to harvest this field.");
+            return useHarvester((Harvester) item);
+        }
         else {
             System.out.println("You can't use that item here.");
         }
@@ -67,11 +67,13 @@ public class Field extends GameObject {
         return super.interact(item);
     }
 
-    private Command[] useFertilizer(Fertilizer fertilizer){
+    private Command[] useFertilizer(Fertilizer item){
         return null; //TODO: Implement method.
     }
-    private Command[] useSeed(Seed seed){
+    private Command[] useSeed(Seed item){
         return null; //TODO: Implement method.
     }
-
+    private Command[] useHarvester(Harvester item){
+        return null; //TODO: Implement method.
+    }
 }
