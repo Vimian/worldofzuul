@@ -32,4 +32,10 @@ public class Inventory {
     public void removeItem(Item item) {
         this.items.remove(item);
     }
+    public void removeItem(int index) {
+        if(items.size() > 0 && items.size() > index){
+            this.items.remove(index);
+        }
+    }
+
 }

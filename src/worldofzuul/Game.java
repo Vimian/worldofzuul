@@ -3,6 +3,7 @@ package worldofzuul;
 
 import worldofzuul.item.Fertilizer;
 import worldofzuul.item.Item;
+import worldofzuul.item.Seed;
 import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
 import worldofzuul.parsing.Parser;
@@ -10,6 +11,8 @@ import worldofzuul.util.Vector;
 import worldofzuul.world.*;
 
 import java.util.Arrays;
+
+import static worldofzuul.util.Math.tryParse;
 
 public class Game
 {
@@ -61,7 +64,7 @@ public class Game
         }
         outside.setGridGameObject(new Door("east", new Vector()), new Vector(2, 3));
         outside.setGridGameObject(new Field(), new Vector(1, 2));
-        player.inventory.addItem(new Fertilizer("Manure", 10));
+        player.inventory.addItem(new Seed("Manure"));
 
 
         //DBG End
@@ -135,6 +138,8 @@ public class Game
 
         if (commandWord == CommandWord.TELEPORT) {
             teleportPlayer(command);
+        } else if (commandWord == CommandWord.REMOVEITEM) {
+            removeItem(command);
         }
 
     }
@@ -165,6 +170,14 @@ public class Game
         }
 
         processCommandInternal(commands);
+    }
+
+    private void removeItem(Command command){
+        int itemIndex = 0;
+        if(command.hasSecondWord()) {
+            itemIndex = tryParse(command.getSecondWord(), 0);
+        }
+        player.inventory.removeItem(itemIndex);
     }
 
     private void printHelp()

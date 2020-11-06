@@ -2,6 +2,7 @@ package worldofzuul.world;
 
 import worldofzuul.item.*;
 import worldofzuul.parsing.Command;
+import worldofzuul.parsing.CommandWord;
 
 public class Field extends GameObject {
     private Fertilizer fertilizer;
@@ -71,9 +72,17 @@ public class Field extends GameObject {
         return null; //TODO: Implement method.
     }
     private Command[] useSeed(Seed item){
-        return null; //TODO: Implement method.
+        setPlant(item.getPlant());
+
+        Command[] commands = new Command[1];
+        commands[0] = new Command(CommandWord.REMOVEITEM, null);
+
+        return commands;
     }
     private Command[] useHarvester(Harvester item){
         return null; //TODO: Implement method.
     }
+
+
+
 }
