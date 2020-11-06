@@ -11,7 +11,6 @@ public class Player {
     public Double balance;
     public Inventory inventory;
     public float Velocity;
-    public Action[] actions;
     public Sprite sprite;
 
     public Double getBalance() {
