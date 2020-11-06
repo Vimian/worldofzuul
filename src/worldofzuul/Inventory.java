@@ -16,8 +16,11 @@ public class Inventory {
         }
     }
     public void setSelectedItem(Item item) {
-        if(!items.isEmpty()){
-            Collections.swap(items, items.indexOf(getSelectedItem()), items.indexOf(item));
+        if (items.size() > 2) {
+            Item selectedItem = getSelectedItem();
+            if (items.contains(item) && selectedItem != item) {
+                Collections.swap(items, items.indexOf(getSelectedItem()), items.indexOf(item));
+            }
         }
     }
     public LinkedList<Item> getItems() {
