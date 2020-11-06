@@ -158,14 +158,15 @@ public class Game
         if (!command.hasSecondWord()) {
             System.out.println("Harvest what?");
         }
-        if (currentRoom.getGridGameObject(player.pos) == new Field()) {
-            if (new Field().getPlant == true) {
-                new Harvest().harvestPlantFromField();
+        Field pfield = new Field(3,3);
+        if (currentRoom.getGridGameObject(player.pos) ==  pfield) {
+            Harvest pharvest = new Harvest(2);
+                pharvest.harvestPlantFromField();
             } else {
                 System.out.println("Can not harvest that!");
-            }
         }
     }
+
 
     private void movePlayer(Command command)
     {
