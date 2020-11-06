@@ -16,7 +16,6 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        player = new Player();
     }
 
 
@@ -43,7 +42,8 @@ public class Game
 
         office.setExit("west", lab);
 
-
+        //DBG Start
+        player = new Player();
         outside.setRoomGrid(new GameObject[10][10]);
         for (GameObject[] gameObjects : outside.getRoomGrid()) {
             Arrays.fill(gameObjects, new Block());
@@ -53,9 +53,12 @@ public class Game
         for (GameObject[] gameObjects : theatre.getRoomGrid()) {
             Arrays.fill(gameObjects, new Block());
         }
-
         outside.setGridGameObject(new Door("east", new Vector()), new Vector(2, 3));
+        outside.setGridGameObject(new Field(), new Vector(1, 2));
+        player.inventory.addItem(new Fertilizer("Manure", 10));
 
+
+        //DBG End
 
 
 

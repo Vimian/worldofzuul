@@ -2,6 +2,10 @@ package worldofzuul;
 
 public class Field extends GameObject {
     private Fertilizer fertilizer;
+
+    public Field() {
+    }
+
     private float water;
     private Plant plant;
     private Float nutrition;
@@ -30,4 +34,31 @@ public class Field extends GameObject {
     public float getNutrition() { return this.nutrition; }
 
     public void setNutrition(float nutrition) { this.nutrition = nutrition; }
+
+    @Override
+    public Command[] interact() {
+        System.out.println("What are you trying to do?");
+
+        return super.interact();
+    }
+
+    @Override
+    public Command[] interact(Item item) {
+
+        if(Fertilizer.class.isAssignableFrom(item.getClass())){
+            System.out.println("You used a fertilizer.");
+            return useFertilizer((Fertilizer) item);
+        } else {
+            System.out.println("You can't use that item here.");
+        }
+
+
+        return super.interact(item);
+    }
+
+    private Command[] useFertilizer(Fertilizer fertilizer){
+        return null; //TODO: Implement method.
+    }
+
+
 }
