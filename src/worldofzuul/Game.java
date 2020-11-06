@@ -86,19 +86,14 @@ public class Game
         else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
         }
-
         else if (commandWord == commandWord.EXAMINE){
             examineObject(command);
- }
+        }
         else if (commandWord == CommandWord.HARVEST){
             harvestObject(command);
-    }
+        }
         else if (commandWord == CommandWord.MOVE) {
             movePlayer(command);
-
-        else if (commandWord == CommandWord.MOVE) {
-            movePlayer(command);
-
         }
         return wantToQuit;
     }
@@ -159,19 +154,18 @@ public class Game
         }
     }
 
-    private boolean quit(Command command) 
-
     private void harvestObject(Command command) {
         if (!command.hasSecondWord()) {
             System.out.println("Harvest what?");
         }
-        if (Field.getPlant().equals(player.pos)){
-                Harvest.harvestPlantFromField();
+        if (currentRoom.getGridGameObject(player.pos) == new Field()) {
+            if (new Field().getPlant == true) {
+                new Harvest().harvestPlantFromField();
             } else {
                 System.out.println("Can not harvest that!");
             }
         }
-}
+    }
 
     private void movePlayer(Command command)
     {
@@ -210,7 +204,7 @@ public class Game
         }
             setPlayerPosition(new Vector(x, y));
         }
-    }
+
     private void teleportPlayer(Command command)
     {
         if(!command.hasSecondWord()) {
@@ -254,8 +248,6 @@ public class Game
             System.out.println("You can't walk there.");
             return false;
         }
-
-        GameObject targetPosition = currentRoom.getRoomGrid()[y][x];
         GameObject targetPosition = currentRoom.getGridGameObject(new Vector(x, y));
         if(targetPosition.colliding){
             System.out.println("You can't walk through that.");
