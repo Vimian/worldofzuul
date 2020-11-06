@@ -1,4 +1,4 @@
-package worldofzuul;
+package worldofzuul.world;
 
 public enum Direction {
     NORTH,

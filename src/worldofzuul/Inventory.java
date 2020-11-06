@@ -1,5 +1,7 @@
 package worldofzuul;
 
+import worldofzuul.item.Item;
+
 import java.util.Collections;
 import java.util.LinkedList;
 

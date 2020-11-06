@@ -1,4 +1,7 @@
-package worldofzuul;
+package worldofzuul.world;
+
+import worldofzuul.parsing.Command;
+import worldofzuul.item.Item;
 
 public abstract class GameObject {
     public boolean colliding;

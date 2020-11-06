@@ -1,4 +1,4 @@
-package worldofzuul;
+package worldofzuul.item;
 
 import worldofzuul.Sprite;
 

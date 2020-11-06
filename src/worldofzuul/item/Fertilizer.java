@@ -1,4 +1,4 @@
-package worldofzuul;
+package worldofzuul.item;
 
 public class Fertilizer extends Item {
     private Double amount;

@@ -1,4 +1,9 @@
-package worldofzuul;
+package worldofzuul.world;
+
+import worldofzuul.parsing.Command;
+import worldofzuul.item.Fertilizer;
+import worldofzuul.item.Item;
+import worldofzuul.item.Plant;
 
 public class Field extends GameObject {
     private Fertilizer fertilizer;
@@ -38,7 +43,6 @@ public class Field extends GameObject {
     @Override
     public Command[] interact() {
         System.out.println("What are you trying to do?");
-
         return super.interact();
     }
 

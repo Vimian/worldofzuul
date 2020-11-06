@@ -1,5 +1,7 @@
-package worldofzuul;
+package worldofzuul.world;
 
+import worldofzuul.parsing.Command;
+import worldofzuul.parsing.CommandWord;
 import worldofzuul.util.Vector;
 
 public class Door extends GameObject {
