@@ -7,10 +7,16 @@ public class Inventory {
     private LinkedList<Item> items = new LinkedList<>();
 
     public Item getSelectedItem() {
-        return items.getFirst();
+        if(!items.isEmpty()){
+            return items.getFirst();
+        } else {
+            return null;
+        }
     }
     public void setSelectedItem(Item item) {
-        Collections.swap(items, items.indexOf(getSelectedItem()), items.indexOf(item));
+        if(!items.isEmpty()){
+            Collections.swap(items, items.indexOf(getSelectedItem()), items.indexOf(item));
+        }
     }
     public LinkedList<Item> getItems() {
         return items;

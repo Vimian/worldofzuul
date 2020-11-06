@@ -3,6 +3,8 @@ package worldofzuul;
 
 import worldofzuul.util.Vector;
 
+import java.util.Arrays;
+
 public class Game
 {
     private Parser parser;
@@ -40,6 +42,23 @@ public class Game
         lab.setExit("east", office);
 
         office.setExit("west", lab);
+
+
+        outside.setRoomGrid(new GameObject[10][10]);
+        for (GameObject[] gameObjects : outside.getRoomGrid()) {
+            Arrays.fill(gameObjects, new Block());
+        }
+
+        theatre.setRoomGrid(new GameObject[10][10]);
+        for (GameObject[] gameObjects : theatre.getRoomGrid()) {
+            Arrays.fill(gameObjects, new Block());
+        }
+
+        outside.setGridGameObject(new Door("east", new Vector()), new Vector(2, 3));
+
+
+
+
 
         currentRoom = outside;
     }
@@ -89,6 +108,8 @@ public class Game
         }
         else if (commandWord == CommandWord.MOVE) {
             movePlayer(command);
+        } else if(commandWord == CommandWord.INTERACT){
+            interactPlayer();
         }
         return wantToQuit;
     }
@@ -105,16 +126,37 @@ public class Game
 
         if (commandWord == CommandWord.TELEPORT) {
             teleportPlayer(command);
-        } else if(commandWord == CommandWord.INTERACT){
-            interactPlayer(command);
         }
 
         return false;
     }
 
-    private void interactPlayer(Command command) {
+    private void processCommandsInternal(Command[] commands)
+    {
+        if(commands != null && commands.length > 0){
+            for (Command command : commands) {
+                processCommandInternal(command);
+            }
+        }
+    }
 
+    private void interactPlayer() {
 
+        Item item = player.inventory.getSelectedItem();
+
+        Command[] commands;
+
+        if(item == null){
+            commands = currentRoom
+                    .getGridGameObject(player.pos)
+                    .interact();
+        } else {
+            commands = currentRoom
+                    .getGridGameObject(player.pos)
+                    .interact(item);
+        }
+
+        processCommandsInternal(commands);
     }
 
     private void printHelp()
@@ -202,16 +244,8 @@ public class Game
         GameObject currentTile = currentRoom.getGridGameObject(player.pos);
         GameObject newTile = currentRoom.getGridGameObject(position);
 
-        currentTile.uponExit();
-        Command[] commands = newTile.uponEntry(currentTile);
-
-
-        if(commands != null){
-            for (Command command : commands) {
-                processCommandInternal(command);
-            }
-        }
-        
+        processCommandsInternal(currentTile.uponExit());
+        processCommandsInternal(newTile.uponEntry(currentTile));
         
         player.pos = position;
     }
