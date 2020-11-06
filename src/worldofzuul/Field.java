@@ -1,11 +1,13 @@
 package worldofzuul;
 
+import java.util.ArrayList;
+
 public class Field extends GameObject {
     private Fertilizer fertilizer;
     private float water;
     private Plant plant;
     private Float nutrition;
-    private static Plant[] plants;
+    private ArrayList<Plant> plants;
 
     public Field(Fertilizer fertilizer) {
         this.fertilizer = fertilizer;
@@ -28,7 +30,7 @@ public class Field extends GameObject {
 
     public void setPlant(Plant plant) { this.plant = plant; }
 
-    public static void removePlant(Plant){ plants.remove(Plant); }
+    public void removePlant(Plant plant){ plants.remove(plant); }
 
     public float getNutrition() { return this.nutrition; }
 
