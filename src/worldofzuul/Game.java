@@ -140,13 +140,15 @@ public class Game
         return false;
     }
 
-    private void processCommandsInternal(Command[] commands)
+    private boolean processCommandInternal(Command[] commands)
     {
         if(commands != null && commands.length > 0){
             for (Command command : commands) {
                 processCommandInternal(command);
             }
+            return true;
         }
+        return false;
     }
 
     private void interactPlayer() {
@@ -165,7 +167,7 @@ public class Game
                     .interact(item);
         }
 
-        processCommandsInternal(commands);
+        processCommandInternal(commands);
     }
 
     private void printHelp()
@@ -253,8 +255,8 @@ public class Game
         GameObject currentTile = currentRoom.getGridGameObject(player.pos);
         GameObject newTile = currentRoom.getGridGameObject(position);
 
-        processCommandsInternal(currentTile.uponExit());
-        processCommandsInternal(newTile.uponEntry(currentTile));
+        processCommandInternal(currentTile.uponExit());
+        processCommandInternal(newTile.uponEntry(currentTile));
         
         player.pos = position;
     }
