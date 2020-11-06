@@ -123,32 +123,29 @@ public class Game
         return wantToQuit;
     }
 
-    private boolean processCommandInternal(Command command)
+    private void processCommandInternal(Command command)
     {
 
         CommandWord commandWord = command.getCommandWord();
 
         if(commandWord == CommandWord.UNKNOWN) {
             System.out.println("I don't know what you mean...");
-            return false;
+            return;
         }
 
         if (commandWord == CommandWord.TELEPORT) {
             teleportPlayer(command);
         }
 
-        return false;
     }
 
-    private boolean processCommandInternal(Command[] commands)
+    private void processCommandInternal(Command[] commands)
     {
         if(commands != null && commands.length > 0){
             for (Command command : commands) {
                 processCommandInternal(command);
             }
-            return true;
         }
-        return false;
     }
 
     private void interactPlayer() {
