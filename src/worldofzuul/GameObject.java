@@ -3,14 +3,20 @@ package worldofzuul;
 public abstract class GameObject {
     public boolean colliding;
 
-    public void uponEntry(){
-
+    public Command[] interact(){
+        return null;
+    }
+    public Command[] interact(Item item){
+        return null;
+    }
+    public Command[] uponEntry(){
+        return null;
     }
     public Command[] uponEntry(GameObject previousGameObject) {
         return null;
     }
 
-    public void uponExit(){
-
+    public Command[] uponExit(){
+        return null;
     }
 }
