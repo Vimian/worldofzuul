@@ -1,5 +1,6 @@
 package worldofzuul.world;
 
+import worldofzuul.item.Seed;
 import worldofzuul.parsing.Command;
 import worldofzuul.item.Fertilizer;
 import worldofzuul.item.Item;
@@ -52,7 +53,13 @@ public class Field extends GameObject {
         if(Fertilizer.class.isAssignableFrom(item.getClass())){
             System.out.println("You used a fertilizer.");
             return useFertilizer((Fertilizer) item);
-        } else {
+        }
+        else if(Seed.class.isAssignableFrom(item.getClass())){
+            System.out.println("You used a seed on the field.");
+            return useSeed((Seed) item);
+        }
+
+        else {
             System.out.println("You can't use that item here.");
         }
 
@@ -63,6 +70,8 @@ public class Field extends GameObject {
     private Command[] useFertilizer(Fertilizer fertilizer){
         return null; //TODO: Implement method.
     }
-
+    private Command[] useSeed(Seed seed){
+        return null; //TODO: Implement method.
+    }
 
 }
