@@ -1,3 +1,5 @@
+package worldofzuul;
+
 import java.util.Objects;
 
 public abstract class Action {
@@ -9,6 +11,6 @@ public abstract class Action {
         sprite = this.sprite;
     }
     public Objects[] getItems(){
-        return items;
+        return null;
     }
 }
