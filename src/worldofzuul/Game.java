@@ -105,9 +105,16 @@ public class Game
 
         if (commandWord == CommandWord.TELEPORT) {
             teleportPlayer(command);
+        } else if(commandWord == CommandWord.INTERACT){
+            interactPlayer(command);
         }
 
         return false;
+    }
+
+    private void interactPlayer(Command command) {
+
+
     }
 
     private void printHelp()
