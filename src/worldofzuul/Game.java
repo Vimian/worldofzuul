@@ -4,6 +4,7 @@ import worldofzuul.item.Fertilizer;
 import worldofzuul.item.Harvester;
 import worldofzuul.item.Item;
 import worldofzuul.item.Seed;
+import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
 import worldofzuul.parsing.Parser;
 import worldofzuul.util.MessageHelper;
@@ -84,14 +85,14 @@ public class Game
 
         boolean finished = false;
         while (! finished) {
-            worldofzuul.parsing.Command command = parser.getCommand();
+            Command command = parser.getCommand();
             finished = processCommand(command);
         }
         MessageHelper.Message.exitMessage();
     }
 
 
-    private boolean processCommand(worldofzuul.parsing.Command command)
+    private boolean processCommand(Command command)
     {
         boolean wantToQuit = false;
 
@@ -119,7 +120,7 @@ public class Game
         return wantToQuit;
     }
 
-    private void processCommandInternal(worldofzuul.parsing.Command command)
+    private void processCommandInternal(Command command)
     {
 
         CommandWord commandWord = command.getCommandWord();
@@ -133,8 +134,8 @@ public class Game
             teleportPlayer(command);
         } else if (commandWord == CommandWord.REMOVEITEM) {
             removeItem(command);
-        } else if (commandWord == CommandWord.HARVEST) {
-            harvestItem(command);
+        } else if (commandWord == CommandWord.ADDITEM) {
+            addItem(command);
         }
         else {
             processCommand(command);
@@ -142,16 +143,16 @@ public class Game
 
     }
 
-    private void harvestItem(worldofzuul.parsing.Command command) {
+    private void addItem(Command command) {
         if(command.hasItem()){
             player.inventory.addItem(command.getItem());
         }
     }
 
-    private void processCommandInternal(worldofzuul.parsing.Command[] commands)
+    private void processCommandInternal(Command[] commands)
     {
         if(commands != null && commands.length > 0){
-            for (worldofzuul.parsing.Command command : commands) {
+            for (Command command : commands) {
                 if(command != null){
                     processCommandInternal(command);
                 }
@@ -163,7 +164,7 @@ public class Game
 
         Item item = player.inventory.getSelectedItem();
 
-        worldofzuul.parsing.Command[] commands;
+        Command[] commands;
 
         if(item == null){
             commands = currentRoom
@@ -178,7 +179,7 @@ public class Game
         processCommandInternal(commands);
     }
 
-    private void removeItem(worldofzuul.parsing.Command command){
+    private void removeItem(Command command){
         int itemIndex = 0;
         if(command.hasItem()){
             player.inventory.removeItem(command.getItem());
@@ -196,7 +197,7 @@ public class Game
         parser.showCommands();
     }
 
-    private void goRoom(worldofzuul.parsing.Command command)
+    private void goRoom(Command command)
     {
         if(!command.hasSecondWord()) {
             MessageHelper.Command.unknownArgument(CommandWord.GO.toString());
@@ -216,7 +217,7 @@ public class Game
         }
     }
 
-    private void movePlayer(worldofzuul.parsing.Command command)
+    private void movePlayer(Command command)
     {
         if(!command.hasSecondWord()) {
             MessageHelper.Command.unknownArgument(CommandWord.MOVE.toString());
@@ -252,7 +253,7 @@ public class Game
             setPlayerPosition(new Vector(x, y));
         }
     }
-    private void teleportPlayer(worldofzuul.parsing.Command command)
+    private void teleportPlayer(Command command)
     {
         if(!command.hasSecondWord()) {
             MessageHelper.Command.unknownArgument(CommandWord.TELEPORT.name());
@@ -299,7 +300,7 @@ public class Game
 
 
 
-    private boolean quit(worldofzuul.parsing.Command command)
+    private boolean quit(Command command)
     {
         if(command.hasSecondWord()) {
             MessageHelper.Command.unknownArgument(CommandWord.QUIT.toString());

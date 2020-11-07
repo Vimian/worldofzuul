@@ -1,6 +1,7 @@
 package worldofzuul.world;
 
 import worldofzuul.item.*;
+import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
 import worldofzuul.util.MessageHelper;
 
@@ -56,13 +57,13 @@ public class Field extends GameObject {
     }
 
     @Override
-    public worldofzuul.parsing.Command[] interact() {
+    public Command[] interact() {
         MessageHelper.Command.unknownAction();
         return super.interact();
     }
 
     @Override
-    public worldofzuul.parsing.Command[] interact(Item item) {
+    public Command[] interact(Item item) {
 
         if (item instanceof Fertilizer) {
             MessageHelper.Item.usedItem(item.getName());
@@ -78,12 +79,12 @@ public class Field extends GameObject {
         return super.interact(item);
     }
 
-    private worldofzuul.parsing.Command[] useFertilizer(Fertilizer item) {
+    private Command[] useFertilizer(Fertilizer item) {
         return null; //TODO: Implement method.
     }
 
-    private worldofzuul.parsing.Command[] useSeed(Seed item) {
-        worldofzuul.parsing.Command[] commands = new worldofzuul.parsing.Command[1];
+    private Command[] useSeed(Seed item) {
+        Command[] commands = new Command[1];
 
         if (item.getSeedCount() > 0) {
             MessageHelper.Item.usedItemOn(item.getName(), this.getClass().getSimpleName());
@@ -91,19 +92,19 @@ public class Field extends GameObject {
         }
 
         if (item.getSeedCount() == 0) {
-            commands[0] = new worldofzuul.parsing.Command(CommandWord.REMOVEITEM, null);
+            commands[0] = new Command(CommandWord.REMOVEITEM, null);
         }
 
 
         return commands;
     }
 
-    private worldofzuul.parsing.Command[] useHarvester(Harvester item) {
-        worldofzuul.parsing.Command[] commands = new worldofzuul.parsing.Command[1];
+    private Command[] useHarvester(Harvester item) {
+        Command[] commands = new Command[1];
         if (plant != null) {
             if (true) { //TODO: Implement "ripeness" check
                 MessageHelper.Item.harvested(plant.getName());
-                commands[0] = new worldofzuul.parsing.Command(CommandWord.HARVEST, null, item.harvest(plant));
+                commands[0] = new Command(CommandWord.ADDITEM, null, item.harvest(plant));
                 removePlant();
             } else {
                 MessageHelper.Item.unripePlant();
