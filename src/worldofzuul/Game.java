@@ -1,7 +1,7 @@
 package worldofzuul;
 
-
 import worldofzuul.item.Fertilizer;
+import worldofzuul.item.Harvester;
 import worldofzuul.item.Item;
 import worldofzuul.item.Seed;
 import worldofzuul.parsing.Command;
@@ -64,7 +64,10 @@ public class Game
         }
         outside.setGridGameObject(new Door("east", new Vector()), new Vector(2, 3));
         outside.setGridGameObject(new Field(), new Vector(1, 2));
-        player.inventory.addItem(new Seed("Manure"));
+        player.inventory.addItem(new Harvester("Corn"));
+        player.inventory.addItem(new Fertilizer("Corn", 3));
+        Seed seed = new Seed("Corn", 3);
+        player.inventory.setSelectedItem(seed);
 
 
         //DBG End
@@ -140,6 +143,8 @@ public class Game
             teleportPlayer(command);
         } else if (commandWord == CommandWord.REMOVEITEM) {
             removeItem(command);
+        } else {
+            processCommand(command);
         }
 
     }
@@ -148,7 +153,9 @@ public class Game
     {
         if(commands != null && commands.length > 0){
             for (Command command : commands) {
-                processCommandInternal(command);
+                if(command != null){
+                    processCommandInternal(command);
+                }
             }
         }
     }
@@ -263,12 +270,13 @@ public class Game
     private void setPlayerPosition(Vector position){
 
         GameObject currentTile = currentRoom.getGridGameObject(player.pos);
+
+        player.pos = position;
         GameObject newTile = currentRoom.getGridGameObject(position);
 
         processCommandInternal(currentTile.uponExit());
         processCommandInternal(newTile.uponEntry(currentTile));
         
-        player.pos = position;
     }
 
     private boolean canPlayerMoveToPoint(int x, int y){

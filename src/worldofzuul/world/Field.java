@@ -48,15 +48,15 @@ public class Field extends GameObject {
     @Override
     public Command[] interact(Item item) {
 
-        if(Fertilizer.class.isAssignableFrom(item.getClass())){
+        if(item instanceof Fertilizer){
             System.out.println("You used a fertilizer.");
             return useFertilizer((Fertilizer) item);
         }
-        else if(Seed.class.isAssignableFrom(item.getClass())){
+        else if(item instanceof Seed){
             System.out.println("You used a seed on the field.");
             return useSeed((Seed) item);
         }
-        else if(Harvester.class.isAssignableFrom(item.getClass())){
+        else if(item instanceof Harvester){
             System.out.println("You tried to harvest this field.");
             return useHarvester((Harvester) item);
         }
@@ -72,10 +72,13 @@ public class Field extends GameObject {
         return null; //TODO: Implement method.
     }
     private Command[] useSeed(Seed item){
-        setPlant(item.getPlant());
-
         Command[] commands = new Command[1];
-        commands[0] = new Command(CommandWord.REMOVEITEM, null);
+        if(item.getSeedCount() > 0){
+            setPlant(item.getPlant());
+        } else {
+            commands[0] = new Command(CommandWord.REMOVEITEM, null);
+        }
+
 
         return commands;
     }

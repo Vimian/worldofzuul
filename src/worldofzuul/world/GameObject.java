@@ -10,6 +10,7 @@ public abstract class GameObject {
         return null;
     }
     public Command[] interact(Item item){
+        System.out.println(item.getName() + " can't be used here.");
         return null;
     }
     public Command[] uponEntry(){
