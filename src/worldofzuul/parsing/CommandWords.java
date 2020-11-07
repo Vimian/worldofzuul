@@ -1,4 +1,6 @@
 package worldofzuul.parsing;
+import worldofzuul.util.MessageHelper;
+
 import java.util.HashMap;
 
 
@@ -35,8 +37,8 @@ public class CommandWords
     public void showAll() 
     {
         for(String command : validCommands.keySet()) {
-            System.out.print(command + "  ");
+            MessageHelper.Command.stringSpace(command);
         }
-        System.out.println();
+        MessageHelper.Command.line();
     }
 }

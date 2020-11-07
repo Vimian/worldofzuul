@@ -4,9 +4,9 @@ import worldofzuul.item.Fertilizer;
 import worldofzuul.item.Harvester;
 import worldofzuul.item.Item;
 import worldofzuul.item.Seed;
-import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
 import worldofzuul.parsing.Parser;
+import worldofzuul.util.MessageHelper;
 import worldofzuul.util.Vector;
 import worldofzuul.world.*;
 
@@ -64,8 +64,8 @@ public class Game
         }
         outside.setGridGameObject(new Door("east", new Vector()), new Vector(2, 3));
         outside.setGridGameObject(new Field(), new Vector(1, 2));
-        player.inventory.addItem(new Harvester("Corn"));
         player.inventory.addItem(new Fertilizer("Corn", 3));
+        player.inventory.addItem(new Harvester("Corn"));
         Seed seed = new Seed("Corn", 3);
         player.inventory.setSelectedItem(seed);
 
@@ -80,35 +80,25 @@ public class Game
 
     public void play()
     {
-        printWelcome();
-
+        MessageHelper.Message.welcomeMessage(currentRoom.getLongDescription());
 
         boolean finished = false;
         while (! finished) {
-            Command command = parser.getCommand();
+            worldofzuul.parsing.Command command = parser.getCommand();
             finished = processCommand(command);
         }
-        System.out.println("Thank you for playing.  Good bye.");
+        MessageHelper.Message.exitMessage();
     }
 
-    private void printWelcome()
-    {
-        System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-        System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
-        System.out.println();
-        System.out.println(currentRoom.getLongDescription());
-    }
 
-    private boolean processCommand(Command command)
+    private boolean processCommand(worldofzuul.parsing.Command command)
     {
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
 
         if(commandWord == CommandWord.UNKNOWN) {
-            System.out.println("I don't know what you mean...");
+            MessageHelper.Command.unknownCommand();
             return false;
         }
 
@@ -129,13 +119,13 @@ public class Game
         return wantToQuit;
     }
 
-    private void processCommandInternal(Command command)
+    private void processCommandInternal(worldofzuul.parsing.Command command)
     {
 
         CommandWord commandWord = command.getCommandWord();
 
         if(commandWord == CommandWord.UNKNOWN) {
-            System.out.println("I don't know what you mean...");
+            MessageHelper.Command.unknownCommand();
             return;
         }
 
@@ -143,16 +133,25 @@ public class Game
             teleportPlayer(command);
         } else if (commandWord == CommandWord.REMOVEITEM) {
             removeItem(command);
-        } else {
+        } else if (commandWord == CommandWord.HARVEST) {
+            harvestItem(command);
+        }
+        else {
             processCommand(command);
         }
 
     }
 
-    private void processCommandInternal(Command[] commands)
+    private void harvestItem(worldofzuul.parsing.Command command) {
+        if(command.hasItem()){
+            player.inventory.addItem(command.getItem());
+        }
+    }
+
+    private void processCommandInternal(worldofzuul.parsing.Command[] commands)
     {
         if(commands != null && commands.length > 0){
-            for (Command command : commands) {
+            for (worldofzuul.parsing.Command command : commands) {
                 if(command != null){
                     processCommandInternal(command);
                 }
@@ -164,7 +163,7 @@ public class Game
 
         Item item = player.inventory.getSelectedItem();
 
-        Command[] commands;
+        worldofzuul.parsing.Command[] commands;
 
         if(item == null){
             commands = currentRoom
@@ -179,27 +178,28 @@ public class Game
         processCommandInternal(commands);
     }
 
-    private void removeItem(Command command){
+    private void removeItem(worldofzuul.parsing.Command command){
         int itemIndex = 0;
-        if(command.hasSecondWord()) {
+        if(command.hasItem()){
+            player.inventory.removeItem(command.getItem());
+            return;
+        } else if (command.hasSecondWord()) {
             itemIndex = tryParse(command.getSecondWord(), 0);
         }
+
         player.inventory.removeItem(itemIndex);
     }
 
     private void printHelp()
     {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
-        System.out.println();
-        System.out.println("Your command words are:");
+        MessageHelper.Message.helpCommands();
         parser.showCommands();
     }
 
-    private void goRoom(Command command)
+    private void goRoom(worldofzuul.parsing.Command command)
     {
         if(!command.hasSecondWord()) {
-            System.out.println("Go where?");
+            MessageHelper.Command.unknownArgument(CommandWord.GO.toString());
             return;
         }
 
@@ -208,18 +208,18 @@ public class Game
         Room nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            MessageHelper.Command.incorrectExit();
         }
         else {
             currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
+            MessageHelper.Command.roomDescription(currentRoom.getLongDescription());
         }
     }
 
-    private void movePlayer(Command command)
+    private void movePlayer(worldofzuul.parsing.Command command)
     {
         if(!command.hasSecondWord()) {
-            System.out.println("Move where?");
+            MessageHelper.Command.unknownArgument(CommandWord.MOVE.toString());
             return;
         }
 
@@ -228,34 +228,34 @@ public class Game
         int y = player.pos.y;
 
 
-        if(Direction.NORTH.name().toLowerCase().equals(secondWord)){
+        if(Direction.NORTH.toString().equals(secondWord)){
             y--;
         }
-        else if (Direction.SOUTH.name().toLowerCase().equals(secondWord))
+        else if (Direction.SOUTH.toString().equals(secondWord))
         {
             y++;
         }
-        else if (Direction.EAST.name().toLowerCase().equals(secondWord))
+        else if (Direction.EAST.toString().equals(secondWord))
         {
             x++;
         }
-        else if (Direction.WEST.name().toLowerCase().equals(secondWord))
+        else if (Direction.WEST.toString().equals(secondWord))
         {
             x--;
         } else {
-            System.out.println("Where do you want to go?");
+            MessageHelper.Command.unknownCommand();
             return;
         }
 
         if(canPlayerMoveToPoint(x, y)){
-            System.out.println("You walked " + secondWord + ".");
+            MessageHelper.Command.moveCommand(secondWord);
             setPlayerPosition(new Vector(x, y));
         }
     }
-    private void teleportPlayer(Command command)
+    private void teleportPlayer(worldofzuul.parsing.Command command)
     {
         if(!command.hasSecondWord()) {
-            System.out.println("Teleport where?");
+            MessageHelper.Command.unknownArgument(CommandWord.TELEPORT.name());
             return;
         }
 
@@ -263,7 +263,7 @@ public class Game
         Vector pos = new Vector(secondWord);
 
         if(canPlayerMoveToPoint(pos.x, pos.y)){
-            System.out.println("You were teleported to " + secondWord + ".");
+            MessageHelper.Command.teleported(pos);
             setPlayerPosition(pos);
         }
     }
@@ -285,13 +285,13 @@ public class Game
 
         //Player exceeds bounds of array
         if (x < 0 || y < 0 || x >= roomDimensionsX || y >= roomDimensionsY){
-            System.out.println("You can't walk there.");
+            MessageHelper.Command.positionExceedsMap();
             return false;
         }
 
         GameObject targetPosition = currentRoom.getGridGameObject(new Vector(x, y));
         if(targetPosition.colliding){
-            System.out.println("You can't walk through that.");
+            MessageHelper.Command.objectIsCollidable();
         }
 
         return !targetPosition.colliding;
@@ -299,10 +299,10 @@ public class Game
 
 
 
-    private boolean quit(Command command)
+    private boolean quit(worldofzuul.parsing.Command command)
     {
         if(command.hasSecondWord()) {
-            System.out.println("Quit what?");
+            MessageHelper.Command.unknownArgument(CommandWord.QUIT.toString());
             return false;
         }
         else {

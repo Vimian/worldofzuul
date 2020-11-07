@@ -1,7 +1,7 @@
 package worldofzuul.world;
 
 import worldofzuul.parsing.Command;
-import worldofzuul.item.Item;
+import worldofzuul.util.MessageHelper;
 
 public abstract class GameObject {
     public boolean colliding;
@@ -9,8 +9,8 @@ public abstract class GameObject {
     public Command[] interact(){
         return null;
     }
-    public Command[] interact(Item item){
-        System.out.println(item.getName() + " can't be used here.");
+    public Command[] interact(worldofzuul.item.Item item){
+        MessageHelper.Item.cantUseItem(item.getName());
         return null;
     }
     public Command[] uponEntry(){

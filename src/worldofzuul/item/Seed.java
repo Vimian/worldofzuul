@@ -10,7 +10,7 @@ public class Seed extends Item {
     }
     public Plant getPlant(){
         seedCount--;
-        return new Plant(getName());
+        return new Plant(super.getName());
     }
     public int getSeedCount() {
         return seedCount;
