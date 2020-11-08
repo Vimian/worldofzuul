@@ -72,7 +72,7 @@ public class MessageHelper {
             System.out.println();
         }
     }
-    public static class Message {
+    public static class Info {
 
         public static void exitMessage(){
             System.out.println("Thank you for playing.  Good bye.");

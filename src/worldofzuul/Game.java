@@ -80,14 +80,14 @@ public class Game
 
     public void play()
     {
-        MessageHelper.Message.welcomeMessage(currentRoom.getLongDescription());
+        MessageHelper.Info.welcomeMessage(currentRoom.getLongDescription());
 
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
-        MessageHelper.Message.exitMessage();
+        MessageHelper.Info.exitMessage();
     }
 
 
@@ -192,7 +192,7 @@ public class Game
 
     private void printHelp()
     {
-        MessageHelper.Message.helpCommands();
+        MessageHelper.Info.helpCommands();
         parser.showCommands();
     }
 
