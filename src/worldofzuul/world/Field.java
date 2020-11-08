@@ -25,38 +25,11 @@ public class Field extends GameObject {
         this.water = water;
     }
 
-    public Fertilizer getFertilizer() {
-        return this.fertilizer;
-    }
-
-    public void setFertilizer(Fertilizer fertilizer) {
-        this.fertilizer = fertilizer;
-    }
-
-    public float getWater() {
-        return this.water;
-    }
-
-    public void setWater(float water) {
-        this.water = water;
-    }
-
-    public Plant getPlant() {
-        return this.plant;
-    }
-
     public void removePlant() {
         this.plant = null;
         plantTickCounter = 0;
     }
 
-    public float getNutrition() {
-        return this.nutrition;
-    }
-
-    public void setNutrition(float nutrition) {
-        this.nutrition = nutrition;
-    }
 
     private boolean isPlantGrowing(){
         return plant != null && plantTickCounter < 1000; //TODO: Implement "ripeness" check
