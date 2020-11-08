@@ -11,9 +11,11 @@ public class Field extends GameObject {
     public Field() {
     }
 
-    private float water;
+    private float water = 0;
     private Plant plant;
-    private Float nutrition;
+    private float nutrition = 10000;
+    private float depletionRate = 5;
+
 
     public Field(Fertilizer fertilizer) {
         this.fertilizer = fertilizer;
@@ -24,42 +26,21 @@ public class Field extends GameObject {
         this.water = water;
     }
 
-    public Fertilizer getFertilizer() {
-        return this.fertilizer;
-    }
 
-    public void setFertilizer(Fertilizer fertilizer) {
-        this.fertilizer = fertilizer;
-    }
-
-    public float getWater() {
-        return this.water;
-    }
-
-    public void setWater(float water) {
-        this.water = water;
-    }
-
-    public Plant getPlant() {
-        return this.plant;
-    }
-
-    public void removePlant() {
-        this.plant = null;
-    }
-
-    public float getNutrition() {
-        return this.nutrition;
-    }
-
-    public void setNutrition(float nutrition) {
-        this.nutrition = nutrition;
+    public void addWater(float water){
+        if(isPlantGrowing()){
+            this.water += water;
+        }
     }
 
     @Override
-    public Command[] interact() {
-        MessageHelper.Command.unknownAction();
-        return super.interact();
+    public Command[] update() {
+
+        if(isPlantGrowing()){
+            plant.grow(depleteWater(), depleteNutrition());
+        }
+
+        return super.update();
     }
 
     @Override
@@ -72,8 +53,10 @@ public class Field extends GameObject {
             return useSeed((Seed) item);
         } else if (item instanceof Harvester) {
             return useHarvester((Harvester) item);
-        } else {
-            MessageHelper.Item.cantUseItem(item.getName());
+        } else if (item instanceof Irrigator) {
+            MessageHelper.Item.usedItem(item.getName());
+            useIrrigator((Irrigator) item);
+            return null;
         }
 
         return super.interact(item);
@@ -82,8 +65,16 @@ public class Field extends GameObject {
     private Command[] useFertilizer(Fertilizer item) {
         return null; //TODO: Implement method.
     }
+    private void useIrrigator(Irrigator item) {
+            item.water(this);
+    }
 
     private Command[] useSeed(Seed item) {
+        if(isPlantGrowing()){
+            MessageHelper.Item.alreadyPlanted();
+            return  null;
+        }
+
         Command[] commands = new Command[1];
 
         if (item.getSeedCount() > 0) {
@@ -102,7 +93,7 @@ public class Field extends GameObject {
     private Command[] useHarvester(Harvester item) {
         Command[] commands = new Command[1];
         if (plant != null) {
-            if (true) { //TODO: Implement "ripeness" check
+            if (plant.isRipe()) {
                 MessageHelper.Item.harvested(plant.getName());
                 commands[0] = new Command(CommandWord.ADDITEM, null, item.harvest(plant));
                 removePlant();
@@ -117,5 +108,31 @@ public class Field extends GameObject {
         return commands;
     }
 
+    private void removePlant() {
+        this.plant = null;
+    }
 
+    private boolean isPlantGrowing(){
+        return plant != null && !plant.isRipe();
+    }
+
+    private float depleteWater(){
+        if(water > depletionRate){
+            return water =- depletionRate;
+        } else {
+            return 0;
+        }
+    }
+
+    private float depleteNutrition(){
+        if(nutrition > depletionRate){
+            return nutrition =- depletionRate;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public void shineLight() {
+    }
 }
