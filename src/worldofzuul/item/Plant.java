@@ -5,6 +5,4 @@ public class Plant extends Item {
         super(name);
     }
 
-    public void addWater(Float water) {
-    }
 }

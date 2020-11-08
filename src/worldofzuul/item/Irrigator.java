@@ -1,5 +1,7 @@
 package worldofzuul.item;
 
+import worldofzuul.world.Field;
+
 public class Irrigator extends Item {
     private float flowRate = 5;
     private float water = 1000;
@@ -15,8 +17,10 @@ public class Irrigator extends Item {
 
     }
 
-    public void water(Plant plant){
-        plant.addWater(getWaterFlow());
+    public void water(Field field){
+
+        field.addWater(getWater());
+
     }
 
     public float getWater() {

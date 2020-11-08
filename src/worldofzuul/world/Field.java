@@ -28,7 +28,7 @@ public class Field extends GameObject {
 
     public void addWater(Float water){
         if(isPlantGrowing()){
-            plant.addWater(water);
+            this.water += water;
         }
     }
 
@@ -83,9 +83,7 @@ public class Field extends GameObject {
         return null; //TODO: Implement method.
     }
     private void useIrrigator(Irrigator item) {
-        if(isPlantGrowing()){
-            item.water(plant);
-        }
+            item.water(this);
     }
     private Command[] useSeed(Seed item) {
         Command[] commands = new Command[1];
