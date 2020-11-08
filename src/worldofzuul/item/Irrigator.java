@@ -19,18 +19,18 @@ public class Irrigator extends Item {
 
     public void water(Field field){
 
-        field.addWater(getWater());
+        field.addWater(drawWater());
 
     }
 
-    public float getWater() {
+    public float getWaterRemaining() {
         return water;
     }
     public void refill(){
         water = waterCapacity;
     }
 
-    private float getWaterFlow(){
+    private float drawWater(){
         if(water > flowRate){
              return water =- flowRate;
         }
