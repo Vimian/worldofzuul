@@ -11,6 +11,7 @@ public abstract class GameObject {
     }
 
     public Command[] interact(){
+        MessageHelper.Command.unknownAction();
         return null;
     }
     public Command[] interact(worldofzuul.item.Item item){

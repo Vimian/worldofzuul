@@ -25,16 +25,22 @@ public class Field extends GameObject {
         this.water = water;
     }
 
-    public void removePlant() {
+
+    public void addWater(Float water){
+        if(isPlantGrowing()){
+            plant.addWater(water);
+        }
+    }
+
+
+    private void removePlant() {
         this.plant = null;
         plantTickCounter = 0;
     }
 
-
     private boolean isPlantGrowing(){
         return plant != null && plantTickCounter < 1000; //TODO: Implement "ripeness" check
     }
-
 
     private void growPlant(){
         //TODO: Implement growPlant
@@ -53,11 +59,6 @@ public class Field extends GameObject {
         return super.update();
     }
 
-    @Override
-    public Command[] interact() {
-        MessageHelper.Command.unknownAction();
-        return super.interact();
-    }
 
     @Override
     public Command[] interact(Item item) {
@@ -69,6 +70,8 @@ public class Field extends GameObject {
             return useSeed((Seed) item);
         } else if (item instanceof Harvester) {
             return useHarvester((Harvester) item);
+        } else if (item instanceof Irrigator) {
+            useIrrigator((Irrigator) item);
         } else {
             MessageHelper.Item.cantUseItem(item.getName());
         }
@@ -79,7 +82,11 @@ public class Field extends GameObject {
     private Command[] useFertilizer(Fertilizer item) {
         return null; //TODO: Implement method.
     }
-
+    private void useIrrigator(Irrigator item) {
+        if(isPlantGrowing()){
+            item.water(plant);
+        }
+    }
     private Command[] useSeed(Seed item) {
         Command[] commands = new Command[1];
 
