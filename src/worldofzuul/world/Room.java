@@ -3,6 +3,7 @@ package worldofzuul.world;
 import worldofzuul.parsing.Command;
 import worldofzuul.util.Vector;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Set;
 import java.util.HashMap;
@@ -13,19 +14,27 @@ public class Room
     private String description;
     private HashMap<String, Room> exits;
     private GameObject[][] roomGrid;
+    private Environment environment;
 
     public Room(String description) 
     {
         this.description = description;
         exits = new HashMap<String, Room>();
+        this.environment = new Environment();
     }
 
     public Room(String description, GameObject[][] roomGrid)
     {
         this(description);
         this.roomGrid = roomGrid;
+        this.environment = new Environment();
     }
-
+    public Room(String description, GameObject[][] roomGrid, Date date)
+    {
+        this(description);
+        this.roomGrid = roomGrid;
+        this.environment = new Environment(date);
+    }
     public void setExit(String direction, Room neighbor) 
     {
         exits.put(direction, neighbor);
@@ -73,10 +82,13 @@ public class Room
     public LinkedList<Command[]> update(){
         LinkedList<Command[]> commands = new LinkedList<>();
 
+        environment.update();
+
         for (GameObject[] gameObjects : roomGrid) {
             for (GameObject gameObject : gameObjects) {
                 if(gameObject != null){
                     commands.add(gameObject.update());
+                    environment.update(gameObject);
                 }
             }
         }

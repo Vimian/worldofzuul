@@ -1,5 +1,7 @@
 package worldofzuul.parsing;
 
+import worldofzuul.util.MessageHelper;
+
 import java.util.Scanner;
 
 public class Parser 
@@ -19,7 +21,7 @@ public class Parser
         String word1 = null;
         String word2 = null;
 
-        System.out.print("> "); 
+        MessageHelper.Command.userInputArrow();
 
         inputLine = reader.nextLine();
 

@@ -88,8 +88,24 @@ public class MessageHelper {
         public static void line(){
             System.out.println();
         }
+        public static void userInputArrow(){
+            System.out.print("> ");
+        }
     }
     public static class Info {
+
+        public static void rainStarted(){
+            printNewLine("It began to rain.");
+        }
+        public static void rainStopped(){
+            printNewLine("The rain suddenly stopped.");
+        }
+        public static void nightStarted(){
+            printNewLine("It became night.");
+        }
+        public static void nightEnded(){
+            printNewLine("The sun began to rise.");
+        }
 
         public static void exitMessage(){
             System.out.println("Thank you for playing.  Good bye.");
@@ -110,6 +126,12 @@ public class MessageHelper {
             System.out.println();
             System.out.println("Your command words are:");
         }
+    }
+
+    private static void printNewLine(String string) {
+        Command.line();
+        System.out.println(string);
+        Command.userInputArrow();
     }
 
     private static String capitalize(String string){
