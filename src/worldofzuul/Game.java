@@ -65,10 +65,9 @@ public class Game
         }
         outside.setGridGameObject(new Door("east", new Vector()), new Vector(2, 3));
         outside.setGridGameObject(new Field(), new Vector(1, 2));
-        player.inventory.addItem(new Fertilizer("Corn", 3));
-        player.inventory.addItem(new Harvester("Corn"));
-        Seed seed = new Seed("Corn", 3);
-        player.inventory.setSelectedItem(seed);
+        player.inventory.addItem(new Fertilizer("Manure", 3));
+        player.inventory.addItem(new Harvester("Sickle"));
+        player.inventory.setSelectedItem(new Seed("Corn", 3));
 
 
         //DBG End
