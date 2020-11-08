@@ -52,4 +52,11 @@ public class Inventory {
         }
     }
 
+    public Item getItem(int index){
+        if (items.size() > 0 && items.size() > index) {
+            return items.get(index);
+        }
+        return null;
+    }
+
 }

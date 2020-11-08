@@ -26,6 +26,10 @@ public class MessageHelper {
         public static void usedItemOn(String item, String secondItem){
             System.out.println("You used a "+ item +" on the "+ secondItem +".");
         }
+
+        public static void alreadyPlanted() {
+            System.out.println("A plant already exists here.");
+        }
     }
     public static class Command {
 
@@ -37,8 +41,13 @@ public class MessageHelper {
             System.out.println("I don't know what you mean...");
         }
 
-        public static void unknownArgument(String message){
+
+        public static void unknownArgumentWhere(String message){
             System.out.println(capitalize(message) + " where?");
+        }
+
+        public static void unknownArgumentWhat(String message){
+            System.out.println(capitalize(message) + " what?");
         }
 
         public static void incorrectExit(){
@@ -62,7 +71,15 @@ public class MessageHelper {
         }
 
         public static void objectIsCollidable(){
-            System.out.println("You can't walk there.");
+            System.out.println("You can't walk through that.");
+        }
+
+        public static void invalidItemIndex(){
+            System.out.println("No item exists at that location in your inventory.");
+        }
+
+        public static void selectedItem(String string){
+            System.out.println("You selected " + string + ".");
         }
 
         public static void stringSpace(String string){

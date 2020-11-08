@@ -1,9 +1,6 @@
 package worldofzuul;
 
-import worldofzuul.item.Fertilizer;
-import worldofzuul.item.Harvester;
-import worldofzuul.item.Item;
-import worldofzuul.item.Seed;
+import worldofzuul.item.*;
 import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
 import worldofzuul.parsing.Parser;
@@ -72,6 +69,7 @@ public class Game
         player.inventory.addItem(new Fertilizer("Manure", 3));
         player.inventory.addItem(new Harvester("Sickle"));
         player.inventory.setSelectedItem(new Seed("Corn", 3));
+        player.inventory.addItem(new Irrigator("Hose"));
 
 
         //DBG End
@@ -131,10 +129,37 @@ public class Game
         }
         else if (commandWord == CommandWord.MOVE) {
             movePlayer(command);
+        } else if (commandWord == CommandWord.SELECT) {
+            selectItem(command);
         } else if(commandWord == CommandWord.INTERACT){
             interactPlayer();
         }
         return wantToQuit;
+    }
+
+    private void selectItem(Command command) {
+        if(!command.hasSecondWord()) {
+            MessageHelper.Command.unknownArgumentWhat(CommandWord.SELECT.toString());
+            return;
+        }
+
+        int itemIndex = tryParse(command.getSecondWord(), 0);
+
+        if(itemIndex != 0){
+
+            Item item = player.inventory.getItem(itemIndex);
+            if(item != null){
+                MessageHelper.Command.selectedItem(item.getName());
+                player.inventory.setSelectedItem(item);
+            } else {
+                MessageHelper.Command.invalidItemIndex();
+            }
+
+        } else {
+            MessageHelper.Command.unknownAction();
+        }
+
+
     }
 
     private void processCommandInternal(Command command)
@@ -217,7 +242,7 @@ public class Game
     private void goRoom(Command command)
     {
         if(!command.hasSecondWord()) {
-            MessageHelper.Command.unknownArgument(CommandWord.GO.toString());
+            MessageHelper.Command.unknownArgumentWhere(CommandWord.GO.toString());
             return;
         }
 
@@ -237,7 +262,7 @@ public class Game
     private void movePlayer(Command command)
     {
         if(!command.hasSecondWord()) {
-            MessageHelper.Command.unknownArgument(CommandWord.MOVE.toString());
+            MessageHelper.Command.unknownArgumentWhere(CommandWord.MOVE.toString());
             return;
         }
 
@@ -273,7 +298,7 @@ public class Game
     private void teleportPlayer(Command command)
     {
         if(!command.hasSecondWord()) {
-            MessageHelper.Command.unknownArgument(CommandWord.TELEPORT.name());
+            MessageHelper.Command.unknownArgumentWhere(CommandWord.TELEPORT.name());
             return;
         }
 
@@ -320,7 +345,7 @@ public class Game
     private boolean quit(Command command)
     {
         if(command.hasSecondWord()) {
-            MessageHelper.Command.unknownArgument(CommandWord.QUIT.toString());
+            MessageHelper.Command.unknownArgumentWhere(CommandWord.QUIT.toString());
             return false;
         }
         else {

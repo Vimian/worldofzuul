@@ -11,10 +11,11 @@ public class Field extends GameObject {
     public Field() {
     }
 
-    private float water;
+    private float water = 0;
     private Plant plant;
-    private Float nutrition;
-    private int plantTickCounter = 0;
+    private float nutrition = 10000;
+    private float depletionRate = 5;
+
 
     public Field(Fertilizer fertilizer) {
         this.fertilizer = fertilizer;
@@ -26,39 +27,21 @@ public class Field extends GameObject {
     }
 
 
-    public void addWater(Float water){
+    public void addWater(float water){
         if(isPlantGrowing()){
             this.water += water;
         }
     }
 
-
-    private void removePlant() {
-        this.plant = null;
-        plantTickCounter = 0;
-    }
-
-    private boolean isPlantGrowing(){
-        return plant != null && plantTickCounter < 1000; //TODO: Implement "ripeness" check
-    }
-
-    private void growPlant(){
-        //TODO: Implement growPlant
-    }
-
-
-
     @Override
     public Command[] update() {
 
         if(isPlantGrowing()){
-            growPlant();
+            plant.grow(depleteWater(), depleteNutrition());
         }
-
 
         return super.update();
     }
-
 
     @Override
     public Command[] interact(Item item) {
@@ -71,9 +54,9 @@ public class Field extends GameObject {
         } else if (item instanceof Harvester) {
             return useHarvester((Harvester) item);
         } else if (item instanceof Irrigator) {
+            MessageHelper.Item.usedItem(item.getName());
             useIrrigator((Irrigator) item);
-        } else {
-            MessageHelper.Item.cantUseItem(item.getName());
+            return null;
         }
 
         return super.interact(item);
@@ -85,7 +68,13 @@ public class Field extends GameObject {
     private void useIrrigator(Irrigator item) {
             item.water(this);
     }
+
     private Command[] useSeed(Seed item) {
+        if(isPlantGrowing()){
+            MessageHelper.Item.alreadyPlanted();
+            return  null;
+        }
+
         Command[] commands = new Command[1];
 
         if (item.getSeedCount() > 0) {
@@ -104,7 +93,7 @@ public class Field extends GameObject {
     private Command[] useHarvester(Harvester item) {
         Command[] commands = new Command[1];
         if (plant != null) {
-            if (!isPlantGrowing()) {
+            if (plant.isRipe()) {
                 MessageHelper.Item.harvested(plant.getName());
                 commands[0] = new Command(CommandWord.ADDITEM, null, item.harvest(plant));
                 removePlant();
@@ -118,6 +107,35 @@ public class Field extends GameObject {
 
         return commands;
     }
+
+    private void removePlant() {
+        this.plant = null;
+    }
+
+    private boolean isPlantGrowing(){
+        return plant != null && !plant.isRipe();
+    }
+
+    private float depleteWater(){
+        if(water > depletionRate){
+            return water =- depletionRate;
+        } else {
+            return 0;
+        }
+    }
+
+    private float depleteNutrition(){
+        if(nutrition > depletionRate){
+            return nutrition =- depletionRate;
+        } else {
+            return 0;
+        }
+    }
+
+
+
+
+
 
 
 }

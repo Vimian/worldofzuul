@@ -2,7 +2,7 @@ package worldofzuul.parsing;
 
 public enum CommandWord
 {
-    ADDITEM(""),REMOVEITEM(""),INTERACT("interact"),MOVE("move"),TELEPORT(""),GO("go"), QUIT("quit"), HELP("help"), UNKNOWN("?");
+    SELECT("select"),ADDITEM(""),REMOVEITEM(""),INTERACT("interact"),MOVE("move"),TELEPORT(""),GO("go"), QUIT("quit"), HELP("help"), UNKNOWN("?");
 
     private String commandString;
 
