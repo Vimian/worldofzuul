@@ -17,17 +17,26 @@
  * @version 2006.03.30
  */
 
-package worldofzuul;
+package worldofzuul.parsing;
+
+import worldofzuul.item.Item;
 
 public class Command
 {
     private CommandWord commandWord;
     private String secondWord;
+    private Item item;
 
     public Command(CommandWord commandWord, String secondWord)
     {
         this.commandWord = commandWord;
         this.secondWord = secondWord;
+    }
+
+    public Command(CommandWord commandWord, String secondWord, Item item) {
+        this.commandWord = commandWord;
+        this.secondWord = secondWord;
+        this.item = item;
     }
 
     public CommandWord getCommandWord()
@@ -40,6 +49,10 @@ public class Command
         return secondWord;
     }
 
+    public Item getItem() {
+        return item;
+    }
+
     public boolean isUnknown()
     {
         return (commandWord == CommandWord.UNKNOWN);
@@ -49,5 +62,12 @@ public class Command
     {
         return (secondWord != null);
     }
+
+    public boolean hasItem()
+    {
+        return (item != null);
+    }
+
+
 }
 

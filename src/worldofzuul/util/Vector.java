@@ -14,7 +14,7 @@ public class Vector {
     }
     public Vector(String s) {
         if(s.contains(delimiter)){
-            var vals = s.split(delimiter);
+            String[] vals = s.split(delimiter);
 
             if(vals.length == 2){
                 this.x = Math.tryParse(vals[0], 0);

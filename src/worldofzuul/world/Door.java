@@ -1,5 +1,7 @@
-package worldofzuul;
+package worldofzuul.world;
 
+import worldofzuul.parsing.Command;
+import worldofzuul.parsing.CommandWord;
 import worldofzuul.util.Vector;
 
 public class Door extends GameObject {
@@ -14,7 +16,7 @@ public class Door extends GameObject {
     @Override
     public Command[] uponEntry(GameObject previousGameObject) {
 
-        if(!Door.class.isAssignableFrom(previousGameObject.getClass())){
+        if(!(previousGameObject instanceof Door)){
             return getCommands();
         }
 
