@@ -12,6 +12,9 @@ import worldofzuul.util.Vector;
 import worldofzuul.world.*;
 
 import java.util.Arrays;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import static worldofzuul.util.Math.tryParse;
 
@@ -20,7 +23,8 @@ public class Game
     private Parser parser;
     private Room currentRoom;
     private Player player;
-
+    private ScheduledExecutorService scheduledThreadPool;
+    private int updateDelay = 60;
 
     public Game()
     {
@@ -82,12 +86,26 @@ public class Game
     {
         MessageHelper.Info.welcomeMessage(currentRoom.getLongDescription());
 
+        enableGameUpdater();
+
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
+
+        scheduledThreadPool.shutdown();
         MessageHelper.Info.exitMessage();
+    }
+
+    private void enableGameUpdater(){
+        scheduledThreadPool = Executors.newScheduledThreadPool(1);
+        long delay = 1000000 / updateDelay;
+        scheduledThreadPool.scheduleAtFixedRate(() -> update(), 0, delay, TimeUnit.MICROSECONDS);
+    }
+
+    private void update(){
+        currentRoom.update().forEach(this::processCommandInternal);
     }
 
 

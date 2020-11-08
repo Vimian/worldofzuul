@@ -6,6 +6,10 @@ import worldofzuul.util.MessageHelper;
 public abstract class GameObject {
     public boolean colliding;
 
+    public Command[] update(){
+        return null;
+    }
+
     public Command[] interact(){
         return null;
     }

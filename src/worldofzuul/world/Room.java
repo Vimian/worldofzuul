@@ -1,7 +1,9 @@
 package worldofzuul.world;
 
+import worldofzuul.parsing.Command;
 import worldofzuul.util.Vector;
 
+import java.util.LinkedList;
 import java.util.Set;
 import java.util.HashMap;
 
@@ -64,9 +66,23 @@ public class Room
         roomGrid[pos.y][pos.x] = gameObject;
     }
 
-
     public void setRoomGrid(GameObject[][] roomGrid) {
         this.roomGrid = roomGrid;
     }
+
+    public LinkedList<Command[]> update(){
+        LinkedList<Command[]> commands = new LinkedList<>();
+
+        for (GameObject[] gameObjects : roomGrid) {
+            for (GameObject gameObject : gameObjects) {
+                if(gameObject != null){
+                    commands.add(gameObject.update());
+                }
+            }
+        }
+
+        return commands;
+    }
+
 }
 

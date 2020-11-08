@@ -14,6 +14,7 @@ public class Field extends GameObject {
     private float water;
     private Plant plant;
     private Float nutrition;
+    private int plantTickCounter = 0;
 
     public Field(Fertilizer fertilizer) {
         this.fertilizer = fertilizer;
@@ -46,6 +47,7 @@ public class Field extends GameObject {
 
     public void removePlant() {
         this.plant = null;
+        plantTickCounter = 0;
     }
 
     public float getNutrition() {
@@ -54,6 +56,28 @@ public class Field extends GameObject {
 
     public void setNutrition(float nutrition) {
         this.nutrition = nutrition;
+    }
+
+    private boolean isPlantGrowing(){
+        return plant != null && plantTickCounter < 1000; //TODO: Implement "ripeness" check
+    }
+
+
+    private void growPlant(){
+        //TODO: Implement growPlant
+    }
+
+
+
+    @Override
+    public Command[] update() {
+
+        if(isPlantGrowing()){
+            growPlant();
+        }
+
+
+        return super.update();
     }
 
     @Override
@@ -102,7 +126,7 @@ public class Field extends GameObject {
     private Command[] useHarvester(Harvester item) {
         Command[] commands = new Command[1];
         if (plant != null) {
-            if (true) { //TODO: Implement "ripeness" check
+            if (!isPlantGrowing()) {
                 MessageHelper.Item.harvested(plant.getName());
                 commands[0] = new Command(CommandWord.ADDITEM, null, item.harvest(plant));
                 removePlant();
