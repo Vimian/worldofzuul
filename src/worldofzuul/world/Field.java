@@ -133,9 +133,6 @@ public class Field extends GameObject {
     }
 
 
-
-
-
-
-
+    public void shineLight() {
+    }
 }
