@@ -11,7 +11,7 @@ public class MessageHelper {
             System.out.println("Plant is not ripe.");
         }
         public static void noPlantOnField(){
-            System.out.println("Plant is not ripe.");
+            System.out.println("There is not a plant in the field.");
         }
 
 

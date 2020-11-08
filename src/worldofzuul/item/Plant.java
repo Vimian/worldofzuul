@@ -1,6 +1,7 @@
 package worldofzuul.item;
 
 public class Plant extends Item {
+    private GrowthStage state = GrowthStage.SEED;
     private float seedQuality = 1;
     private float waterNeeded = 1000;
     private float nutritionNeeded = 1000;
