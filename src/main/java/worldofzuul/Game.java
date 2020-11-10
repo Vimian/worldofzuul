@@ -30,7 +30,6 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-
     }
 
 
@@ -89,15 +88,6 @@ public class Game
         MessageHelper.Info.welcomeMessage(currentRoom.getLongDescription());
 
         enableGameUpdater();
-
-        boolean finished = false;
-        while (! finished) {
-            Command command = parser.getCommand();
-            finished = processCommand(command);
-        }
-
-        scheduledThreadPool.shutdown();
-        MessageHelper.Info.exitMessage();
     }
 
     private void enableGameUpdater(){
@@ -107,8 +97,6 @@ public class Game
     }
 
     private void update(){
-
-
         currentRoom.update().forEach(this::processCommandInternal);
     }
 
