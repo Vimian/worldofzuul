@@ -34,10 +34,6 @@ public class Inventory {
         return items;
     }
 
-    public void setItems(LinkedList<Item> items) {
-        this.items = items;
-    }
-
     public void addItem(Item item) {
         this.items.add(item);
     }

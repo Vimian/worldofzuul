@@ -8,19 +8,12 @@ public abstract class Item {
     private Double value;
     private Double sellbackRate;
 
-    public String getName() {
-        return name;
-    }
-
-    public Double getValue() {
-        return value;
-    }
-
-    public Double getSellbackRate() {
-        return sellbackRate;
-    }
 
     public Item(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }

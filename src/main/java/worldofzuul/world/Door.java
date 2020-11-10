@@ -5,8 +5,8 @@ import worldofzuul.parsing.CommandWord;
 import worldofzuul.util.Vector;
 
 public class Door extends GameObject {
-    public String exit;
-    public Vector linkedLocation;
+    private String exit;
+    private Vector linkedLocation;
 
     public Door(String exit, Vector linkedLocation) {
         this.exit = exit;

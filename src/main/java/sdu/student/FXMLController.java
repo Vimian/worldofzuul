@@ -18,7 +18,9 @@ public class FXMLController implements Initializable {
     @FXML
     private Label label;
 
-    private Game game = new Game();
+    @FXML
+    private Game game;
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -26,7 +28,7 @@ public class FXMLController implements Initializable {
         String javafxVersion = System.getProperty("javafx.version");
         label.setText("Hello, JavaFX " + javafxVersion + "\nRunning on Java " + javaVersion + ".");
 
-        game.play();
+
     }
 
 

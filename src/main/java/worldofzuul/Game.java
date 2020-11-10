@@ -16,8 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 import static worldofzuul.util.Math.tryParse;
 
-public class Game
-{
+public class Game {
     private Parser parser;
     private Room currentRoom;
     private Player player;
@@ -25,32 +24,14 @@ public class Game
     private int updateDelay = 60;
 
 
-
-    public Game()
-    {
+    public Game() {
         createRooms();
         parser = new Parser();
-    }
 
-    public void move(Direction direction){
-        processCommandInternal(new Command(CommandWord.MOVE, direction.toString()));
-    }
-    public void interact(){
-        processCommandInternal(new Command(CommandWord.INTERACT, null));
     }
 
 
-
-
-
-
-
-
-
-
-
-    private void createRooms()
-    {
+    private void createRooms() {
         Room outside, theatre, pub, lab, office;
 
         outside = new Room("outside the main entrance of the university");
@@ -85,82 +66,87 @@ public class Game
         }
         outside.setGridGameObject(new Door("east", new Vector()), new Vector(2, 3));
         outside.setGridGameObject(new Field(), new Vector(1, 2));
-        player.inventory.addItem(new Fertilizer("Manure", 3));
-        player.inventory.addItem(new Harvester("Sickle"));
-        player.inventory.setSelectedItem(new Seed("Corn", 3));
-        player.inventory.addItem(new Irrigator("Hose"));
+
+        player.getInventory().addItem(new Fertilizer("Manure", 3));
+        player.getInventory().addItem(new Harvester("Sickle"));
+        player.getInventory().addItem(new Irrigator("Hose"));
+        player.getInventory().setSelectedItem(new Seed("Corn", 3));
 
 
         //DBG End
 
 
-
-
         currentRoom = outside;
     }
 
-    public void play()
-    {
+    public void play() {
         MessageHelper.Info.welcomeMessage(currentRoom.getLongDescription());
 
         enableGameUpdater();
+
+        boolean finished = false;
+        while (!finished) {
+            Command command = parser.getCommand();
+            finished = processCommand(command);
+        }
+
+        scheduledThreadPool.shutdown();
+        MessageHelper.Info.exitMessage();
     }
 
-    private void enableGameUpdater(){
+    private void enableGameUpdater() {
         scheduledThreadPool = Executors.newScheduledThreadPool(1);
         long delay = 1000000 / updateDelay;
         scheduledThreadPool.scheduleAtFixedRate(() -> update(), 0, delay, TimeUnit.MICROSECONDS);
     }
 
-    private void update(){
+    private void update() {
+
+
         currentRoom.update().forEach(this::processCommandInternal);
     }
 
 
-    private boolean processCommand(Command command)
-    {
+    private boolean processCommand(Command command) {
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
 
-        if(commandWord == CommandWord.UNKNOWN) {
+        if (commandWord == CommandWord.UNKNOWN) {
             MessageHelper.Command.unknownCommand();
             return false;
         }
 
         if (commandWord == CommandWord.HELP) {
             printHelp();
-        }
-        else if (commandWord == CommandWord.GO) {
+        } else if (commandWord == CommandWord.GO) {
             goRoom(command);
-        }
-        else if (commandWord == CommandWord.QUIT) {
+        } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
-        }
-        else if (commandWord == CommandWord.MOVE) {
+        } else if (commandWord == CommandWord.MOVE) {
             movePlayer(command);
         } else if (commandWord == CommandWord.SELECT) {
             selectItem(command);
-        } else if(commandWord == CommandWord.INTERACT){
+        } else if (commandWord == CommandWord.INTERACT) {
             interactPlayer();
         }
         return wantToQuit;
     }
 
     private void selectItem(Command command) {
-        if(!command.hasSecondWord()) {
+        if (!command.hasSecondWord()) {
             MessageHelper.Command.unknownArgumentWhat(CommandWord.SELECT.toString());
             return;
         }
 
         int itemIndex = tryParse(command.getSecondWord(), 0);
 
-        if(itemIndex != 0){
+        if (itemIndex != 0) {
 
-            Item item = player.inventory.getItem(itemIndex);
-            if(item != null){
+            Item item = player.getInventory().getItem(itemIndex);
+            if (item != null) {
                 MessageHelper.Command.selectedItem(item.getName());
-                player.inventory.setSelectedItem(item);
+                player.getInventory().setSelectedItem(item);
             } else {
                 MessageHelper.Command.invalidItemIndex();
             }
@@ -172,12 +158,11 @@ public class Game
 
     }
 
-    private void processCommandInternal(Command command)
-    {
+    private void processCommandInternal(Command command) {
 
         CommandWord commandWord = command.getCommandWord();
 
-        if(commandWord == CommandWord.UNKNOWN) {
+        if (commandWord == CommandWord.UNKNOWN) {
             MessageHelper.Command.unknownCommand();
             return;
         }
@@ -188,24 +173,22 @@ public class Game
             removeItem(command);
         } else if (commandWord == CommandWord.ADDITEM) {
             addItem(command);
-        }
-        else {
+        } else {
             processCommand(command);
         }
 
     }
 
     private void addItem(Command command) {
-        if(command.hasItem()){
-            player.inventory.addItem(command.getItem());
+        if (command.hasItem()) {
+            player.getInventory().addItem(command.getItem());
         }
     }
 
-    private void processCommandInternal(Command[] commands)
-    {
-        if(commands != null && commands.length > 0){
+    private void processCommandInternal(Command[] commands) {
+        if (commands != null && commands.length > 0) {
             for (Command command : commands) {
-                if(command != null){
+                if (command != null) {
                     processCommandInternal(command);
                 }
             }
@@ -214,44 +197,42 @@ public class Game
 
     private void interactPlayer() {
 
-        Item item = player.inventory.getSelectedItem();
+        Item item = player.getInventory().getSelectedItem();
 
         Command[] commands;
 
-        if(item == null){
+        if (item == null) {
             commands = currentRoom
-                    .getGridGameObject(player.pos)
+                    .getGridGameObject(player.getPos())
                     .interact();
         } else {
             commands = currentRoom
-                    .getGridGameObject(player.pos)
+                    .getGridGameObject(player.getPos())
                     .interact(item);
         }
 
         processCommandInternal(commands);
     }
 
-    private void removeItem(Command command){
+    private void removeItem(Command command) {
         int itemIndex = 0;
-        if(command.hasItem()){
-            player.inventory.removeItem(command.getItem());
+        if (command.hasItem()) {
+            player.getInventory().removeItem(command.getItem());
             return;
         } else if (command.hasSecondWord()) {
             itemIndex = tryParse(command.getSecondWord(), 0);
         }
 
-        player.inventory.removeItem(itemIndex);
+        player.getInventory().removeItem(itemIndex);
     }
 
-    private void printHelp()
-    {
+    private void printHelp() {
         MessageHelper.Info.helpCommands();
         parser.showCommands();
     }
 
-    private void goRoom(Command command)
-    {
-        if(!command.hasSecondWord()) {
+    private void goRoom(Command command) {
+        if (!command.hasSecondWord()) {
             MessageHelper.Command.unknownArgumentWhere(CommandWord.GO.toString());
             return;
         }
@@ -262,52 +243,44 @@ public class Game
 
         if (nextRoom == null) {
             MessageHelper.Command.incorrectExit();
-        }
-        else {
+        } else {
             currentRoom = nextRoom;
             MessageHelper.Command.roomDescription(currentRoom.getLongDescription());
         }
     }
 
-    private void movePlayer(Command command)
-    {
-        if(!command.hasSecondWord()) {
+    private void movePlayer(Command command) {
+        if (!command.hasSecondWord()) {
             MessageHelper.Command.unknownArgumentWhere(CommandWord.MOVE.toString());
             return;
         }
 
         String secondWord = command.getSecondWord();
-        int x = player.pos.x;
-        int y = player.pos.y;
+        int x = player.getPos().getX();
+        int y = player.getPos().getY();
 
 
-        if(Direction.NORTH.toString().equals(secondWord)){
+        if (Direction.NORTH.toString().equals(secondWord)) {
             y--;
-        }
-        else if (Direction.SOUTH.toString().equals(secondWord))
-        {
+        } else if (Direction.SOUTH.toString().equals(secondWord)) {
             y++;
-        }
-        else if (Direction.EAST.toString().equals(secondWord))
-        {
+        } else if (Direction.EAST.toString().equals(secondWord)) {
             x++;
-        }
-        else if (Direction.WEST.toString().equals(secondWord))
-        {
+        } else if (Direction.WEST.toString().equals(secondWord)) {
             x--;
         } else {
             MessageHelper.Command.unknownCommand();
             return;
         }
 
-        if(canPlayerMoveToPoint(x, y)){
+        if (canPlayerMoveToPoint(x, y)) {
             MessageHelper.Command.moveCommand(secondWord);
             setPlayerPosition(new Vector(x, y));
         }
     }
-    private void teleportPlayer(Command command)
-    {
-        if(!command.hasSecondWord()) {
+
+    private void teleportPlayer(Command command) {
+        if (!command.hasSecondWord()) {
             MessageHelper.Command.unknownArgumentWhere(CommandWord.TELEPORT.name());
             return;
         }
@@ -315,35 +288,36 @@ public class Game
         String secondWord = command.getSecondWord();
         Vector pos = new Vector(secondWord);
 
-        if(canPlayerMoveToPoint(pos.x, pos.y)){
+        if (canPlayerMoveToPoint(pos.getX(), pos.getY())) {
             MessageHelper.Command.teleported(pos);
             setPlayerPosition(pos);
         }
     }
-    private void setPlayerPosition(Vector position){
 
-        GameObject currentTile = currentRoom.getGridGameObject(player.pos);
+    private void setPlayerPosition(Vector position) {
 
-        player.pos = position;
+        GameObject currentTile = currentRoom.getGridGameObject(player.getPos());
+
+        player.setPos(position);
         GameObject newTile = currentRoom.getGridGameObject(position);
 
         processCommandInternal(currentTile.uponExit());
         processCommandInternal(newTile.uponEntry(currentTile));
-        
+
     }
 
-    private boolean canPlayerMoveToPoint(int x, int y){
+    private boolean canPlayerMoveToPoint(int x, int y) {
         int roomDimensionsY = currentRoom.getRoomGrid().length;
         int roomDimensionsX = currentRoom.getRoomGrid()[0].length;
 
         //Player exceeds bounds of array
-        if (x < 0 || y < 0 || x >= roomDimensionsX || y >= roomDimensionsY){
+        if (x < 0 || y < 0 || x >= roomDimensionsX || y >= roomDimensionsY) {
             MessageHelper.Command.positionExceedsMap();
             return false;
         }
 
         GameObject targetPosition = currentRoom.getGridGameObject(new Vector(x, y));
-        if(targetPosition.colliding){
+        if (targetPosition.colliding) {
             MessageHelper.Command.objectIsCollidable();
         }
 
@@ -351,14 +325,11 @@ public class Game
     }
 
 
-
-    private boolean quit(Command command)
-    {
-        if(command.hasSecondWord()) {
+    private boolean quit(Command command) {
+        if (command.hasSecondWord()) {
             MessageHelper.Command.unknownArgumentWhere(CommandWord.QUIT.toString());
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }

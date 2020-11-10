@@ -63,7 +63,7 @@ public class MessageHelper {
         }
 
         public static void teleported(Vector destination){
-            System.out.println("You were teleported to X: " + destination.x + " Y: " + destination.y + ".");
+            System.out.println("You were teleported to X: " + destination.getX() + " Y: " + destination.getY() + ".");
         }
 
         public static void positionExceedsMap(){

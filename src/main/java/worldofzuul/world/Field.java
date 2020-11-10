@@ -7,14 +7,12 @@ import worldofzuul.util.MessageHelper;
 
 public class Field extends GameObject {
     private Fertilizer fertilizer;
-
-    public Field() {
-    }
-
     private float water = 0;
     private Plant plant;
     private float nutrition = 10000;
     private float depletionRate = 5;
+    public Field() {
+    }
 
 
     public Field(Fertilizer fertilizer) {
@@ -27,8 +25,8 @@ public class Field extends GameObject {
     }
 
 
-    public void addWater(float water){
-        if(isPlantGrowing()){
+    public void addWater(float water) {
+        if (isPlantGrowing()) {
             this.water += water;
         }
     }
@@ -36,7 +34,7 @@ public class Field extends GameObject {
     @Override
     public Command[] update() {
 
-        if(isPlantGrowing()){
+        if (isPlantGrowing()) {
             plant.grow(depleteWater(), depleteNutrition());
         }
 
@@ -65,14 +63,15 @@ public class Field extends GameObject {
     private Command[] useFertilizer(Fertilizer item) {
         return null; //TODO: Implement method.
     }
+
     private void useIrrigator(Irrigator item) {
-            item.water(this);
+        item.water(this);
     }
 
     private Command[] useSeed(Seed item) {
-        if(isPlantGrowing()){
+        if (isPlantGrowing()) {
             MessageHelper.Item.alreadyPlanted();
-            return  null;
+            return null;
         }
 
         Command[] commands = new Command[1];
@@ -100,8 +99,7 @@ public class Field extends GameObject {
             } else {
                 MessageHelper.Item.unripePlant();
             }
-        }
-        else {
+        } else {
             MessageHelper.Item.noPlantOnField();
         }
 
@@ -112,21 +110,21 @@ public class Field extends GameObject {
         this.plant = null;
     }
 
-    private boolean isPlantGrowing(){
+    private boolean isPlantGrowing() {
         return plant != null && !plant.isRipe();
     }
 
-    private float depleteWater(){
-        if(water > depletionRate){
-            return water =- depletionRate;
+    private float depleteWater() {
+        if (water > depletionRate) {
+            return water = -depletionRate;
         } else {
             return 0;
         }
     }
 
-    private float depleteNutrition(){
-        if(nutrition > depletionRate){
-            return nutrition =- depletionRate;
+    private float depleteNutrition() {
+        if (nutrition > depletionRate) {
+            return nutrition = -depletionRate;
         } else {
             return 0;
         }
