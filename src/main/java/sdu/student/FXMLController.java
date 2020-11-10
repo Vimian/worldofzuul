@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import worldofzuul.Game;
+import worldofzuul.world.Direction;
 
 public class FXMLController implements Initializable {
 
@@ -29,4 +30,19 @@ public class FXMLController implements Initializable {
     }
 
 
+    public void moveNorth(ActionEvent actionEvent) {
+        game.move(Direction.NORTH);
+    }
+    public void moveSouth(ActionEvent actionEvent) {
+        game.move(Direction.SOUTH);
+    }
+    public void moveEast(ActionEvent actionEvent) {
+        game.move(Direction.EAST);
+    }
+    public void moveWest(ActionEvent actionEvent) {
+        game.move(Direction.WEST);
+    }
+    public void interact(ActionEvent actionEvent) {
+        game.interact();
+    }
 }

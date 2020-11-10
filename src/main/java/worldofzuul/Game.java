@@ -32,6 +32,22 @@ public class Game
         parser = new Parser();
     }
 
+    public void move(Direction direction){
+        processCommandInternal(new Command(CommandWord.MOVE, direction.toString()));
+    }
+    public void interact(){
+        processCommandInternal(new Command(CommandWord.INTERACT, null));
+    }
+
+
+
+
+
+
+
+
+
+
 
     private void createRooms()
     {
