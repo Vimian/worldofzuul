@@ -20,8 +20,7 @@ public class MainApp extends Application {
         stage.setScene(scene);
         stage.show();
 
-        Game game = new Game();
-        game.play();
+
     }
 
     public static void main(String[] args) {
