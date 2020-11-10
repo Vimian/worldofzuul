@@ -30,6 +30,7 @@ public class Player {
     }
 
     public void setPos(Vector pos){
-        this.pos = pos;
+        this.pos.setY(pos.getY());
+        this.pos.setX(pos.getX());
     }
 }

@@ -14,7 +14,6 @@
     <fx:define>
         <Game fx:id="game" />
     </fx:define>
-
     <HBox>
         <VBox HBox.hgrow="ALWAYS">
             <Label fx:id="label" text="Label"/>
@@ -29,7 +28,7 @@
 
             <Button text="Interact" onAction="#interact"/>
 
-            <Label text="${game.player.position}" />
+            <Label fx:id="playerPositionProperty" />
 
         </VBox>
         <VBox HBox.hgrow="ALWAYS">

@@ -6,11 +6,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import worldofzuul.Game;
+import worldofzuul.Player;
 import worldofzuul.world.Direction;
 
 public class FXMLController implements Initializable {
@@ -21,12 +25,18 @@ public class FXMLController implements Initializable {
     @FXML
     private Game game;
 
+    @FXML
+    private Label playerPositionProperty;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         String javaVersion = System.getProperty("java.version");
         String javafxVersion = System.getProperty("javafx.version");
         label.setText("Hello, JavaFX " + javafxVersion + "\nRunning on Java " + javaVersion + ".");
+
+
+        playerPositionProperty.textProperty()
+                .bindBidirectional(game.getPlayer().getPos().vectorValueProperty());
 
 
     }
