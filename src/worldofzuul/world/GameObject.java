@@ -6,26 +6,29 @@ import worldofzuul.util.MessageHelper;
 public abstract class GameObject {
     public boolean colliding;
 
-    public Command[] update(){
+    public Command[] update() {
         return null;
     }
 
-    public Command[] interact(){
+    public Command[] interact() {
         MessageHelper.Command.unknownAction();
         return null;
     }
-    public Command[] interact(worldofzuul.item.Item item){
+
+    public Command[] interact(worldofzuul.item.Item item) {
         MessageHelper.Item.cantUseItem(item.getName());
         return null;
     }
-    public Command[] uponEntry(){
+
+    public Command[] uponEntry() {
         return null;
     }
+
     public Command[] uponEntry(GameObject previousGameObject) {
         return null;
     }
 
-    public Command[] uponExit(){
+    public Command[] uponExit() {
         return null;
     }
 }
