@@ -10,6 +10,7 @@ public class Irrigator extends Item {
     public Irrigator(String name) {
         super(name);
     }
+
     public Irrigator(String name, float flowRate, float waterCapacity) {
         super(name);
         this.flowRate = flowRate;
@@ -17,22 +18,23 @@ public class Irrigator extends Item {
 
     }
 
-    public void water(Field field){
+    public void water(Field field) {
 
         field.addWater(drawWater());
 
     }
 
-    public float getWaterRemaining() {
+    public float getWater() {
         return water;
     }
-    public void refill(){
+
+    public void refill() {
         water = waterCapacity;
     }
 
-    private float drawWater(){
-        if(water > flowRate){
-             return water =- flowRate;
+    private float drawWater() {
+        if (water > flowRate) {
+            return water = -flowRate;
         }
 
         return 0;

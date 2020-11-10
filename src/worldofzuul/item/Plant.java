@@ -18,32 +18,32 @@ public class Plant extends Item {
         consumeNutrition(nutrition);
         consumeWater(water);
 
-        if(readyForNextStage()){
+        if (readyForNextStage()) {
             advanceStage();
         }
 
         growTicks++;
     }
 
-    public boolean isRipe(){
+    public boolean isRipe() {
         return waterNeeded <= 0 && nutritionNeeded <= 0 && growTicks >= growthTime;
     }
 
 
-
-
-    private void consumeWater(float water){
-        waterNeeded =- water * seedQuality;
-    }
-    private void consumeNutrition(float nutrition){
-        nutritionNeeded =- nutrition * seedQuality;
+    private void consumeWater(float water) {
+        waterNeeded = -water * seedQuality;
     }
 
+    private void consumeNutrition(float nutrition) {
+        nutritionNeeded = -nutrition * seedQuality;
+    }
 
-    private boolean readyForNextStage(){
+
+    private boolean readyForNextStage() {
         return false;
     }
-    private void advanceStage(){
+
+    private void advanceStage() {
 
     }
 

@@ -69,10 +69,10 @@ public class Room
         return roomGrid;
     }
     public GameObject getGridGameObject(Vector pos) {
-        return getRoomGrid()[pos.y][pos.x];
+        return getRoomGrid()[pos.getY()][pos.getX()];
     }
     public void setGridGameObject(GameObject gameObject, Vector pos) {
-        roomGrid[pos.y][pos.x] = gameObject;
+        roomGrid[pos.getY()][pos.getX()] = gameObject;
     }
 
     public void setRoomGrid(GameObject[][] roomGrid) {
