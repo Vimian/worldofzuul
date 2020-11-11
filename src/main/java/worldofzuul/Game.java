@@ -23,12 +23,26 @@ public class Game {
     private ScheduledExecutorService scheduledThreadPool;
     private int updateDelay = 60;
 
-
     public Game() {
         createRooms();
         parser = new Parser();
 
     }
+
+    public Player getPlayer(){
+        return player;
+    }
+    public Room getRoom(){
+        return currentRoom;
+    }
+
+    public void move(Direction direction) {
+        processCommandInternal(new Command(CommandWord.MOVE, direction.toString()));
+    }
+    public void interact() {
+        processCommandInternal(new Command(CommandWord.INTERACT, null));
+    }
+
 
 
     private void createRooms() {
@@ -333,4 +347,6 @@ public class Game {
             return true;
         }
     }
+
+
 }

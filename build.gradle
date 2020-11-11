@@ -1,0 +1,37 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+    id 'org.beryx.jlink' version '2.22.2'
+
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+javafx {
+    version = "15.0.1"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+jlink {
+    launcher {
+        name = 'worldofzuul'
+    }
+}
+
+mainClassName = 'sdu.student.MainApp'
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'sdu.student.MainApp'
+        )
+    }
+}
+
+
