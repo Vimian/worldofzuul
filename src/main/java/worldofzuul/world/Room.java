@@ -1,5 +1,6 @@
 package worldofzuul.world;
 
+
 import worldofzuul.parsing.Command;
 import worldofzuul.util.Vector;
 
@@ -8,9 +9,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Set;
 
-
 public class Room {
     private String description;
+
     private HashMap<String, Room> exits;
     private GameObject[][] roomGrid;
     private Environment environment;

@@ -1,6 +1,10 @@
 package sdu.student;
 
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,6 +28,27 @@ public class MainApp extends Application {
     }
 
     public static void main(String[] args) {
+
+
+        try{
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            Game game = new Game();
+            String json = ow.writeValueAsString(game);
+            String what = json;
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+
+
+
+
+
+
+
+
         launch(args);
+
     }
 }
