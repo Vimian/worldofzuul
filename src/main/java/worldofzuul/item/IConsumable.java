@@ -9,8 +9,6 @@ public interface IConsumable {
     FloatProperty capacity = new SimpleFloatProperty();
     FloatProperty consumptionRate = new SimpleFloatProperty();
 
-
-
     default float getConsumptionRate(){
         return consumptionRate.get();
     }
@@ -38,6 +36,14 @@ public interface IConsumable {
         }
 
         return depletionAmount;
+    }
+    default boolean deplete(float amount){
+        if(amount >= getRemaining()){
+            setRemaining(getRemaining() - amount);
+            return true;
+        } else{
+            return false;
+        }
     }
 
     default Float getRemaining() {
