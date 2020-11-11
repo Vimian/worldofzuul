@@ -1,5 +1,16 @@
 # World Of Zuul
 
+Kompiler og hent dependencies med
+```
+gradle build
+```
+
+Kør og debug med
+```
+gradle run
+```
+
+
 ## Contributors
 *  [Sune Roed](https://github.com/suroe20 "suroe20")
 *  [Christian Kisholt](https://github.com/wojtek9 "wojtek9")
