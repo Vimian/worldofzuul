@@ -1,5 +1,6 @@
 package worldofzuul.world;
 
+import java.util.ArrayList;
 import worldofzuul.item.*;
 import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
@@ -9,12 +10,11 @@ public class Field extends GameObject {
     private Fertilizer fertilizer;
     private float water = 0;
     private Plant plant;
+    private ArrayList<Plant> plants;
     private float nutrition = 10000;
     private float depletionRate = 5;
     public Field() {
     }
-
-
     public Field(Fertilizer fertilizer) {
         this.fertilizer = fertilizer;
     }

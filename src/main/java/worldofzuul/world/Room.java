@@ -15,7 +15,13 @@ public class Room {
     private GameObject[][] roomGrid;
     private Environment environment;
 
-    public Room(String description) {
+    // method for adding GameObjects to roomGrid, give positions as coordinate system.
+    public void addToGrid(GameObject gameObject, int posX, int posY){
+        roomGrid[posY][posX] = gameObject;
+    }
+
+    public Room(String description)
+    {
         this.description = description;
         exits = new HashMap<String, Room>();
         this.environment = new Environment();

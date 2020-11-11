@@ -1,4 +1,4 @@
-package worldofzuul;
+package worldofzuul.item;
 
 public class Money extends Item {
     private float cash;

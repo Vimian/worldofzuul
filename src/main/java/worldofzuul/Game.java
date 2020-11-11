@@ -143,6 +143,11 @@ public class Game {
             selectItem(command);
         } else if (commandWord == CommandWord.INTERACT) {
             interactPlayer();
+        } else if (commandWord == commandWord.EXAMINE){
+            examineObject(command);
+        }
+        else if (commandWord == CommandWord.HARVEST){
+            harvestObject(command);
         }
         return wantToQuit;
     }
@@ -256,11 +261,35 @@ public class Game {
         Room nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
-            MessageHelper.Command.incorrectExit();
-        } else {
-            currentRoom = nextRoom;
-            MessageHelper.Command.roomDescription(currentRoom.getLongDescription());
+            System.out.println("There is no door!");
         }
+        else {
+            currentRoom = nextRoom;
+            System.out.println(currentRoom.getLongDescription());
+        }
+    }
+
+
+    //Method for examining objects in room
+    private void examineObject(Command command){ //TODO: Missing implementation
+        if(!command.hasSecondWord()) {
+            System.out.println("Examine what?");
+            return;
+        }
+    }
+
+    private void harvestObject(Command command) { //TODO: Missing implementation
+        if (!command.hasSecondWord()) {
+            System.out.println("Harvest what?");
+        }
+        //Merge conflict possibly redundant
+        /*Field pfield = new Field(3,3);
+        if (currentRoom.getGridGameObject(player.pos) ==  pfield) {
+            Harvest pharvest = new Harvest(2);
+                pharvest.harvestPlantFromField();
+            } else {
+                System.out.println("Can not harvest that!");
+        }*/
     }
 
     private void movePlayer(Command command) {

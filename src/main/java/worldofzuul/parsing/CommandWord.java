@@ -1,4 +1,4 @@
-package worldofzuul;
+package worldofzuul.parsing;
 
 public enum CommandWord
 {
