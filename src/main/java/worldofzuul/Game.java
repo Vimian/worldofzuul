@@ -1,5 +1,6 @@
 package worldofzuul;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import worldofzuul.item.*;
 import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
@@ -9,6 +10,7 @@ import worldofzuul.util.Vector;
 import worldofzuul.world.*;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -18,12 +20,13 @@ import static worldofzuul.util.Math.tryParse;
 public class Game {
     private Parser parser;
     private Room currentRoom;
+    private Room[] rooms;
     private Player player;
     private ScheduledExecutorService scheduledThreadPool;
     private int updateDelay = 60;
 
     public Game() {
-        createRooms();
+        //createRooms();
         parser = new Parser();
 
     }
@@ -31,10 +34,14 @@ public class Game {
     public Player getPlayer(){
         return player;
     }
+
+    @JsonIgnore
     public Room getRoom(){
         return currentRoom;
     }
-
+    public void setRoom(Room room){
+        currentRoom = room;
+    }
     public void move(Direction direction) {
         processCommandInternal(new Command(CommandWord.MOVE, direction.toString()));
     }
@@ -43,8 +50,38 @@ public class Game {
     }
 
 
+    public void reconfigureRooms(){
+        for (Room room : rooms) {
+            HashMap<String, String> exitLinks = room.getRoomStringExits();
+            if(exitLinks.size() <= 0){
+                continue;
+            }
 
-    private void createRooms() {
+            Object[] values = exitLinks.values().toArray();
+            int i = 0;
+            for (String s : exitLinks.keySet()) {
+                Room exitRoom = findRoom((String) values[i]);
+                if(exitRoom != null){
+                    room.setExit(s, exitRoom);
+                }
+                i++;
+            }
+
+        }
+        setRoom(rooms[0]);
+    }
+
+    private Room findRoom(String shortDescription){
+        for (Room room : rooms) {
+            if(room.getDescription().equals(shortDescription)){
+                return room;
+            }
+        }
+
+        return null;
+    }
+
+    public void createRooms() {
         Room outside, theatre, pub, lab, office;
 
         outside = new Room("outside the main entrance of the university");
@@ -87,6 +124,13 @@ public class Game {
 
 
         //DBG End
+
+        rooms = new Room[5];
+        rooms[0] = outside;
+        rooms[1] = theatre;
+        rooms[2] = pub;
+        rooms[3] = lab;
+        rooms[4] = office;
 
 
         currentRoom = outside;
@@ -375,6 +419,11 @@ public class Game {
         }
     }
 
+    public Room[] getRooms() {
+        return rooms;
+    }
 
-
+    public void setRooms(Room[] rooms) {
+        this.rooms = rooms;
+    }
 }

@@ -3,6 +3,7 @@ package worldofzuul.item;
 public class Fertilizer extends Item {
     private Double amount;
 
+    public Fertilizer(){}
     public Fertilizer(String name, double amount) {
         super(name);
         this.amount = amount;

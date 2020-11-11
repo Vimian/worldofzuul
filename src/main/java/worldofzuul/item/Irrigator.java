@@ -7,6 +7,7 @@ public class Irrigator extends Item {
     private float water = 1000;
     private float waterCapacity;
 
+    public Irrigator(){}
     public Irrigator(String name) {
         super(name);
     }
