@@ -9,12 +9,11 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class Data {
-    private static final String configFileName = "gameConfig.txt";
 
-    public static String readConfigFile(){
+    public static String readConfigFile(String configFileName){
         try{
             List<String> strings = Files.readAllLines(Paths.get(configFileName));
-            return strings.stream().findFirst().get();
+            return String.join("", strings).trim();
         } catch (Exception e){
             System.out.println(e.getStackTrace());
             System.out.println(e.getMessage());
@@ -24,9 +23,8 @@ public class Data {
     public static String gameToJson(Game game){
         try{
             ObjectWriter ow = new ObjectMapper().writer();
-            String json = ow.writeValueAsString(game);
+            return ow.writeValueAsString(game);
 
-            return json;
         } catch (Exception e){
             System.out.println(e.getStackTrace());
             System.out.println(e.getMessage());
@@ -37,9 +35,8 @@ public class Data {
         try{
 
             ObjectMapper mapper = new ObjectMapper();
-            Game game = mapper.readValue(configJson, Game.class);
+            return mapper.readValue(configJson, Game.class);
 
-            return game;
         } catch (Exception e){
             System.out.println(e.getStackTrace());
             System.out.println(e.getMessage());

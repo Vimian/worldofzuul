@@ -14,7 +14,7 @@ import static worldofzuul.util.Data.jsonToGame;
 import static worldofzuul.util.Data.readConfigFile;
 
 public class FXMLController implements Initializable {
-    private static final String configFileName = "gameConfig.txt";
+    private static final String configFileName = "gameConfig.json";
 
     @FXML
     private Label label;
@@ -36,7 +36,7 @@ public class FXMLController implements Initializable {
 
 
     private void loadGame(){
-        game = jsonToGame(readConfigFile());
+        game = jsonToGame(readConfigFile(configFileName));
         game.reconfigureRooms();
 
         bindProperties();
