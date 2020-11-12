@@ -1,11 +1,14 @@
 package worldofzuul.item;
 
+import worldofzuul.util.BetterArrays;
+
 public class Plant extends Item {
     private GrowthStage state = GrowthStage.SEED;
     private float seedQuality = 1;
     private float waterNeeded = 1000;
     private float nutritionNeeded = 1000;
     private int growthTime = 1000;
+    private String[] fieldTypeRequired = {};
 
     private int growTicks = 0;
 
@@ -29,7 +32,6 @@ public class Plant extends Item {
         return waterNeeded <= 0 && nutritionNeeded <= 0 && growTicks >= growthTime;
     }
 
-
     private void consumeWater(float water) {
         waterNeeded = -water * seedQuality;
     }
@@ -38,7 +40,6 @@ public class Plant extends Item {
         nutritionNeeded = -nutrition * seedQuality;
     }
 
-
     private boolean readyForNextStage() {
         return false;
     }
@@ -46,6 +47,16 @@ public class Plant extends Item {
     private void advanceStage() {
 
     }
+
+    public String[] getFieldTypeRequired() { return this.fieldTypeRequired; }
+
+    public void setFieldTypeRequired(String[] fieldType) { this.fieldTypeRequired = fieldType; }
+
+    public void setFieldTypeRequired(String fieldType) { this.fieldTypeRequired = BetterArrays.push(this.fieldTypeRequired, fieldType); }
+
+    public void addFieldTypeRequired(String fieldType) { this.fieldTypeRequired = BetterArrays.push(this.fieldTypeRequired, fieldType); }
+
+    public void addFieldTypeRequired(String[] fieldTypes) { this.fieldTypeRequired = BetterArrays.merge(this.fieldTypeRequired, fieldTypes); }
 
 
 }

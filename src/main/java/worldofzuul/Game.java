@@ -111,13 +111,16 @@ public class Game {
     private void enableGameUpdater() {
         scheduledThreadPool = Executors.newScheduledThreadPool(1);
         long delay = 1000000 / updateDelay;
-        scheduledThreadPool.scheduleAtFixedRate(() -> update(), 0, delay, TimeUnit.MICROSECONDS);
+        scheduledThreadPool.scheduleAtFixedRate(() -> { update(); },
+                0,
+                delay,
+                TimeUnit.MICROSECONDS);
     }
 
     private void update() {
-
-
-        currentRoom.update().forEach(this::processCommandInternal);
+        for (Command[] command: currentRoom.update()) {
+            this.processCommandInternal(command);
+        }
     }
 
 
