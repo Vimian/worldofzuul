@@ -158,8 +158,6 @@ public class Game {
     }
 
     private void update() {
-
-
         currentRoom.update().forEach(this::processCommandInternal);
     }
 

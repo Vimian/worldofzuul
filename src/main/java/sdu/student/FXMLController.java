@@ -31,15 +31,17 @@ public class FXMLController implements Initializable {
         String javafxVersion = System.getProperty("javafx.version");
         label.setText("Hello, JavaFX " + javafxVersion + "\nRunning on Java " + javaVersion + ".");
 
-        loadGame();
+        //loadGame();
+        game = new Game();
+        game.createRooms();
+        bindProperties();
+
     }
 
 
     private void loadGame(){
         game = jsonToGame(readConfigFile(configFileName));
         game.reconfigureRooms();
-
-        bindProperties();
     }
 
     private void bindProperties(){

@@ -50,10 +50,13 @@ public class Data {
             ObjectMapper mapper = new ObjectMapper();
             return mapper.readValue(configJson, Game.class);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getStackTrace());
             System.out.println(e.getMessage());
             return null;
+        }
+    }
+
 
     public static HashMap<String, Image> getImages(String directory, Class<? extends FXMLController> aClass) {
         URI uri = null;
