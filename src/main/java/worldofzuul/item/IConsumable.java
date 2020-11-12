@@ -1,5 +1,8 @@
 package worldofzuul.item;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleFloatProperty;
 
@@ -21,10 +24,18 @@ public interface IConsumable {
     default void setCapacity(float value){
         capacity.set(value);
     }
-
-    default void refill() {
-        setRemaining(getCapacity());
+    default Float getRemaining() {
+        return remaining.get();
     }
+    default void setRemaining(float value){
+        remaining.set(value);
+    }
+    @JsonIgnore
+    default FloatProperty remainingProperty(){
+        return remaining;
+    }
+
+    @JsonIgnore
     default float deplete() {
         float depletionAmount = 0;
         if (getRemaining() > getConsumptionRate()) {
@@ -37,6 +48,7 @@ public interface IConsumable {
 
         return depletionAmount;
     }
+    @JsonIgnore
     default boolean deplete(float amount){
         if(amount >= getRemaining()){
             setRemaining(getRemaining() - amount);
@@ -45,14 +57,8 @@ public interface IConsumable {
             return false;
         }
     }
+    default void refill() {
+        setRemaining(getCapacity());
+    }
 
-    default Float getRemaining() {
-        return remaining.get();
-    }
-    default void setRemaining(float value){
-        remaining.set(value);
-    }
-    default FloatProperty remainingProperty(){
-        return remaining;
-    }
 }

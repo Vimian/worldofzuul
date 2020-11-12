@@ -10,8 +10,7 @@ import worldofzuul.world.Direction;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static worldofzuul.util.Data.jsonToGame;
-import static worldofzuul.util.Data.readConfigFile;
+import static worldofzuul.util.Data.*;
 
 public class FXMLController implements Initializable {
     private static final String configFileName = "gameConfig.json";
