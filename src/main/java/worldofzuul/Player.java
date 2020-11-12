@@ -5,7 +5,7 @@ import worldofzuul.util.Vector;
 public class Player {
 
     private Vector pos;
-    private Double balance;
+
     private Inventory inventory = new Inventory();
     private float Velocity;
     private Sprite sprite;
@@ -15,10 +15,6 @@ public class Player {
     }
     Player(int x, int y){
         pos = new Vector(x, y);
-    }
-
-    public Double getBalance() {
-        return balance;
     }
 
     public Inventory getInventory(){

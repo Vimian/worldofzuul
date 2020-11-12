@@ -4,6 +4,7 @@ import worldofzuul.world.Field;
 
 public class Irrigator extends Item implements IConsumable {
 
+    public Irrigator(){}
     public Irrigator(String name) {
         super(name);
     }

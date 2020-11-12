@@ -3,6 +3,7 @@ package worldofzuul.item;
 public class Money extends Item {
     private float cash;
 
+    public Money(){}
     public Money(String name, float cash) {
         super(name);
         this.cash = cash;

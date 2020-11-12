@@ -1,5 +1,7 @@
 package worldofzuul.world;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import worldofzuul.parsing.Command;
 import worldofzuul.util.Vector;
 
@@ -8,22 +10,23 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Set;
 
-
 public class Room {
     private String description;
-    private HashMap<String, Room> exits;
+
+    private HashMap<String, Room> exits = new HashMap<>();
     private GameObject[][] roomGrid;
     private Environment environment;
+    private HashMap<String, String> roomStringExits = new HashMap<>();
 
     // method for adding GameObjects to roomGrid, give positions as coordinate system.
     public void addToGrid(GameObject gameObject, int posX, int posY){
         roomGrid[posY][posX] = gameObject;
     }
 
+    public Room(){}
     public Room(String description)
     {
         this.description = description;
-        exits = new HashMap<String, Room>();
         this.environment = new Environment();
     }
 
@@ -40,16 +43,21 @@ public class Room {
     }
 
     public void setExit(String direction, Room neighbor) {
+        roomStringExits.put(direction, neighbor.getShortDescription());
+
         exits.put(direction, neighbor);
     }
 
+    @JsonIgnore
     public String getShortDescription() {
         return description;
     }
 
+    @JsonIgnore
     public String getLongDescription() {
         return "You are " + description + ".\n" + getExitString();
     }
+
 
     private String getExitString() {
         String returnString = "Exits:";
@@ -95,6 +103,21 @@ public class Room {
         }
 
         return commands;
+    }
+
+    public HashMap<String, String> getRoomStringExits() {
+        return roomStringExits;
+    }
+
+    public void setRoomStringExits(HashMap<String, String> roomStringExits) {
+        this.roomStringExits = roomStringExits;
+    }
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

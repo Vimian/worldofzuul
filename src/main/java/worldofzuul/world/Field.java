@@ -1,10 +1,11 @@
 package worldofzuul.world;
 
-import java.util.ArrayList;
 import worldofzuul.item.*;
 import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
 import worldofzuul.util.MessageHelper;
+
+import java.util.ArrayList;
 
 public class Field extends GameObject {
     private Fertilizer fertilizer;
@@ -13,8 +14,8 @@ public class Field extends GameObject {
     private ArrayList<Plant> plants;
     private float nutrition = 10000;
     private float depletionRate = 5;
-    public Field() {
-    }
+
+    public Field() {}
     public Field(Fertilizer fertilizer) {
         this.fertilizer = fertilizer;
     }
@@ -132,5 +133,30 @@ public class Field extends GameObject {
 
 
     public void shineLight() {
+    }
+
+
+    public float getWater() {
+        return water;
+    }
+
+    public void setWater(float water) {
+        this.water = water;
+    }
+
+    public float getNutrition() {
+        return nutrition;
+    }
+
+    public void setNutrition(float nutrition) {
+        this.nutrition = nutrition;
+    }
+
+    public float getDepletionRate() {
+        return depletionRate;
+    }
+
+    public void setDepletionRate(float depletionRate) {
+        this.depletionRate = depletionRate;
     }
 }

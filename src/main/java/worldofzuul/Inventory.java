@@ -1,5 +1,6 @@
 package worldofzuul;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import worldofzuul.item.Item;
 
 import java.util.Collections;
@@ -8,6 +9,7 @@ import java.util.LinkedList;
 public class Inventory {
     private LinkedList<Item> items = new LinkedList<>();
 
+    @JsonIgnore
     public Item getSelectedItem() {
         if (!items.isEmpty()) {
             return items.getFirst();

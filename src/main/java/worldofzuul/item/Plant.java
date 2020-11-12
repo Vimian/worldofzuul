@@ -9,6 +9,7 @@ public class Plant extends Item {
 
     private int growTicks = 0;
 
+    public Plant(){}
     public Plant(String name) {
         super(name);
     }
@@ -48,4 +49,43 @@ public class Plant extends Item {
     }
 
 
+    public float getSeedQuality() {
+        return seedQuality;
+    }
+
+    public void setSeedQuality(float seedQuality) {
+        this.seedQuality = seedQuality;
+    }
+
+    public float getWaterNeeded() {
+        return waterNeeded;
+    }
+
+    public void setWaterNeeded(float waterNeeded) {
+        this.waterNeeded = waterNeeded;
+    }
+
+    public float getNutritionNeeded() {
+        return nutritionNeeded;
+    }
+
+    public void setNutritionNeeded(float nutritionNeeded) {
+        this.nutritionNeeded = nutritionNeeded;
+    }
+
+    public int getGrowthTime() {
+        return growthTime;
+    }
+
+    public void setGrowthTime(int growthTime) {
+        this.growthTime = growthTime;
+    }
+
+    public int getGrowTicks() {
+        return growTicks;
+    }
+
+    public void setGrowTicks(int growTicks) {
+        this.growTicks = growTicks;
+    }
 }

@@ -1,23 +1,20 @@
 package sdu.student;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import worldofzuul.Game;
-import worldofzuul.Player;
 import worldofzuul.world.Direction;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import static worldofzuul.util.Data.jsonToGame;
+import static worldofzuul.util.Data.readConfigFile;
+
 public class FXMLController implements Initializable {
+    private static final String configFileName = "gameConfig.json";
 
     @FXML
     private Label label;
@@ -34,10 +31,20 @@ public class FXMLController implements Initializable {
         String javafxVersion = System.getProperty("javafx.version");
         label.setText("Hello, JavaFX " + javafxVersion + "\nRunning on Java " + javaVersion + ".");
 
+        loadGame();
+    }
 
+
+    private void loadGame(){
+        game = jsonToGame(readConfigFile(configFileName));
+        game.reconfigureRooms();
+
+        bindProperties();
+    }
+
+    private void bindProperties(){
         playerPositionProperty.textProperty()
                 .bindBidirectional(game.getPlayer().getPos().vectorValueProperty());
-
 
     }
 
