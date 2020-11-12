@@ -2,10 +2,7 @@ package worldofzuul.item;
 
 import worldofzuul.world.Field;
 
-public class Irrigator extends Item {
-    private float flowRate = 5;
-    private float water = 1000;
-    private float waterCapacity;
+public class Irrigator extends Item implements IConsumable {
 
     public Irrigator(){}
     public Irrigator(String name) {
@@ -14,32 +11,13 @@ public class Irrigator extends Item {
 
     public Irrigator(String name, float flowRate, float waterCapacity) {
         super(name);
-        this.flowRate = flowRate;
-        this.waterCapacity = this.water = waterCapacity;
-
+        setConsumptionRate(flowRate);
+        setCapacity(waterCapacity);
+        refill();
     }
 
     public void water(Field field) {
-
-        field.addWater(drawWater());
-
+        field.addWater(deplete());
     }
-
-    public float getWater() {
-        return water;
-    }
-
-    public void refill() {
-        water = waterCapacity;
-    }
-
-    private float drawWater() {
-        if (water > flowRate) {
-            return water = -flowRate;
-        }
-
-        return 0;
-    }
-
 
 }
