@@ -4,11 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import worldofzuul.Game;
 import worldofzuul.world.Direction;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static worldofzuul.util.Data.*;
 
@@ -23,6 +25,8 @@ public class FXMLController implements Initializable {
 
     @FXML
     private Label playerPositionProperty;
+    @FXML
+    private ImageView imageView;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -30,9 +34,13 @@ public class FXMLController implements Initializable {
         String javafxVersion = System.getProperty("javafx.version");
         label.setText("Hello, JavaFX " + javafxVersion + "\nRunning on Java " + javaVersion + ".");
 
+
+
         //loadGame();
-        game = new Game();
         game.createRooms();
+
+       //examplePlayAnimation();
+
         bindProperties();
 
     }
@@ -41,6 +49,27 @@ public class FXMLController implements Initializable {
     private void loadGame(){
         game = jsonToGame(readConfigFile(configFileName));
         game.reconfigureRooms();
+    }
+
+    private void examplePlayAnimation(){
+
+        Image playerSpriteSheet = getImages("sprites", getClass()).get("sprites/player/walkCycle.png");
+        List<Image[]> spriteAnimations = cutSprites(playerSpriteSheet, 64);
+
+        List<Object> animationKeys = new ArrayList<>();
+        animationKeys.add(Direction.NORTH);
+        animationKeys.add(Direction.EAST);
+        animationKeys.add(Direction.SOUTH);
+        animationKeys.add(Direction.WEST);
+
+        game.getPlayer().addAnimation(animationKeys, spriteAnimations);
+        game.getPlayer().setImageView(imageView);
+        game.getPlayer().setAnimationCycleLengthMillis(650);
+
+
+
+        //game.getPlayer().displayStill();
+        game.getPlayer().playAnimation(Direction.EAST);
     }
 
     private void bindProperties(){

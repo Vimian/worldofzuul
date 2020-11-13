@@ -2,13 +2,12 @@ package worldofzuul;
 
 import worldofzuul.util.Vector;
 
-public class Player {
+public class Player extends SpriteAnimation {
 
     private Vector pos;
 
     private Inventory inventory = new Inventory();
     private float Velocity;
-    private Sprite sprite;
 
     Player(){
         pos = new Vector();
