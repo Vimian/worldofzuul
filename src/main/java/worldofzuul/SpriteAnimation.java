@@ -18,8 +18,9 @@ public abstract class SpriteAnimation extends Sprite {
 
     private int animationCycleLengthMillis = 1000;
 
-    HashMap<Object, Image[]> imageAnimations = new HashMap<>();
-    Timeline timeline;
+    private HashMap<Object, Image[]> imageAnimations = new HashMap<>();
+    private Timeline animationTimeline;
+    private boolean animationActive;
 
     public SpriteAnimation() {
     }
@@ -101,7 +102,9 @@ public abstract class SpriteAnimation extends Sprite {
     }
 
     private void playAnimation(ImageView view, int cycles, Image[] images) {
-        timeline = new Timeline(new KeyFrame(Duration.millis(animationCycleLengthMillis), ev -> {
+        animationActive = true;
+
+        animationTimeline = new Timeline(new KeyFrame(Duration.millis(animationCycleLengthMillis), ev -> {
             Transition animation = new Transition() {
                 {
                     setCycleDuration(Duration.millis(animationCycleLengthMillis));
@@ -115,21 +118,35 @@ public abstract class SpriteAnimation extends Sprite {
             };
             animation.play();
         }));
-        timeline.setCycleCount(cycles);
-        timeline.play();
+        animationTimeline.setOnFinished(event -> {
+            animationActive = false;
+            display();
+        });
+
+        animationTimeline.setCycleCount(cycles);
+        animationTimeline.play();
     }
 
     public void stopAnimation() {
-        timeline.stop();
+        animationTimeline.stop();
     }
 
-    @JsonIgnore
     public int getAnimationCycleLengthMillis() {
         return animationCycleLengthMillis;
     }
 
     public void setAnimationCycleLengthMillis(int animationCycleLengthMillis) {
         this.animationCycleLengthMillis = animationCycleLengthMillis;
+    }
+
+    @JsonIgnore
+    public boolean isAnimationActive() {
+        return animationTimeline.getStatus().equals(Animation.Status.RUNNING);
+    }
+
+    @JsonIgnore
+    public Timeline getAnimationTimeline() {
+        return animationTimeline;
     }
 
     @Override

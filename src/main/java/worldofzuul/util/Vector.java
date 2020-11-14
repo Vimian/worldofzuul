@@ -1,5 +1,6 @@
 package worldofzuul.util;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -29,19 +30,21 @@ public class Vector {
         }
 
     }
+    public Vector(Vector oldVector, Vector newVector){
+        this();
+
+        setX(newVector.getX() - oldVector.getX());
+        setY(newVector.getY() - oldVector.getY());
+    }
 
 
 
-
-    // Define a variable to store the property
-
-    // Define a getter for the property's value
+    @JsonIgnore
     public final String getVectorValue(){return vectorValue.get();}
 
-    // Define a setter for the property's value
     public final void setVectorValue(String value){vectorValue.set(value);}
 
-    // Define a getter for the property itself
+    @JsonIgnore
     public StringProperty vectorValueProperty() {return vectorValue;}
 
 

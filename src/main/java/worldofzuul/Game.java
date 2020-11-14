@@ -105,12 +105,12 @@ public class Game {
 
         //DBG Start
         player = new Player();
-        outside.setRoomGrid(new GameObject[10][10]);
+        outside.setRoomGrid(new GameObject[25][25]);
         for (GameObject[] gameObjects : outside.getRoomGrid()) {
             Arrays.fill(gameObjects, new Block());
         }
 
-        theatre.setRoomGrid(new GameObject[10][10]);
+        theatre.setRoomGrid(new GameObject[25][25]);
         for (GameObject[] gameObjects : theatre.getRoomGrid()) {
             Arrays.fill(gameObjects, new Block());
         }
@@ -380,14 +380,16 @@ public class Game {
 
     private void setPlayerPosition(Vector position) {
 
-        GameObject currentTile = currentRoom.getGridGameObject(player.getPos());
-
+        GameObject currentTile = player.getCurrentGameObject();
         player.setPos(position);
         GameObject newTile = currentRoom.getGridGameObject(position);
+        player.setCurrentGameObject(newTile);
 
-        processCommandInternal(currentTile.uponExit());
+        if(currentTile != null){
+            processCommandInternal(currentTile.uponExit());
+        }
+
         processCommandInternal(newTile.uponEntry(currentTile));
-
     }
 
     private boolean canPlayerMoveToPoint(int x, int y) {

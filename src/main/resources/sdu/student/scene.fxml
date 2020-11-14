@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import worldofzuul.Game ?>
@@ -15,12 +13,38 @@
     <fx:define>
         <Game fx:id="game" />
     </fx:define>
+
+    <VBox alignment="CENTER">
+        <HBox alignment="CENTER">
+
+            <StackPane>
+                <Pane fx:id="roomPane"/>
+
+
+                <ImageView
+                        fx:id="imageView"
+                        fitHeight="150.0"
+                        pickOnBounds="true"
+                        preserveRatio="true"
+
+                />
+
+
+
+
+            </StackPane>
+
+
+
+        </HBox>
+
+
+    </VBox>
+
     <HBox>
         <VBox HBox.hgrow="ALWAYS">
+
             <Label fx:id="label" text="Label"/>
-
-
-
             <Button text="North" onAction="#moveNorth"/>
             <Button text="South" onAction="#moveSouth"/>
             <Button text="East" onAction="#moveEast"/>
@@ -29,20 +53,16 @@
 
             <Button text="Interact" onAction="#interact"/>
 
+
             <Label fx:id="playerPositionProperty" />
-            <ImageView
-                    fx:id="imageView"
-                    fitHeight="150.0"
-                    pickOnBounds="true"
-                    preserveRatio="true"
-            />
+
+
 
         </VBox>
         <VBox HBox.hgrow="ALWAYS">
 
         </VBox>
     </HBox>
-
 
 
 </StackPane>

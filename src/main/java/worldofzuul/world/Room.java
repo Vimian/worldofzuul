@@ -17,6 +17,7 @@ public class Room {
     private GameObject[][] roomGrid;
     private Environment environment;
     private HashMap<String, String> roomStringExits = new HashMap<>();
+    private String backgroundImage;
 
     // method for adding GameObjects to roomGrid, give positions as coordinate system.
     public void addToGrid(GameObject gameObject, int posX, int posY){
@@ -120,5 +121,12 @@ public class Room {
         this.description = description;
     }
 
+    public String getBackgroundImage() {
+        return backgroundImage;
+    }
+
+    public void setBackgroundImage(String backgroundImage) {
+        this.backgroundImage = backgroundImage;
+    }
 }
 
