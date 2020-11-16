@@ -105,15 +105,10 @@ public class Game {
 
         //DBG Start
         player = new Player();
-        outside.setRoomGrid(new GameObject[25][25]);
-        for (GameObject[] gameObjects : outside.getRoomGrid()) {
-            Arrays.fill(gameObjects, new Block());
-        }
 
-        theatre.setRoomGrid(new GameObject[25][25]);
-        for (GameObject[] gameObjects : theatre.getRoomGrid()) {
-            Arrays.fill(gameObjects, new Block());
-        }
+        outside.fillRoomGridWithBlocks(50, 50);
+        theatre.fillRoomGridWithBlocks(50, 50);
+
         outside.setGridGameObject(new Door("east", new Vector()), new Vector(2, 3));
         outside.setGridGameObject(new Field(), new Vector(1, 2));
 
@@ -184,7 +179,7 @@ public class Game {
             selectItem(command);
         } else if (commandWord == CommandWord.INTERACT) {
             interactPlayer();
-        } else if (commandWord == commandWord.EXAMINE){
+        } else if (commandWord == CommandWord.EXAMINE){
             examineObject(command);
         }
         else if (commandWord == CommandWord.HARVEST){
@@ -403,11 +398,11 @@ public class Game {
         }
 
         GameObject targetPosition = currentRoom.getGridGameObject(new Vector(x, y));
-        if (targetPosition.colliding) {
+        if (targetPosition.isColliding()) {
             MessageHelper.Command.objectIsCollidable();
         }
 
-        return !targetPosition.colliding;
+        return !targetPosition.isColliding();
     }
 
     private boolean quit(Command command) {

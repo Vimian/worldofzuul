@@ -18,7 +18,7 @@ public abstract class SpriteAnimation extends Sprite {
 
     private int animationCycleLengthMillis = 1000;
 
-    private HashMap<Object, Image[]> imageAnimations = new HashMap<>();
+    private final HashMap<Object, Image[]> imageAnimations = new HashMap<>();
     private Timeline animationTimeline;
     private boolean animationActive;
 
@@ -35,7 +35,7 @@ public abstract class SpriteAnimation extends Sprite {
     }
 
     public SpriteAnimation(List<Object> animationKeys, List<Image[]> imageAnimations) {
-        this(imageAnimations.stream().findFirst().stream().findFirst().get());
+        this(imageAnimations.stream().findFirst().stream().findFirst().orElseThrow());
         addAnimation(animationKeys, imageAnimations);
     }
 
@@ -95,7 +95,7 @@ public abstract class SpriteAnimation extends Sprite {
     public void playAnimation(ImageView view, int cycles, Object animationKey) {
         if (imageAnimations.containsKey(animationKey)) {
             Image[] images = imageAnimations.get(animationKey);
-            if(images != null && images.length > 0){
+            if (images != null && images.length > 0) {
                 playAnimation(view, cycles, images);
             }
         }
@@ -151,9 +151,9 @@ public abstract class SpriteAnimation extends Sprite {
 
     @Override
     public Image getImage() {
-        if(super.getImage() != null){
+        if (super.getImage() != null) {
             return super.getImage();
-        } else if(imageAnimations.values().size() > 0){
+        } else if (imageAnimations.values().size() > 0) {
             Image[] images = imageAnimations.values().stream().findFirst().get();
             if (images.length > 0) {
                 setImage(images[0]);

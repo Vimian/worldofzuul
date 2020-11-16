@@ -13,10 +13,10 @@ public abstract class Sprite {
     private String defaultImageFile;
 
 
-
-    public Sprite(){
+    public Sprite() {
 
     }
+
     public Sprite(Image defaultImage) {
         this.image = defaultImage;
     }
@@ -36,16 +36,20 @@ public abstract class Sprite {
     }
 
     public void setImageView(ImageView imageView) {
+        if (image == null && imageView.getImage() != null) {
+            image = imageView.getImage();
+        }
+
         this.imageView = imageView;
     }
 
-    public void display(){
+    public void display() {
         if (getImageView() != null) {
             display(getImageView());
         }
     }
 
-    public void display(ImageView imageView){
+    public void display(ImageView imageView) {
         if (getImage() != null) {
             imageView.setImage(getImage());
         }
@@ -60,11 +64,12 @@ public abstract class Sprite {
     }
 
     public TranslateTransition translate(double x, double y, double z) {
-        return translate(x,y,z,translationTime);
+        return translate(x, y, z, translationTime);
     }
+
     public TranslateTransition translate(double x, double y, double z, int translationTime) {
-        if (getImageView() != null){
-           return Drawing.translate(getImageView(), x, y, z, translationTime);
+        if (getImageView() != null) {
+            return Drawing.translate(getImageView(), x, y, z, translationTime);
         }
         return null;
     }

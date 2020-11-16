@@ -113,8 +113,18 @@ public class Room {
     public void setRoomStringExits(HashMap<String, String> roomStringExits) {
         this.roomStringExits = roomStringExits;
     }
+
     public String getDescription() {
         return description;
+    }
+
+    public void fillRoomGridWithBlocks(int height, int width) {
+        this.roomGrid = new GameObject[height][width];
+        for (int h = 0; h < this.roomGrid.length; h++) {
+            for (int w = 0; w < this.roomGrid[h].length; w++) {
+                this.roomGrid[h][w] = new Block();
+            }
+        }
     }
 
     public void setDescription(String description) {
@@ -127,6 +137,12 @@ public class Room {
 
     public void setBackgroundImage(String backgroundImage) {
         this.backgroundImage = backgroundImage;
+    }
+
+    @JsonIgnore
+    @Override
+    public String toString() {
+        return description;
     }
 }
 

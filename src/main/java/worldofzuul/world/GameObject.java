@@ -13,7 +13,7 @@ import worldofzuul.util.MessageHelper;
         @JsonSubTypes.Type(value= Door.class, name="Door")
 })
 public abstract class GameObject extends SpriteAnimation {
-    public boolean colliding;
+    private boolean colliding;
 
     public GameObject(){}
 
@@ -41,5 +41,14 @@ public abstract class GameObject extends SpriteAnimation {
 
     public Command[] uponExit() {
         return null;
+    }
+
+
+    public boolean isColliding() {
+        return colliding;
+    }
+
+    public void setColliding(boolean colliding) {
+        this.colliding = colliding;
     }
 }

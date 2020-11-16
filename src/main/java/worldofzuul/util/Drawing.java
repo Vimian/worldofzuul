@@ -2,9 +2,16 @@ package worldofzuul.util;
 
 import javafx.animation.TranslateTransition;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import worldofzuul.world.*;
+
+import java.util.HashMap;
 
 public class Drawing {
 
@@ -40,6 +47,62 @@ public class Drawing {
 
     }
 
+    public static void drawGameObjects(Room room, HashMap<String, Image> loadedImages, Pane roomPane, double backgroundTileDim) {
+        for (int i = 0; i < room.getRoomGrid().length; i++) {
+            for (int j = 0; j < room.getRoomGrid().length; j++) {
+                var rect = new Rectangle(j * backgroundTileDim, i * backgroundTileDim, backgroundTileDim, backgroundTileDim);
+
+                GameObject object = room.getGridGameObject(new Vector(j, i));
+
+                //Draw img
+                if (object.getDefaultImageFile() != null && loadedImages.containsKey(object.getDefaultImageFile())) {
+                    ImageView imageView;
+                    if (object.getImageView() == null || loadedImages.get(object.getDefaultImageFile()) != object.getImage()) {
+                        imageView = new ImageView(loadedImages.get(object.getDefaultImageFile()));
+                        imageView.setX(rect.getX());
+                        imageView.setY(rect.getY());
+                        imageView.setFitHeight(rect.getHeight());
+                        imageView.setFitWidth(rect.getWidth());
+
+                        object.setImageView(imageView);
+                    } else {
+                        imageView = object.getImageView();
+                    }
+                    roomPane.getChildren().add(imageView);
+                }
+
+                //Draw border
+                if (object instanceof Block) {
+                    if (object.isColliding()) {
+                        rect.setStroke(Color.RED);
+                    } else {
+                        continue;
+                    }
+                } else if (object instanceof Door) {
+
+                    if (object.isColliding()) {
+                        rect.setStroke(Color.CYAN);
+                    } else {
+                        rect.setStroke(Color.BLUE);
+                    }
+
+                } else if (object instanceof Field) {
+                    if (object.isColliding()) {
+                        rect.setStroke(Color.YELLOW);
+                    } else {
+                        rect.setStroke(Color.GREEN);
+                    }
+                } else {
+                    continue;
+                }
+
+
+                rect.setStrokeWidth(4);
+                rect.setFill(Color.TRANSPARENT);
+                roomPane.getChildren().add(rect);
+            }
+        }
+    }
 
 
 }

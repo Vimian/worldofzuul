@@ -10,21 +10,22 @@ public class Math {
             return defaultVal;
         }
     }
-    public static Direction vectorDirection(Vector oldVector, Vector newVector){
+
+    public static Direction vectorDirection(Vector oldVector, Vector newVector) {
 
         int x = newVector.getX() - oldVector.getX();
         int y = newVector.getY() - oldVector.getY();
 
-        if(y != 0){
+        if (y != 0) {
 
-            if(y > 0){//SOUTH
+            if (y > 0) {//SOUTH
                 return Direction.SOUTH;
-            } else{//NORTH
+            } else {//NORTH
                 return Direction.NORTH;
             }
 
-        } else if(x != 0){
-            if(x < 0){//EAST
+        } else if (x != 0) {
+            if (x < 0) {//EAST
                 return Direction.EAST;
 
             } else {//WEST
@@ -33,8 +34,21 @@ public class Math {
         }
         return null;
     }
-    public static int vectorDifference(Vector vector1, Vector vector2){
+
+    public static int vectorDifference(Vector vector1, Vector vector2) {
         return java.lang.Math.abs(vector1.getX() - vector2.getX()) + java.lang.Math.abs(vector1.getY() - vector2.getY());
 
+    }
+
+    public static Vector positionClickedOnPane(double tileHeight, double tileWidth, double x, double y) {
+
+        if (x > 0) {
+            x = java.lang.Math.floor(x / tileWidth);
+        }
+        if (y > 0) {
+            y = java.lang.Math.floor(y / tileHeight);
+        }
+
+        return new Vector((int) x, (int) y);
     }
 }

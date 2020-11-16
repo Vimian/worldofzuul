@@ -17,7 +17,7 @@ public class MainApp extends Application {
 
 
         Parent root = FXMLLoader.load(getClass().getResource("scene.fxml"));
-
+        //Parent root = FXMLLoader.load(getClass().getResource("gameEditor.fxml"));
 
         Scene scene = new Scene(root);
 

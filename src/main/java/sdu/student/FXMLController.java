@@ -8,12 +8,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import worldofzuul.Game;
 import worldofzuul.util.Vector;
-import worldofzuul.world.*;
+import worldofzuul.world.Direction;
+import worldofzuul.world.Room;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -22,33 +21,29 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import static worldofzuul.util.Data.*;
-import static worldofzuul.util.Drawing.drawGrid;
-import static worldofzuul.util.Drawing.translate;
+import static worldofzuul.util.Drawing.*;
 import static worldofzuul.util.Math.vectorDifference;
 import static worldofzuul.util.Math.vectorDirection;
 
 public class FXMLController implements Initializable {
     private static final String configFileName = "gameConfig.json";
-    private static final int gameTileDim = 32;
-    private static final int backgroundScaling = 3;
+    private static final String spriteDirectory = "sprites";
+    private static final int gameTileDim = 16;
+    private static final int backgroundScaling = 6;
     private static final double paneTransDelayCoefficient = 1.2;
 
     @FXML
     private Pane roomPane;
-
     @FXML
     private Label label;
-
-    @FXML
-    private Game game;
-
     @FXML
     private Label playerPositionProperty;
     @FXML
     private ImageView imageView;
-    private TranslateTransition paneTranslation;
 
+    private TranslateTransition paneTranslation;
     private HashMap<String, Image> loadedImages;
+    private Game game;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -56,9 +51,10 @@ public class FXMLController implements Initializable {
         String javafxVersion = System.getProperty("javafx.version");
         label.setText("Hello, JavaFX " + javafxVersion + "\nRunning on Java " + javaVersion + ".");
 
-        loadedImages = getImages("sprites", getClass());
+        loadedImages = getImages(spriteDirectory, getClass());
 
         //loadGame();
+        game = new Game();
         game.createRooms();
 
         bindProperties();
@@ -71,7 +67,12 @@ public class FXMLController implements Initializable {
 
     private void loadGame() {
         game = jsonToGame(readConfigFile(configFileName));
-        game.reconfigureRooms();
+        if(game != null){
+            game.reconfigureRooms();
+        } else {
+            game = new Game();
+            game.createRooms();
+        }
     }
 
     private void examplePlayAnimation() {
@@ -110,7 +111,7 @@ public class FXMLController implements Initializable {
 
     private void repositionPlayer(Vector pos, Vector pos2) {
         setPaneTranslation(pos);
-        if(vectorDifference(pos, pos2) > 1){
+        if (vectorDifference(pos, pos2) > 1) {
             drawRoom();
             game.getPlayer().stopAnimation();
             paneTranslation.stop();
@@ -126,7 +127,7 @@ public class FXMLController implements Initializable {
         double transX = getBackgroundTileDim();
         double transY = getBackgroundTileDim();
 
-        switch(direction){
+        switch (direction) {
             case SOUTH -> {
                 transY *= -1;
                 transX = 0;
@@ -156,7 +157,7 @@ public class FXMLController implements Initializable {
     }
 
 
-    private void setPaneTranslation(Vector pos){
+    private void setPaneTranslation(Vector pos) {
         double cubeDim = (getBackgroundTileDim());
 
 
@@ -178,36 +179,13 @@ public class FXMLController implements Initializable {
 
     private void drawRoom() {
         roomPane.getChildren().clear();
-        setBackground(loadedImages.get("sprites/room/test.png"));
-
-        drawGrid(roomPane, getBackgroundRowCount());
-
-        for (int i = 0; i < game.getRoom().getRoomGrid().length; i++) {
-            for (int j = 0; j < game.getRoom().getRoomGrid().length; j++) {
-                var rect = new Rectangle(j * getBackgroundTileDim(), i * getBackgroundTileDim(), getBackgroundTileDim(), getBackgroundTileDim());
-
-                GameObject object = game.getRoom().getGridGameObject(new Vector(j, i));
-                //Replace with method to get images / add imageviews instead
-                if (object instanceof Block) {
-                    if (object.colliding) {
-                        rect.setStroke(Color.RED);
-                    } else {
-                        continue;
-                    }
-                } else if (object instanceof Door) {
-                    rect.setStroke(Color.BLUE);
-                } else if (object instanceof Field) {
-                    rect.setStroke(Color.GREEN);
-                } else {
-                    continue;
-                }
-                rect.setStrokeWidth(4);
-                rect.setFill(Color.TRANSPARENT);
-                roomPane.getChildren().add(rect);
-            }
+        if (game.getRoom().getBackgroundImage() != null && loadedImages.containsKey(game.getRoom().getBackgroundImage())) {
+            setBackground(game.getRoom());
+        } else {
+            setBackground(loadedImages.get("sprites/room/test.png"));
         }
-
-
+        drawGrid(roomPane, getBackgroundRowCount());
+        drawGameObjects(game.getRoom(), loadedImages, roomPane, getBackgroundTileDim());
     }
 
 
@@ -218,10 +196,8 @@ public class FXMLController implements Initializable {
 
     }
 
-    private void setBackground(Room room){
-        Image backgroundImage = loadedImages.get(room.getBackgroundImage());
-        setBackground(backgroundImage);
-
+    private void setBackground(Room room) {
+        setBackground(loadedImages.get(room.getBackgroundImage()));
     }
 
     private void setBackground(Image backgroundImage) {
@@ -272,6 +248,7 @@ public class FXMLController implements Initializable {
         return false;
         /*
 
+        //TODO: Solve pane translation flicker caused by animation cancelling
         if (paneTranslation != null) {
             if (paneTranslation.getStatus().equals(Animation.Status.RUNNING)) {
                 return true;
@@ -285,6 +262,7 @@ public class FXMLController implements Initializable {
     private double getBackgroundTileDim() {
         return roomPane.getMinWidth() / getBackgroundRowCount();
     }
+
     private double getBackgroundRowCount() {
         return (roomPane.getMinWidth() / backgroundScaling) / gameTileDim;
     }
