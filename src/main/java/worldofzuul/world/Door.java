@@ -8,7 +8,10 @@ public class Door extends GameObject {
     private String exit;
     private Vector linkedLocation;
 
-    public Door(){}
+    public Door() {
+        linkedLocation = new Vector();
+    }
+
 
     public Door(String exit, Vector linkedLocation) {
         this.exit = exit;

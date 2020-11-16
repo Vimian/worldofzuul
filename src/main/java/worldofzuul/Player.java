@@ -1,11 +1,13 @@
 package worldofzuul;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import worldofzuul.util.Vector;
+import worldofzuul.world.GameObject;
 
 public class Player extends SpriteAnimation {
 
     private Vector pos;
-
+    private GameObject currentGameObject;
     private Inventory inventory = new Inventory();
     private float Velocity;
 
@@ -27,5 +29,14 @@ public class Player extends SpriteAnimation {
     public void setPos(Vector pos){
         this.pos.setY(pos.getY());
         this.pos.setX(pos.getX());
+    }
+
+    @JsonIgnore
+    public GameObject getCurrentGameObject() {
+        return currentGameObject;
+    }
+
+    public void setCurrentGameObject(GameObject currentGameObject) {
+        this.currentGameObject = currentGameObject;
     }
 }

@@ -18,8 +18,9 @@ public abstract class SpriteAnimation extends Sprite {
 
     private int animationCycleLengthMillis = 1000;
 
-    HashMap<Object, Image[]> imageAnimations = new HashMap<>();
-    Timeline timeline;
+    private final HashMap<Object, Image[]> imageAnimations = new HashMap<>();
+    private Timeline animationTimeline;
+    private boolean animationActive;
 
     public SpriteAnimation() {
     }
@@ -34,7 +35,7 @@ public abstract class SpriteAnimation extends Sprite {
     }
 
     public SpriteAnimation(List<Object> animationKeys, List<Image[]> imageAnimations) {
-        this(imageAnimations.stream().findFirst().stream().findFirst().get());
+        this(imageAnimations.stream().findFirst().stream().findFirst().orElseThrow());
         addAnimation(animationKeys, imageAnimations);
     }
 
@@ -94,14 +95,16 @@ public abstract class SpriteAnimation extends Sprite {
     public void playAnimation(ImageView view, int cycles, Object animationKey) {
         if (imageAnimations.containsKey(animationKey)) {
             Image[] images = imageAnimations.get(animationKey);
-            if(images != null && images.length > 0){
+            if (images != null && images.length > 0) {
                 playAnimation(view, cycles, images);
             }
         }
     }
 
     private void playAnimation(ImageView view, int cycles, Image[] images) {
-        timeline = new Timeline(new KeyFrame(Duration.millis(animationCycleLengthMillis), ev -> {
+        animationActive = true;
+
+        animationTimeline = new Timeline(new KeyFrame(Duration.millis(animationCycleLengthMillis), ev -> {
             Transition animation = new Transition() {
                 {
                     setCycleDuration(Duration.millis(animationCycleLengthMillis));
@@ -115,15 +118,19 @@ public abstract class SpriteAnimation extends Sprite {
             };
             animation.play();
         }));
-        timeline.setCycleCount(cycles);
-        timeline.play();
+        animationTimeline.setOnFinished(event -> {
+            animationActive = false;
+            display();
+        });
+
+        animationTimeline.setCycleCount(cycles);
+        animationTimeline.play();
     }
 
     public void stopAnimation() {
-        timeline.stop();
+        animationTimeline.stop();
     }
 
-    @JsonIgnore
     public int getAnimationCycleLengthMillis() {
         return animationCycleLengthMillis;
     }
@@ -132,11 +139,21 @@ public abstract class SpriteAnimation extends Sprite {
         this.animationCycleLengthMillis = animationCycleLengthMillis;
     }
 
+    @JsonIgnore
+    public boolean isAnimationActive() {
+        return animationTimeline.getStatus().equals(Animation.Status.RUNNING);
+    }
+
+    @JsonIgnore
+    public Timeline getAnimationTimeline() {
+        return animationTimeline;
+    }
+
     @Override
     public Image getImage() {
-        if(super.getImage() != null){
+        if (super.getImage() != null) {
             return super.getImage();
-        } else if(imageAnimations.values().size() > 0){
+        } else if (imageAnimations.values().size() > 0) {
             Image[] images = imageAnimations.values().stream().findFirst().get();
             if (images.length > 0) {
                 setImage(images[0]);
