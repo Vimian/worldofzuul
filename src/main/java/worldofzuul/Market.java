@@ -29,7 +29,7 @@ public class Market {
        if(Sold){
            Inventory I = new Inventory();
            I.removeItem(item);
-           MarketInventory MI = new MarketInventory()
+           MarketInventory MI = new MarketInventory();
            MI.addItemToStock(item);
        }
            return null;
