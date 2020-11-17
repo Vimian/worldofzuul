@@ -1,28 +1,14 @@
 package worldofzuul;
 
-import worldofzuul.item.Item;
-import worldofzuul.item.Money;
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class MarketInventory {
-    public ArrayList<MarketInventory> Items;
-    public Money price;
-    public Item items;
+    private ArrayList<MarketInventory> stock = new ArrayList<>();
 
-    public ArrayList<MarketInventory> removeItems() {
-        return this.Items.remove(items);
-    }
-    public ArrayList<MarketInventory> addItems() {
-        return this.Items.add(items);
-    }
+    public void removeItemsFromStock(MarketInventory item) { this.stock.remove(item); }
+    public void addItemsToStock(MarketInventory item) {  this.stock.add(item); }
 
-    public ArrayList<MarketInventory> getItems(Item item) {
-        return Items;
-    }
-
-    public Money getPrice(Item item) {
-        return price;
-    }
+    public ArrayList<MarketInventory> getStock(MarketInventory item) { return stock; }
 }
 
