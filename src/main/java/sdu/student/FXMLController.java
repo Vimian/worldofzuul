@@ -121,7 +121,6 @@ public class FXMLController implements Initializable {
 
                 var dbgT = loadedImages.get("sprites/room/test.png");
 
-                //TODO: Fix weird behavior in regards to default images and placement of keys
                 List<Image[]> imgs = new ArrayList<>();
                 imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0000.png")});
                 imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0003.png")});
