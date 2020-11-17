@@ -5,20 +5,28 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
+import sdu.student.editor.model.GameModel;
+import sdu.student.editor.model.InventoryModel;
 import worldofzuul.Game;
+import worldofzuul.item.GrowthStage;
+import worldofzuul.item.Item;
 import worldofzuul.util.Vector;
 import worldofzuul.world.Direction;
+import worldofzuul.world.Field;
 import worldofzuul.world.Room;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 
 import static worldofzuul.util.Data.*;
 import static worldofzuul.util.Drawing.*;
@@ -31,7 +39,9 @@ public class FXMLController implements Initializable {
     private static final int gameTileDim = 16;
     private static final int backgroundScaling = 6;
     private static final double paneTransDelayCoefficient = 1.2;
-
+    private static final int updateDelay = 60;
+    @FXML
+    private ListView playerItems;
     @FXML
     private Pane roomPane;
     @FXML
@@ -43,7 +53,9 @@ public class FXMLController implements Initializable {
 
     private TranslateTransition paneTranslation;
     private HashMap<String, Image> loadedImages;
-    private Game game;
+    private GameModel model;
+    private ScheduledExecutorService scheduledThreadPool;
+    private Game game = new Game();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -52,26 +64,37 @@ public class FXMLController implements Initializable {
         label.setText("Hello, JavaFX " + javafxVersion + "\nRunning on Java " + javaVersion + ".");
 
         loadedImages = getImages(spriteDirectory, getClass());
+        loadGame();
 
-        //loadGame();
-        game = new Game();
-        game.createRooms();
+
 
         bindProperties();
+        examplePlayAnimation();
 
-        //examplePlayAnimation();
-
-
+        enableGameUpdater();
     }
 
+    private void enableGameUpdater() {
+
+        scheduledThreadPool = Executors.newScheduledThreadPool(1, r -> {
+            Thread thread = new Thread(r);
+            thread.setDaemon(true);
+            return thread;
+        });
+
+        long delay = ((long) 1e9)/ updateDelay;
+        scheduledThreadPool.scheduleAtFixedRate(() -> model.getGame().update(), 0, delay, TimeUnit.NANOSECONDS);
+    }
 
     private void loadGame() {
-        game = jsonToGame(readConfigFile(configFileName));
+        Game game = jsonToGame(readConfigFile(configFileName));
         if(game != null){
-            game.reconfigureRooms();
+            model = new GameModel(game);
+            model.getGame().reconfigureRooms();
         } else {
-            game = new Game();
-            game.createRooms();
+            System.out.println("Error loading game config");
+            model = new GameModel(new Game());
+            model.getGame().createRooms();
         }
     }
 
@@ -86,22 +109,45 @@ public class FXMLController implements Initializable {
         animationKeys.add(Direction.SOUTH);
         animationKeys.add(Direction.WEST);
 
-        game.getPlayer().addAnimation(animationKeys, spriteAnimations);
-        game.getPlayer().setImageView(imageView);
-        game.getPlayer().setAnimationCycleLengthMillis(400);
+        model.getGame().getPlayer().addAnimation(animationKeys, spriteAnimations);
+        model.getGame().getPlayer().setImageView(imageView);
+        model.getGame().getPlayer().setAnimationCycleLengthMillis(400);
 
-        game.getPlayer().display();
+        model.getGame().getPlayer().display();
+
+        //Example add sprites to fields
+        Arrays.stream(model.getGame().getRoom().getRoomGrid()).forEach(t -> Arrays.stream(t).forEach(gameObject -> {
+            if(gameObject instanceof Field){
+
+                var dbgT = loadedImages.get("sprites/room/test.png");
+
+                //TODO: Fix weird behavior in regards to default images and placement of keys
+                List<Image[]> imgs = new ArrayList<>();
+                imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0000.png")});
+                imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0003.png")});
+                imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0008.png")});
+
+                List<Object> keys = new ArrayList<>();
+                keys.add(GrowthStage.SEED);
+                keys.add(GrowthStage.ADULT);
+                keys.add(GrowthStage.RIPE);
+
+                gameObject.addAnimation(keys, imgs);
+                gameObject.setAnimationCycleLengthMillis(400);
+
+            }
+        }));
 
 
         drawRoom();
-        setPaneTranslation(game.getPlayer().getPos());
+        setPaneTranslation(model.getGame().getPlayer().getPos());
         subscribeToPlayerMovement();
 
     }
 
     private void subscribeToPlayerMovement() {
         //Upon player position change, move pane and activate player walk animation
-        game.getPlayer().getPos().vectorValueProperty().addListener((observable, oldValue, newValue) -> {
+        model.getGame().getPlayer().getPos().vectorValueProperty().addListener((observable, oldValue, newValue) -> {
             Vector pos = new Vector(oldValue);
             Vector pos2 = new Vector(newValue);
             repositionPlayer(pos, pos2);
@@ -113,7 +159,7 @@ public class FXMLController implements Initializable {
         setPaneTranslation(pos);
         if (vectorDifference(pos, pos2) > 1) {
             drawRoom();
-            game.getPlayer().stopAnimation();
+            model.getGame().getPlayer().stopAnimation();
             paneTranslation.stop();
             setPaneTranslation(pos2);
             return;
@@ -122,7 +168,7 @@ public class FXMLController implements Initializable {
     }
 
     private void repositionPlayer(Direction direction) {
-        game.getPlayer().playAnimation(1, direction);
+        model.getGame().getPlayer().playAnimation(1, direction);
 
         double transX = getBackgroundTileDim();
         double transY = getBackgroundTileDim();
@@ -149,13 +195,12 @@ public class FXMLController implements Initializable {
                 transX,
                 transY,
                 0,
-                (int) (game.getPlayer().getAnimationCycleLengthMillis() * paneTransDelayCoefficient));
+                (int) (model.getGame().getPlayer().getAnimationCycleLengthMillis() * paneTransDelayCoefficient));
 
-        paneTranslation.setDelay(Duration.millis(paneTransDelayCoefficient * game.getPlayer().getAnimationCycleLengthMillis()));
+        paneTranslation.setDelay(Duration.millis(paneTransDelayCoefficient * model.getGame().getPlayer().getAnimationCycleLengthMillis()));
 
         paneTranslation.play();
     }
-
 
     private void setPaneTranslation(Vector pos) {
         double cubeDim = (getBackgroundTileDim());
@@ -179,19 +224,19 @@ public class FXMLController implements Initializable {
 
     private void drawRoom() {
         roomPane.getChildren().clear();
-        if (game.getRoom().getBackgroundImage() != null && loadedImages.containsKey(game.getRoom().getBackgroundImage())) {
-            setBackground(game.getRoom());
+        if (model.getGame().getRoom().getBackgroundImage() != null && loadedImages.containsKey(model.getGame().getRoom().getBackgroundImage())) {
+            setBackground(model.getGame().getRoom());
         } else {
             setBackground(loadedImages.get("sprites/room/test.png"));
         }
         drawGrid(roomPane, getBackgroundRowCount());
-        drawGameObjects(game.getRoom(), loadedImages, roomPane, getBackgroundTileDim());
+        drawGameObjects(model.getGame().getRoom(), loadedImages, roomPane, getBackgroundTileDim());
     }
 
-
     private void bindProperties() {
-        playerPositionProperty.textProperty()
-                .bindBidirectional(game.getPlayer().getPos().vectorValueProperty());
+        playerPositionProperty.textProperty();
+
+        playerItems.itemsProperty().bindBidirectional(new InventoryModel(model.getGame().getPlayer().getInventory()).itemsProperty());
 
 
     }
@@ -209,40 +254,39 @@ public class FXMLController implements Initializable {
         roomPane.setBackground(new Background(myBI));
     }
 
-
     public void moveNorth(ActionEvent actionEvent) {
         if (!isPlayerMoving()) {
-            game.move(Direction.NORTH);
+            model.getGame().move(Direction.NORTH);
         }
     }
 
     public void moveSouth(ActionEvent actionEvent) {
         if (!isPlayerMoving()) {
-            game.move(Direction.SOUTH);
+            model.getGame().move(Direction.SOUTH);
         }
     }
 
     public void moveEast(ActionEvent actionEvent) {
         if (!isPlayerMoving()) {
-            game.move(Direction.EAST);
+            model.getGame().move(Direction.EAST);
         }
     }
 
     public void moveWest(ActionEvent actionEvent) {
         if (!isPlayerMoving()) {
-            game.move(Direction.WEST);
+            model.getGame().move(Direction.WEST);
         }
     }
 
     public void interact(ActionEvent actionEvent) {
-        game.interact();
+        model.getGame().interact();
     }
 
 
     private boolean isPlayerMoving() {
 
-        if (game.getPlayer().getAnimationTimeline() != null) {
-            return game.getPlayer().isAnimationActive();
+        if (model.getGame().getPlayer().getAnimationTimeline() != null) {
+            return model.getGame().getPlayer().isAnimationActive();
         }
 
         return false;
@@ -257,6 +301,15 @@ public class FXMLController implements Initializable {
 
 
         return false;*/
+    }
+
+    public void playerItemsClicked(MouseEvent mouseEvent) {
+
+        Object clickedElement = playerItems.getSelectionModel().getSelectedItem();
+        if(clickedElement instanceof Item){
+            model.getPlayerModel().getInventoryModel().setSelectedItem((Item) clickedElement);
+        }
+
     }
 
     private double getBackgroundTileDim() {

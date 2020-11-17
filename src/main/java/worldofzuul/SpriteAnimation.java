@@ -10,7 +10,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public abstract class SpriteAnimation extends Sprite {
@@ -18,7 +20,7 @@ public abstract class SpriteAnimation extends Sprite {
 
     private int animationCycleLengthMillis = 1000;
 
-    private final HashMap<Object, Image[]> imageAnimations = new HashMap<>();
+    private final LinkedHashMap<Object, Image[]> imageAnimations = new LinkedHashMap<>();
     private Timeline animationTimeline;
     private boolean animationActive;
 
@@ -102,6 +104,9 @@ public abstract class SpriteAnimation extends Sprite {
     }
 
     private void playAnimation(ImageView view, int cycles, Image[] images) {
+        setImage(Arrays.stream(images).findFirst().orElseThrow());
+        stopAnimation();
+
         animationActive = true;
 
         animationTimeline = new Timeline(new KeyFrame(Duration.millis(animationCycleLengthMillis), ev -> {
@@ -128,7 +133,9 @@ public abstract class SpriteAnimation extends Sprite {
     }
 
     public void stopAnimation() {
-        animationTimeline.stop();
+        if (animationTimeline != null) {
+            animationTimeline.stop();
+        }
     }
 
     public int getAnimationCycleLengthMillis() {
@@ -154,7 +161,7 @@ public abstract class SpriteAnimation extends Sprite {
         if (super.getImage() != null) {
             return super.getImage();
         } else if (imageAnimations.values().size() > 0) {
-            Image[] images = imageAnimations.values().stream().findFirst().get();
+            Image[] images = imageAnimations.values().stream().findFirst().orElseThrow();
             if (images.length > 0) {
                 setImage(images[0]);
                 return super.getImage();

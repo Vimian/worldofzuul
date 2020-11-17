@@ -15,6 +15,7 @@ public class GameModel {
             FXCollections.observableArrayList());
     private Game game;
     private RoomModel currentRoom;
+    private PlayerModel playerModel;
 
     public GameModel(Game game) {
         this.game = game;
@@ -35,6 +36,7 @@ public class GameModel {
             }
         });
 
+        setPlayerModel(new PlayerModel(game.getPlayer()));
     }
 
     public Game getGame() {
@@ -65,5 +67,13 @@ public class GameModel {
     public void setCurrentRoom(RoomModel currentRoom) {
         game.setRoom(currentRoom.getRoom());
         this.currentRoom = currentRoom;
+    }
+
+    public PlayerModel getPlayerModel() {
+        return playerModel;
+    }
+
+    public void setPlayerModel(PlayerModel playerModel) {
+        this.playerModel = playerModel;
     }
 }

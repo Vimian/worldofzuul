@@ -24,17 +24,18 @@ public class Room {
         roomGrid[posY][posX] = gameObject;
     }
 
-    public Room(){}
+    public Room(){
+        this.environment = new Environment();
+    }
     public Room(String description)
     {
+        this();
         this.description = description;
-        this.environment = new Environment();
     }
 
     public Room(String description, GameObject[][] roomGrid) {
         this(description);
         this.roomGrid = roomGrid;
-        this.environment = new Environment();
     }
 
     public Room(String description, GameObject[][] roomGrid, Date date) {
@@ -45,7 +46,6 @@ public class Room {
 
     public void setExit(String direction, Room neighbor) {
         roomStringExits.put(direction, neighbor.getShortDescription());
-
         exits.put(direction, neighbor);
     }
 

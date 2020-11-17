@@ -37,6 +37,7 @@ public abstract class Sprite {
 
     public void setImageView(ImageView imageView) {
         if (image == null && imageView.getImage() != null) {
+
             image = imageView.getImage();
         }
 
@@ -73,5 +74,6 @@ public abstract class Sprite {
         }
         return null;
     }
+
 
 }

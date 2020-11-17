@@ -55,9 +55,10 @@ public class Drawing {
                 GameObject object = room.getGridGameObject(new Vector(j, i));
 
                 //Draw img
-                if (object.getDefaultImageFile() != null && loadedImages.containsKey(object.getDefaultImageFile())) {
+                if (object.getImage() != null || object.getDefaultImageFile() != null && loadedImages.containsKey(object.getDefaultImageFile())) {
                     ImageView imageView;
                     if (object.getImageView() == null || loadedImages.get(object.getDefaultImageFile()) != object.getImage()) {
+                        System.out.println(object.getDefaultImageFile());
                         imageView = new ImageView(loadedImages.get(object.getDefaultImageFile()));
                         imageView.setX(rect.getX());
                         imageView.setY(rect.getY());
@@ -65,9 +66,18 @@ public class Drawing {
                         imageView.setFitWidth(rect.getWidth());
 
                         object.setImageView(imageView);
-                    } else {
+                    }  else {
                         imageView = object.getImageView();
                     }
+
+                    if(object.getImage() != null && object.getImage() != imageView.getImage()){
+                        imageView.setImage(object.getImage());
+                    }
+
+
+
+
+
                     roomPane.getChildren().add(imageView);
                 }
 

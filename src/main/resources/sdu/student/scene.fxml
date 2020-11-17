@@ -51,6 +51,8 @@
 
             <Label fx:id="playerPositionProperty" />
 
+            <ListView fx:id="playerItems" maxWidth="100" onMouseClicked="#playerItemsClicked" />
+
 
 
         </VBox>

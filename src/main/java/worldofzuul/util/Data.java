@@ -12,10 +12,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Data {
 
@@ -99,5 +96,10 @@ public class Data {
         }
         return cutSprites;
     }
+    public static Image[][] singleImageToArrays(Image image){
+        LinkedList<Image[]> images = new LinkedList<Image[]>();
+        images.add(new Image[]{image});
+        return images.toArray(new Image[1][1]);
 
+    }
 }

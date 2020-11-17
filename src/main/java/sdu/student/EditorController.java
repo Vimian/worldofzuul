@@ -29,7 +29,7 @@ import static worldofzuul.util.Drawing.drawGrid;
 import static worldofzuul.util.Math.positionClickedOnPane;
 import static worldofzuul.util.Math.tryParse;
 
-public class GameEditor implements Initializable {
+public class EditorController implements Initializable {
     private static final String configFileName = "gameConfig.json";
     private static final String spriteDirectory = "sprites";
     private static final int defaultGameTileDim = 16;

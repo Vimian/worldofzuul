@@ -152,7 +152,7 @@ public class Game {
         scheduledThreadPool.scheduleAtFixedRate(() -> update(), 0, delay, TimeUnit.MICROSECONDS);
     }
 
-    private void update() {
+    public void update() {
         currentRoom.update().forEach(this::processCommandInternal);
     }
 
