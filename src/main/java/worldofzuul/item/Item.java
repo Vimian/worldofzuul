@@ -1,7 +1,6 @@
 package worldofzuul.item;
 
 import worldofzuul.Sprite;
-import java.util.HashMap;
 
 public abstract class Item {
     private String name;
@@ -14,11 +13,11 @@ public abstract class Item {
         this.name = name;
     }
     public Item(String name, Double value){
-        this.name = name; this.value = value;
+        this(name);
+        this.value = value;
     }
     public Item(String name, Double value, Double sellbackRate){
-        this.name = name;
-        this.value = value;
+        this(name, value);
         this.sellbackRate = sellbackRate;
     }
 
