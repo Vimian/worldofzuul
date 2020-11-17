@@ -1,36 +1,39 @@
 package worldofzuul;
 
 import worldofzuul.item.Item;
-import worldofzuul.MarketInventory;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Market {
    public HashMap<Item, Double> stock2;
-   public ArrayList<MarketInventory> stock;
+   public ArrayList<Market> stock;
    public Item price;
    public boolean Bought = false;
    public boolean Sold = false;
 
-   public Market(ArrayList<MarketInventory> stock, Item price){
+   public Market(ArrayList<Market> stock, Item price){
        this.stock = stock;
        this.price = price;
    }
-    public Double purchaseItem(MarketInventory item){
+    public Double purchaseItem(Market item, Inventory item2){
        if(Bought){
-           MarketInventory MI = new MarketInventory();
-           MI.removeItemFromStock(item);
+           this.stock.remove(item);
+           item = item2;
            Inventory I = new Inventory();
-           I.addItem(item);
+           I.addItem(item2);
        }
        return null;
    }
-   public Double sellItem(MarketInventory item){
+    public ArrayList<Market> getStock(Market item) {
+       return stock;
+   }
+   public Double sellItem(Market item, Inventory item2){
        if(Sold){
            Inventory I = new Inventory();
-           I.removeItem(item);
-           MarketInventory MI = new MarketInventory();
-           MI.addItemToStock(item);
+           I.removeItem(item2);
+           this.item2 = item;
+           Market MI = new Market();
+           this.stock.add(item);
        }
            return null;
    }
