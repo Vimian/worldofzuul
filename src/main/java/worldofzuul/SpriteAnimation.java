@@ -20,6 +20,7 @@ public abstract class SpriteAnimation extends Sprite {
 
     private int animationCycleLengthMillis = 1000;
 
+    //Is Linked as order matters in getImage()
     private final LinkedHashMap<Object, Image[]> imageAnimations = new LinkedHashMap<>();
     private Timeline animationTimeline;
     private boolean animationActive;

@@ -119,8 +119,6 @@ public class FXMLController implements Initializable {
         Arrays.stream(model.getGame().getRoom().getRoomGrid()).forEach(t -> Arrays.stream(t).forEach(gameObject -> {
             if(gameObject instanceof Field){
 
-                var dbgT = loadedImages.get("sprites/room/test.png");
-
                 List<Image[]> imgs = new ArrayList<>();
                 imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0000.png")});
                 imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0003.png")});
