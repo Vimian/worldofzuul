@@ -37,7 +37,6 @@ public class Math {
 
     public static int vectorDifference(Vector vector1, Vector vector2) {
         return java.lang.Math.abs(vector1.getX() - vector2.getX()) + java.lang.Math.abs(vector1.getY() - vector2.getY());
-
     }
 
     public static Vector positionClickedOnPane(double tileHeight, double tileWidth, double x, double y) {

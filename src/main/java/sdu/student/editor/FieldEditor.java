@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.util.converter.NumberStringConverter;
-import sdu.student.editor.model.FieldModel;
+import worldofzuul.world.Field;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,7 +14,7 @@ import static worldofzuul.util.Math.tryParse;
 
 public class FieldEditor implements Initializable {
 
-    private final FieldModel model;
+    private final Field model;
     public TextField imageFileTextField;
     public TextField animationLengthTextField;
     public TextField nutritionTextField;
@@ -22,13 +22,13 @@ public class FieldEditor implements Initializable {
     public TextField waterTextField;
     public ToggleButton toggleButton;
 
-    public FieldEditor(FieldModel fieldModel) {
+    public FieldEditor(Field fieldModel) {
         this.model = fieldModel;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        toggleButton.setSelected(model.getColliding());
+        toggleButton.setSelected(model.isColliding());
 
         imageFileTextField.textProperty().bindBidirectional(this.model.defaultImageFileProperty());
 
@@ -57,6 +57,6 @@ public class FieldEditor implements Initializable {
 
 
     public void toggleColliding(ActionEvent actionEvent) {
-        model.setColliding(!model.getColliding());
+        model.setColliding(!model.isColliding());
     }
 }

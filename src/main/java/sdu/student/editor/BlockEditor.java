@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.util.converter.NumberStringConverter;
-import sdu.student.editor.model.BlockModel;
+import worldofzuul.world.Block;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,19 +13,19 @@ import java.util.ResourceBundle;
 import static worldofzuul.util.Math.tryParse;
 
 public class BlockEditor implements Initializable {
-    private final BlockModel model;
+    private final Block model;
     public TextField imageFileTextField;
     public TextField animationLengthTextField;
     public ToggleButton toggleButton;
 
-    public BlockEditor(BlockModel model) {
+    public BlockEditor(Block model) {
         this.model = model;
 
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        toggleButton.setSelected(model.getColliding());
+        toggleButton.setSelected(model.isColliding());
         imageFileTextField.textProperty().bindBidirectional(this.model.defaultImageFileProperty());
         animationLengthTextField.textProperty().bindBidirectional(this.model.animationCycleLengthMillisProperty(), new NumberStringConverter());
         imageFileTextField.textProperty().addListener(ev -> {
@@ -37,6 +37,6 @@ public class BlockEditor implements Initializable {
     }
 
     public void toggleColliding(ActionEvent actionEvent) {
-        model.setColliding(!model.getColliding());
+        model.setColliding(!model.isColliding());
     }
 }

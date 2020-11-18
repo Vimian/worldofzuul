@@ -3,7 +3,6 @@ package worldofzuul.item;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import worldofzuul.Sprite;
-import worldofzuul.SpriteAnimation;
 
 
 @JsonTypeInfo(use=JsonTypeInfo.Id.NAME, include= JsonTypeInfo.As.WRAPPER_OBJECT, property="type")
@@ -33,4 +32,6 @@ public abstract class Item extends Sprite {
     public String toString() {
         return name;
     }
+
+
 }

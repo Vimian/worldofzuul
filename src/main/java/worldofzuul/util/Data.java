@@ -58,6 +58,7 @@ public class Data {
             uri = CallerClass.getResource(directory + "/").toURI();
         } catch (URISyntaxException e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
             return null;
         }
 

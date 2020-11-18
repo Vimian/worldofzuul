@@ -1,23 +1,27 @@
 package worldofzuul.util;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Vector {
     private static final String delimiter = ",";
-    private int x = 0;
-    private int y = 0;
-    private StringProperty vectorValue = new SimpleStringProperty();
+    private final IntegerProperty x = new SimpleIntegerProperty(0);
+    private final IntegerProperty y = new SimpleIntegerProperty(0);
+    private final StringProperty vectorValue = new SimpleStringProperty(); //TODO: Refactor out
 
     public Vector() {
         setVectorValue(this.toString());
     }
+
     public Vector(int x, int y) {
         this();
         setX(x);
         setY(y);
     }
+
     public Vector(String s) {
         this();
         if(s.contains(delimiter)){
@@ -45,31 +49,42 @@ public class Vector {
     public final void setVectorValue(String value){vectorValue.set(value);}
 
     @JsonIgnore
-    public StringProperty vectorValueProperty() {return vectorValue;}
+    public StringProperty vectorValueProperty() {
+        return vectorValue;
+    }
 
 
     @Override
     public String toString() {
-        return x + delimiter + y;
+        return x.get() + delimiter + y.get();
     }
-
 
 
     public int getX() {
-        return x;
+        return x.get();
     }
 
     public void setX(int x) {
-        this.x = x;
+        this.x.set(x);
         setVectorValue(this.toString());
+    }
+
+    @JsonIgnore
+    public IntegerProperty xProperty() {
+        return x;
     }
 
     public int getY() {
-        return y;
+        return y.get();
     }
 
     public void setY(int y) {
-        this.y = y;
+        this.y.set(y);
         setVectorValue(this.toString());
+    }
+
+    @JsonIgnore
+    public IntegerProperty yProperty() {
+        return y;
     }
 }

@@ -11,8 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
-import sdu.student.editor.model.GameModel;
-import sdu.student.editor.model.InventoryModel;
 import worldofzuul.Game;
 import worldofzuul.item.GrowthStage;
 import worldofzuul.item.Item;
@@ -25,7 +23,6 @@ import java.net.URL;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 import static worldofzuul.util.Data.*;
@@ -53,9 +50,9 @@ public class FXMLController implements Initializable {
 
     private TranslateTransition paneTranslation;
     private HashMap<String, Image> loadedImages;
-    private GameModel model;
+    private Game model;
     private ScheduledExecutorService scheduledThreadPool;
-    private Game game = new Game();
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -83,18 +80,23 @@ public class FXMLController implements Initializable {
         });
 
         long delay = ((long) 1e9)/ updateDelay;
-        scheduledThreadPool.scheduleAtFixedRate(() -> model.getGame().update(), 0, delay, TimeUnit.NANOSECONDS);
+        scheduledThreadPool.scheduleAtFixedRate(() -> model.update(), 0, delay, TimeUnit.NANOSECONDS);
     }
 
     private void loadGame() {
-        Game game = jsonToGame(readConfigFile(configFileName));
-        if(game != null){
-            model = new GameModel(game);
-            model.getGame().reconfigureRooms();
+
+        var gamee = new Game();
+        gamee.createRooms();
+
+        var aa = gameToJson(gamee);
+
+        model = jsonToGame(readConfigFile(configFileName));
+        if (model != null) {
+            model.reconfigureRooms();
         } else {
             System.out.println("Error loading game config");
-            model = new GameModel(new Game());
-            model.getGame().createRooms();
+            model = new Game();
+            model.createRooms();
         }
     }
 
@@ -109,15 +111,15 @@ public class FXMLController implements Initializable {
         animationKeys.add(Direction.SOUTH);
         animationKeys.add(Direction.WEST);
 
-        model.getGame().getPlayer().addAnimation(animationKeys, spriteAnimations);
-        model.getGame().getPlayer().setImageView(imageView);
-        model.getGame().getPlayer().setAnimationCycleLengthMillis(400);
+        model.getPlayer().addAnimation(animationKeys, spriteAnimations);
+        model.getPlayer().setImageView(imageView);
+        model.getPlayer().setAnimationCycleLengthMillis(400);
 
-        model.getGame().getPlayer().display();
+        model.getPlayer().display();
 
         //Example add sprites to fields
-        Arrays.stream(model.getGame().getRoom().getRoomGrid()).forEach(t -> Arrays.stream(t).forEach(gameObject -> {
-            if(gameObject instanceof Field){
+        Arrays.stream(model.getRoom().getRoomGrid()).forEach(t -> Arrays.stream(t).forEach(gameObject -> {
+            if (gameObject instanceof Field) {
 
                 List<Image[]> imgs = new ArrayList<>();
                 imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0000.png")});
@@ -137,18 +139,15 @@ public class FXMLController implements Initializable {
 
 
         drawRoom();
-        setPaneTranslation(model.getGame().getPlayer().getPos());
+        setPaneTranslation(model.getPlayer().getPos());
         subscribeToPlayerMovement();
 
     }
 
     private void subscribeToPlayerMovement() {
         //Upon player position change, move pane and activate player walk animation
-        model.getGame().getPlayer().getPos().vectorValueProperty().addListener((observable, oldValue, newValue) -> {
-            Vector pos = new Vector(oldValue);
-            Vector pos2 = new Vector(newValue);
-            repositionPlayer(pos, pos2);
-
+        model.getPlayer().getPos().vectorValueProperty().addListener((observable, oldValue, newValue) -> {
+            repositionPlayer(new Vector(oldValue), new Vector(newValue));
         });
     }
 
@@ -156,7 +155,7 @@ public class FXMLController implements Initializable {
         setPaneTranslation(pos);
         if (vectorDifference(pos, pos2) > 1) {
             drawRoom();
-            model.getGame().getPlayer().stopAnimation();
+            model.getPlayer().stopAnimation();
             paneTranslation.stop();
             setPaneTranslation(pos2);
             return;
@@ -165,7 +164,7 @@ public class FXMLController implements Initializable {
     }
 
     private void repositionPlayer(Direction direction) {
-        model.getGame().getPlayer().playAnimation(1, direction);
+        model.getPlayer().playAnimation(1, direction);
 
         double transX = getBackgroundTileDim();
         double transY = getBackgroundTileDim();
@@ -192,9 +191,9 @@ public class FXMLController implements Initializable {
                 transX,
                 transY,
                 0,
-                (int) (model.getGame().getPlayer().getAnimationCycleLengthMillis() * paneTransDelayCoefficient));
+                (int) (model.getPlayer().getAnimationCycleLengthMillis() * paneTransDelayCoefficient));
 
-        paneTranslation.setDelay(Duration.millis(paneTransDelayCoefficient * model.getGame().getPlayer().getAnimationCycleLengthMillis()));
+        paneTranslation.setDelay(Duration.millis(paneTransDelayCoefficient * model.getPlayer().getAnimationCycleLengthMillis()));
 
         paneTranslation.play();
     }
@@ -221,19 +220,19 @@ public class FXMLController implements Initializable {
 
     private void drawRoom() {
         roomPane.getChildren().clear();
-        if (model.getGame().getRoom().getBackgroundImage() != null && loadedImages.containsKey(model.getGame().getRoom().getBackgroundImage())) {
-            setBackground(model.getGame().getRoom());
+        if (model.getRoom().getBackgroundImage() != null && loadedImages.containsKey(model.getRoom().getBackgroundImage())) {
+            setBackground(model.getRoom());
         } else {
             setBackground(loadedImages.get("sprites/room/test.png"));
         }
         drawGrid(roomPane, getBackgroundRowCount());
-        drawGameObjects(model.getGame().getRoom(), loadedImages, roomPane, getBackgroundTileDim());
+        drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim());
     }
 
     private void bindProperties() {
-        playerPositionProperty.textProperty();
+        playerPositionProperty.textProperty().bindBidirectional(model.getPlayer().getPos().vectorValueProperty());
 
-        playerItems.itemsProperty().bindBidirectional(new InventoryModel(model.getGame().getPlayer().getInventory()).itemsProperty());
+        playerItems.itemsProperty().bindBidirectional(model.getPlayer().getInventory().itemsProperty());
 
 
     }
@@ -253,37 +252,37 @@ public class FXMLController implements Initializable {
 
     public void moveNorth(ActionEvent actionEvent) {
         if (!isPlayerMoving()) {
-            model.getGame().move(Direction.NORTH);
+            model.move(Direction.NORTH);
         }
     }
 
     public void moveSouth(ActionEvent actionEvent) {
         if (!isPlayerMoving()) {
-            model.getGame().move(Direction.SOUTH);
+            model.move(Direction.SOUTH);
         }
     }
 
     public void moveEast(ActionEvent actionEvent) {
         if (!isPlayerMoving()) {
-            model.getGame().move(Direction.EAST);
+            model.move(Direction.EAST);
         }
     }
 
     public void moveWest(ActionEvent actionEvent) {
         if (!isPlayerMoving()) {
-            model.getGame().move(Direction.WEST);
+            model.move(Direction.WEST);
         }
     }
 
     public void interact(ActionEvent actionEvent) {
-        model.getGame().interact();
+        model.interact();
     }
 
 
     private boolean isPlayerMoving() {
 
-        if (model.getGame().getPlayer().getAnimationTimeline() != null) {
-            return model.getGame().getPlayer().isAnimationActive();
+        if (model.getPlayer().getAnimationTimeline() != null) {
+            return model.getPlayer().isAnimationActive();
         }
 
         return false;
@@ -304,7 +303,7 @@ public class FXMLController implements Initializable {
 
         Object clickedElement = playerItems.getSelectionModel().getSelectedItem();
         if(clickedElement instanceof Item){
-            model.getPlayerModel().getInventoryModel().setSelectedItem((Item) clickedElement);
+            model.getPlayer().getInventory().setSelectedItem((Item) clickedElement);
         }
 
     }

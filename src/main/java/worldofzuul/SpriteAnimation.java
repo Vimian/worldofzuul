@@ -6,19 +6,20 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.Transition;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 public abstract class SpriteAnimation extends Sprite {
 
 
-    private int animationCycleLengthMillis = 1000;
+    private final IntegerProperty animationCycleLengthMillis = new SimpleIntegerProperty(1000);
 
     //Is Linked as order matters in getImage()
     private final LinkedHashMap<Object, Image[]> imageAnimations = new LinkedHashMap<>();
@@ -109,11 +110,10 @@ public abstract class SpriteAnimation extends Sprite {
         stopAnimation();
 
         animationActive = true;
-
-        animationTimeline = new Timeline(new KeyFrame(Duration.millis(animationCycleLengthMillis), ev -> {
+        animationTimeline = new Timeline(new KeyFrame(Duration.millis(getAnimationCycleLengthMillis()), ev -> {
             Transition animation = new Transition() {
                 {
-                    setCycleDuration(Duration.millis(animationCycleLengthMillis));
+                    setCycleDuration(Duration.millis(getAnimationCycleLengthMillis()));
                 }
 
                 @Override
@@ -139,12 +139,17 @@ public abstract class SpriteAnimation extends Sprite {
         }
     }
 
+
     public int getAnimationCycleLengthMillis() {
-        return animationCycleLengthMillis;
+        return animationCycleLengthMillis.get();
     }
 
     public void setAnimationCycleLengthMillis(int animationCycleLengthMillis) {
-        this.animationCycleLengthMillis = animationCycleLengthMillis;
+        this.animationCycleLengthMillis.set(animationCycleLengthMillis);
+    }
+
+    public IntegerProperty animationCycleLengthMillisProperty() {
+        return animationCycleLengthMillis;
     }
 
     @JsonIgnore

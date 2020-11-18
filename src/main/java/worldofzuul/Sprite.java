@@ -2,6 +2,8 @@ package worldofzuul;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.animation.TranslateTransition;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import worldofzuul.util.Drawing;
@@ -10,7 +12,7 @@ public abstract class Sprite {
     private final static int translationTime = 2000;
     private Image image;
     private ImageView imageView;
-    private String defaultImageFile;
+    private final StringProperty defaultImageFile = new SimpleStringProperty();
 
 
     public Sprite() {
@@ -56,12 +58,17 @@ public abstract class Sprite {
         }
     }
 
+
     public String getDefaultImageFile() {
-        return defaultImageFile;
+        return defaultImageFile.get();
     }
 
     public void setDefaultImageFile(String defaultImageFile) {
-        this.defaultImageFile = defaultImageFile;
+        this.defaultImageFile.set(defaultImageFile);
+    }
+
+    public StringProperty defaultImageFileProperty() {
+        return defaultImageFile;
     }
 
     public TranslateTransition translate(double x, double y, double z) {

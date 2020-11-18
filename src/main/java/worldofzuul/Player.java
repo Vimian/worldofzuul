@@ -6,10 +6,9 @@ import worldofzuul.world.GameObject;
 
 public class Player extends SpriteAnimation {
 
-    private Vector pos;
+    private final Vector pos;
     private GameObject currentGameObject;
-    private Inventory inventory = new Inventory();
-    private float Velocity;
+    private final Inventory inventory = new Inventory();
 
     Player(){
         pos = new Vector();

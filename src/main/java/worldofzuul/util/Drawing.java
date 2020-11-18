@@ -55,31 +55,9 @@ public class Drawing {
                 GameObject object = room.getGridGameObject(new Vector(j, i));
 
                 //Draw img
-                if (object.getImage() != null || object.getDefaultImageFile() != null && loadedImages.containsKey(object.getDefaultImageFile())) {
-                    ImageView imageView;
-                    if (object.getImageView() == null || loadedImages.get(object.getDefaultImageFile()) != object.getImage()) {
-                        System.out.println(object.getDefaultImageFile());
-                        imageView = new ImageView(loadedImages.get(object.getDefaultImageFile()));
-                        imageView.setX(rect.getX());
-                        imageView.setY(rect.getY());
-                        imageView.setFitHeight(rect.getHeight());
-                        imageView.setFitWidth(rect.getWidth());
+                //TODO: Refactor & Optimize
+                drawGameObjectImage(loadedImages, roomPane, rect, object);
 
-                        object.setImageView(imageView);
-                    }  else {
-                        imageView = object.getImageView();
-                    }
-
-                    if(object.getImage() != null && object.getImage() != imageView.getImage()){
-                        imageView.setImage(object.getImage());
-                    }
-
-
-
-
-
-                    roomPane.getChildren().add(imageView);
-                }
 
                 //Draw border
                 if (object instanceof Block) {
@@ -111,6 +89,30 @@ public class Drawing {
                 rect.setFill(Color.TRANSPARENT);
                 roomPane.getChildren().add(rect);
             }
+        }
+    }
+
+    private static void drawGameObjectImage(HashMap<String, Image> loadedImages, Pane roomPane, Rectangle rect, GameObject object) {
+        if (object.getImage() != null || object.getDefaultImageFile() != null && loadedImages.containsKey(object.getDefaultImageFile())) {
+            ImageView imageView;
+            if (object.getImageView() == null || loadedImages.get(object.getDefaultImageFile()) != object.getImage()) {
+                imageView = new ImageView(loadedImages.get(object.getDefaultImageFile()));
+                imageView.setX(rect.getX());
+                imageView.setY(rect.getY());
+                imageView.setFitHeight(rect.getHeight());
+                imageView.setFitWidth(rect.getWidth());
+
+                object.setImageView(imageView);
+            } else {
+                imageView = object.getImageView();
+            }
+
+            if (object.getImage() != null && object.getImage() != imageView.getImage()) {
+                imageView.setImage(object.getImage());
+            }
+
+
+            roomPane.getChildren().add(imageView);
         }
     }
 

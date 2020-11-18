@@ -1,31 +1,51 @@
 package worldofzuul.world;
 
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import worldofzuul.parsing.Command;
 import worldofzuul.util.Vector;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Set;
 
 public class Room {
-    private String description;
 
-    private HashMap<String, Room> exits = new HashMap<>();
+    private final MapProperty<String, Room> exits = new SimpleMapProperty<>(
+            FXCollections.observableHashMap()
+    );
+    private final ListProperty<Exit> exitStrings = new SimpleListProperty<>(
+            FXCollections.observableArrayList());
+    private final StringProperty backgroundImage = new SimpleStringProperty();
+
     private GameObject[][] roomGrid;
     private Environment environment;
-    private HashMap<String, String> roomStringExits = new HashMap<>();
-    private String backgroundImage;
+    private String description; //TODO: Consider converting to StringProperty
 
-    // method for adding GameObjects to roomGrid, give positions as coordinate system.
-    public void addToGrid(GameObject gameObject, int posX, int posY){
-        roomGrid[posY][posX] = gameObject;
+    public Room() {
+        this.environment = new Environment();
+        /*
+        //Listen for room exit change
+        exitStringsProperty().forEach(e -> {
+            listenToExitPropertyChange(e);
+        });
+
+        exitStringsProperty().addListener((object, oldV, newV) -> {
+            listenToNewObjects(oldV, newV);
+        });
+        */
+
     }
 
-    public Room(){
-        this.environment = new Environment();
+    // method for adding GameObjects to roomGrid, give positions as coordinate system.
+    public void addToGrid(GameObject gameObject, int posX, int posY) {
+        roomGrid[posY][posX] = gameObject;
     }
     public Room(String description)
     {
@@ -45,7 +65,7 @@ public class Room {
     }
 
     public void setExit(String direction, Room neighbor) {
-        roomStringExits.put(direction, neighbor.getShortDescription());
+        exitStrings.add(new Exit(direction, neighbor.toString()));
         exits.put(direction, neighbor);
     }
 
@@ -106,13 +126,6 @@ public class Room {
         return commands;
     }
 
-    public HashMap<String, String> getRoomStringExits() {
-        return roomStringExits;
-    }
-
-    public void setRoomStringExits(HashMap<String, String> roomStringExits) {
-        this.roomStringExits = roomStringExits;
-    }
 
     public String getDescription() {
         return description;
@@ -131,18 +144,105 @@ public class Room {
         this.description = description;
     }
 
+
     public String getBackgroundImage() {
-        return backgroundImage;
+        return backgroundImage.get();
     }
 
     public void setBackgroundImage(String backgroundImage) {
-        this.backgroundImage = backgroundImage;
+        this.backgroundImage.set(backgroundImage);
+    }
+
+    public StringProperty backgroundImageProperty() {
+        return backgroundImage;
+    }
+
+    @JsonIgnore
+    public ObservableMap<String, Room> getExits() {
+        return exits.get();
+    }
+
+    @JsonIgnore
+    public void setExits(ObservableMap<String, Room> exits) {
+        this.exits.set(exits);
+    }
+
+    @JsonIgnore
+    public MapProperty<String, Room> exitsProperty() {
+        return exits;
+    }
+
+    @JsonGetter
+    public ObservableList<Exit> getExitStrings() {
+        return exitStrings.get();
+    }
+
+    @JsonSetter
+    public void setExitStrings(LinkedList<Exit> exits) {
+        ListProperty<Exit> temp = new SimpleListProperty<>(
+                FXCollections.observableArrayList());
+
+        temp.addAll(exits);
+
+        setExitStrings(temp);
+    }
+
+    @JsonIgnore
+    public void setExitStrings(ObservableList<Exit> exitStrings) {
+        this.exitStrings.set(exitStrings);
+    }
+
+    @JsonIgnore
+    public ListProperty<Exit> exitStringsProperty() {
+        return exitStrings;
     }
 
     @JsonIgnore
     @Override
     public String toString() {
         return description;
+    }
+
+
+    public static class Exit {
+
+        private final StringProperty exitKey = new SimpleStringProperty();
+        private final StringProperty exitValue = new SimpleStringProperty();
+
+        public Exit() {
+        }
+
+        public Exit(String exitKey, String exitValue) {
+            setExitKey(exitKey);
+            setExitValue(exitValue);
+        }
+
+
+        public String getExitKey() {
+            return exitKey.get();
+        }
+
+        public void setExitKey(String exitKey) {
+            this.exitKey.set(exitKey);
+        }
+
+        @JsonIgnore
+        public StringProperty exitKeyProperty() {
+            return exitKey;
+        }
+
+        public String getExitValue() {
+            return exitValue.get();
+        }
+
+        public void setExitValue(String exitValue) {
+            this.exitValue.set(exitValue);
+        }
+
+        @JsonIgnore
+        public StringProperty exitValueProperty() {
+            return exitValue;
+        }
     }
 }
 
