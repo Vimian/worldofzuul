@@ -19,13 +19,11 @@ public class MainApp extends Application {
         stage.setTitle("JavaFX and Gradle");
         stage.setScene(scene);
         stage.show();
-
-
     }
 
     public static void main(String[] args) {
         //launch(args);
-        Game game = new Game();
-        game.play();
+        //Game game = new Game();
+        //game.play();
     }
 }
