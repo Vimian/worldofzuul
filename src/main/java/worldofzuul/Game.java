@@ -157,7 +157,7 @@ public class Game {
     //need to implement helper message on wrong 2'nd command
     //need to fix collision when moving into objects
     //DEPENDENCY: ROOMS MUST HAVE BEEN FILLED WITH STUFF, ELSE nullPointerExecption.
-    //THEN make a dynamic world printer, meaning if you make dynamic world builder you can also show stuff.
+    //BUG: move player east pass size of room for another room, then show local -> fix, make player always appear within room boundary when moving room to room.
 
     private void showPlayerRoom(Command command){
         if (!command.hasSecondWord()) {
@@ -183,13 +183,12 @@ public class Game {
             }
         } else if("global".equals(command.getSecondWord())) {
 //            showGlobal();
-              showGameWorldStatic();
+              showGlobalStatic();
 
         }
         System.out.println(); //dont remove, makes room for userarrow
     }
-    //navigate 2d arraylist
-    //dependencies: crateRooms have been called. .GetShort description should be room symbol/name. Order of rooms is fixed.
+
     private void showGlobal(){
         int index = 0;
         ArrayList<String> gameWorld = new ArrayList<>(0);
@@ -204,29 +203,23 @@ public class Game {
         index++;
         //}
         System.out.println(gameWorld);
-    }
+    } //missing implementation
 
     //mest dogshit implementation af globalt map. navne/strings skal redigeres manuelt ved ændring af nye rooms :)
-    public void showGameWorldStatic(){
+    public void showGlobalStatic(){
         String[] staticWorld ={"pub"," == ","outside", " == ", "theatre", "\r\n",
                 "         ",   "||", "\r\n",
                 "         ",  "lab", " == ", "office"};
         for(String string: staticWorld){
             System.out.print(string);
-            if (currentRoom.getName() == string){
+            if (currentRoom.getName().equals(string)){
                 System.out.print(" P");
             }
         }
-
     }
 
-    public void keyboardWalk(){}
-
-
-
-    public void unknownArgument(Command command){
-
-    } //a lot of repeated code to handle unknown arguments, move it to this one
+    public void keyboardWalk(){} //Missing implementation.
+    public void unknownArgument(Command command){} // Missing implementation. Idea: use it to handle unknown arguments, move it to this one
 
     private void selectItem(Command command) {
         if (!command.hasSecondWord()) {
@@ -349,7 +342,6 @@ public class Game {
     private void examineObject(Command command){ //TODO: Missing implementation
         if(!command.hasSecondWord()) {
             System.out.println("Examine what?");
-            return;
         }
     }
 
