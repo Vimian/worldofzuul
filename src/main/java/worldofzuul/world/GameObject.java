@@ -15,6 +15,7 @@ public abstract class GameObject {
         return null;
     }
 
+
     public Command[] interact(worldofzuul.item.Item item) {
         MessageHelper.Item.cantUseItem(item.getName());
         return null;
@@ -31,4 +32,6 @@ public abstract class GameObject {
     public Command[] uponExit() {
         return null;
     }
+
+
 }

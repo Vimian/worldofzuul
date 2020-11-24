@@ -69,4 +69,10 @@ public class Vector {
         this.y = y;
         setVectorValue(this.toString());
     }
+
+//    @Override
+//    public boolean equals(Object o) {
+//        return true;
+//    }
+
 }

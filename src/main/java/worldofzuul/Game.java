@@ -8,8 +8,8 @@ import worldofzuul.util.MessageHelper;
 import worldofzuul.util.Vector;
 import worldofzuul.world.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -22,6 +22,8 @@ public class Game {
     private Player player;
     private ScheduledExecutorService scheduledThreadPool;
     private int updateDelay = 60;
+    private Room[] roomArray;
+    private String[][] globalMap;
 
     public Game() {
         createRooms();
@@ -43,16 +45,14 @@ public class Game {
         processCommandInternal(new Command(CommandWord.INTERACT, null));
     }
 
-
-
     private void createRooms() {
         Room outside, theatre, pub, lab, office;
 
-        outside = new Room("outside the main entrance of the university");
-        theatre = new Room("in a lecture theatre");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        outside = new Room("outside the main entrance of the university", "outside");
+        theatre = new Room("in a lecture theatre","theatre");
+        pub = new Room("in the campus pub", "pub");
+        lab = new Room("in a computing lab","lab");
+        office = new Room("in the computing admin office","office");
 
         outside.setExit("east", theatre);
         outside.setExit("south", lab);
@@ -67,17 +67,20 @@ public class Game {
 
         office.setExit("west", lab);
 
+        roomArray = new Room[] {outside, theatre, pub, lab, office};
+
         //DBG Start
         player = new Player();
-        outside.setRoomGrid(new GameObject[10][10]);
+        outside.setRoomGrid(new GameObject[5][7]);
         for (GameObject[] gameObjects : outside.getRoomGrid()) {
             Arrays.fill(gameObjects, new Block());
         }
 
-        theatre.setRoomGrid(new GameObject[10][10]);
+        theatre.setRoomGrid(new GameObject[9][3]);
         for (GameObject[] gameObjects : theatre.getRoomGrid()) {
             Arrays.fill(gameObjects, new Block());
         }
+        //Dependency: If door is set outside room range, get index error
         outside.setGridGameObject(new Door("east", new Vector()), new Vector(2, 3));
         outside.setGridGameObject(new Field(), new Vector(1, 2));
 
@@ -115,11 +118,9 @@ public class Game {
     }
 
     private void update() {
-
-
         currentRoom.update().forEach(this::processCommandInternal);
+        keyboardWalk();
     }
-
 
     private boolean processCommand(Command command) {
         boolean wantToQuit = false;
@@ -145,12 +146,87 @@ public class Game {
             interactPlayer();
         } else if (commandWord == commandWord.EXAMINE){
             examineObject(command);
-        }
-        else if (commandWord == CommandWord.HARVEST){
+        } else if (commandWord == CommandWord.HARVEST){
             harvestObject(command);
+        } else if (commandWord == CommandWord.SHOW){
+            showPlayerRoom(command);
         }
         return wantToQuit;
     }
+
+    //need to implement helper message on wrong 2'nd command
+    //need to fix collision when moving into objects
+    //DEPENDENCY: ROOMS MUST HAVE BEEN FILLED WITH STUFF, ELSE nullPointerExecption.
+    //THEN make a dynamic world printer, meaning if you make dynamic world builder you can also show stuff.
+
+    private void showPlayerRoom(Command command){
+        if (!command.hasSecondWord()) {
+            MessageHelper.Command.unknownArgumentWhat(CommandWord.SHOW.toString());
+            return;
+        }
+        if("local".equals( command.getSecondWord() ) ){
+            for(int y=0; y < currentRoom.getRoomGrid().length; y++){
+                if(y>0){
+                    System.out.println();
+                }
+                for(int x=0; x < currentRoom.getRoomGrid()[0].length; x++){
+                    if((player.getPos().getX() == x ) && (player.getPos().getY() == y ) ){ //
+                        System.out.print("P  ");
+                    } else if (currentRoom.getRoomGrid()[y][x] instanceof Block) {
+                        System.out.print("[] ");
+                    } else if (currentRoom.getRoomGrid()[y][x] instanceof Field) {
+                        System.out.print("F  ");
+                    } else if (currentRoom.getRoomGrid()[y][x] instanceof Door) {
+                        System.out.print("D  "); //showGameWorld();
+                    }
+                }
+            }
+        } else if("global".equals(command.getSecondWord())) {
+//            showGlobal();
+              showGameWorldStatic();
+
+        }
+        System.out.println(); //dont remove, makes room for userarrow
+    }
+    //navigate 2d arraylist
+    //dependencies: crateRooms have been called. .GetShort description should be room symbol/name. Order of rooms is fixed.
+    private void showGlobal(){
+        int index = 0;
+        ArrayList<String> gameWorld = new ArrayList<>(0);
+        //for(Room rooms: roomArray){
+        gameWorld.add(this.roomArray[index].getShortDescription());
+        if(this.roomArray[index].getExit("west") != null){
+            gameWorld.add(0,this.roomArray[index].getExit("west").getShortDescription()+" == "); //getExit("west) tager fat i nabo på west
+        }
+        if(this.roomArray[index].getExit("east") != null){
+            gameWorld.add(gameWorld.size(), " == "+ this.roomArray[index].getExit("east").getShortDescription());
+        }
+        index++;
+        //}
+        System.out.println(gameWorld);
+    }
+
+    //mest dogshit implementation af globalt map. navne/strings skal redigeres manuelt ved ændring af nye rooms :)
+    public void showGameWorldStatic(){
+        String[] staticWorld ={"pub"," == ","outside", " == ", "theatre", "\r\n",
+                "         ",   "||", "\r\n",
+                "         ",  "lab", " == ", "office"};
+        for(String string: staticWorld){
+            System.out.print(string);
+            if (currentRoom.getName() == string){
+                System.out.print(" P");
+            }
+        }
+
+    }
+
+    public void keyboardWalk(){}
+
+
+
+    public void unknownArgument(Command command){
+
+    } //a lot of repeated code to handle unknown arguments, move it to this one
 
     private void selectItem(Command command) {
         if (!command.hasSecondWord()) {
@@ -198,12 +274,6 @@ public class Game {
 
     }
 
-    private void addItem(Command command) {
-        if (command.hasItem()) {
-            player.getInventory().addItem(command.getItem());
-        }
-    }
-
     private void processCommandInternal(Command[] commands) {
         if (commands != null && commands.length > 0) {
             for (Command command : commands) {
@@ -211,6 +281,12 @@ public class Game {
                     processCommandInternal(command);
                 }
             }
+        }
+    }
+
+    private void addItem(Command command) {
+        if (command.hasItem()) {
+            player.getInventory().addItem(command.getItem());
         }
     }
 
@@ -269,7 +345,6 @@ public class Game {
         }
     }
 
-
     //Method for examining objects in room
     private void examineObject(Command command){ //TODO: Missing implementation
         if(!command.hasSecondWord()) {
@@ -303,14 +378,14 @@ public class Game {
         int y = player.getPos().getY();
 
 
-        if (Direction.NORTH.toString().equals(secondWord)) {
-            y--;
-        } else if (Direction.SOUTH.toString().equals(secondWord)) {
-            y++;
+        if (Direction.WEST.toString().equals(secondWord)) {
+            x--;
         } else if (Direction.EAST.toString().equals(secondWord)) {
             x++;
-        } else if (Direction.WEST.toString().equals(secondWord)) {
-            x--;
+        } else if (Direction.SOUTH.toString().equals(secondWord)) {
+            y++;
+        } else if (Direction.NORTH.toString().equals(secondWord)) {
+            y--;
         } else {
             MessageHelper.Command.unknownCommand();
             return;

@@ -33,4 +33,5 @@ public class Player {
         this.pos.setY(pos.getY());
         this.pos.setX(pos.getX());
     }
+
 }

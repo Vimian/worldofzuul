@@ -72,7 +72,7 @@ public class MessageHelper {
 
         public static void objectIsCollidable(){
             System.out.println("You can't walk through that.");
-        }
+        } //needs fix
 
         public static void invalidItemIndex(){
             System.out.println("No item exists at that location in your inventory.");

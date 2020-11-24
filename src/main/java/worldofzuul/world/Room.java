@@ -1,12 +1,10 @@
 package worldofzuul.world;
 
+import worldofzuul.Player;
 import worldofzuul.parsing.Command;
 import worldofzuul.util.Vector;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Set;
+import java.util.*;
 
 
 public class Room {
@@ -14,27 +12,29 @@ public class Room {
     private HashMap<String, Room> exits;
     private GameObject[][] roomGrid;
     private Environment environment;
+    private String name;
 
     // method for adding GameObjects to roomGrid, give positions as coordinate system.
     public void addToGrid(GameObject gameObject, int posX, int posY){
         roomGrid[posY][posX] = gameObject;
     }
 
-    public Room(String description)
+    public Room(String description, String name)
     {
         this.description = description;
         exits = new HashMap<String, Room>();
         this.environment = new Environment();
+        this.name = name;
     }
 
     public Room(String description, GameObject[][] roomGrid) {
-        this(description);
+        this.description = description;
         this.roomGrid = roomGrid;
         this.environment = new Environment();
     }
 
     public Room(String description, GameObject[][] roomGrid, Date date) {
-        this(description);
+        this.description = description;
         this.roomGrid = roomGrid;
         this.environment = new Environment(date);
     }
@@ -51,7 +51,7 @@ public class Room {
         return "You are " + description + ".\n" + getExitString();
     }
 
-    private String getExitString() {
+    public String getExitString() {
         String returnString = "Exits:";
         Set<String> keys = exits.keySet();
         for (String exit : keys) {
@@ -62,6 +62,11 @@ public class Room {
 
     public Room getExit(String direction) {
         return exits.get(direction);
+    }
+
+    public String getExitName(Room room) {
+
+        return "hej";
     }
 
     public GameObject[][] getRoomGrid() {
@@ -80,6 +85,10 @@ public class Room {
         roomGrid[pos.getY()][pos.getX()] = gameObject;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     public LinkedList<Command[]> update() {
         LinkedList<Command[]> commands = new LinkedList<>();
 
@@ -93,9 +102,7 @@ public class Room {
                 }
             }
         }
-
         return commands;
     }
-
 }
 
