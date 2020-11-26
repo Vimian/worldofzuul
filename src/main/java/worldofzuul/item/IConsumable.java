@@ -10,6 +10,8 @@ public interface IConsumable {
     FloatProperty capacity = new SimpleFloatProperty();
     FloatProperty consumptionRate = new SimpleFloatProperty();
 
+
+
     default float getConsumptionRate(){
         return consumptionRate.get();
     }
@@ -35,15 +37,13 @@ public interface IConsumable {
     default FloatProperty remainingProperty() {
         return remaining;
     }
-
     @JsonIgnore
     default FloatProperty capacityProperty() {
-        return remaining;
+        return capacity;
     }
-
     @JsonIgnore
     default FloatProperty depletionRateProperty() {
-        return remaining;
+        return consumptionRate;
     }
 
     @JsonIgnore
