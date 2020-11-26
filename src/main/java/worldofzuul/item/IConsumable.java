@@ -42,7 +42,7 @@ public interface IConsumable {
         return capacity;
     }
     @JsonIgnore
-    default FloatProperty depletionRateProperty() {
+    default FloatProperty consumptionRateProperty() {
         return consumptionRate;
     }
 
