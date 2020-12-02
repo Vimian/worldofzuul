@@ -37,8 +37,6 @@ public class FXMLController implements Initializable {
 
         playerPositionProperty.textProperty()
                 .bindBidirectional(game.getPlayer().getPos().vectorValueProperty());
-
-
     }
 
 
