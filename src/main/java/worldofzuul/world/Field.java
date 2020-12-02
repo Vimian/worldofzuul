@@ -111,9 +111,7 @@ public class Field extends GameObject {
         this.plant = null;
     }
 
-    private boolean isPlantGrowing() {
-        return plant != null && !plant.isRipe();
-    }
+    private boolean isPlantGrowing() { return plant != null && !plant.isRipe(); }
 
     private float depleteWater() {
         if (water > depletionRate) {
