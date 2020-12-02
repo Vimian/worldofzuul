@@ -13,14 +13,11 @@ public class Plant extends Item {
 
     
     private int timeTillDeath = 100;
-    
-    //private int day;
+
     private int ticksNotWatered;
-    
-    //private boolean watered;
-    //private boolean dead;
+
     private int growTicks = 0;
-    private int GrowthStageTime;
+
 
     public Plant(String name) {
         super(name);
@@ -108,18 +105,6 @@ public class Plant extends Item {
                 state = RIPE;
             }
         }
-        
-        
     }
-
-    /*
-    public void plusday(){
-    if(watered){
-    dayNotWatered = 0;
-    this.day++;
-    }
-    if(!watered && )
-}
-    */
 
 }
