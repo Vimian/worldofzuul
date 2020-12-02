@@ -136,7 +136,7 @@ public class Field extends GameObject {
     private float depleteWater() {
         if (getWater() > getDepletionRate()) {
             setWater(getWater() - getDepletionRate());
-            return getWater();
+            return getDepletionRate();
         } else {
             return 0;
         }
@@ -145,7 +145,7 @@ public class Field extends GameObject {
     private float depleteNutrition() {
         if (getNutrition() > getDepletionRate()) {
             setNutrition(getNutrition() - getDepletionRate());
-            return getNutrition();
+            return getDepletionRate();
         } else {
             return 0;
         }

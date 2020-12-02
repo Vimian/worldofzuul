@@ -21,7 +21,6 @@ public class Plant extends Item {
     public Plant(){}
     public Plant(String name) {
         super(name);
-        this.growthTime = 0;
     }
  
 
@@ -53,35 +52,29 @@ public class Plant extends Item {
     }
 
     public boolean isRipe() {
-        return waterNeeded <= 0 && nutritionNeeded <= 0 && growTicks >= growthTime;
+        return waterNeeded <= 0 && nutritionNeeded <= 0 && growTicks >= growthTime && state == RIPE;
     }
 
 
     private void consumeWater(float water) {
-        waterNeeded = -water * seedQuality;
+        waterNeeded -= water * seedQuality;
     }
 
     private void consumeNutrition(float nutrition) {
-        nutritionNeeded = -nutrition * seedQuality;
+        nutritionNeeded -= nutrition * seedQuality;
     }
 
 
     private boolean readyForNextStage() {
         switch (state) {
             case SEED -> {
-                if(maxWater / 4 > maxWater - waterNeeded && maxNutrition / 4 > maxWater - nutritionNeeded){
-                    return true;
-                }
+                return requiredPropertiesReady(2);
             }
             case SPROUT -> {
-                if((maxWater / 4) * 2 > maxWater - waterNeeded && (maxNutrition / 4) * 2 > maxWater - nutritionNeeded){
-                    return true;
-                }
+                return requiredPropertiesReady(3);
             }
             case ADULT -> {
-                if((maxWater / 4) * 3 > maxWater - waterNeeded && (maxNutrition / 4) * 3 > maxWater - nutritionNeeded){
-                    return true;
-                }
+                return requiredPropertiesReady(4);
             }
 
             default -> {
@@ -89,7 +82,12 @@ public class Plant extends Item {
             }
         }
 
-        return false;
+    }
+
+    private boolean requiredPropertiesReady(int i) {
+        return (maxWater / 4) * i < maxWater - waterNeeded &&
+                (maxNutrition / 4) * i < maxWater - nutritionNeeded &&
+                (growthTime / 4) * i < growTicks;
     }
 
     private void advanceStage() {
