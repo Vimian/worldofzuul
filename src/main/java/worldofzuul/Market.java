@@ -1,7 +1,6 @@
 package worldofzuul;
 
 import worldofzuul.item.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Market {

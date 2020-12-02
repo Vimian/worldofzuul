@@ -16,4 +16,12 @@ public abstract class Item {
     public String getName() {
         return name;
     }
+
+    public Double getValue() {
+        return value;
+    }
+
+    public Double getSellbackRate() {
+        return sellbackRate;
+    }
 }

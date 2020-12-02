@@ -9,9 +9,7 @@ public class Player extends SpriteAnimation {
     private final Vector pos;
     private GameObject currentGameObject;
     private final Inventory inventory = new Inventory();
-    private Vector pos;
     private Double balance = 0.0;
-    private Inventory inventory = new Inventory();
     private float Velocity;
     private Sprite sprite;
 

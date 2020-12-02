@@ -54,5 +54,7 @@ public class Inventory {
         }
         return null;
     }
-
+    public boolean doesContain(Item item){
+        return items.contains(item);
+    }
 }
