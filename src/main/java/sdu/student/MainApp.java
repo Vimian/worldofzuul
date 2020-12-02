@@ -16,12 +16,8 @@ public class MainApp extends Application {
 
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("scene.fxml"));
-
-
+        Parent root = FXMLLoader.load(getClass().getResource("menu.fxml"));
         Scene scene = new Scene(root);
-
-        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
         stage.setTitle("JavaFX and Gradle");
         stage.setScene(scene);
@@ -33,6 +29,7 @@ public class MainApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 
 
 }

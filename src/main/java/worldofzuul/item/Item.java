@@ -14,9 +14,8 @@ import worldofzuul.Sprite;
         @JsonSubTypes.Type(value=Money.class, name="Money"),
         @JsonSubTypes.Type(value=Plant.class, name="Plant"),
 })
-public abstract class Item {
+public abstract class Item extends Sprite {
     private String name;
-    private Sprite sprite;
     private Double value;
     private Double sellbackRate;
 
@@ -28,4 +27,11 @@ public abstract class Item {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+
 }

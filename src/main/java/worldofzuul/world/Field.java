@@ -1,5 +1,7 @@
 package worldofzuul.world;
 
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.SimpleFloatProperty;
 import worldofzuul.item.*;
 import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
@@ -9,34 +11,43 @@ import java.util.ArrayList;
 
 public class Field extends GameObject {
     private Fertilizer fertilizer;
-    private float water = 0;
     private Plant plant;
     private ArrayList<Plant> plants;
-    private float nutrition = 10000;
-    private float depletionRate = 5;
 
-    public Field() {}
+    private final FloatProperty water = new SimpleFloatProperty(10);
+    private final FloatProperty nutrition = new SimpleFloatProperty(10000);
+    private final FloatProperty depletionRate = new SimpleFloatProperty(5);
+    private boolean ripePlantSeen = false;
+
+    public Field() {
+    }
+
     public Field(Fertilizer fertilizer) {
         this.fertilizer = fertilizer;
     }
 
     public Field(Fertilizer fertilizer, float water) {
         this(fertilizer);
-        this.water = water;
+        setWater(water);
     }
 
 
     public void addWater(float water) {
         if (isPlantGrowing()) {
-            this.water += water;
+            setWater(getWater() + water);
         }
     }
 
     @Override
     public Command[] update() {
-
-        if (isPlantGrowing()) {
-            plant.grow(depleteWater(), depleteNutrition());
+        if (plant != null) {
+            if(isPlantGrowing()){
+                plant.grow(depleteWater(), depleteNutrition());
+            } if(plant.isRipe() && !ripePlantSeen){
+                MessageHelper.Info.plantBecameRipe(plant.getName());
+                playAnimation(GrowthStage.RIPE);
+                ripePlantSeen = true;
+            }
         }
 
         return super.update();
@@ -70,7 +81,7 @@ public class Field extends GameObject {
     }
 
     private Command[] useSeed(Seed item) {
-        if (isPlantGrowing()) {
+        if (plant != null) {
             MessageHelper.Item.alreadyPlanted();
             return null;
         }
@@ -78,8 +89,7 @@ public class Field extends GameObject {
         Command[] commands = new Command[1];
 
         if (item.getSeedCount() > 0) {
-            MessageHelper.Item.usedItemOn(item.getName(), this.getClass().getSimpleName());
-            plant = (item.getPlant());
+            plantSeed(item);
         }
 
         if (item.getSeedCount() == 0) {
@@ -90,6 +100,13 @@ public class Field extends GameObject {
         return commands;
     }
 
+    private void plantSeed(Seed item) {
+        MessageHelper.Item.usedItemOn(item.getName(), this.getClass().getSimpleName());
+        plant = (item.getPlant());
+        ripePlantSeen = false;
+        playAnimation(GrowthStage.ADULT);
+    }
+
     private Command[] useHarvester(Harvester item) {
         Command[] commands = new Command[1];
         if (plant != null) {
@@ -97,6 +114,9 @@ public class Field extends GameObject {
                 MessageHelper.Item.harvested(plant.getName());
                 commands[0] = new Command(CommandWord.ADDITEM, null, item.harvest(plant));
                 removePlant();
+
+                playAnimation(GrowthStage.SEED);
+
             } else {
                 MessageHelper.Item.unripePlant();
             }
@@ -114,16 +134,18 @@ public class Field extends GameObject {
     private boolean isPlantGrowing() { return plant != null && !plant.isRipe(); }
 
     private float depleteWater() {
-        if (water > depletionRate) {
-            return water = -depletionRate;
+        if (getWater() > getDepletionRate()) {
+            setWater(getWater() - getDepletionRate());
+            return getWater();
         } else {
             return 0;
         }
     }
 
     private float depleteNutrition() {
-        if (nutrition > depletionRate) {
-            return nutrition = -depletionRate;
+        if (getNutrition() > getDepletionRate()) {
+            setNutrition(getNutrition() - getDepletionRate());
+            return getNutrition();
         } else {
             return 0;
         }
@@ -135,26 +157,38 @@ public class Field extends GameObject {
 
 
     public float getWater() {
-        return water;
+        return water.get();
     }
 
     public void setWater(float water) {
-        this.water = water;
+        this.water.set(water);
+    }
+
+    public FloatProperty waterProperty() {
+        return water;
     }
 
     public float getNutrition() {
-        return nutrition;
+        return nutrition.get();
     }
 
     public void setNutrition(float nutrition) {
-        this.nutrition = nutrition;
+        this.nutrition.set(nutrition);
+    }
+
+    public FloatProperty nutritionProperty() {
+        return nutrition;
     }
 
     public float getDepletionRate() {
-        return depletionRate;
+        return depletionRate.get();
     }
 
     public void setDepletionRate(float depletionRate) {
-        this.depletionRate = depletionRate;
+        this.depletionRate.set(depletionRate);
+    }
+
+    public FloatProperty depletionRateProperty() {
+        return depletionRate;
     }
 }

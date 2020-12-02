@@ -1,18 +1,25 @@
 package worldofzuul.world;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
 import worldofzuul.util.Vector;
 
 public class Door extends GameObject {
-    private String exit;
+    private final StringProperty exit = new SimpleStringProperty();
     private Vector linkedLocation;
 
-    public Door(){}
+    public Door() {
+        linkedLocation = new Vector();
+    }
+
 
     public Door(String exit, Vector linkedLocation) {
-        this.exit = exit;
-        this.linkedLocation = linkedLocation;
+        this();
+        setExit(exit);
+        this.linkedLocation.setX(linkedLocation.getX());
+        this.linkedLocation.setY(linkedLocation.getY());
     }
 
     @Override
@@ -25,14 +32,6 @@ public class Door extends GameObject {
         return null;
     }
 
-    public String getExit() {
-        return exit;
-    }
-
-    public void setExit(String exit) {
-        this.exit = exit;
-    }
-
     public Vector getLinkedLocation() {
         return linkedLocation;
     }
@@ -41,10 +40,23 @@ public class Door extends GameObject {
         this.linkedLocation = linkedLocation;
     }
 
-    private Command[] getCommands(){
+
+    public String getExit() {
+        return exit.get();
+    }
+
+    public void setExit(String exit) {
+        this.exit.set(exit);
+    }
+
+    public StringProperty exitProperty() {
+        return exit;
+    }
+
+    private Command[] getCommands() {
 
         Command[] commands = new Command[2];
-        commands[0] = new Command(CommandWord.GO, exit);
+        commands[0] = new Command(CommandWord.GO, getExit());
         commands[1] = new Command(CommandWord.TELEPORT, linkedLocation.toString());
 
         return commands;

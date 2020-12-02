@@ -126,6 +126,10 @@ public class MessageHelper {
             System.out.println();
             System.out.println("Your command words are:");
         }
+
+        public static void plantBecameRipe(String plant) {
+            System.out.println(plant + " became ripe!");
+        }
     }
 
     private static void printNewLine(String string) {

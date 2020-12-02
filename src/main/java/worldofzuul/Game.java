@@ -1,6 +1,14 @@
 package worldofzuul;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.MapProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleMapProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import worldofzuul.item.*;
 import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
@@ -10,7 +18,6 @@ import worldofzuul.util.Vector;
 import worldofzuul.world.*;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -18,12 +25,13 @@ import java.util.concurrent.TimeUnit;
 import static worldofzuul.util.Math.tryParse;
 
 public class Game {
+    private final static int updateDelay = 60;
     private Parser parser;
     private Room currentRoom;
-    private Room[] rooms;
+    private final ListProperty<Room> rooms = new SimpleListProperty<>(
+            FXCollections.observableArrayList());
     private Player player;
     private ScheduledExecutorService scheduledThreadPool;
-    private int updateDelay = 60;
 
     public Game() {
         //createRooms();
@@ -31,7 +39,7 @@ public class Game {
 
     }
 
-    public Player getPlayer(){
+    public Player getPlayer() {
         return player;
     }
 
@@ -52,23 +60,24 @@ public class Game {
 
     public void reconfigureRooms(){
         for (Room room : rooms) {
-            HashMap<String, String> exitLinks = room.getRoomStringExits();
-            if(exitLinks.size() <= 0){
+            if (room.getExitStrings().size() <= 0) {
                 continue;
             }
 
-            Object[] values = exitLinks.values().toArray();
-            int i = 0;
-            for (String s : exitLinks.keySet()) {
-                Room exitRoom = findRoom((String) values[i]);
-                if(exitRoom != null){
-                    room.setExit(s, exitRoom);
-                }
-                i++;
+            MapProperty<String, Room> exits = new SimpleMapProperty<>(
+                    FXCollections.observableHashMap()
+            );
+
+            for (Room.Exit exit : room.getExitStrings()) {
+                Room exitRoom = findRoom(exit.getExitValue());
+                exits.put(exit.getExitKey(), exitRoom);
             }
 
+            if (exits.size() > 0) {
+                room.setExits(exits);
+            }
         }
-        setRoom(rooms[0]);
+        setRoom(getRooms().get(0));
     }
 
     private Room findRoom(String shortDescription){
@@ -105,15 +114,10 @@ public class Game {
 
         //DBG Start
         player = new Player();
-        outside.setRoomGrid(new GameObject[10][10]);
-        for (GameObject[] gameObjects : outside.getRoomGrid()) {
-            Arrays.fill(gameObjects, new Block());
-        }
 
-        theatre.setRoomGrid(new GameObject[10][10]);
-        for (GameObject[] gameObjects : theatre.getRoomGrid()) {
-            Arrays.fill(gameObjects, new Block());
-        }
+        outside.fillRoomGridWithBlocks(50, 50);
+        theatre.fillRoomGridWithBlocks(50, 50);
+
         outside.setGridGameObject(new Door("east", new Vector()), new Vector(2, 3));
         outside.setGridGameObject(new Field(), new Vector(1, 2));
 
@@ -125,12 +129,14 @@ public class Game {
 
         //DBG End
 
-        rooms = new Room[5];
-        rooms[0] = outside;
-        rooms[1] = theatre;
-        rooms[2] = pub;
-        rooms[3] = lab;
-        rooms[4] = office;
+        Room[] roomsA = new Room[5];
+        roomsA[0] = outside;
+        roomsA[1] = theatre;
+        roomsA[2] = pub;
+        roomsA[3] = lab;
+        roomsA[4] = office;
+
+        setRooms(roomsA);
 
 
         currentRoom = outside;
@@ -157,7 +163,7 @@ public class Game {
         scheduledThreadPool.scheduleAtFixedRate(() -> update(), 0, delay, TimeUnit.MICROSECONDS);
     }
 
-    private void update() {
+    public void update() {
         currentRoom.update().forEach(this::processCommandInternal);
     }
 
@@ -184,7 +190,7 @@ public class Game {
             selectItem(command);
         } else if (commandWord == CommandWord.INTERACT) {
             interactPlayer();
-        } else if (commandWord == commandWord.EXAMINE){
+        } else if (commandWord == CommandWord.EXAMINE){
             examineObject(command);
         }
         else if (commandWord == CommandWord.HARVEST){
@@ -380,14 +386,16 @@ public class Game {
 
     private void setPlayerPosition(Vector position) {
 
-        GameObject currentTile = currentRoom.getGridGameObject(player.getPos());
-
+        GameObject currentTile = player.getCurrentGameObject();
         player.setPos(position);
         GameObject newTile = currentRoom.getGridGameObject(position);
+        player.setCurrentGameObject(newTile);
 
-        processCommandInternal(currentTile.uponExit());
+        if(currentTile != null){
+            processCommandInternal(currentTile.uponExit());
+        }
+
         processCommandInternal(newTile.uponEntry(currentTile));
-
     }
 
     private boolean canPlayerMoveToPoint(int x, int y) {
@@ -401,11 +409,11 @@ public class Game {
         }
 
         GameObject targetPosition = currentRoom.getGridGameObject(new Vector(x, y));
-        if (targetPosition.colliding) {
+        if (targetPosition.isColliding()) {
             MessageHelper.Command.objectIsCollidable();
         }
 
-        return !targetPosition.colliding;
+        return !targetPosition.isColliding();
     }
 
     private boolean quit(Command command) {
@@ -417,11 +425,28 @@ public class Game {
         }
     }
 
-    public Room[] getRooms() {
-        return rooms;
+    @JsonGetter
+    public ObservableList<Room> getRooms() {
+        return rooms.get();
     }
 
+    @JsonSetter
     public void setRooms(Room[] rooms) {
-        this.rooms = rooms;
+        ObservableList<Room> temp = new SimpleListProperty<>(
+                FXCollections.observableArrayList());
+
+        temp.addAll(Arrays.asList(rooms));
+
+        this.rooms.set(temp);
+    }
+
+    @JsonIgnore
+    public void setRooms(ObservableList<Room> observableRooms) {
+        this.rooms.set(observableRooms);
+    }
+
+    @JsonIgnore
+    public ListProperty<Room> roomsProperty() {
+        return rooms;
     }
 }

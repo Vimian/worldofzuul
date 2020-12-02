@@ -2,6 +2,9 @@ package worldofzuul.world;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import worldofzuul.SpriteAnimation;
 import worldofzuul.parsing.Command;
 import worldofzuul.util.MessageHelper;
 
@@ -11,8 +14,8 @@ import worldofzuul.util.MessageHelper;
         @JsonSubTypes.Type(value= Field.class, name="Field"),
         @JsonSubTypes.Type(value= Door.class, name="Door")
 })
-public abstract class GameObject {
-    public boolean colliding;
+public abstract class GameObject extends SpriteAnimation {
+    private final BooleanProperty colliding = new SimpleBooleanProperty();
 
     public GameObject(){}
 
@@ -40,5 +43,17 @@ public abstract class GameObject {
 
     public Command[] uponExit() {
         return null;
+    }
+
+    public boolean isColliding() {
+        return colliding.get();
+    }
+
+    public void setColliding(boolean colliding) {
+        this.colliding.set(colliding);
+    }
+
+    public BooleanProperty collidingProperty() {
+        return colliding;
     }
 }
