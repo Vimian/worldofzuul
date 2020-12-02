@@ -1,5 +1,6 @@
 package worldofzuul.item;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleFloatProperty;
 
@@ -8,6 +9,8 @@ public interface IConsumable {
     FloatProperty remaining = new SimpleFloatProperty();
     FloatProperty capacity = new SimpleFloatProperty();
     FloatProperty consumptionRate = new SimpleFloatProperty();
+
+
 
     default float getConsumptionRate(){
         return consumptionRate.get();
@@ -22,21 +25,41 @@ public interface IConsumable {
         capacity.set(value);
     }
 
-    default void refill() {
-        setRemaining(getCapacity());
+    default Float getRemaining() {
+        return remaining.get();
     }
+
+    default void setRemaining(float value) {
+        remaining.set(value);
+    }
+
+    @JsonIgnore
+    default FloatProperty remainingProperty() {
+        return remaining;
+    }
+    @JsonIgnore
+    default FloatProperty capacityProperty() {
+        return capacity;
+    }
+    @JsonIgnore
+    default FloatProperty consumptionRateProperty() {
+        return consumptionRate;
+    }
+
+    @JsonIgnore
     default float deplete() {
         float depletionAmount = 0;
         if (getRemaining() > getConsumptionRate()) {
             setRemaining(getRemaining() - getConsumptionRate());
             depletionAmount = getConsumptionRate();
         } else if (getRemaining() > 0) {
-            depletionAmount  = getRemaining();
+            depletionAmount = getRemaining();
             setRemaining(0);
         }
 
         return depletionAmount;
     }
+    @JsonIgnore
     default boolean deplete(float amount){
         if(amount >= getRemaining()){
             setRemaining(getRemaining() - amount);
@@ -45,14 +68,8 @@ public interface IConsumable {
             return false;
         }
     }
+    default void refill() {
+        setRemaining(getCapacity());
+    }
 
-    default Float getRemaining() {
-        return remaining.get();
-    }
-    default void setRemaining(float value){
-        remaining.set(value);
-    }
-    default FloatProperty remainingProperty(){
-        return remaining;
-    }
 }

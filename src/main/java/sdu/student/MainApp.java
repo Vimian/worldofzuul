@@ -6,17 +6,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import worldofzuul.Game;
-import worldofzuul.item.Fertilizer;
-import worldofzuul.item.Harvester;
-import worldofzuul.item.Item;
+
 public class MainApp extends Application {
+
+    private static final String configFileName = "gameConfig.txt";
+
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("scene.fxml"));
 
+
+
+        Parent root = FXMLLoader.load(getClass().getResource("menu.fxml"));
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
         stage.setTitle("JavaFX and Gradle");
         stage.setScene(scene);
@@ -28,4 +29,7 @@ public class MainApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+
+
 }

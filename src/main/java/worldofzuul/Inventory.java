@@ -38,7 +38,9 @@ public class Inventory {
         this.items.add(item);
     }
 
-    public void removeItem(Item item) { this.items.remove(item); }
+    public void removeItem(Item item) {
+        this.items.remove(item);
+    }
 
     public void removeItem(int index) {
         if (items.size() > 0 && items.size() > index) {
@@ -51,9 +53,6 @@ public class Inventory {
             return items.get(index);
         }
         return null;
-    }
-    public boolean doesContain(Item item){
-        return items.contains(item);
     }
 
 }

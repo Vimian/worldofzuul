@@ -19,7 +19,7 @@ import static worldofzuul.util.Math.tryParse;
 public class Game {
     private Parser parser;
     private Room currentRoom;
-    public Player player;
+    private Player player;
     private ScheduledExecutorService scheduledThreadPool;
     private int updateDelay = 60;
 
