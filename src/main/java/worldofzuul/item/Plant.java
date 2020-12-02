@@ -1,17 +1,22 @@
 package worldofzuul.item;
 
+import static worldofzuul.item.GrowthStage.*;
+
 public class Plant extends Item {
-    private GrowthStage state1 = GrowthStage.SEED;
-    private GrowthStage state2 = GrowthStage.SPROUT;
-    private GrowthStage state3 = GrowthStage.ADULT;
-    private GrowthStage state4 = GrowthStage.RIPE;
+    private GrowthStage state = GrowthStage.SEED;
     private float seedQuality = 1;
     private float waterNeeded = 1000;
     private float nutritionNeeded = 1000;
     private int growthTime = 1000;
+    private float maxWater = waterNeeded;
+    private float maxNutrition = nutritionNeeded;
 
+    
+    private int timeTillDeath = 100;
+    
     //private int day;
-    //private int dayNotWatered;
+    private int ticksNotWatered;
+    
     //private boolean watered;
     //private boolean dead;
     private int growTicks = 0;
@@ -21,42 +26,15 @@ public class Plant extends Item {
         super(name);
         this.growthTime = 0;
     }
-    public void crops(){
-      switch(GrowthStageTime){
-          case crops.CORN:
-              for (int c = 0; c < 5; c++);
-              this.GrowthStageTime = 3;
-              this.waterNeeded = 700;
-              this.nutritionNeeded = 600;
-              break;
-          case RICE:
-              for (int c = 0; c < 5; c++);
-              this.GrowthStageTime = 1;
-              this.waterNeeded = 400;
-              this.nutritionNeeded = 600;
-              break;
-          case CASHEW:
-              for (int c = 0; c < 5; c++);
-              this.GrowthStageTime = 4;
-              this.waterNeeded = 600;
-              this.nutritionNeeded = 900;
-              break;
-          case MANGO:
-              for (int c = 0; c < 5; c++);
-              this.GrowthStageTime = 4;
-              this.waterNeeded = 600;
-              this.nutritionNeeded = 1000;
-              break;
-          case COWPEA:
-              for (int c = 0; c < 5; c++);
-              this.GrowthStageTime = 2;
-              this.waterNeeded = 500;
-              this.nutritionNeeded = 500;
-              break;
-      }
-    }
+ 
 
     public void grow(float water, float nutrition) {
+        
+        if(water == 0){
+            witherPlant();
+        } else if (ticksNotWatered != 0){
+            ticksNotWatered = 0;
+        }
 
         consumeNutrition(nutrition);
         consumeWater(water);
@@ -64,17 +42,17 @@ public class Plant extends Item {
         if (readyForNextStage()) {
             advanceStage();
        }
-        /*
-        switch (growthTime) {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                readyForNextStage();
-                break;
-        }
-         */
+  
         growTicks++;
+    }
+
+    private void witherPlant() {
+        ticksNotWatered++;
+        
+        if(ticksNotWatered >= timeTillDeath){
+            state = GrowthStage.DEAD;
+        }
+        
     }
 
     public boolean isRipe() {
@@ -92,10 +70,47 @@ public class Plant extends Item {
 
 
     private boolean readyForNextStage() {
+        switch (state) {
+            case SEED -> {
+                if(maxWater / 4 > maxWater - waterNeeded && maxNutrition / 4 > maxWater - nutritionNeeded){
+                    return true;
+                }
+            }
+            case SPROUT -> {
+                if((maxWater / 4) * 2 > maxWater - waterNeeded && (maxNutrition / 4) * 2 > maxWater - nutritionNeeded){
+                    return true;
+                }
+            }
+            case ADULT -> {
+                if((maxWater / 4) * 3 > maxWater - waterNeeded && (maxNutrition / 4) * 3 > maxWater - nutritionNeeded){
+                    return true;
+                }
+            }
+
+            default -> {
+                return false;
+            }
+        }
+
         return false;
     }
 
-    private void advanceStage() { }
+    private void advanceStage() {
+
+        switch (state) {
+            case SEED -> {
+                state = SPROUT;
+            }
+            case SPROUT -> {
+                state = ADULT;
+            }
+            case ADULT -> {
+                state = RIPE;
+            }
+        }
+        
+        
+    }
 
     /*
     public void plusday(){

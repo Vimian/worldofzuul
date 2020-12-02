@@ -4,5 +4,5 @@ public enum GrowthStage {
     SEED,
     SPROUT,
     ADULT,
-    RIPE
+    DEAD, RIPE
 }
