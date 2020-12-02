@@ -1,4 +1,5 @@
 plugins {
+    id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.9'
     id 'org.beryx.jlink' version '2.22.2'
@@ -11,6 +12,9 @@ repositories {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.3'
+
 }
 
 javafx {
@@ -23,7 +27,6 @@ jlink {
         name = 'worldofzuul'
     }
 }
-
 mainClassName = 'sdu.student.MainApp'
 
 jar {

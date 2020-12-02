@@ -8,6 +8,8 @@ public class Door extends GameObject {
     private String exit;
     private Vector linkedLocation;
 
+    public Door(){}
+
     public Door(String exit, Vector linkedLocation) {
         this.exit = exit;
         this.linkedLocation = linkedLocation;
@@ -23,7 +25,21 @@ public class Door extends GameObject {
         return null;
     }
 
+    public String getExit() {
+        return exit;
+    }
 
+    public void setExit(String exit) {
+        this.exit = exit;
+    }
+
+    public Vector getLinkedLocation() {
+        return linkedLocation;
+    }
+
+    public void setLinkedLocation(Vector linkedLocation) {
+        this.linkedLocation = linkedLocation;
+    }
 
     private Command[] getCommands(){
 
