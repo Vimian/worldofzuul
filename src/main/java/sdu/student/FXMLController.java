@@ -8,6 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import  javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
@@ -50,7 +52,7 @@ public class FXMLController implements Initializable {
 
     private TranslateTransition paneTranslation;
     private HashMap<String, Image> loadedImages;
-    private Game model;
+    public Game model;
     private ScheduledExecutorService scheduledThreadPool;
 
 
@@ -99,6 +101,7 @@ public class FXMLController implements Initializable {
             model.createRooms();
         }
     }
+
 
     private void examplePlayAnimation() {
 
