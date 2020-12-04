@@ -56,7 +56,7 @@ public class FieldInfoBarController implements Initializable {
             resetTimer();
         });
 
-        resetTimer();
+        infoBarContainer.setVisible(false);
     }
 
     private void setWaterProgress()

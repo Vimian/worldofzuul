@@ -193,7 +193,7 @@ public class EditorController implements Initializable {
             drawGrid(roomPane, getBackgroundRowCount());
         }
 
-        drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim());
+        drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim(), getClass());
 
 
     }

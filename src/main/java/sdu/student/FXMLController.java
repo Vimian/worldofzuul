@@ -232,7 +232,7 @@ public class FXMLController implements Initializable {
             setBackground(loadedImages.get("sprites/room/test.png"));
         }
         drawGrid(roomPane, getBackgroundRowCount());
-        drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim());
+        drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim(), getClass());
     }
 
     private void bindProperties() {
@@ -342,26 +342,9 @@ public class FXMLController implements Initializable {
 
     private void rightClickGameObject(GameObject object){
 
-
-
-
         if(object instanceof Field && selectedGamePosition != null){
 
-
-
-            Node infoBar = loadFieldInfoBar((Field) object);
-            if (infoBar != null) {
-                roomPane.getChildren().add(infoBar);
-                setNodePositionToVectorCorner(infoBar, selectedGamePosition, getBackgroundTileDim());
-            }
-
-
-
-
-
-
-
-
+            //TODO: Implement on click functionality
 
         } else {
 
@@ -372,22 +355,6 @@ public class FXMLController implements Initializable {
     }
 
 
-    private Node loadFieldInfoBar(Field field){
-        FXMLLoader loader = new FXMLLoader();
-
-        //Defines our controller
-        loader.setControllerFactory(aClass -> new FieldInfoBarController(field));
-        //Defines the FXML file
-        loader.setLocation(getClass().getResource("fieldInfoBar.fxml"));
 
 
-        try {
-            return loader.load();
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 }
