@@ -12,7 +12,7 @@
     <VBox alignment="CENTER">
         <HBox alignment="CENTER">
 
-            <StackPane>
+            <StackPane fx:id="gameContainerPane">
                 <Pane fx:id="roomPane"/>
 
 

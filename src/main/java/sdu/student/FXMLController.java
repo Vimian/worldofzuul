@@ -1,15 +1,23 @@
 package sdu.student;
 
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import worldofzuul.Game;
 import worldofzuul.item.GrowthStage;
@@ -37,6 +45,7 @@ public class FXMLController implements Initializable {
     private static final int backgroundScaling = 6;
     private static final double paneTransDelayCoefficient = 1.2;
     private static final int updateDelay = 60;
+    public StackPane gameContainerPane;
     @FXML
     private ListView playerItems;
     @FXML
@@ -69,6 +78,10 @@ public class FXMLController implements Initializable {
         examplePlayAnimation();
 
         enableGameUpdater();
+
+
+        displayTextMessage("Cooool", 5000);
+        displayTextMessage("Cooool", 5000);displayTextMessage("Cooool", 5000);displayTextMessage("Cooool", 5000);
     }
 
     private void enableGameUpdater() {
@@ -314,6 +327,44 @@ public class FXMLController implements Initializable {
 
     private double getBackgroundRowCount() {
         return (roomPane.getMinWidth() / backgroundScaling) / gameTileDim;
+    }
+
+    private void displayTextMessage(String text, int deletionDelay){
+
+
+        var timeOutDelay = 5000;
+
+        //Configure label
+        Label newLabel = new Label(text);
+        newLabel.setContentDisplay(ContentDisplay.CENTER);
+        newLabel.setTextAlignment(TextAlignment.CENTER);
+
+        newLabel.setFont(new Font("Calisto MT", 48));
+        DropShadow effect = new DropShadow(0.67, Color.WHITE);
+        effect.setInput(new Glow(0.65));
+        newLabel.setEffect(effect);
+
+
+        gameContainerPane.getChildren().add(newLabel);
+
+
+        //Delete thingie
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run()
+            {
+               // newLabel.setVisible(false);
+                gameContainerPane.getChildren().remove(newLabel);
+                this.cancel();
+            }
+        }, timeOutDelay);
+
+
+
+
+
     }
 
 }
