@@ -734,7 +734,9 @@
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
               "colliding": false,
-              "water": 100000.0,
+              "maxWater": 20000.0,
+              "maxNutrition": 20000.0,
+              "water": 10000.0,
               "nutrition": 10000.0,
               "depletionRate": 5.0
             }
@@ -4747,7 +4749,9 @@
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
               "colliding": false,
-              "water": 10.0,
+              "maxWater": 20000.0,
+              "maxNutrition": 20000.0,
+              "water": 10000.0,
               "nutrition": 10000.0,
               "depletionRate": 5.0
             }
@@ -4785,6 +4789,8 @@
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
               "colliding": false,
+              "maxWater": 20000.0,
+              "maxNutrition": 20000.0,
               "water": 10000.0,
               "nutrition": 10000.0,
               "depletionRate": 5.0
@@ -5105,6 +5111,8 @@
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
               "colliding": false,
+              "maxWater": 20000.0,
+              "maxNutrition": 20000.0,
               "water": 10000.0,
               "nutrition": 10000.0,
               "depletionRate": 5.0
@@ -5143,6 +5151,8 @@
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
               "colliding": false,
+              "maxWater": 20000.0,
+              "maxNutrition": 20000.0,
               "water": 10000.0,
               "nutrition": 10000.0,
               "depletionRate": 5.0
@@ -35322,14 +35332,14 @@
             "defaultImageFile": null,
             "name": "Hose",
             "remaining": 50000.0,
-            "consumptionRate": 2000.0,
-            "capacity": 50000.0
+            "capacity": 50000.0,
+            "consumptionRate": 2000.0
           }
         },
         {
           "Seed": {
             "defaultImageFile": null,
-            "name": "Corn",
+            "name": "Corn seed",
             "seedCount": 3
           }
         }

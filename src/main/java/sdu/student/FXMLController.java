@@ -3,22 +3,27 @@ package sdu.student;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
+import sdu.student.editor.BlockEditor;
+import sdu.student.editor.DoorEditor;
+import sdu.student.editor.FieldEditor;
 import worldofzuul.Game;
 import worldofzuul.item.GrowthStage;
 import worldofzuul.item.Item;
 import worldofzuul.util.Vector;
-import worldofzuul.world.Direction;
-import worldofzuul.world.Field;
-import worldofzuul.world.Room;
+import worldofzuul.world.*;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.Executors;
@@ -27,8 +32,7 @@ import java.util.concurrent.TimeUnit;
 
 import static worldofzuul.util.Data.*;
 import static worldofzuul.util.Drawing.*;
-import static worldofzuul.util.Math.vectorDifference;
-import static worldofzuul.util.Math.vectorDirection;
+import static worldofzuul.util.Math.*;
 
 public class FXMLController implements Initializable {
     private static final String configFileName = "gameConfig.json";
@@ -52,6 +56,7 @@ public class FXMLController implements Initializable {
     private HashMap<String, Image> loadedImages;
     private Game model;
     private ScheduledExecutorService scheduledThreadPool;
+    private Vector selectedGamePosition;
 
 
     @Override
@@ -69,6 +74,7 @@ public class FXMLController implements Initializable {
         examplePlayAnimation();
 
         enableGameUpdater();
+
     }
 
     private void enableGameUpdater() {
@@ -316,4 +322,72 @@ public class FXMLController implements Initializable {
         return (roomPane.getMinWidth() / backgroundScaling) / gameTileDim;
     }
 
+    public void roomPaneClicked(MouseEvent mouseEvent) {
+
+        if (mouseEvent.getButton() == MouseButton.SECONDARY){
+
+            selectedGamePosition = positionClickedOnPane(getBackgroundTileDim(), getBackgroundTileDim(), mouseEvent.getX(), mouseEvent.getY());
+            if (selectedGamePosition.getX() < 0 || selectedGamePosition.getY() < 0 || selectedGamePosition.getX() > getBackgroundRowCount() || selectedGamePosition.getY() > getBackgroundRowCount()) {
+                return;
+            }
+
+            try {
+                rightClickGameObject(model.getRoom().getGridGameObject(selectedGamePosition));
+            } catch (ArrayIndexOutOfBoundsException e) { // Handle exceptions caused by non-matching RoomGrid sizes or invalid positions
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+
+    private void rightClickGameObject(GameObject object){
+
+
+
+
+        if(object instanceof Field && selectedGamePosition != null){
+
+
+
+            Node infoBar = loadFieldInfoBar((Field) object);
+            if (infoBar != null) {
+                roomPane.getChildren().add(infoBar);
+                setNodePositionToVectorCorner(infoBar, selectedGamePosition, getBackgroundTileDim());
+            }
+
+
+
+
+
+
+
+
+
+        } else {
+
+        }
+
+
+
+    }
+
+
+    private Node loadFieldInfoBar(Field field){
+        FXMLLoader loader = new FXMLLoader();
+
+        //Defines our controller
+        loader.setControllerFactory(aClass -> new FieldInfoBarController(field));
+        //Defines the FXML file
+        loader.setLocation(getClass().getResource("fieldInfoBar.fxml"));
+
+
+        try {
+            return loader.load();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

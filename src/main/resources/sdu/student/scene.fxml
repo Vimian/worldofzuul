@@ -12,14 +12,17 @@
     <VBox alignment="CENTER">
         <HBox alignment="CENTER">
 
-            <StackPane>
-                <Pane fx:id="roomPane"/>
+            <StackPane
+
+
+            >
+                <Pane fx:id="roomPane" onMouseClicked="#roomPaneClicked"/>
 
 
                 <ImageView
                         fx:id="imageView"
                         fitHeight="150.0"
-                        pickOnBounds="true"
+                        pickOnBounds="false"
                         preserveRatio="true"
 
                 />
@@ -36,8 +39,12 @@
 
     </VBox>
 
-    <HBox>
-        <VBox HBox.hgrow="ALWAYS">
+    <HBox
+            pickOnBounds="false"
+    >
+        <VBox HBox.hgrow="ALWAYS"
+        pickOnBounds="false"
+        >
 
             <Label fx:id="label" text="Label"/>
             <Button text="North" onAction="#moveNorth"/>
@@ -56,7 +63,7 @@
 
 
         </VBox>
-        <VBox HBox.hgrow="ALWAYS">
+        <VBox HBox.hgrow="ALWAYS"         pickOnBounds="false">
 
         </VBox>
     </HBox>

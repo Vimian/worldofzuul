@@ -47,6 +47,15 @@ public class Drawing {
 
     }
 
+    public static void setNodePositionToVector(Node node, Vector position, double tileDim){
+        node.setTranslateX(position.getX() * tileDim);
+        node.setTranslateY(position.getY() * tileDim);
+    }
+    public static void setNodePositionToVectorCorner(Node node, Vector position, double tileDim){
+        node.setTranslateX(position.getX() * tileDim + tileDim / 3);
+        node.setTranslateY(position.getY() * tileDim - tileDim / 3);
+    }
+
     public static void drawGameObjects(Room room, HashMap<String, Image> loadedImages, Pane roomPane, double backgroundTileDim) {
         for (int i = 0; i < room.getRoomGrid().length; i++) {
             for (int j = 0; j < room.getRoomGrid().length; j++) {
