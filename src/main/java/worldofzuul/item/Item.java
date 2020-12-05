@@ -8,9 +8,10 @@ public abstract class Item {
     private Double value;
     private Double sellbackRate;
 
-
-    public Item(String name) {
+    public Item(String name, Double value, Double sellbackRate) {
         this.name = name;
+        this.value = value;
+        this.sellbackRate = sellbackRate;
     }
 
     public String getName() {
