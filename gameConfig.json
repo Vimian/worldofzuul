@@ -734,7 +734,7 @@
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
               "colliding": false,
-              "water": 100000.0,
+              "water": 10.0,
               "nutrition": 10000.0,
               "depletionRate": 5.0
             }

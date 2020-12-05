@@ -18,9 +18,6 @@ public class Plant extends Item {
     private int growTicks = 0;
     private crops crops;
 
-    public Plant(){}
-    public Plant(String name) {
-        super(name);
     public Plant(String name, Double value, Double sellbackRate) {
         super(name, value ,sellbackRate);
         this.growthTime = 0;
@@ -124,29 +121,35 @@ public class Plant extends Item {
     }
 
     public boolean isRipe() {
-        return waterNeeded <= 0 && nutritionNeeded <= 0 && growTicks >= growthTime && state == RIPE;
+        return waterNeeded <= 0 && nutritionNeeded <= 0 && growTicks >= growthTime;
     }
 
 
     private void consumeWater(float water) {
-        waterNeeded -= water * seedQuality;
+        waterNeeded = -water * seedQuality;
     }
 
     private void consumeNutrition(float nutrition) {
-        nutritionNeeded -= nutrition * seedQuality;
+        nutritionNeeded = -nutrition * seedQuality;
     }
 
 
     private boolean readyForNextStage() {
         switch (state) {
             case SEED -> {
-                return requiredPropertiesReady(2);
+                if(maxWater / 4 > maxWater - waterNeeded && maxNutrition / 4 > maxWater - nutritionNeeded){
+                    return true;
+                }
             }
             case SPROUT -> {
-                return requiredPropertiesReady(3);
+                if((maxWater / 4) * 2 > maxWater - waterNeeded && (maxNutrition / 4) * 2 > maxWater - nutritionNeeded){
+                    return true;
+                }
             }
             case ADULT -> {
-                return requiredPropertiesReady(4);
+                if((maxWater / 4) * 3 > maxWater - waterNeeded && (maxNutrition / 4) * 3 > maxWater - nutritionNeeded){
+                    return true;
+                }
             }
 
             default -> {
@@ -154,12 +157,7 @@ public class Plant extends Item {
             }
         }
 
-    }
-
-    private boolean requiredPropertiesReady(int i) {
-        return (maxWater / 4) * i < maxWater - waterNeeded &&
-                (maxNutrition / 4) * i < maxWater - nutritionNeeded &&
-                (growthTime / 4) * i < growTicks;
+        return false;
     }
 
     private void advanceStage() {

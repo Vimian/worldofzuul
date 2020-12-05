@@ -3,10 +3,8 @@ package sdu.student;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
@@ -16,7 +14,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        //Group subRoot = new Group();
+
 
         Parent root = FXMLLoader.load(getClass().getResource("menu.fxml"));
         Scene scene = new Scene(root);
@@ -24,6 +22,8 @@ public class MainApp extends Application {
         stage.setTitle("JavaFX and Gradle");
         stage.setScene(scene);
         stage.show();
+
+
     }
 
     public static void main(String[] args) {
