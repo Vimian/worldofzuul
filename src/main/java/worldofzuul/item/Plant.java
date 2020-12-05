@@ -1,6 +1,7 @@
 package worldofzuul.item;
 
 import static worldofzuul.item.GrowthStage.*;
+import worldofzuul.world.*;
 
 public class Plant extends Item {
     private GrowthStage state = GrowthStage.SEED;
@@ -10,37 +11,31 @@ public class Plant extends Item {
     private int growthTime = 1000;
     private float maxWater = waterNeeded;
     private float maxNutrition = nutritionNeeded;
-
-    
     private int timeTillDeath = 100;
-
     private int ticksNotWatered;
-
     private int growTicks = 0;
 
-    public Plant(){}
-    public Plant(String name) {
-        super(name);
+    public Plant(String name, Double value, Double sellbackRate) {
+        super(name, value ,sellbackRate);
         this.growthTime = 0;
     }
- 
+    public void grow(float water, float nutrition, Double pH) {
+        if (pH <= 16 && pH >= 26) {
+            if (water == 0) {
+                witherPlant();
+            } else if (ticksNotWatered != 0) {
+                ticksNotWatered = 0;
+            }
 
-    public void grow(float water, float nutrition) {
-        
-        if(water == 0){
-            witherPlant();
-        } else if (ticksNotWatered != 0){
-            ticksNotWatered = 0;
+            consumeNutrition(nutrition);
+            consumeWater(water);
+
+            if (readyForNextStage()) {
+                advanceStage();
+            }
+
+            growTicks++;
         }
-
-        consumeNutrition(nutrition);
-        consumeWater(water);
-
-        if (readyForNextStage()) {
-            advanceStage();
-       }
-  
-        growTicks++;
     }
 
     private void witherPlant() {
