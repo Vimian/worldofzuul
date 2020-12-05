@@ -46,6 +46,7 @@
             <Button text="West" onAction="#moveWest"/>
 
 
+
             <Button text="Interact" onAction="#interact"/>
 
 
