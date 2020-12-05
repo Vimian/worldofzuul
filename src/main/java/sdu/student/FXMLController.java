@@ -23,11 +23,13 @@ import javafx.util.Duration;
 import worldofzuul.Game;
 import worldofzuul.item.GrowthStage;
 import worldofzuul.item.Item;
+import worldofzuul.util.CustomPrintStream;
 import worldofzuul.util.Vector;
 import worldofzuul.world.Direction;
 import worldofzuul.world.Field;
 import worldofzuul.world.Room;
 
+import java.io.PrintStream;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.Executors;
@@ -40,6 +42,8 @@ import static worldofzuul.util.Math.vectorDifference;
 import static worldofzuul.util.Math.vectorDirection;
 
 public class FXMLController implements Initializable {
+    private final CustomPrintStream printStream = new CustomPrintStream(System.out);
+    private final PrintStream systemPrintStream = System.out;
     private static final String configFileName = "gameConfig.json";
     private static final String spriteDirectory = "sprites";
     private static final int gameTileDim = 16;
@@ -47,8 +51,8 @@ public class FXMLController implements Initializable {
     private static final double paneTransDelayCoefficient = 1.2;
     private static final int updateDelay = 60;
 
-    private static final int textDisplayDeletionDelay = 12000;
-    private static final int textDisplayFadeDelay = 3000;
+    private static final int textDisplayDeletionDelay = 8000;
+    private static final int textDisplayFadeDelay = 1500;
 
 
     public StackPane gameContainerPane;
@@ -86,6 +90,9 @@ public class FXMLController implements Initializable {
 
         enableGameUpdater();
 
+        //Configure custom PrintStream
+        System.setOut(printStream);
+        printStream.printListProperty().addListener((observable, oldValue, newValue) -> displayTextMessage(newValue.get(newValue.size() - 1), textDisplayDeletionDelay));
     }
 
     private void enableGameUpdater() {
