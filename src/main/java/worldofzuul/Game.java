@@ -18,6 +18,7 @@ import worldofzuul.util.Vector;
 import worldofzuul.world.*;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -125,6 +126,17 @@ public class Game {
         player.getInventory().addItem(new Harvester("Sickle"));
         player.getInventory().addItem(new Irrigator("Hose"));
         player.getInventory().setSelectedItem(new Seed("Corn", 3));
+
+        /*
+        *
+
+          player.getInventory().addItem(new Fertilizer("Manure", 3.0, 2.0, 2.0));
+        player.getInventory().addItem(new Harvester("Sickle",0.0, 2.0));
+        player.getInventory().addItem(new Irrigator("Hose",2.0 , 2.0));
+        player.getInventory().setSelectedItem(new Seed("Corn", 3, 2.0, 2.0));
+
+
+        * */
 
 
         //DBG End
