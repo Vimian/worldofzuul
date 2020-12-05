@@ -81,10 +81,10 @@ public class Game {
         outside.setGridGameObject(new Door("east", new Vector()), new Vector(2, 3));
         outside.setGridGameObject(new Field(), new Vector(1, 2));
 
-        player.getInventory().addItem(new Fertilizer("Manure", 3));
-        player.getInventory().addItem(new Harvester("Sickle"));
-        player.getInventory().addItem(new Irrigator("Hose"));
-        player.getInventory().setSelectedItem(new Seed("Corn", 3));
+        player.getInventory().addItem(new Fertilizer("Manure", 3.0, 2.0, 2.0));
+        player.getInventory().addItem(new Harvester("Sickle",0.0, 2.0));
+        player.getInventory().addItem(new Irrigator("Hose",2.0 , 2.0));
+        player.getInventory().setSelectedItem(new Seed("Corn", 3, 2.0, 2.0));
 
 
         //DBG End

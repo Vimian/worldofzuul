@@ -14,7 +14,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import worldofzuul.Game;
-import worldofzuul.Player;
 import worldofzuul.world.Direction;
 
 public class FXMLController implements Initializable {
