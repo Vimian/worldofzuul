@@ -86,9 +86,6 @@ public class FXMLController implements Initializable {
 
         enableGameUpdater();
 
-
-        displayTextMessage("Cooool", 5000);
-        displayTextMessage("Cooool", 5000);displayTextMessage("Cooool", 5000);displayTextMessage("Cooool", 5000);
     }
 
     private void enableGameUpdater() {
@@ -274,7 +271,6 @@ public class FXMLController implements Initializable {
         if (!isPlayerMoving()) {
             model.move(Direction.NORTH);
         }
-
     }
 
     public void moveSouth(ActionEvent actionEvent) {
