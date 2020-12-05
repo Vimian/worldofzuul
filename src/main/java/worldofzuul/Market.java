@@ -8,7 +8,9 @@ public class Market {
 
    public Market(HashMap<Item, Double> stock){
        this.stock.put(fertilizer, 320.0);
-       this.stock.put(harvester, 230.0);
+       this.stock.put(harvester1, 0.0);
+       this.stock.put(harvester2,230.0);
+       this.stock.put(harvester3, 4000.0);
        this.stock.put(irrigator1, 320.0);
        this.stock.put(irrigator2, 300.0);
        this.stock.put(irrigator3, 300.0);
@@ -23,7 +25,9 @@ public class Market {
        this.stock.put(seed4, 93.0);
        this.stock.put(seed5, 10.0);
    }
-    Harvester harvester = new Harvester("Sickle", 230.0, 0.95);
+   Harvester harvester1 = new Harvester("Hands", 0.0, 0.0);
+   Harvester harvester2 = new Harvester("Sickle", 230.0, 0.0);
+   Harvester harvester3 = new Harvester("Scythe", 2000.0,0.0);
     Fertilizer fertilizer = new Fertilizer("Fertilizer", 2, 320.0, 0.975);
     Irrigator irrigator1 = new Irrigator("Bucket", 320.0, 0.0);
     Irrigator irrigator2 = new Irrigator("Watering Can", 300.0, 0.0 );
@@ -61,6 +65,20 @@ public class Market {
                 player.setBalance(player.getBalance() - item.getValue());
                 player.getInventory().addItem(irrigator3);
                 player.getInventory().removeItem(irrigator2);
+            }
+        }
+        if(player.getInventory().doesContain(harvester2)) {
+            if (player.getBalance() >= item.getValue()) {
+                player.setBalance(player.getBalance() - item.getValue());
+                player.getInventory().addItem(harvester2);
+                player.getInventory().removeItem(harvester1);
+            }
+        }
+        if(player.getInventory().doesContain(harvester3)){
+            if(player.getBalance() >= item.getValue()) {
+                player.setBalance(player.getBalance() - item.getValue());
+                player.getInventory().addItem(harvester3);
+                player.getInventory().removeItem(harvester2);
             }
         }
         else {
