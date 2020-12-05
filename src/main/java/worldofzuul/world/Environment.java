@@ -39,8 +39,6 @@ public class Environment {
         } else if (shouldItRain()) {
             startRaining();
         }
-
-
     }
 
 
@@ -50,7 +48,7 @@ public class Environment {
             if(isRaining()){
                 ((Field) gameObject).addWater(rainWaterAmount);
             } else if(dayTime()){
-                ((Field) gameObject).shineLight();
+                ((Field) gameObject).shineLight();      //#Svær kode annotering (Casting).
             }
         }
     }

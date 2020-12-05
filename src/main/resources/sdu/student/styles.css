@@ -8,3 +8,6 @@
     -fx-alignment: center;
     -fx-text-alignment: center;
 }
+#anchor {
+    -fx-background-color: darkgrey;
+}

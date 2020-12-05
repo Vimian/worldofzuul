@@ -1,12 +1,16 @@
 package sdu.student;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,11 +40,54 @@ public class MenuController implements Initializable {
     public void changeSceneGame(ActionEvent actionEvent) {
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("scene.fxml"));
+            FXMLLoader loader = new FXMLLoader();
+            FXMLController controller = new FXMLController();
+
+
+            loader.setControllerFactory(aClass -> controller);
+            //Defines the FXML file
+            loader.setLocation(getClass().getResource("scene.fxml"));
+
+
+
             Stage stage = (Stage) gameButton.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
             stage.setScene(scene);
+
+//            scene.setOnKeyPressed(new EventHandler<KeyEvent>() { - non lampda implementation
+//                @Override
+//                public void handle(KeyEvent event) {
+//                    switch (event.getCode()) {
+//                        case A:
+//                            controller.moveEast(actionEvent);
+//                        ...
+//                    }
+//                }
+//            });
+
+            scene.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
+
+                switch(e.getCode()){
+                    case W:
+                        controller.moveNorth(actionEvent);
+                        break;
+                    case D:
+                        controller.moveEast(actionEvent);
+                        break;
+                    case S:
+                        controller.moveSouth(actionEvent);
+                        break;
+                    case A:
+                        controller.moveWest(actionEvent);
+                        break;
+                }
+
+
+            } );
+            stage.setScene(scene);
+
+
         }catch (IOException e){
             e.printStackTrace();
         }

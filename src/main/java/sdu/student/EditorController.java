@@ -126,6 +126,7 @@ public class EditorController implements Initializable {
         }
     }
 
+
     public void changeType(ActionEvent actionEvent) {
         if (model.getRoom().getGridGameObject(currentlyEditingPos) != currentGameObject) {
             return;
@@ -193,9 +194,7 @@ public class EditorController implements Initializable {
             drawGrid(roomPane, getBackgroundRowCount());
         }
 
-        drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim());
-
-
+        drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim(), currentlyEditingPos);
     }
 
 
@@ -306,6 +305,10 @@ public class EditorController implements Initializable {
         try {
             GameObject gameObject = model.getRoom().getGridGameObject(currentlyEditingPos);
             selectGameObject(gameObject);
+            drawRoom();
+
+
+
         } catch (ArrayIndexOutOfBoundsException e) { // Handle exceptions caused by non-matching RoomGrid sizes or invalid positions
             System.out.println(e.getMessage());
             //Create fitting RoomGrid
