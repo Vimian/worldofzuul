@@ -20,9 +20,6 @@ public class Field extends GameObject {
     private final FloatProperty depletionRate = new SimpleFloatProperty(5);
     private boolean ripePlantSeen = false;
 
-    public Field() {
-    }
-
     public Field(Fertilizer fertilizer) {
         this.fertilizer = fertilizer;
     }
