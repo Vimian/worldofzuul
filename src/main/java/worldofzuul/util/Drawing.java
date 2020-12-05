@@ -59,53 +59,8 @@ public class Drawing {
         node.setTranslateY(position.getY() * tileDim - tileDim / 3);
     }
 
-    public static void drawGameObjects(Room room, HashMap<String, Image> loadedImages, Pane roomPane, double backgroundTileDim, Class<?> callerController) {
-        for (int i = 0; i < room.getRoomGrid().length; i++) {
-            for (int j = 0; j < room.getRoomGrid().length; j++) {
-                var rect = new Rectangle(j * backgroundTileDim, i * backgroundTileDim, backgroundTileDim, backgroundTileDim);
 
-                GameObject object = room.getGridGameObject(new Vector(j, i));
-
-                //Draw img
-                //TODO: Refactor & Optimize
-                drawGameObjectImage(loadedImages, roomPane, rect, object);
-
-
-                //Draw border
-                if (object instanceof Block) {
-                    if (object.isColliding()) {
-                        rect.setStroke(Color.RED);
-                    } else {
-                        continue;
-                    }
-                } else if (object instanceof Door) {
-
-                    if (object.isColliding()) {
-                        rect.setStroke(Color.CYAN);
-                    } else {
-                        rect.setStroke(Color.BLUE);
-                    }
-
-                } else if (object instanceof Field) {
-                    appendFieldInfoBar((Field) object, roomPane, new Vector(j, i), backgroundTileDim, callerController);
-                    if (object.isColliding()) {
-                        rect.setStroke(Color.YELLOW);
-                    } else {
-                        rect.setStroke(Color.GREEN);
-                    }
-                } else {
-                    continue;
-                }
-
-
-                rect.setStrokeWidth(4);
-                rect.setFill(Color.TRANSPARENT);
-                roomPane.getChildren().add(rect);
-            }
-        }
-    }
-
-    public static void drawGameObjects(Room room, HashMap<String, Image> loadedImages, Pane roomPane, double backgroundTileDim, Vector clickedPos) {
+    public static void drawGameObjects(Room room, HashMap<String, Image> loadedImages, Pane roomPane, double backgroundTileDim, Class<?> callerController, Vector clickedPos) {
         for (int i = 0; i < room.getRoomGrid().length; i++) {
             for (int j = 0; j < room.getRoomGrid().length; j++) {
                 var rect = new Rectangle(j * backgroundTileDim, i * backgroundTileDim, backgroundTileDim, backgroundTileDim);
@@ -138,6 +93,7 @@ public class Drawing {
                     }
 
                 } else if (object instanceof Field) {
+                    appendFieldInfoBar((Field) object, roomPane, new Vector(j, i), backgroundTileDim, callerController);
                     if (object.isColliding()) {
                         rect.setStroke(Color.YELLOW);
                     } else {

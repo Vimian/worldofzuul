@@ -286,7 +286,7 @@ public class FXMLController implements Initializable {
             setBackground(loadedImages.get("sprites/room/test.png"));
         }
         drawGrid(roomPane, getBackgroundRowCount());
-        drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim());
+        drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim(), getClass(), selectedGamePosition);
     }
 
     private void bindProperties() {
