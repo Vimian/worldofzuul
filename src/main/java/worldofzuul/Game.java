@@ -33,6 +33,7 @@ public class Game {
             FXCollections.observableArrayList());
     private Player player;
     private ScheduledExecutorService scheduledThreadPool;
+    private Market market = new Market();
 
     public Game() {
         //createRooms();
@@ -51,6 +52,16 @@ public class Game {
     public void setRoom(Room room){
         currentRoom = room;
     }
+
+
+    public Market getMarket() {
+        return market;
+    }
+
+    public void setMarket(Market market) {
+        this.market = market;
+    }
+
     public void move(Direction direction) {
         processCommandInternal(new Command(CommandWord.MOVE, direction.toString()));
     }
@@ -59,15 +70,20 @@ public class Game {
     }
 
 
+
     public void reconfigureRooms(){
         for (Room room : rooms) {
             if (room.getExitStrings().size() <= 0) {
                 continue;
             }
 
+
+
             MapProperty<String, Room> exits = new SimpleMapProperty<>(
                     FXCollections.observableHashMap()
             );
+
+
 
             for (Room.Exit exit : room.getExitStrings()) {
                 Room exitRoom = findRoom(exit.getExitValue());

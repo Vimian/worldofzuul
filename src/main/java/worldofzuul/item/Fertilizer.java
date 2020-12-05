@@ -1,6 +1,8 @@
 package worldofzuul.item;
 
-public class Fertilizer extends Item implements ISellable, IConsumable {
+
+public class Fertilizer extends Consumable {
+
 
     public Fertilizer(){}
     public Fertilizer(String name, float amount) {
@@ -13,5 +15,8 @@ public class Fertilizer extends Item implements ISellable, IConsumable {
         setValue(value);
         setSellBackRate(sellbackRate);
     }
+
+
+
 
 }

@@ -1,6 +1,6 @@
 package worldofzuul.item;
 
-public class Money extends Item implements IConsumable {
+public class Money extends Consumable {
 
     public Money(){}
     public Money(String name, float cash) {

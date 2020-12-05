@@ -48,8 +48,7 @@ import sdu.student.editor.BlockEditor;
 import sdu.student.editor.DoorEditor;
 import sdu.student.editor.FieldEditor;
 import worldofzuul.Game;
-import worldofzuul.item.GrowthStage;
-import worldofzuul.item.Item;
+import worldofzuul.item.*;
 import worldofzuul.util.CustomPrintStream;
 import worldofzuul.util.Vector;
 import worldofzuul.world.*;
@@ -129,6 +128,8 @@ public class FXMLController implements Initializable {
         printStream.printListProperty().addListener((observable, oldValue, newValue) -> {
            Platform.runLater(() -> displayTextMessage(newValue.get(newValue.size() - 1), textDisplayDeletionDelay));
         });
+
+
     }
 
     private void enableGameUpdater() {

@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static java.lang.Float.valueOf;
 
-public class Seed extends Item implements ISellable, IConsumable {
+public class Seed extends Consumable {
     private static final String nameDelimiter = " ";
     private int maxCornSeedCount = 850;
     private int minCornSeedCount = 750;

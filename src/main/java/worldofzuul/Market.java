@@ -1,29 +1,52 @@
 package worldofzuul;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import worldofzuul.item.*;
+
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Market {
-   public HashMap<Item, Double> stock = new HashMap<Item, Double>();
+    private List<Item> stock = new LinkedList<>();
+
+
+    public Market() {
+        //this(null);
+
+
+
+    }
 
    public Market(HashMap<Item, Double> stock){
-       this.stock.put(fertilizer, 320.0);
-       this.stock.put(harvester1, 0.0);
-       this.stock.put(harvester2,230.0);
-       this.stock.put(harvester3, 4000.0);
-       this.stock.put(irrigator1, 320.0);
-       this.stock.put(irrigator2, 300.0);
-       this.stock.put(irrigator3, 300.0);
-       this.stock.put(plant1, 2.0);
-       this.stock.put(plant2, 2.0);//a
-       this.stock.put(plant3, 4.0);
-       this.stock.put(plant4, 10.0);
-       this.stock.put(plant5, 20.0);
-       this.stock.put(seed1, 13.0);
-       this.stock.put(seed2, 32.0);
-       this.stock.put(seed3, 42.0);
-       this.stock.put(seed4, 93.0);
-       this.stock.put(seed5, 10.0);
+       this.stock.clear();
+
+       this.stock.addAll(Arrays.asList(
+                fertilizer,
+                harvester1,
+                harvester2,
+                harvester3,
+                irrigator1,
+                irrigator2,
+                irrigator3,
+                plant1,
+                plant2,
+                plant3,
+                plant4,
+                plant5,
+                seed1,
+                seed2,
+                seed3,
+                seed4,
+                seed5
+        ));
+
+
+
+
    }
    Harvester harvester1 = new Harvester("Hands", 0.0, 0.0);
    Harvester harvester2 = new Harvester("Sickle", 230.0, 0.0);
@@ -43,10 +66,11 @@ public class Market {
     Seed seed4 = new Seed("MangoSeeds", 5,93.0,0.98);
     Seed seed5 = new Seed("CowpeaSeeds",5,10.0, 0.98);
 
+
     public void purchaseItem(Item item, Player player) {
-        if(item instanceof ISellable){
-            if (player.getBalance() >= ((ISellable) item).getValue()) {
-                player.setBalance(player.getBalance() - ((ISellable) item).getValue());
+        if(item instanceof Sellable){
+            if (player.getBalance() >= ((Sellable) item).getValue()) {
+                player.setBalance(player.getBalance() - ((Sellable) item).getValue());
                 player.getInventory().addItem(item);
             } else {
                 System.out.println("Not enough money!");
@@ -55,31 +79,31 @@ public class Market {
     }
 
     public void purchaseUpgradeToItems(Item item, Player player){
-        if (item instanceof ISellable) {
+        if (item instanceof Sellable) {
             if (player.getInventory().getItems().contains(irrigator1)) {
-                if (player.getBalance() >= ((ISellable) item).getValue()) {
-                    player.setBalance(player.getBalance() - ((ISellable) item).getValue());
+                if (player.getBalance() >= ((Sellable) item).getValue()) {
+                    player.setBalance(player.getBalance() - ((Sellable) item).getValue());
                     player.getInventory().addItem(irrigator2);
                     player.getInventory().removeItem(irrigator1);
                 }
             }
             if (player.getInventory().getItems().contains(irrigator2)) {
-                if (player.getBalance() >= ((ISellable) item).getValue()) {
-                    player.setBalance(player.getBalance() - ((ISellable) item).getValue());
+                if (player.getBalance() >= ((Sellable) item).getValue()) {
+                    player.setBalance(player.getBalance() - ((Sellable) item).getValue());
                     player.getInventory().addItem(irrigator3);
                     player.getInventory().removeItem(irrigator2);
                 }
             }
             if (player.getInventory().getItems().contains(harvester2)) {
-                if (player.getBalance() >= ((ISellable) item).getValue()) {
-                    player.setBalance(player.getBalance() - ((ISellable) item).getValue());
+                if (player.getBalance() >= ((Sellable) item).getValue()) {
+                    player.setBalance(player.getBalance() - ((Sellable) item).getValue());
                     player.getInventory().addItem(harvester2);
                     player.getInventory().removeItem(harvester1);
                 }
             }
             if (player.getInventory().getItems().contains(harvester3)) {
-                if (player.getBalance() >= ((ISellable) item).getValue()) {
-                    player.setBalance(player.getBalance() - ((ISellable) item).getValue());
+                if (player.getBalance() >= ((Sellable) item).getValue()) {
+                    player.setBalance(player.getBalance() - ((Sellable) item).getValue());
                     player.getInventory().addItem(harvester3);
                     player.getInventory().removeItem(harvester2);
                 }
@@ -92,20 +116,36 @@ public class Market {
 
     }
 
+    @JsonIgnore
    public void sellItem(Item item, Player player){
-        if(player.getInventory().getItems().contains(item) && item instanceof ISellable) {
-            player.setBalance(player.getBalance() + (((ISellable) item).getValue() * ((ISellable) item).getSellBackRate()));
+        if(player.getInventory().getItems().contains(item) && item instanceof Sellable) {
+            player.setBalance(player.getBalance() + (((Sellable) item).getValue() * ((Sellable) item).getSellBackRate()));
             player.getInventory().removeItem(item);
         }
         else {
             System.out.println("Player does not have that item");
         }
     }
+    @JsonIgnore
    public Double getItems(Item item){
-
-        for(int i = 0; i< stock.keySet().toArray().length; i++){
-            System.out.println(stock.keySet().toArray()[i]);
+        if(item instanceof Sellable){
+            for (Item value : stock) {
+                System.out.println(value);
+            }
+            return  ((Sellable) item).getValue();
         }
-       return stock.get(item);
+        else {
+            return 0d;
+        }
+
    }
+
+
+    public List<Item> getStock() {
+        return stock;
+    }
+
+    public void setStock(List<Item> stock) {
+        this.stock = stock;
+    }
 }

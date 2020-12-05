@@ -3,8 +3,9 @@ package worldofzuul.item;
 import static worldofzuul.item.GrowthStage.*;
 import static worldofzuul.item.crops.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import worldofzuul.world.*;
-public class Plant extends Item implements ISellable {
+public class Plant extends Sellable {
     private GrowthStage state = GrowthStage.SEED;
     private float seedQuality = 1;
     private float waterNeeded = 1000;
@@ -150,6 +151,7 @@ public class Plant extends Item implements ISellable {
         
     }
 
+    @JsonIgnore
     public boolean isRipe() {
         return waterNeeded <= 0 && nutritionNeeded <= 0 && growTicks >= growthTime && state == RIPE;
     }
