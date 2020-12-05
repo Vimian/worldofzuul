@@ -23,6 +23,12 @@ public abstract class Item extends Sprite {
     public Item(String name) {
         this.name = name;
     }
+    public Item(String name, Double value, Double sellbackRate) {
+        this.name = name;
+        this.value = value;
+        this.sellbackRate = sellbackRate;
+    }
+
 
     public String getName() {
         return name;
@@ -31,6 +37,14 @@ public abstract class Item extends Sprite {
     @Override
     public String toString() {
         return name;
+    }
+
+    public Double getValue() {
+        return value;
+    }
+
+    public Double getSellbackRate() {
+        return sellbackRate;
     }
 
 
