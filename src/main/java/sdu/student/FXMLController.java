@@ -1,5 +1,6 @@
 package sdu.student;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -45,7 +46,13 @@ public class FXMLController implements Initializable {
     private static final int backgroundScaling = 6;
     private static final double paneTransDelayCoefficient = 1.2;
     private static final int updateDelay = 60;
+
+    private static final int textDisplayDeletionDelay = 12000;
+    private static final int textDisplayFadeDelay = 3000;
+
+
     public StackPane gameContainerPane;
+    public VBox textDisplayBox;
     @FXML
     private ListView playerItems;
     @FXML
@@ -267,6 +274,7 @@ public class FXMLController implements Initializable {
         if (!isPlayerMoving()) {
             model.move(Direction.NORTH);
         }
+
     }
 
     public void moveSouth(ActionEvent actionEvent) {
@@ -331,35 +339,32 @@ public class FXMLController implements Initializable {
 
     private void displayTextMessage(String text, int deletionDelay){
 
-
-        var timeOutDelay = 5000;
-
-        //Configure label
         Label newLabel = new Label(text);
-        newLabel.setContentDisplay(ContentDisplay.CENTER);
-        newLabel.setTextAlignment(TextAlignment.CENTER);
+        newLabel.setId("textDisplayLabel");
 
-        newLabel.setFont(new Font("Calisto MT", 48));
         DropShadow effect = new DropShadow(0.67, Color.WHITE);
         effect.setInput(new Glow(0.65));
         newLabel.setEffect(effect);
 
 
-        gameContainerPane.getChildren().add(newLabel);
+        textDisplayBox.getChildren().add(newLabel);
 
-
-        //Delete thingie
-
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+        new Timer().schedule(new TimerTask() {
             @Override
             public void run()
             {
-               // newLabel.setVisible(false);
-                gameContainerPane.getChildren().remove(newLabel);
+                Platform.runLater(() -> { //Platform.runLater is used to avoid cross thread UI invocation exceptions
+
+                    FadeTransition ft = new FadeTransition(Duration.millis(textDisplayFadeDelay), newLabel);
+                    ft.setFromValue(1.0);
+                    ft.setToValue(0.0);
+                    ft.setOnFinished(event -> textDisplayBox.getChildren().remove(newLabel));
+
+                    ft.play();
+                });
                 this.cancel();
             }
-        }, timeOutDelay);
+        }, deletionDelay);
 
 
 
