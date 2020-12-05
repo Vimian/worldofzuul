@@ -364,7 +364,7 @@ public class Game {
         }
 
         if (canPlayerMoveToPoint(x, y)) {
-            MessageHelper.Command.moveCommand(secondWord);
+            //MessageHelper.Command.moveCommand(secondWord);
             setPlayerPosition(new Vector(x, y));
         }
     }
