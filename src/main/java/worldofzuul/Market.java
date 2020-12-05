@@ -9,7 +9,9 @@ public class Market {
    public Market(HashMap<Item, Double> stock){
        this.stock.put(fertilizer, 320.0);
        this.stock.put(harvester, 230.0);
-       this.stock.put(irrigator, 320.0);
+       this.stock.put(irrigator1, 320.0);
+       this.stock.put(irrigator2, 300.0);
+       this.stock.put(irrigator3, 300.0);
        this.stock.put(plant1, 2.0);
        this.stock.put(plant2, 2.0);
        this.stock.put(plant3, 4.0);
@@ -23,7 +25,9 @@ public class Market {
    }
     Harvester harvester = new Harvester("Sickle", 230.0, 0.95);
     Fertilizer fertilizer = new Fertilizer("Fertilizer", 2, 320.0, 0.975);
-    Irrigator irrigator = new Irrigator("Irrigator", 320.0, 0.95);
+    Irrigator irrigator1 = new Irrigator("Bucket", 320.0, 0.0);
+    Irrigator irrigator2 = new Irrigator("Watering Can", 300.0, 0.0 );
+    Irrigator irrigator3 = new Irrigator("Hose", 400.0, 0.0);
     Plant plant1 = new Plant("Corn", 2.0, 0.30);
     Plant plant2 = new Plant("Cashew", 2.0, 0.40);
     Plant plant3 = new Plant("Rice", 4.0, 0.20);
@@ -41,6 +45,26 @@ public class Market {
             player.getInventory().addItem(item);
         } else {
             System.out.println("Not enough money!");
+        }
+    }
+
+    public void purchaseUpgradeToItems(Item item, Player player){
+        if(player.getInventory().doesContain(irrigator1)){
+            if (player.getBalance() >= item.getValue()){
+                player.setBalance(player.getBalance() - item.getValue());
+                player.getInventory().addItem(irrigator2);
+                player.getInventory().removeItem(irrigator1);
+            }
+        }
+        if(player.getInventory().doesContain(irrigator2)){
+            if(player.getBalance() >= item.getValue()){
+                player.setBalance(player.getBalance() - item.getValue());
+                player.getInventory().addItem(irrigator3);
+                player.getInventory().removeItem(irrigator2);
+            }
+        }
+        else {
+            System.out.println("Cannot purchase that!!!");
         }
     }
 
