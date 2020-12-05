@@ -11,23 +11,16 @@ public class Irrigator extends Consumable {
     }
 
     public Irrigator(String name, Double value, Double sellbackRate) {
-        this(name);
-        setValue(value);
-        setSellBackRate(sellbackRate);
+        super(name, value, sellbackRate);
     }
 
     public Irrigator(String name, float flowRate, float waterCapacity, Double value, Double sellbackRate) {
-        this(name, value, sellbackRate);
-        setConsumptionRate(flowRate);
-        setCapacity(waterCapacity);
-        refill();
+        super(name, value, sellbackRate, flowRate, waterCapacity, waterCapacity);
     }
 
     public Irrigator(String name, float flowRate, float waterCapacity) {
-        this(name);
-        setConsumptionRate(flowRate);
-        setCapacity(waterCapacity);
-        refill();
+        super(name, flowRate, waterCapacity, waterCapacity);
+
     }
     @JsonIgnore
     public void water(Field field) {

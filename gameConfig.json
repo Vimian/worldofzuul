@@ -738,7 +738,8 @@
               "maxNutrition": 20000.0,
               "water": 10000.0,
               "nutrition": 10000.0,
-              "depletionRate": 5.0
+              "depletionRate": 5.0,
+              "ph": null
             }
           },
           {
@@ -4753,7 +4754,8 @@
               "maxNutrition": 20000.0,
               "water": 10000.0,
               "nutrition": 10000.0,
-              "depletionRate": 5.0
+              "depletionRate": 5.0,
+              "ph": null
             }
           },
           {
@@ -4793,7 +4795,8 @@
               "maxNutrition": 20000.0,
               "water": 10000.0,
               "nutrition": 10000.0,
-              "depletionRate": 5.0
+              "depletionRate": 5.0,
+              "ph": null
             }
           },
           {
@@ -5115,7 +5118,8 @@
               "maxNutrition": 20000.0,
               "water": 10000.0,
               "nutrition": 10000.0,
-              "depletionRate": 5.0
+              "depletionRate": 5.0,
+              "ph": null
             }
           },
           {
@@ -5155,7 +5159,8 @@
               "maxNutrition": 20000.0,
               "water": 10000.0,
               "nutrition": 10000.0,
-              "depletionRate": 5.0
+              "depletionRate": 5.0,
+              "ph": null
             }
           },
           {
@@ -35319,235 +35324,246 @@
             "defaultImageFile": null,
             "name": "Manure",
             "value": 16.0,
-            "sellBackRate": 21,
-            "remaining": 3,
-            "capacity": 0,
-            "consumptionRate": 1
+            "sellBackRate": 21.0,
+            "remaining": 3.0,
+            "capacity": 0.0,
+            "consumptionRate": 1.0
           }
         },
         {
           "Harvester": {
             "defaultImageFile": null,
             "name": "Sickle",
-            "value": 0,
-            "sellBackRate": 0
+            "value": 0.0,
+            "sellBackRate": 0.0
           }
         },
         {
           "Irrigator": {
             "defaultImageFile": null,
             "name": "Hose",
-            "remaining": 3,
-            "capacity": 0,
-            "consumptionRate": 1,
-            "value": 0,
-            "sellBackRate": 0
+            "value": 0.0,
+            "sellBackRate": 0.0,
+            "remaining": 3.0,
+            "capacity": 0.0,
+            "consumptionRate": 1.0
           }
         },
         {
           "Seed": {
             "defaultImageFile": null,
             "name": "Corn",
-            "value": 0,
-            "sellBackRate": 0,
-            "remaining": 3,
-            "capacity": 0,
-            "consumptionRate": 1
+            "value": 0.0,
+            "sellBackRate": 0.0,
+            "remaining": 3.0,
+            "capacity": 0.0,
+            "consumptionRate": 1.0,
+            "maxSeeds": 0,
+            "minSeeds": 0
           }
         }
       ]
     },
-    "balance": 0
-
+    "balance": 0.0
   },
   "market": {
     "stock": [
       {
         "Fertilizer": {
           "defaultImageFile": null,
-          "name": "Fertilizerr",
+          "name": "Fertilizer",
+          "value": 230.0,
           "sellBackRate": 0.98,
-          "value": 230,
-          "remaining": 3,
-          "capacity": 0,
-          "consumptionRate": 1
+          "remaining": 3.0,
+          "capacity": 0.0,
+          "consumptionRate": 1.0
         }
       },
       {
         "Harvester": {
           "defaultImageFile": null,
           "name": "Hands",
-          "sellBackRate": 0.98,
-          "value": 10
+          "value": 10.0,
+          "sellBackRate": 0.98
         }
       },
       {
         "Harvester": {
           "defaultImageFile": null,
           "name": "Sickle",
-          "sellBackRate": 0.98,
-          "value": 10
+          "value": 10.0,
+          "sellBackRate": 0.98
         }
       },
       {
         "Harvester": {
           "defaultImageFile": null,
           "name": "Scythe",
-          "sellBackRate": 0.98,
-          "value": 10
+          "value": 10.0,
+          "sellBackRate": 0.98
         }
       },
       {
         "Irrigator": {
           "defaultImageFile": null,
           "name": "Bucket",
-          "remaining": 3,
-          "capacity": 0,
-          "consumptionRate": 1,
+          "value": 10.0,
           "sellBackRate": 0.98,
-          "value": 10
+          "remaining": 3.0,
+          "capacity": 0.0,
+          "consumptionRate": 1.0
         }
       },
       {
         "Irrigator": {
           "defaultImageFile": null,
           "name": "Watering Can",
-          "remaining": 3,
-          "capacity": 0,
-          "consumptionRate": 1,
+          "value": 10.0,
           "sellBackRate": 0.98,
-          "value": 10
+          "remaining": 3.0,
+          "capacity": 0.0,
+          "consumptionRate": 1.0
         }
       },
       {
         "Irrigator": {
           "defaultImageFile": null,
           "name": "Hose",
-          "remaining": 3,
-          "capacity": 0,
-          "consumptionRate": 1,
+          "value": 10.0,
           "sellBackRate": 0.98,
-          "value": 10
+          "remaining": 3.0,
+          "capacity": 0.0,
+          "consumptionRate": 1.0
         }
       },
       {
         "Plant": {
           "defaultImageFile": null,
           "name": "Corn",
-          "seedQuality": 1,
-          "waterNeeded": 1000,
-          "nutritionNeeded": 1000,
-          "growthTime": 1000,
-          "growTicks": 0,
+          "value": 10.0,
           "sellBackRate": 0.98,
-          "value": 10
+          "seedQuality": 1.0,
+          "waterNeeded": 1000.0,
+          "nutritionNeeded": 1000.0,
+          "growthTime": 1000,
+          "maxTimeWithoutWater": 100
         }
       },
       {
         "Plant": {
           "defaultImageFile": null,
           "name": "Cashew",
-          "seedQuality": 1,
-          "waterNeeded": 1000,
-          "nutritionNeeded": 1000,
-          "growthTime": 1000,
-          "growTicks": 0,
+          "value": 10.0,
           "sellBackRate": 0.98,
-          "value": 10
+          "seedQuality": 1.0,
+          "waterNeeded": 1000.0,
+          "nutritionNeeded": 1000.0,
+          "growthTime": 1000,
+          "maxTimeWithoutWater": 100
         }
       },
       {
         "Plant": {
           "defaultImageFile": null,
           "name": "Rice",
-          "seedQuality": 1,
-          "waterNeeded": 1000,
-          "nutritionNeeded": 1000,
-          "growthTime": 1000,
-          "growTicks": 0,
+          "value": 10.0,
           "sellBackRate": 0.98,
-          "value": 10
+          "seedQuality": 1.0,
+          "waterNeeded": 1000.0,
+          "nutritionNeeded": 1000.0,
+          "growthTime": 1000,
+          "maxTimeWithoutWater": 100
         }
       },
       {
         "Plant": {
           "defaultImageFile": null,
           "name": "Mango",
-          "seedQuality": 1,
-          "waterNeeded": 1000,
-          "nutritionNeeded": 1000,
-          "growthTime": 1000,
-          "growTicks": 0,
+          "value": 10.0,
           "sellBackRate": 0.98,
-          "value": 10
+          "seedQuality": 1.0,
+          "waterNeeded": 1000.0,
+          "nutritionNeeded": 1000.0,
+          "growthTime": 1000,
+          "maxTimeWithoutWater": 100
         }
       },
       {
         "Plant": {
           "defaultImageFile": null,
           "name": "Cowpea",
-          "seedQuality": 1,
-          "waterNeeded": 1000,
-          "nutritionNeeded": 1000,
-          "growthTime": 1000,
-          "growTicks": 0,
+          "value": 10.0,
           "sellBackRate": 0.98,
-          "value": 10
+          "seedQuality": 1.0,
+          "waterNeeded": 1000.0,
+          "nutritionNeeded": 1000.0,
+          "growthTime": 1000,
+          "maxTimeWithoutWater": 100
         }
       },
       {
         "Seed": {
           "defaultImageFile": null,
           "name": "CornSeeds",
+          "value": 10.0,
           "sellBackRate": 0.98,
-          "value": 10,
-          "remaining": 3,
-          "capacity": 0,
-          "consumptionRate": 1
+          "remaining": 3.0,
+          "capacity": 0.0,
+          "consumptionRate": 1.0,
+          "maxSeeds": 0,
+          "minSeeds": 0
         }
       },
       {
         "Seed": {
           "defaultImageFile": null,
           "name": "CashewSeeds",
+          "value": 10.0,
           "sellBackRate": 0.98,
-          "value": 10,
-          "remaining": 3,
-          "capacity": 0,
-          "consumptionRate": 1
+          "remaining": 3.0,
+          "capacity": 0.0,
+          "consumptionRate": 1.0,
+          "maxSeeds": 0,
+          "minSeeds": 0
         }
       },
       {
         "Seed": {
           "defaultImageFile": null,
           "name": "RiceSeeds",
+          "value": 10.0,
           "sellBackRate": 0.98,
-          "value": 10,
-          "remaining": 3,
-          "capacity": 0,
-          "consumptionRate": 1
+          "remaining": 3.0,
+          "capacity": 0.0,
+          "consumptionRate": 1.0,
+          "maxSeeds": 0,
+          "minSeeds": 0
         }
       },
       {
         "Seed": {
           "defaultImageFile": null,
           "name": "MangoSeeds",
+          "value": 10.0,
           "sellBackRate": 0.98,
-          "value": 10,
-          "remaining": 3,
-          "capacity": 0,
-          "consumptionRate": 1
+          "remaining": 3.0,
+          "capacity": 0.0,
+          "consumptionRate": 1.0,
+          "maxSeeds": 0,
+          "minSeeds": 0
         }
       },
       {
         "Seed": {
           "defaultImageFile": null,
           "name": "Cowpea",
+          "value": 10.0,
           "sellBackRate": 0.98,
-          "value": 10,
-          "remaining": 3,
-          "capacity": 0,
-          "consumptionRate": 1
+          "remaining": 3.0,
+          "capacity": 0.0,
+          "consumptionRate": 1.0,
+          "maxSeeds": 0,
+          "minSeeds": 0
         }
       }
     ]

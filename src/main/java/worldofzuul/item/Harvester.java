@@ -6,9 +6,7 @@ public class Harvester extends Sellable {
         super(name);
     }
     public Harvester(String name, Double value, Double sellbackRate ) {
-        this(name);
-        setValue(value);
-        setSellBackRate(sellbackRate);
+        super(name, value, sellbackRate);
     }
     public Plant harvest(Plant plant){
         return plant;

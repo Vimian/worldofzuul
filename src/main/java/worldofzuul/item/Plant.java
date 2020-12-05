@@ -15,8 +15,7 @@ public class Plant extends Sellable {
     private float maxNutrition = nutritionNeeded;
 
     
-    private int timeTillDeath = 100;
-
+    private int maxTimeWithoutWater = 100;
     private int ticksNotWatered;
 
     private int growTicks = 0;
@@ -145,7 +144,7 @@ public class Plant extends Sellable {
     private void witherPlant() {
         ticksNotWatered++;
         
-        if(ticksNotWatered >= timeTillDeath){
+        if(ticksNotWatered >= maxTimeWithoutWater){
             state = GrowthStage.DEAD;
         }
         
@@ -238,11 +237,20 @@ public class Plant extends Sellable {
         this.growthTime = growthTime;
     }
 
+    @JsonIgnore
     public int getGrowTicks() {
         return growTicks;
     }
 
     public void setGrowTicks(int growTicks) {
         this.growTicks = growTicks;
+    }
+
+    public int getMaxTimeWithoutWater() {
+        return maxTimeWithoutWater;
+    }
+
+    public void setMaxTimeWithoutWater(int maxTimeWithoutWater) {
+        this.maxTimeWithoutWater = maxTimeWithoutWater;
     }
 }

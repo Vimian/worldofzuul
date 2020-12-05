@@ -11,9 +11,7 @@ public class Fertilizer extends Consumable {
     }
 
     public Fertilizer(String name, float amount, Double value, Double sellbackRate) {
-        this(name, amount);
-        setValue(value);
-        setSellBackRate(sellbackRate);
+        super(name, value, sellbackRate);
     }
 
 

@@ -9,6 +9,9 @@ import static java.lang.Float.valueOf;
 
 public class Seed extends Consumable {
     private static final String nameDelimiter = " ";
+    private int maxSeeds;
+    private int minSeeds;
+
     private int maxCornSeedCount = 850;
     private int minCornSeedCount = 750;
     private int maxRiceSeedCount = 1100;
@@ -113,4 +116,20 @@ public class Seed extends Consumable {
         return super.getName() + nameDelimiter + this.getClass().getSimpleName().toLowerCase();
     }
 
+
+    public int getMaxSeeds() {
+        return maxSeeds;
+    }
+
+    public void setMaxSeeds(int maxSeeds) {
+        this.maxSeeds = maxSeeds;
+    }
+
+    public int getMinSeeds() {
+        return minSeeds;
+    }
+
+    public void setMinSeeds(int minSeeds) {
+        this.minSeeds = minSeeds;
+    }
 }
