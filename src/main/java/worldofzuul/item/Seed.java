@@ -1,18 +1,22 @@
 package worldofzuul.item;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import worldofzuul.Game;
 import worldofzuul.Player;
-import worldofzuul.Inventory;
+
 import java.util.concurrent.ThreadLocalRandom;
-import worldofzuul.item.SeedType.*;
-import worldofzuul.item.crops.*;
 
 public class Seed extends Item {
     private static final String nameDelimiter = " ";
     private int seedCount;
-    private int maxSeedCount = 20;
-    private int minSeedCount = 0;
+    private int maxCornSeedCount = 850;
+    private int minCornSeedCount = 750;
+    private int maxRiceSeedCount = 1100;
+    private int minRiceSeedCount = 900;
+    private int CashewSeedCount = 1;
+    private int maxCowpeaSeedCount = 13;
+    private int minCowpeaSeedCount = 6;
+    private int MangoSeedCount = 1;
+    private crops crops;
 
     public Seed(String name, int seedCount, Double value, Double sellbackRate) {
         super(name,value,sellbackRate);
@@ -29,21 +33,62 @@ public class Seed extends Item {
     }
 
     public void getSeedsFromPlant(Plant plant, Player player){
+switch (crops) {
+    case CORN:
+    if (player.getInventory().doesContain(plant)) {
+        player.getInventory().removeItem(plant);
+        ThreadLocalRandom randomSeedGenerator = ThreadLocalRandom.current();
+        int randomSeed = randomSeedGenerator.nextInt(minCornSeedCount, maxCornSeedCount);
+        seedCount = seedCount + randomSeed;
+        Item Seed = new Seed("CornSeed", seedCount, 2.0, 0.20);
+        player.getInventory().addItem(Seed);
+    } else {
+        System.out.println("This is not a plant and does not contain any seeds");
 
+    }
+    case RICE:
         if (player.getInventory().doesContain(plant)) {
             player.getInventory().removeItem(plant);
             ThreadLocalRandom randomSeedGenerator = ThreadLocalRandom.current();
-            int randomSeed = randomSeedGenerator.nextInt(minSeedCount, maxSeedCount);
+            int randomSeed = randomSeedGenerator.nextInt(minRiceSeedCount, maxRiceSeedCount);
             seedCount = seedCount + randomSeed;
-            Item Seed = new Seed("Seed",seedCount,2.0,0.20);
+            Item Seed = new Seed("RiceSeed", seedCount, 2.0, 0.20);
             player.getInventory().addItem(Seed);
-        }
-        else {
+        } else {
             System.out.println("This is not a plant and does not contain any seeds");
 
         }
+    case CASHEW:
+        if(player.getInventory().doesContain(plant)){
+            player.getInventory().removeItem(plant);
+            seedCount = seedCount + CashewSeedCount;
+            Item Seed = new Seed("CashewSeed", seedCount, 2.0, 0.50);
+            player.getInventory().addItem(Seed);
+        } else {
+            System.out.println("This is not a plant and does not contain any seeds");
+        }
+    case COWPEA:
+        if (player.getInventory().doesContain(plant)) {
+            player.getInventory().removeItem(plant);
+            ThreadLocalRandom randomSeedGenerator = ThreadLocalRandom.current();
+            int randomSeed = randomSeedGenerator.nextInt(minCowpeaSeedCount, maxCowpeaSeedCount);
+            seedCount = seedCount + randomSeed;
+            Item Seed = new Seed("CowpeaSeed", seedCount, 2.0, 0.20);
+            player.getInventory().addItem(Seed);
+        } else {
+            System.out.println("This is not a plant and does not contain any seeds");
 
-
+        }
+    case MANGO:
+        if(player.getInventory().doesContain(plant)){
+            player.getInventory().removeItem(plant);
+            seedCount = seedCount + CashewSeedCount;
+            Item Seed = new Seed("MangoSeed", seedCount, 2.0, 0.50);
+            player.getInventory().addItem(Seed);
+        } else {
+            System.out.println("This is not a plant and does not contain any seeds");
+        }
+        }
     }
 
     @Override
