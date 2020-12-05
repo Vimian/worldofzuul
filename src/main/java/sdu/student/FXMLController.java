@@ -82,7 +82,6 @@ public class FXMLController implements Initializable {
     public VBox textDisplayBox;
     public StackPane mainPane;
     public VBox boxName;
-    public StackPane stackPane;
 
     @FXML
     private ListView playerItems;
@@ -344,7 +343,7 @@ public class FXMLController implements Initializable {
         loader.setLocation(getClass().getResource("subScene.fxml"));
 
         try {
-            stackPane.getChildren().add(loader.load());
+            gameContainerPane.getChildren().add(loader.load());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -404,6 +403,7 @@ public class FXMLController implements Initializable {
 
         Label newLabel = new Label(text);
         newLabel.setId("textDisplayLabel");
+        newLabel.setPickOnBounds(false);
 
         DropShadow effect = new DropShadow(0.67, Color.WHITE);
         effect.setInput(new Glow(0.65));
