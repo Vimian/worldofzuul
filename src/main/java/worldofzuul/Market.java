@@ -44,51 +44,57 @@ public class Market {
     Seed seed5 = new Seed("CowpeaSeeds",5,10.0, 0.98);
 
     public void purchaseItem(Item item, Player player) {
-        if (player.getBalance() >= item.getValue()) {
-            player.setBalance(player.getBalance() - item.getValue());
-            player.getInventory().addItem(item);
-        } else {
-            System.out.println("Not enough money!");
+        if(item instanceof ISellable){
+            if (player.getBalance() >= ((ISellable) item).getValue()) {
+                player.setBalance(player.getBalance() - ((ISellable) item).getValue());
+                player.getInventory().addItem(item);
+            } else {
+                System.out.println("Not enough money!");
+            }
         }
     }
 
     public void purchaseUpgradeToItems(Item item, Player player){
-        if(player.getInventory().getItems().contains(irrigator1)){
-            if (player.getBalance() >= item.getValue()){
-                player.setBalance(player.getBalance() - item.getValue());
-                player.getInventory().addItem(irrigator2);
-                player.getInventory().removeItem(irrigator1);
+        if (item instanceof ISellable) {
+            if (player.getInventory().getItems().contains(irrigator1)) {
+                if (player.getBalance() >= ((ISellable) item).getValue()) {
+                    player.setBalance(player.getBalance() - ((ISellable) item).getValue());
+                    player.getInventory().addItem(irrigator2);
+                    player.getInventory().removeItem(irrigator1);
+                }
             }
-        }
-        if(player.getInventory().getItems().contains(irrigator2)){
-            if(player.getBalance() >= item.getValue()){
-                player.setBalance(player.getBalance() - item.getValue());
-                player.getInventory().addItem(irrigator3);
-                player.getInventory().removeItem(irrigator2);
+            if (player.getInventory().getItems().contains(irrigator2)) {
+                if (player.getBalance() >= ((ISellable) item).getValue()) {
+                    player.setBalance(player.getBalance() - ((ISellable) item).getValue());
+                    player.getInventory().addItem(irrigator3);
+                    player.getInventory().removeItem(irrigator2);
+                }
             }
-        }
-        if(player.getInventory().getItems().contains(harvester2)) {
-            if (player.getBalance() >= item.getValue()) {
-                player.setBalance(player.getBalance() - item.getValue());
-                player.getInventory().addItem(harvester2);
-                player.getInventory().removeItem(harvester1);
+            if (player.getInventory().getItems().contains(harvester2)) {
+                if (player.getBalance() >= ((ISellable) item).getValue()) {
+                    player.setBalance(player.getBalance() - ((ISellable) item).getValue());
+                    player.getInventory().addItem(harvester2);
+                    player.getInventory().removeItem(harvester1);
+                }
             }
-        }
-        if(player.getInventory().getItems().contains(harvester3)){
-            if(player.getBalance() >= item.getValue()) {
-                player.setBalance(player.getBalance() - item.getValue());
-                player.getInventory().addItem(harvester3);
-                player.getInventory().removeItem(harvester2);
+            if (player.getInventory().getItems().contains(harvester3)) {
+                if (player.getBalance() >= ((ISellable) item).getValue()) {
+                    player.setBalance(player.getBalance() - ((ISellable) item).getValue());
+                    player.getInventory().addItem(harvester3);
+                    player.getInventory().removeItem(harvester2);
+                }
+            } else {
+                System.out.println("Cannot purchase that!!!");
             }
+        } else {
+            return;
         }
-        else {
-            System.out.println("Cannot purchase that!!!");
-        }
+
     }
 
    public void sellItem(Item item, Player player){
-        if(player.getInventory().getItems().contains(item)) {
-            player.setBalance(player.getBalance() + (item.getValue() * item.getSellbackRate()));
+        if(player.getInventory().getItems().contains(item) && item instanceof ISellable) {
+            player.setBalance(player.getBalance() + (((ISellable) item).getValue() * ((ISellable) item).getSellBackRate()));
             player.getInventory().removeItem(item);
         }
         else {

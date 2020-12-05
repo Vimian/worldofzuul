@@ -35318,32 +35318,46 @@
           "Fertilizer": {
             "defaultImageFile": null,
             "name": "Manure",
-            "amount": 10.0
+            "value": 0,
+            "sellBackRate": 0,
+            "remaining": 3,
+            "capacity": 0,
+            "consumptionRate": 1
           }
         },
         {
           "Harvester": {
             "defaultImageFile": null,
-            "name": "Sickle"
+            "name": "Sickle",
+            "value": 0,
+            "sellBackRate": 0
           }
         },
         {
           "Irrigator": {
             "defaultImageFile": null,
             "name": "Hose",
-            "remaining": 50000.0,
-            "capacity": 50000.0,
-            "consumptionRate": 2000.0
+            "remaining": 3,
+            "capacity": 0,
+            "consumptionRate": 1,
+            "value": 0,
+            "sellBackRate": 0
           }
         },
         {
           "Seed": {
             "defaultImageFile": null,
             "name": "Corn",
-            "seedCount": 3
+            "value": 0,
+            "sellBackRate": 0,
+            "remaining": 3,
+            "capacity": 0,
+            "consumptionRate": 1
           }
         }
       ]
-    }
+    },
+    "balance": 0
+
   }
 }

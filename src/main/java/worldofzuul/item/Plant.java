@@ -4,7 +4,7 @@ import static worldofzuul.item.GrowthStage.*;
 import static worldofzuul.item.crops.*;
 
 import worldofzuul.world.*;
-public class Plant extends Item {
+public class Plant extends Item implements ISellable {
     private GrowthStage state = GrowthStage.SEED;
     private float seedQuality = 1;
     private float waterNeeded = 1000;
@@ -27,8 +27,9 @@ public class Plant extends Item {
     }
 
     public Plant(String name, Double value, Double sellbackRate) {
-        super(name, value ,sellbackRate);
-        this.growthTime = 0;
+        super(name);
+        setValue(value);
+        setSellBackRate(sellbackRate);
     }
 
     public void grow(float water, float nutrition) {

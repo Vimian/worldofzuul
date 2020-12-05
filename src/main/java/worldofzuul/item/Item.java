@@ -16,17 +16,10 @@ import worldofzuul.Sprite;
 })
 public abstract class Item extends Sprite {
     private String name;
-    private Double value;
-    private Double sellbackRate;
 
     public Item(){}
     public Item(String name) {
         this.name = name;
-    }
-    public Item(String name, Double value, Double sellbackRate) {
-        this.name = name;
-        this.value = value;
-        this.sellbackRate = sellbackRate;
     }
 
 
@@ -37,14 +30,6 @@ public abstract class Item extends Sprite {
     @Override
     public String toString() {
         return name;
-    }
-
-    public Double getValue() {
-        return value;
-    }
-
-    public Double getSellbackRate() {
-        return sellbackRate;
     }
 
 

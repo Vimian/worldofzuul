@@ -108,11 +108,11 @@ public class Field extends GameObject {
 
         Command[] commands = new Command[1];
 
-        if (item.getSeedCount() > 0) {
+        if (item.getRemaining() > 0) {
             plantSeed(item);
         }
 
-        if (item.getSeedCount() == 0) {
+        if (item.getRemaining() == 0) {
             commands[0] = new Command(CommandWord.REMOVEITEM, null);
         }
 

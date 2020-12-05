@@ -8,7 +8,7 @@ public interface IConsumable {
 
     FloatProperty remaining = new SimpleFloatProperty();
     FloatProperty capacity = new SimpleFloatProperty();
-    FloatProperty consumptionRate = new SimpleFloatProperty();
+    FloatProperty consumptionRate = new SimpleFloatProperty(1);
 
 
 

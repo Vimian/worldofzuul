@@ -1,19 +1,17 @@
 package worldofzuul.item;
 
-public class Fertilizer extends Item {
-    private Double amount;
+public class Fertilizer extends Item implements ISellable, IConsumable {
 
     public Fertilizer(){}
-    public Fertilizer(String name, double amount) {
+    public Fertilizer(String name, float amount) {
         super(name);
-        this.amount = amount;
+        this.setRemaining(amount);
     }
 
-    public Fertilizer(String name, double amount, Double value, Double sellbackRate) {
-        super(name,value,sellbackRate);
-        this.amount = amount;
+    public Fertilizer(String name, float amount, Double value, Double sellbackRate) {
+        this(name, amount);
+        setValue(value);
+        setSellBackRate(sellbackRate);
     }
-    public double getAmount() { return this.amount; }
 
-    public void setAmount(double amount) { this.amount = amount; }
 }
