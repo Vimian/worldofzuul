@@ -4,7 +4,7 @@
 
 #textDisplayLabel {
     -fx-font-family: "Calisto MT";
-    -fx-font-size: 48;
+    -fx-font-size: 32;
     -fx-alignment: center;
     -fx-text-alignment: center;
 }

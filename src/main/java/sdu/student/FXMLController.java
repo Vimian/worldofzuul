@@ -92,7 +92,9 @@ public class FXMLController implements Initializable {
 
         //Configure custom PrintStream
         System.setOut(printStream);
-        printStream.printListProperty().addListener((observable, oldValue, newValue) -> displayTextMessage(newValue.get(newValue.size() - 1), textDisplayDeletionDelay));
+        printStream.printListProperty().addListener((observable, oldValue, newValue) -> {
+           Platform.runLater(() -> displayTextMessage(newValue.get(newValue.size() - 1), textDisplayDeletionDelay));
+        });
     }
 
     private void enableGameUpdater() {

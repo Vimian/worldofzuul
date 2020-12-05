@@ -58,7 +58,7 @@
     </HBox>
 
 
-       <VBox fx:id="textDisplayBox" alignment="TOP_CENTER" maxHeight="600.0" maxWidth="600.0" StackPane.alignment="TOP_CENTER">
+       <VBox fx:id="textDisplayBox" alignment="TOP_CENTER" maxHeight="600.0" maxWidth="800.0" StackPane.alignment="TOP_CENTER">
       <padding>
          <Insets top="20.0" />
       </padding>
