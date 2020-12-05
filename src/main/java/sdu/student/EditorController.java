@@ -305,7 +305,6 @@ public class EditorController implements Initializable {
         try {
             GameObject gameObject = model.getRoom().getGridGameObject(currentlyEditingPos);
             selectGameObject(gameObject);
-            System.out.println("click");
             drawRoom();
 
 
