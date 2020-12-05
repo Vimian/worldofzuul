@@ -1,3 +1,6 @@
 .label {
-    -fx-text-fill: blue;
+    -fx-text-fill: black;
+}
+#anchor {
+    -fx-background-color: darkgrey;
 }

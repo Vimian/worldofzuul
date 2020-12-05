@@ -12,15 +12,23 @@ import javafx.beans.value.ObservableValue;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.SubScene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import  javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import worldofzuul.Game;
 import worldofzuul.item.GrowthStage;
@@ -30,6 +38,7 @@ import worldofzuul.world.Direction;
 import worldofzuul.world.Field;
 import worldofzuul.world.Room;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.Executors;
@@ -48,6 +57,10 @@ public class FXMLController implements Initializable {
     private static final int backgroundScaling = 6;
     private static final double paneTransDelayCoefficient = 1.2;
     private static final int updateDelay = 60;
+    public StackPane mainPane;
+    public VBox boxName;
+    public StackPane stackPane;
+
     @FXML
     private ListView playerItems;
     @FXML
@@ -58,11 +71,15 @@ public class FXMLController implements Initializable {
     private Label playerPositionProperty;
     @FXML
     private ImageView imageView;
+    @FXML
+    private ListView inventoryView;
 
     private TranslateTransition paneTranslation;
     private HashMap<String, Image> loadedImages;
     public Game model;
     private ScheduledExecutorService scheduledThreadPool;
+
+    public Button marketButton;
 
 
     @Override
@@ -75,11 +92,12 @@ public class FXMLController implements Initializable {
         loadGame();
 
 
-
         bindProperties();
         examplePlayAnimation();
 
         enableGameUpdater();
+
+
     }
 
     private void enableGameUpdater() {
@@ -90,7 +108,7 @@ public class FXMLController implements Initializable {
             return thread;
         });
 
-        long delay = ((long) 1e9)/ updateDelay;
+        long delay = ((long) 1e9) / updateDelay;
         scheduledThreadPool.scheduleAtFixedRate(() -> model.update(), 0, delay, TimeUnit.NANOSECONDS);
     }
 
@@ -290,6 +308,33 @@ public class FXMLController implements Initializable {
         model.interact();
     }
 
+    public void openMarket(ActionEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader();
+
+        //Defines our controller
+        loader.setControllerFactory(aClass -> new sdu.student.SubScene(model));
+        //Defines the FXML file
+        loader.setLocation(getClass().getResource("subScene.fxml"));
+
+        try {
+            stackPane.getChildren().add(loader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /*
+        try {
+            Node subRoot = FXMLLoader.load(getClass().getResource("subScene.fxml"));
+            loader.setControllerFactory(aClass -> new FieldInfoBarController(field));
+            stackPane.getChildren().add(subRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        */
+
+
+
+    }
+
 
     private boolean isPlayerMoving() {
 
@@ -314,7 +359,7 @@ public class FXMLController implements Initializable {
     public void playerItemsClicked(MouseEvent mouseEvent) {
 
         Object clickedElement = playerItems.getSelectionModel().getSelectedItem();
-        if(clickedElement instanceof Item){
+        if (clickedElement instanceof Item) {
             model.getPlayer().getInventory().setSelectedItem((Item) clickedElement);
         }
 
