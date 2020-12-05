@@ -5,13 +5,12 @@ import worldofzuul.world.Field;
 
 public class Irrigator extends Item implements IConsumable {
 
-    public Irrigator(){}
-    public Irrigator(String name) {
-        super(name);
+    public Irrigator(String name, Double value, Double sellbackRate) {
+        super(name,value,sellbackRate);
     }
 
-    public Irrigator(String name, float flowRate, float waterCapacity) {
-        super(name);
+    public Irrigator(String name, float flowRate, float waterCapacity, Double value, Double sellbackRate) {
+        super(name,value,sellbackRate);
         setConsumptionRate(flowRate);
         setCapacity(waterCapacity);
         refill();
