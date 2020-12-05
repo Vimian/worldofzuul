@@ -734,7 +734,9 @@
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
               "colliding": false,
-              "water": 100000.0,
+              "maxWater": 20000.0,
+              "maxNutrition": 20000.0,
+              "water": 10000.0,
               "nutrition": 10000.0,
               "depletionRate": 5.0
             }
@@ -4042,7 +4044,7 @@
             "Block": {
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
-              "colliding": false
+              "colliding": true
             }
           },
           {
@@ -4394,7 +4396,7 @@
             "Block": {
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
-              "colliding": false
+              "colliding": true
             }
           },
           {
@@ -4429,14 +4431,14 @@
             "Block": {
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
-              "colliding": false
+              "colliding": true
             }
           },
           {
             "Block": {
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
-              "colliding": false
+              "colliding": true
             }
           },
           {
@@ -4739,6 +4741,114 @@
             "Block": {
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
+              "colliding": true
+            }
+          },
+          {
+            "Field": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false,
+              "maxWater": 20000.0,
+              "maxNutrition": 20000.0,
+              "water": 10000.0,
+              "nutrition": 10000.0,
+              "depletionRate": 5.0
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Field": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false,
+              "maxWater": 20000.0,
+              "maxNutrition": 20000.0,
+              "water": 10000.0,
+              "nutrition": 10000.0,
+              "depletionRate": 5.0
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": true
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
               "colliding": false
             }
           },
@@ -4789,6 +4899,622 @@
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
               "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          }
+        ],
+        [
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": true
+            }
+          },
+          {
+            "Field": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false,
+              "maxWater": 20000.0,
+              "maxNutrition": 20000.0,
+              "water": 10000.0,
+              "nutrition": 10000.0,
+              "depletionRate": 5.0
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Field": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false,
+              "maxWater": 20000.0,
+              "maxNutrition": 20000.0,
+              "water": 10000.0,
+              "nutrition": 10000.0,
+              "depletionRate": 5.0
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": true
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          }
+        ],
+        [
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": true
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": true
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": true
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": false
+            }
+          },
+          {
+            "Block": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 1000,
+              "colliding": true
             }
           },
           {
@@ -5105,739 +5831,35 @@
             "Block": {
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
-              "colliding": false
+              "colliding": true
             }
           },
           {
             "Block": {
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
-              "colliding": false
+              "colliding": true
             }
           },
           {
             "Block": {
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
-              "colliding": false
+              "colliding": true
             }
           },
           {
             "Block": {
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
-              "colliding": false
+              "colliding": true
             }
           },
           {
             "Block": {
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          }
-        ],
-        [
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          }
-        ],
-        [
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
-            }
-          },
-          {
-            "Block": {
-              "defaultImageFile": null,
-              "animationCycleLengthMillis": 1000,
-              "colliding": false
+              "colliding": true
             }
           },
           {
@@ -35287,8 +35309,8 @@
     "defaultImageFile": null,
     "animationCycleLengthMillis": 1000,
     "pos": {
-      "x": 0,
-      "y": 0
+      "x": 23,
+      "y": 13
     },
     "inventory": {
       "items": [
@@ -35296,7 +35318,7 @@
           "Fertilizer": {
             "defaultImageFile": null,
             "name": "Manure",
-            "amount": 3.0
+            "amount": 10.0
           }
         },
         {
@@ -35309,9 +35331,9 @@
           "Irrigator": {
             "defaultImageFile": null,
             "name": "Hose",
-            "remaining": 0.0,
-            "consumptionRate": 0.0,
-            "capacity": 0.0
+            "remaining": 50000.0,
+            "capacity": 50000.0,
+            "consumptionRate": 2000.0
           }
         },
         {

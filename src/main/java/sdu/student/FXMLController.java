@@ -28,6 +28,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
@@ -35,6 +36,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import  javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -42,16 +44,18 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import sdu.student.editor.BlockEditor;
+import sdu.student.editor.DoorEditor;
+import sdu.student.editor.FieldEditor;
 import worldofzuul.Game;
 import worldofzuul.item.GrowthStage;
 import worldofzuul.item.Item;
 import worldofzuul.util.CustomPrintStream;
 import worldofzuul.util.Vector;
-import worldofzuul.world.Direction;
-import worldofzuul.world.Field;
-import worldofzuul.world.Room;
+import worldofzuul.world.*;
 
 import java.io.PrintStream;
+import java.io.IOException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -61,8 +65,7 @@ import java.util.concurrent.TimeUnit;
 
 import static worldofzuul.util.Data.*;
 import static worldofzuul.util.Drawing.*;
-import static worldofzuul.util.Math.vectorDifference;
-import static worldofzuul.util.Math.vectorDirection;
+import static worldofzuul.util.Math.*;
 
 public class FXMLController implements Initializable {
     private final CustomPrintStream printStream = new CustomPrintStream(System.out);
@@ -100,6 +103,7 @@ public class FXMLController implements Initializable {
     private HashMap<String, Image> loadedImages;
     public Game model;
     private ScheduledExecutorService scheduledThreadPool;
+    private Vector selectedGamePosition;
 
     public Button marketButton;
 
@@ -434,5 +438,40 @@ public class FXMLController implements Initializable {
 
 
     }
+
+    public void roomPaneClicked(MouseEvent mouseEvent) {
+
+        if (mouseEvent.getButton() == MouseButton.SECONDARY){
+
+            selectedGamePosition = positionClickedOnPane(getBackgroundTileDim(), getBackgroundTileDim(), mouseEvent.getX(), mouseEvent.getY());
+            if (selectedGamePosition.getX() < 0 || selectedGamePosition.getY() < 0 || selectedGamePosition.getX() > getBackgroundRowCount() || selectedGamePosition.getY() > getBackgroundRowCount()) {
+                return;
+            }
+
+            try {
+                rightClickGameObject(model.getRoom().getGridGameObject(selectedGamePosition));
+            } catch (ArrayIndexOutOfBoundsException e) { // Handle exceptions caused by non-matching RoomGrid sizes or invalid positions
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+
+    private void rightClickGameObject(GameObject object){
+
+        if(object instanceof Field && selectedGamePosition != null){
+
+            //TODO: Implement on click functionality
+
+        } else {
+
+        }
+
+
+
+    }
+
+
+
 
 }

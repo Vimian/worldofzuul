@@ -1,6 +1,7 @@
 package worldofzuul.util;
 
 import javafx.animation.TranslateTransition;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,8 +10,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import sdu.student.FieldInfoBarController;
 import worldofzuul.world.*;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Drawing {
@@ -47,18 +50,25 @@ public class Drawing {
 
     }
 
-    public static void drawGameObjects(Room room, HashMap<String, Image> loadedImages, Pane roomPane, double backgroundTileDim) {
+    public static void setNodePositionToVector(Node node, Vector position, double tileDim){
+        node.setTranslateX(position.getX() * tileDim);
+        node.setTranslateY(position.getY() * tileDim);
+    }
+    public static void setNodePositionToVectorCorner(Node node, Vector position, double tileDim){
+        node.setTranslateX(position.getX() * tileDim + tileDim / 3);
+        node.setTranslateY(position.getY() * tileDim - tileDim / 3);
+    }
+
+    public static void drawGameObjects(Room room, HashMap<String, Image> loadedImages, Pane roomPane, double backgroundTileDim, Class<?> callerController) {
         for (int i = 0; i < room.getRoomGrid().length; i++) {
             for (int j = 0; j < room.getRoomGrid().length; j++) {
                 var rect = new Rectangle(j * backgroundTileDim, i * backgroundTileDim, backgroundTileDim, backgroundTileDim);
-
 
                 GameObject object = room.getGridGameObject(new Vector(j, i));
 
                 //Draw img
                 //TODO: Refactor & Optimize
                 drawGameObjectImage(loadedImages, roomPane, rect, object);
-
 
 
                 //Draw border
@@ -77,6 +87,7 @@ public class Drawing {
                     }
 
                 } else if (object instanceof Field) {
+                    appendFieldInfoBar((Field) object, roomPane, new Vector(j, i), backgroundTileDim, callerController);
                     if (object.isColliding()) {
                         rect.setStroke(Color.YELLOW);
                     } else {
@@ -145,6 +156,14 @@ public class Drawing {
     }
 
 
+    private static void appendFieldInfoBar(Field field, Pane pane, Vector position, double tileDim, Class<?> callerController) {
+        Node infoBar = loadFieldInfoBar(field, callerController);
+        if (infoBar != null) {
+            pane.getChildren().add(infoBar);
+            setNodePositionToVectorCorner(infoBar, position, tileDim);
+        }
+    }
+
     private static void drawGameObjectImage(HashMap<String, Image> loadedImages, Pane roomPane, Rectangle rect, GameObject object) {
         if (object.getImage() != null || object.getDefaultImageFile() != null && loadedImages.containsKey(object.getDefaultImageFile())) {
             ImageView imageView;
@@ -169,5 +188,22 @@ public class Drawing {
         }
     }
 
+    private static Node loadFieldInfoBar(Field field, Class<?> callerController){
+        FXMLLoader loader = new FXMLLoader();
+
+        //Defines our controller
+        loader.setControllerFactory(aClass -> new FieldInfoBarController(field));
+        //Defines the FXML file
+        loader.setLocation(callerController.getResource("fieldInfoBar.fxml"));
+
+        try {
+            return loader.load();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }

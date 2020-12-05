@@ -126,7 +126,6 @@ public class EditorController implements Initializable {
         }
     }
 
-
     public void changeType(ActionEvent actionEvent) {
         if (model.getRoom().getGridGameObject(currentlyEditingPos) != currentGameObject) {
             return;
@@ -195,6 +194,8 @@ public class EditorController implements Initializable {
         }
 
         drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim(), currentlyEditingPos);
+        //        drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim(), getClass());
+
     }
 
 
