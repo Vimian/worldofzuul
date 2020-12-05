@@ -19,6 +19,7 @@ public class SubScene implements Initializable {
 
     @FXML
     private ListView inventoryView;
+    //Wack
 
     @FXML
     private ListView marketView;
