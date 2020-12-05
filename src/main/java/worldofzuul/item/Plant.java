@@ -1,6 +1,9 @@
 package worldofzuul.item;
 
 import static worldofzuul.item.GrowthStage.*;
+import static worldofzuul.item.crops.*;
+
+import worldofzuul.world.*;
 
 public class Plant extends Item {
     private GrowthStage state = GrowthStage.SEED;
@@ -10,38 +13,107 @@ public class Plant extends Item {
     private int growthTime = 1000;
     private float maxWater = waterNeeded;
     private float maxNutrition = nutritionNeeded;
-
-    
     private int timeTillDeath = 100;
-
     private int ticksNotWatered;
-
     private int growTicks = 0;
+    private crops crops;
 
     public Plant(){}
     public Plant(String name) {
         super(name);
+    public Plant(String name, Double value, Double sellbackRate) {
+        super(name, value ,sellbackRate);
+        this.growthTime = 0;
     }
- 
+    public void grow(float water, float nutrition, Double pH) {
+        switch (crops) {
+            case CORN:
+            if (pH <= 5.8 && pH >= 7) {
+                if (water == 0) {
+                    witherPlant();
+                } else if (ticksNotWatered != 0) {
+                    ticksNotWatered = 0;
+                }
 
-    public void grow(float water, float nutrition) {
-        
-        if(water == 0){
-            witherPlant();
-        } else if (ticksNotWatered != 0){
-            ticksNotWatered = 0;
+                consumeNutrition(nutrition);
+                consumeWater(water);
+
+                if (readyForNextStage()) {
+                    advanceStage();
+                }
+
+                growTicks++;
+            }
+            case RICE:
+                if (pH <= 5.5 && pH >= 7) {
+                    if (water == 0) {
+                        witherPlant();
+                    } else if (ticksNotWatered != 0) {
+                        ticksNotWatered = 0;
+                    }
+
+                    consumeNutrition(nutrition);
+                    consumeWater(water);
+
+                    if (readyForNextStage()) {
+                        advanceStage();
+                    }
+
+                    growTicks++;
+                }
+            case CASHEW:
+                if (pH <= 5 && pH >= 6.5) {
+                    if (water == 0) {
+                        witherPlant();
+                    } else if (ticksNotWatered != 0) {
+                        ticksNotWatered = 0;
+                    }
+
+                    consumeNutrition(nutrition);
+                    consumeWater(water);
+
+                    if (readyForNextStage()) {
+                        advanceStage();
+                    }
+
+                    growTicks++;
+                }
+            case COWPEA:
+                if (pH <= 5.5 && pH >= 6.5) {
+                    if (water == 0) {
+                        witherPlant();
+                    } else if (ticksNotWatered != 0) {
+                        ticksNotWatered = 0;
+                    }
+
+                    consumeNutrition(nutrition);
+                    consumeWater(water);
+
+                    if (readyForNextStage()) {
+                        advanceStage();
+                    }
+
+                    growTicks++;
+                }
+            case MANGO:
+                if (pH <= 6 && pH >= 7.2) {
+                    if (water == 0) {
+                        witherPlant();
+                    } else if (ticksNotWatered != 0) {
+                        ticksNotWatered = 0;
+                    }
+
+                    consumeNutrition(nutrition);
+                    consumeWater(water);
+
+                    if (readyForNextStage()) {
+                        advanceStage();
+                    }
+
+                    growTicks++;
+                }
         }
-
-        consumeNutrition(nutrition);
-        consumeWater(water);
-
-        if (readyForNextStage()) {
-            advanceStage();
-       }
-  
-        growTicks++;
     }
-
     private void witherPlant() {
         ticksNotWatered++;
         

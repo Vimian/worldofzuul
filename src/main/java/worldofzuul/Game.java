@@ -1,14 +1,5 @@
 package worldofzuul;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.MapProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleMapProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import worldofzuul.item.*;
 import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
@@ -18,6 +9,7 @@ import worldofzuul.util.Vector;
 import worldofzuul.world.*;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -25,31 +17,25 @@ import java.util.concurrent.TimeUnit;
 import static worldofzuul.util.Math.tryParse;
 
 public class Game {
-    private final static int updateDelay = 60;
     private Parser parser;
     private Room currentRoom;
-    private final ListProperty<Room> rooms = new SimpleListProperty<>(
-            FXCollections.observableArrayList());
     private Player player;
     private ScheduledExecutorService scheduledThreadPool;
+    private int updateDelay = 60;
 
     public Game() {
-        //createRooms();
+        createRooms();
         parser = new Parser();
 
     }
 
-    public Player getPlayer() {
+    public Player getPlayer(){
         return player;
     }
-
-    @JsonIgnore
     public Room getRoom(){
         return currentRoom;
     }
-    public void setRoom(Room room){
-        currentRoom = room;
-    }
+
     public void move(Direction direction) {
         processCommandInternal(new Command(CommandWord.MOVE, direction.toString()));
     }
@@ -58,39 +44,8 @@ public class Game {
     }
 
 
-    public void reconfigureRooms(){
-        for (Room room : rooms) {
-            if (room.getExitStrings().size() <= 0) {
-                continue;
-            }
 
-            MapProperty<String, Room> exits = new SimpleMapProperty<>(
-                    FXCollections.observableHashMap()
-            );
-
-            for (Room.Exit exit : room.getExitStrings()) {
-                Room exitRoom = findRoom(exit.getExitValue());
-                exits.put(exit.getExitKey(), exitRoom);
-            }
-
-            if (exits.size() > 0) {
-                room.setExits(exits);
-            }
-        }
-        setRoom(getRooms().get(0));
-    }
-
-    private Room findRoom(String shortDescription){
-        for (Room room : rooms) {
-            if(room.getDescription().equals(shortDescription)){
-                return room;
-            }
-        }
-
-        return null;
-    }
-
-    public void createRooms() {
+    private void createRooms() {
         Room outside, theatre, pub, lab, office;
 
         outside = new Room("outside the main entrance of the university");
@@ -114,29 +69,25 @@ public class Game {
 
         //DBG Start
         player = new Player();
+        outside.setRoomGrid(new GameObject[10][10]);
+        for (GameObject[] gameObjects : outside.getRoomGrid()) {
+            Arrays.fill(gameObjects, new Block());
+        }
 
-        outside.fillRoomGridWithBlocks(50, 50);
-        theatre.fillRoomGridWithBlocks(50, 50);
-
+        theatre.setRoomGrid(new GameObject[10][10]);
+        for (GameObject[] gameObjects : theatre.getRoomGrid()) {
+            Arrays.fill(gameObjects, new Block());
+        }
         outside.setGridGameObject(new Door("east", new Vector()), new Vector(2, 3));
         outside.setGridGameObject(new Field(), new Vector(1, 2));
 
-        player.getInventory().addItem(new Fertilizer("Manure", 3));
-        player.getInventory().addItem(new Harvester("Sickle"));
-        player.getInventory().addItem(new Irrigator("Hose"));
-        player.getInventory().setSelectedItem(new Seed("Corn", 3));
+        player.getInventory().addItem(new Fertilizer("Manure", 3.0, 2.0, 2.0));
+        player.getInventory().addItem(new Harvester("Sickle",0.0, 2.0));
+        player.getInventory().addItem(new Irrigator("Hose",2.0 , 2.0));
+        player.getInventory().setSelectedItem(new Seed("Corn", 3, 2.0, 2.0));
 
 
         //DBG End
-
-        Room[] roomsA = new Room[5];
-        roomsA[0] = outside;
-        roomsA[1] = theatre;
-        roomsA[2] = pub;
-        roomsA[3] = lab;
-        roomsA[4] = office;
-
-        setRooms(roomsA);
 
 
         currentRoom = outside;
@@ -163,7 +114,9 @@ public class Game {
         scheduledThreadPool.scheduleAtFixedRate(() -> update(), 0, delay, TimeUnit.MICROSECONDS);
     }
 
-    public void update() {
+    private void update() {
+
+
         currentRoom.update().forEach(this::processCommandInternal);
     }
 
@@ -190,7 +143,7 @@ public class Game {
             selectItem(command);
         } else if (commandWord == CommandWord.INTERACT) {
             interactPlayer();
-        } else if (commandWord == CommandWord.EXAMINE){
+        } else if (commandWord == commandWord.EXAMINE){
             examineObject(command);
         }
         else if (commandWord == CommandWord.HARVEST){
@@ -386,16 +339,14 @@ public class Game {
 
     private void setPlayerPosition(Vector position) {
 
-        GameObject currentTile = player.getCurrentGameObject();
+        GameObject currentTile = currentRoom.getGridGameObject(player.getPos());
+
         player.setPos(position);
         GameObject newTile = currentRoom.getGridGameObject(position);
-        player.setCurrentGameObject(newTile);
 
-        if(currentTile != null){
-            processCommandInternal(currentTile.uponExit());
-        }
-
+        processCommandInternal(currentTile.uponExit());
         processCommandInternal(newTile.uponEntry(currentTile));
+
     }
 
     private boolean canPlayerMoveToPoint(int x, int y) {
@@ -409,12 +360,13 @@ public class Game {
         }
 
         GameObject targetPosition = currentRoom.getGridGameObject(new Vector(x, y));
-        if (targetPosition.isColliding()) {
+        if (targetPosition.colliding) {
             MessageHelper.Command.objectIsCollidable();
         }
 
-        return !targetPosition.isColliding();
+        return !targetPosition.colliding;
     }
+
 
     private boolean quit(Command command) {
         if (command.hasSecondWord()) {
@@ -425,28 +377,5 @@ public class Game {
         }
     }
 
-    @JsonGetter
-    public ObservableList<Room> getRooms() {
-        return rooms.get();
-    }
 
-    @JsonSetter
-    public void setRooms(Room[] rooms) {
-        ObservableList<Room> temp = new SimpleListProperty<>(
-                FXCollections.observableArrayList());
-
-        temp.addAll(Arrays.asList(rooms));
-
-        this.rooms.set(temp);
-    }
-
-    @JsonIgnore
-    public void setRooms(ObservableList<Room> observableRooms) {
-        this.rooms.set(observableRooms);
-    }
-
-    @JsonIgnore
-    public ListProperty<Room> roomsProperty() {
-        return rooms;
-    }
 }

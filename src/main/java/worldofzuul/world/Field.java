@@ -13,22 +13,21 @@ public class Field extends GameObject {
     private Fertilizer fertilizer;
     private Plant plant;
     private ArrayList<Plant> plants;
+    private Double pH;
 
     private final FloatProperty water = new SimpleFloatProperty(10);
     private final FloatProperty nutrition = new SimpleFloatProperty(10000);
     private final FloatProperty depletionRate = new SimpleFloatProperty(5);
     private boolean ripePlantSeen = false;
 
-    public Field() {
-    }
-
     public Field(Fertilizer fertilizer) {
         this.fertilizer = fertilizer;
     }
 
-    public Field(Fertilizer fertilizer, float water) {
+    public Field(Fertilizer fertilizer, float water, Double pH) {
         this(fertilizer);
         setWater(water);
+        this.pH = pH;
     }
 
 
@@ -38,11 +37,19 @@ public class Field extends GameObject {
         }
     }
 
+    public Double getPH(){
+        return pH;
+    }
+
+    public void setPH(){
+        this.pH = pH;
+    }
+
     @Override
     public Command[] update() {
         if (plant != null) {
             if(isPlantGrowing()){
-                plant.grow(depleteWater(), depleteNutrition());
+                plant.grow(depleteWater(), depleteNutrition(), getPH());
             } if(plant.isRipe() && !ripePlantSeen){
                 MessageHelper.Info.plantBecameRipe(plant.getName());
                 playAnimation(GrowthStage.RIPE);
