@@ -41,14 +41,24 @@ public class Quest {
         if(turnInClass.isInstance(item)){
             if(item instanceof Consumable){
                 if(((Consumable) item).getRemaining() >= turnInQuantity){
+                    System.out.println("You turned in " +turnInQuantity + " " + item.getName() + "s.");
+
                     ((Consumable) item).deplete(turnInQuantity);
                     commands.addAll(completeQuest());
+
                 } else {
                     turnInQuantity -= ((Consumable) item).getRemaining();
+                    System.out.println("You turned in " + ((Consumable) item).getRemaining() + " " + item.getName() + "s.");
                     ((Consumable) item).deplete(((Consumable) item).getRemaining());
+
+                    if(((Consumable) item).getRemaining() == 0){
+                        commands.add(new Command(CommandWord.REMOVEITEM, null, item));
+                    }
                 }
             } else {
                 commands.add(new Command(CommandWord.REMOVEITEM, null, item));
+                System.out.println("You turned in one " + item.getName());
+
                 turnInQuantity--;
                 if(turnInQuantity <= 0){
                     commands.addAll(completeQuest());

@@ -69,6 +69,21 @@ public class Game {
         processCommandInternal(new Command(CommandWord.INTERACT, null));
     }
 
+    public void interact(Vector gameObjectPos, boolean useItem) {
+        Command[] commands;
+        if (useItem) {
+            commands = currentRoom
+                    .getGridGameObject(gameObjectPos)
+                    .interact(player.getInventory().getSelectedItem());
+        } else {
+            commands = currentRoom
+                    .getGridGameObject(gameObjectPos)
+                    .interact();
+            }
+
+       processCommandInternal(commands);
+    }
+
 
 
     public void reconfigureRooms(){

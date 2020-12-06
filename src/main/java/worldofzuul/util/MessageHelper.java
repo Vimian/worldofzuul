@@ -30,6 +30,7 @@ public class MessageHelper {
         public static void alreadyPlanted() {
             System.out.println("A plant already exists here.");
         }
+
     }
     public static class Command {
 
@@ -129,6 +130,9 @@ public class MessageHelper {
 
         public static void plantBecameRipe(String plant) {
             System.out.println(plant + " became ripe!");
+        }
+        public static void println(String string){
+            System.out.println(string);
         }
     }
 
