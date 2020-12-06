@@ -28,6 +28,7 @@
                         mouseTransparent="true"
                         preserveRatio="true"
                 />
+                <Pane fx:id="environmentLayerPane" mouseTransparent="true" />
             </StackPane>
         </HBox>
     </VBox>

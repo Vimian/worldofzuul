@@ -84,6 +84,7 @@ public class FXMLController implements Initializable {
     public VBox textDisplayBox;
     public StackPane mainPane;
     public VBox boxName;
+    public Pane environmentLayerPane;
 
     @FXML
     private ListView playerItems;
@@ -297,6 +298,41 @@ public class FXMLController implements Initializable {
 
         playerItems.itemsProperty().bindBidirectional(model.getPlayer().getInventory().itemsProperty());
 
+        subscribeToEnvironmentChanges(model.getRoom().getEnvironment());
+
+        //Listen to Room change
+        model.roomProperty().addListener((observable, oldValue, newValue) -> {
+            unsubscribeToEnvironmentChanges(oldValue.getEnvironment());
+            subscribeToEnvironmentChanges(newValue.getEnvironment());
+
+        });
+
+
+
+    }
+
+    private void subscribeToEnvironmentChanges(Environment environment){
+        environment.rainStateProperty().addListener((observable1, oldValue1, newValue1) -> {
+            changeRainState(newValue1);
+        });
+        environment.nightStateProperty().addListener((observable1, oldValue1, newValue1) -> {
+            changeNightStage(newValue1);
+        });
+    }
+
+    private void unsubscribeToEnvironmentChanges(Environment environment){
+        environment.rainStateProperty().removeListener((observable1, oldValue1, newValue1) -> {
+            changeRainState(newValue1);
+        });
+        environment.nightStateProperty().removeListener((observable1, oldValue1, newValue1) -> {
+            changeNightStage(newValue1);
+        });
+    }
+
+    private void changeRainState(boolean isRaining){
+
+    }
+    private void changeNightStage(boolean isNight){
 
     }
 

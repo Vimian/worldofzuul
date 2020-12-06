@@ -11,6 +11,8 @@ import java.util.Random;
 
 public class Environment {
     private final BooleanProperty rainState = new SimpleBooleanProperty(false);
+    private final BooleanProperty nightState = new SimpleBooleanProperty(false);
+
     private int rainTicksMin = 500;
     private int rainTicksMax = 1500;
     private double chanceForRain = 0.00001; //TODO: Tweak this
@@ -24,9 +26,6 @@ public class Environment {
     private final Random random = new Random();
 
     private int rainTicks = 0;
-    private boolean rainStarted = false;
-    private boolean nightStarted = false;
-
 
     public Environment(){
         calendar.set(2020, Calendar.JANUARY,1,8, 1);
@@ -39,9 +38,9 @@ public class Environment {
         incrementTime();
         if(isRaining()){
             rainTicks--;
-        } else if (rainStarted) {
+        } else if (getRainState()) {
             MessageHelper.Info.rainStopped();
-            rainStarted = false;
+            setRainState(false);
         } else if (shouldItRain()) {
             startRaining();
         }
@@ -73,12 +72,12 @@ public class Environment {
         int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
         boolean result = currentHour >= dayTimeStart && currentHour <= dayTimeEnd;
 
-        if(nightStarted && result){
+        if(getNightState() && result){
             MessageHelper.Info.nightEnded();
-            nightStarted = false;
-        } else if (!nightStarted && !result){
+            setNightState(false);
+        } else if (!getNightState() && !result){
             MessageHelper.Info.nightStarted();
-            nightStarted = true;
+            setNightState(true);
         }
 
         return currentHour >= dayTimeStart && currentHour <= dayTimeEnd;
@@ -86,7 +85,7 @@ public class Environment {
 
     private void startRaining() {
             rainTicks = random.nextInt((rainTicksMax - rainTicksMin) + 1) + rainTicksMin;
-            rainStarted = true;
+            setRainState(true);
 
             MessageHelper.Info.rainStarted();
     }
@@ -162,6 +161,18 @@ public class Environment {
     public void setRainState(boolean rainState) {
         this.rainState.set(rainState);
     }
+    @JsonIgnore
+    public boolean getNightState() {
+        return nightState.get();
+    }
+    @JsonIgnore
+    public BooleanProperty nightStateProperty() {
+        return nightState;
+    }
+    @JsonIgnore
+    public void setNightState(boolean nightState) {
+        this.nightState.set(nightState);
+    }
 
     public Date getCalendarStart(){
         return calendar.getTime();
@@ -169,4 +180,5 @@ public class Environment {
     public void setCalendarStart(Date date){
         calendar.setTime(date);
     }
+
 }
