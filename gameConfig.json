@@ -17815,10 +17815,10 @@
       "environment": {
         "rainTicksMin": 500,
         "rainTicksMax": 1000,
-        "chanceForRain": 1.0E-3,
+        "chanceForRain": 1.0E-4,
         "dayTimeStart": 6,
         "dayTimeEnd": 18,
-        "secondsToIncrement": 2,
+        "secondsToIncrement": 4,
         "rainWaterAmount": 0.1,
         "calendarStart": 1577862106224
       },
