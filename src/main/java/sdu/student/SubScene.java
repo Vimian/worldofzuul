@@ -36,7 +36,7 @@ public class SubScene implements Initializable {
     }
 
     public void inventoryClicked(MouseEvent mouseEventInventory){
-        fxmlController.playerItemsClicked(mouseEventInventory);
+        //fxmlController.playerItemsClicked(mouseEventInventory);
     }
 
 }

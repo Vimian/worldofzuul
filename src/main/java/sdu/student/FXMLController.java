@@ -82,42 +82,35 @@ public class FXMLController implements Initializable {
     private static final int textDisplayFadeDelay = 1500;
 
 
+
     public StackPane gameContainerPane;
     public VBox textDisplayBox;
     public StackPane mainPane;
-    public VBox boxName;
     public Pane environmentLayerPane;
-    public ImageView rainImageView;
     public Pane nightLayerPane;
     public Pane rainImagePane;
+    public TableView<Item> inventoryTableView;
+    public Label currentlySelectedItemLabel;
 
-    @FXML
-    private ListView playerItems;
     @FXML
     private Pane roomPane;
     @FXML
-    private Label label;
-    @FXML
-    private Label playerPositionProperty;
-    @FXML
     private ImageView imageView;
-    @FXML
-    private ListView inventoryView;
+    public Button marketButton;
+
 
     private TranslateTransition paneTranslation;
     private HashMap<String, Image> loadedImages;
     public Game model;
     private ScheduledExecutorService scheduledThreadPool;
     private Vector selectedGamePosition;
+    private Node instanceOfInventory;
 
-    public Button marketButton;
+
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        String javaVersion = System.getProperty("java.version");
-        String javafxVersion = System.getProperty("javafx.version");
-        label.setText("Hello, JavaFX " + javafxVersion + "\nRunning on Java " + javaVersion + ".");
 
         loadedImages = getImages(spriteDirectory, getClass());
 
@@ -296,16 +289,15 @@ public class FXMLController implements Initializable {
         } else {
             setBackground(loadedImages.get("sprites/room/test.png"));
         }
-        drawGrid(roomPane, getBackgroundRowCount());
+        //drawGrid(roomPane, getBackgroundRowCount());
         drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim(), getClass(), selectedGamePosition);
     }
 
     private void bindProperties() {
-        playerPositionProperty.textProperty().bindBidirectional(model.getPlayer().getPos().vectorValueProperty());
 
-        playerItems.itemsProperty().bindBidirectional(model.getPlayer().getInventory().itemsProperty());
-
+        inventoryTableView.itemsProperty().bindBidirectional(model.getPlayer().getInventory().itemsProperty());
         subscribeToEnvironmentChanges(model.getRoom().getEnvironment());
+        currentlySelectedItemLabel.textProperty().bindBidirectional(model.getPlayer().getInventory().selectedItemNameProperty());
 
         //Listen to Room change
         model.roomProperty().addListener((observable, oldValue, newValue) -> {
@@ -451,15 +443,6 @@ public class FXMLController implements Initializable {
         return false;*/
     }
 
-    public void playerItemsClicked(MouseEvent mouseEvent) {
-
-        Object clickedElement = playerItems.getSelectionModel().getSelectedItem();
-        if (clickedElement instanceof Item) {
-            model.getPlayer().getInventory().setSelectedItem((Item) clickedElement);
-        }
-
-    }
-
     private double getBackgroundTileDim() {
         return roomPane.getMinWidth() / getBackgroundRowCount();
     }
@@ -553,7 +536,8 @@ public class FXMLController implements Initializable {
 
     }
 
-
-
+    public void selectItem(MouseEvent mouseEvent) {
+        model.getPlayer().getInventory().setSelectedItem(inventoryTableView.getSelectionModel().getSelectedItem());
+    }
 
 }

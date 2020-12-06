@@ -1,7 +1,10 @@
 package worldofzuul.item;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import worldofzuul.Sprite;
 
 
@@ -15,21 +18,30 @@ import worldofzuul.Sprite;
         @JsonSubTypes.Type(value=Plant.class, name="Plant"),
 })
 public abstract class Item extends Sprite {
-    private String name;
+    private StringProperty name = new SimpleStringProperty();
 
     public Item(){}
     public Item(String name) {
-        this.name = name;
+        setName(name);
     }
 
 
     public String getName() {
+        return name.get();
+    }
+
+    @JsonIgnore
+    public StringProperty nameProperty() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name.set(name);
     }
 
     @Override
     public String toString() {
-        return name;
+        return getName();
     }
 
 

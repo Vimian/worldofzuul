@@ -15,3 +15,7 @@
     -fx-background-image: url("sprites/room/clipart-rain-gif-transparent-12.gif");
     -fx-background-color: rgba(0,0,0,0.3);
 }
+
+.accordion .titled-pane > *.content{
+    -fx-background-color: transparent ;
+}

@@ -49,7 +49,8 @@
                           </cellValueFactory>
                       </TableColumn>
                       <TableColumn fx:id="exitRoomRow" editable="true" onEditCommit="#changeExitValue" prefWidth="75.0" sortable="false" text="Room names">
-                          <cellValueFactory><PropertyValueFactory property="exitValue" />
+                          <cellValueFactory>
+                              <PropertyValueFactory property="exitValue" />
                           </cellValueFactory>
                       </TableColumn>
                     </columns>
