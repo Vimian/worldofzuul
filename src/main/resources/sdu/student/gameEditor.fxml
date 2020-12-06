@@ -85,6 +85,7 @@
                               <String fx:value="Block" />
                               <String fx:value="Door" />
                               <String fx:value="Field" />
+                              <String fx:value="NPC" />
                           </FXCollections>
                       </items>
                   </ComboBox>

@@ -13,6 +13,7 @@ import javafx.scene.layout.*;
 import sdu.student.editor.BlockEditor;
 import sdu.student.editor.DoorEditor;
 import sdu.student.editor.FieldEditor;
+import sdu.student.editor.NPCEditor;
 import worldofzuul.Game;
 import worldofzuul.item.Fertilizer;
 import worldofzuul.item.Item;
@@ -100,24 +101,6 @@ public class EditorController implements Initializable {
         drawRoom();
         addListeners();
 
-        NPC npc = new NPC();
-        npc.getDialog().add("aa");
-        npc.getDialog().add("ab");
-        npc.getDialog().add("ac");
-
-        List<Item> itemList = new LinkedList<>();
-        itemList.add(new Plant("aa"));
-        itemList.add(new Plant("asdasd"));
-
-        Quest q1 = new Quest(itemList, "title", "hello", "bye", Seed.class, 12f);
-        Quest q2 = new Quest(itemList, "asdas", "asdd", "dsaa", Fertilizer.class, 14f);
-
-        npc.getQuests().add(q1);
-        npc.getQuests().add(q2);
-
-
-
-        model.getRoom().setGridGameObject(npc, new Vector(13, 23));
     }
 
 
@@ -182,6 +165,13 @@ public class EditorController implements Initializable {
 
                 objectToAdd = new Door();
                 break;
+            case "NPC":
+                if (currentGameObject instanceof Door) {
+                    return;
+                }
+
+                objectToAdd = new NPC();
+                break;
             default:
                 return;
         }
@@ -218,7 +208,7 @@ public class EditorController implements Initializable {
             drawGrid(roomPane, getBackgroundRowCount());
         }
 
-        drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim(), getClass(), null);
+        drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim(), getClass(), currentlyEditingPos);
 
     }
 
@@ -273,6 +263,10 @@ public class EditorController implements Initializable {
             nodeToLoad = "editor/fieldEditor.fxml";
             loader.setControllerFactory(aClass -> new FieldEditor((Field) gameObject));
             gameObjectTypeBox.getSelectionModel().select(2);
+        } else if (gameObject instanceof NPC) {
+            nodeToLoad = "editor/npcEditor.fxml";
+            loader.setControllerFactory(aClass -> new NPCEditor((NPC) gameObject));
+            gameObjectTypeBox.getSelectionModel().select(3);
         }
 
         loader.setLocation(getClass().getResource(nodeToLoad));

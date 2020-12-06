@@ -65,20 +65,14 @@ public class Drawing {
             for (int j = 0; j < room.getRoomGrid().length; j++) {
                 var rect = new Rectangle(j * backgroundTileDim, i * backgroundTileDim, backgroundTileDim, backgroundTileDim);
 
-
-                Vector scan = new Vector(j,i);
-                GameObject object = room.getGridGameObject(scan);
+                GameObject object = room.getGridGameObject(new Vector(j,i));
 
                 //Draw img
                 //TODO: Refactor & Optimize
                 drawGameObjectImage(loadedImages, roomPane, rect, object);
                 //Draw border
 
-                if(clickedPos != null && clickedPos.getX() == scan.getX() && clickedPos.getY() == scan.getY()){
-                    rect.setStroke(Color.PINK);
-                    System.out.println("clickedPos x: "+clickedPos.getX() + "clickedPos y " + clickedPos.getY());
-
-                } else if (object instanceof Block) {
+                if (object instanceof Block) {
                     if (object.isColliding()) {
                         rect.setStroke(Color.RED);
                     } else {
@@ -99,7 +93,14 @@ public class Drawing {
                     } else {
                         rect.setStroke(Color.GREEN);
                     }
-                } else {
+                } else if (object instanceof NPC) {
+                    if (object.isColliding()) {
+                        rect.setStroke(Color.MAGENTA);
+                    } else {
+                        rect.setStroke(Color.DARKMAGENTA);
+                    }
+                }
+                else {
                     continue;
                 }
 
@@ -109,7 +110,22 @@ public class Drawing {
 
             }
         }
+
+        if(clickedPos != null){
+            Rectangle rect = new Rectangle(clickedPos.getX() * backgroundTileDim,
+                    clickedPos.getY() * backgroundTileDim,
+                    backgroundTileDim,
+                    backgroundTileDim);
+            rect.setStrokeWidth(4);
+            rect.setFill(Color.TRANSPARENT);
+            rect.setStroke(Color.PINK);
+            roomPane.getChildren().add(rect);
+
+        }
+
     }
+
+
 
 
     private static void appendFieldInfoBar(Field field, Pane pane, Vector position, double tileDim, Class<?> callerController) {
