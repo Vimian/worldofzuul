@@ -1,5 +1,8 @@
 package worldofzuul.world;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import worldofzuul.util.MessageHelper;
 
 import java.util.Calendar;
@@ -7,11 +10,14 @@ import java.util.Date;
 import java.util.Random;
 
 public class Environment {
-    private static final int rainTicksMin = 500;
-    private static final int rainTicksMax = 1500;
-    private static final double chanceForRain = 0.00001; //TODO: Tweak this
-    private static final int dayTimeStart = 6;
-    private static final int dayTimeEnd = 18;
+    private final BooleanProperty rainState = new SimpleBooleanProperty(false);
+    private int rainTicksMin = 500;
+    private int rainTicksMax = 1500;
+    private double chanceForRain = 0.00001; //TODO: Tweak this
+    private int dayTimeStart = 6;
+    private int dayTimeEnd = 18;
+    private int secondsToIncrement = 2;
+    private float rainWaterAmount = 0.1f;
 
 
     private final Calendar calendar = Calendar.getInstance();
@@ -20,7 +26,7 @@ public class Environment {
     private int rainTicks = 0;
     private boolean rainStarted = false;
     private boolean nightStarted = false;
-    private float rainWaterAmount = 0.1f;
+
 
     public Environment(){
         calendar.set(2020, Calendar.JANUARY,1,8, 1);
@@ -30,7 +36,7 @@ public class Environment {
     }
 
     public void update(){
-        incrementOneSecond();
+        incrementTime();
         if(isRaining()){
             rainTicks--;
         } else if (rainStarted) {
@@ -41,8 +47,6 @@ public class Environment {
         }
     }
 
-
-
     public void update(GameObject gameObject){
         if(gameObject instanceof Field){
             if(isRaining()){
@@ -52,13 +56,13 @@ public class Environment {
             }
         }
     }
-
+    @JsonIgnore
     public boolean isRaining(){
         return rainTicks > 0;
     }
 
-    private void incrementOneSecond(){
-        calendar.add(Calendar.SECOND, 1);
+    private void incrementTime(){
+        calendar.add(Calendar.SECOND, secondsToIncrement);
     }
 
     private boolean shouldItRain(){
@@ -88,4 +92,81 @@ public class Environment {
     }
 
 
+    public int getRainTicksMin() {
+        return rainTicksMin;
+    }
+
+    public void setRainTicksMin(int rainTicksMin) {
+        this.rainTicksMin = rainTicksMin;
+    }
+
+    public int getRainTicksMax() {
+        return rainTicksMax;
+    }
+
+    public void setRainTicksMax(int rainTicksMax) {
+        this.rainTicksMax = rainTicksMax;
+    }
+
+    public double getChanceForRain() {
+        return chanceForRain;
+    }
+
+    public void setChanceForRain(double chanceForRain) {
+        this.chanceForRain = chanceForRain;
+    }
+
+    public int getDayTimeStart() {
+        return dayTimeStart;
+    }
+
+    public void setDayTimeStart(int dayTimeStart) {
+        this.dayTimeStart = dayTimeStart;
+    }
+
+    public int getDayTimeEnd() {
+        return dayTimeEnd;
+    }
+
+    public void setDayTimeEnd(int dayTimeEnd) {
+        this.dayTimeEnd = dayTimeEnd;
+    }
+
+    public int getSecondsToIncrement() {
+        return secondsToIncrement;
+    }
+
+    public void setSecondsToIncrement(int secondsToIncrement) {
+        this.secondsToIncrement = secondsToIncrement;
+    }
+
+    public float getRainWaterAmount() {
+        return rainWaterAmount;
+    }
+
+    public void setRainWaterAmount(float rainWaterAmount) {
+        this.rainWaterAmount = rainWaterAmount;
+    }
+
+    @JsonIgnore
+    public boolean getRainState() {
+        return rainState.get();
+    }
+
+    @JsonIgnore
+    public BooleanProperty rainStateProperty() {
+        return rainState;
+    }
+
+    @JsonIgnore
+    public void setRainState(boolean rainState) {
+        this.rainState.set(rainState);
+    }
+
+    public Date getCalendarStart(){
+        return calendar.getTime();
+    }
+    public void setCalendarStart(Date date){
+        calendar.setTime(date);
+    }
 }

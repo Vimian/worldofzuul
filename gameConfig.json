@@ -734,12 +734,12 @@
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
               "colliding": false,
-              "water": 20000,
-              "nutrition": 10000,
-              "depletionRate": 5,
-              "maxWater": 20000,
-              "maxNutrition": 20000,
-              "ph": 21
+              "water": 20000.0,
+              "nutrition": 10000.0,
+              "depletionRate": 5.0,
+              "maxWater": 20000.0,
+              "maxNutrition": 20000.0,
+              "ph": 21.0
             }
           },
           {
@@ -3715,12 +3715,12 @@
                       "Plant": {
                         "defaultImageFile": null,
                         "name": "aa",
-                        "seedQuality": 1,
-                        "waterNeeded": 1000,
-                        "nutritionNeeded": 1000,
+                        "value": 0.0,
+                        "sellBackRate": 0.0,
+                        "seedQuality": 1.0,
+                        "waterNeeded": 1000.0,
+                        "nutritionNeeded": 1000.0,
                         "growthTime": 1000,
-                        "value": 0,
-                        "sellBackRate": 0,
                         "maxTimeWithoutWater": 100
                       }
                     },
@@ -3728,12 +3728,12 @@
                       "Plant": {
                         "defaultImageFile": null,
                         "name": "asdasd",
-                        "seedQuality": 1,
-                        "waterNeeded": 1000,
-                        "nutritionNeeded": 1000,
+                        "value": 0.0,
+                        "sellBackRate": 0.0,
+                        "seedQuality": 1.0,
+                        "waterNeeded": 1000.0,
+                        "nutritionNeeded": 1000.0,
                         "growthTime": 1000,
-                        "value": 0,
-                        "sellBackRate": 0,
                         "maxTimeWithoutWater": 100
                       }
                     }
@@ -3741,7 +3741,7 @@
                   "questTitle": "title",
                   "introductionMessage": "hello",
                   "completionMessage": "bye",
-                  "turnInQuantity": 12,
+                  "turnInQuantity": 12.0,
                   "turnInType": "worldofzuul.item.Seed"
                 },
                 {
@@ -3750,12 +3750,12 @@
                       "Plant": {
                         "defaultImageFile": null,
                         "name": "aa",
-                        "seedQuality": 1,
-                        "waterNeeded": 1000,
-                        "nutritionNeeded": 1000,
+                        "value": 0.0,
+                        "sellBackRate": 0.0,
+                        "seedQuality": 1.0,
+                        "waterNeeded": 1000.0,
+                        "nutritionNeeded": 1000.0,
                         "growthTime": 1000,
-                        "value": 0,
-                        "sellBackRate": 0,
                         "maxTimeWithoutWater": 100
                       }
                     },
@@ -3763,12 +3763,12 @@
                       "Plant": {
                         "defaultImageFile": null,
                         "name": "asdasd",
-                        "seedQuality": 1,
-                        "waterNeeded": 1000,
-                        "nutritionNeeded": 1000,
+                        "value": 0.0,
+                        "sellBackRate": 0.0,
+                        "seedQuality": 1.0,
+                        "waterNeeded": 1000.0,
+                        "nutritionNeeded": 1000.0,
                         "growthTime": 1000,
-                        "value": 0,
-                        "sellBackRate": 0,
                         "maxTimeWithoutWater": 100
                       }
                     }
@@ -3776,7 +3776,7 @@
                   "questTitle": "asdas",
                   "introductionMessage": "asdd",
                   "completionMessage": "dsaa",
-                  "turnInQuantity": 14,
+                  "turnInQuantity": 14.0,
                   "turnInType": "worldofzuul.item.Fertilizer"
                 }
               ],
@@ -4827,12 +4827,12 @@
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
               "colliding": false,
-              "maxWater": 20000,
-              "maxNutrition": 20000,
-              "water": 20000,
-              "nutrition": 10000,
-              "depletionRate": 5,
-              "ph": null
+              "water": 20000.0,
+              "nutrition": 10000.0,
+              "depletionRate": 5.0,
+              "maxWater": 20000.0,
+              "maxNutrition": 20000.0,
+              "ph": 0.0
             }
           },
           {
@@ -4868,12 +4868,12 @@
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
               "colliding": false,
-              "maxWater": 20000,
-              "maxNutrition": 20000,
-              "water": 20000,
-              "nutrition": 10000,
-              "depletionRate": 5,
-              "ph": null
+              "water": 20000.0,
+              "nutrition": 10000.0,
+              "depletionRate": 5.0,
+              "maxWater": 20000.0,
+              "maxNutrition": 20000.0,
+              "ph": 0.0
             }
           },
           {
@@ -5191,12 +5191,12 @@
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
               "colliding": false,
-              "maxWater": 20000,
-              "maxNutrition": 20000,
-              "water": 20000,
-              "nutrition": 10000,
-              "depletionRate": 5,
-              "ph": null
+              "water": 20000.0,
+              "nutrition": 10000.0,
+              "depletionRate": 5.0,
+              "maxWater": 20000.0,
+              "maxNutrition": 20000.0,
+              "ph": 0.0
             }
           },
           {
@@ -5232,12 +5232,12 @@
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
               "colliding": false,
-              "maxWater": 20000,
-              "maxNutrition": 20000,
-              "water": 40000,
-              "nutrition": 10000,
-              "depletionRate": 2,
-              "ph": null
+              "water": 40000.0,
+              "nutrition": 10000.0,
+              "depletionRate": 2.0,
+              "maxWater": 20000.0,
+              "maxNutrition": 20000.0,
+              "ph": 0.0
             }
           },
           {
@@ -8334,12 +8334,12 @@
                       "Plant": {
                         "defaultImageFile": null,
                         "name": "aa",
-                        "seedQuality": 1,
-                        "waterNeeded": 1000,
-                        "nutritionNeeded": 1000,
+                        "value": 0.0,
+                        "sellBackRate": 0.0,
+                        "seedQuality": 1.0,
+                        "waterNeeded": 1000.0,
+                        "nutritionNeeded": 1000.0,
                         "growthTime": 1000,
-                        "value": 0,
-                        "sellBackRate": 0,
                         "maxTimeWithoutWater": 100
                       }
                     },
@@ -8347,12 +8347,12 @@
                       "Plant": {
                         "defaultImageFile": null,
                         "name": "asdasd",
-                        "seedQuality": 1,
-                        "waterNeeded": 1000,
-                        "nutritionNeeded": 1000,
+                        "value": 0.0,
+                        "sellBackRate": 0.0,
+                        "seedQuality": 1.0,
+                        "waterNeeded": 1000.0,
+                        "nutritionNeeded": 1000.0,
                         "growthTime": 1000,
-                        "value": 0,
-                        "sellBackRate": 0,
                         "maxTimeWithoutWater": 100
                       }
                     }
@@ -8360,7 +8360,7 @@
                   "questTitle": "title",
                   "introductionMessage": "hello",
                   "completionMessage": "bye",
-                  "turnInQuantity": 12,
+                  "turnInQuantity": 12.0,
                   "turnInType": "worldofzuul.item.Seed"
                 },
                 {
@@ -8369,12 +8369,12 @@
                       "Plant": {
                         "defaultImageFile": null,
                         "name": "aa",
-                        "seedQuality": 1,
-                        "waterNeeded": 1000,
-                        "nutritionNeeded": 1000,
+                        "value": 0.0,
+                        "sellBackRate": 0.0,
+                        "seedQuality": 1.0,
+                        "waterNeeded": 1000.0,
+                        "nutritionNeeded": 1000.0,
                         "growthTime": 1000,
-                        "value": 0,
-                        "sellBackRate": 0,
                         "maxTimeWithoutWater": 100
                       }
                     },
@@ -8382,12 +8382,12 @@
                       "Plant": {
                         "defaultImageFile": null,
                         "name": "asdasd",
-                        "seedQuality": 1,
-                        "waterNeeded": 1000,
-                        "nutritionNeeded": 1000,
+                        "value": 0.0,
+                        "sellBackRate": 0.0,
+                        "seedQuality": 1.0,
+                        "waterNeeded": 1000.0,
+                        "nutritionNeeded": 1000.0,
                         "growthTime": 1000,
-                        "value": 0,
-                        "sellBackRate": 0,
                         "maxTimeWithoutWater": 100
                       }
                     }
@@ -8395,7 +8395,7 @@
                   "questTitle": "asdas",
                   "introductionMessage": "asdd",
                   "completionMessage": "dsaa",
-                  "turnInQuantity": 14,
+                  "turnInQuantity": 14.0,
                   "turnInType": "worldofzuul.item.Fertilizer"
                 }
               ],
@@ -17812,6 +17812,16 @@
           }
         ]
       ],
+      "environment": {
+        "rainTicksMin": 500,
+        "rainTicksMax": 1500,
+        "chanceForRain": 1.0E-5,
+        "dayTimeStart": 6,
+        "dayTimeEnd": 18,
+        "secondsToIncrement": 2,
+        "rainWaterAmount": 0.1,
+        "calendarStart": 1577862106224
+      },
       "description": "outside the main entrance of the university"
     },
     {
@@ -35429,6 +35439,16 @@
           }
         ]
       ],
+      "environment": {
+        "rainTicksMin": 500,
+        "rainTicksMax": 1500,
+        "chanceForRain": 1.0E-5,
+        "dayTimeStart": 6,
+        "dayTimeEnd": 18,
+        "secondsToIncrement": 2,
+        "rainWaterAmount": 0.1,
+        "calendarStart": 1577862106282
+      },
       "description": "in a lecture theatre"
     },
     {
@@ -35440,6 +35460,16 @@
       ],
       "backgroundImage": null,
       "roomGrid": null,
+      "environment": {
+        "rainTicksMin": 500,
+        "rainTicksMax": 1500,
+        "chanceForRain": 1.0E-5,
+        "dayTimeStart": 6,
+        "dayTimeEnd": 18,
+        "secondsToIncrement": 2,
+        "rainWaterAmount": 0.1,
+        "calendarStart": 1577862106293
+      },
       "description": "in the campus pub"
     },
     {
@@ -35455,6 +35485,16 @@
       ],
       "backgroundImage": null,
       "roomGrid": null,
+      "environment": {
+        "rainTicksMin": 500,
+        "rainTicksMax": 1500,
+        "chanceForRain": 1.0E-5,
+        "dayTimeStart": 6,
+        "dayTimeEnd": 18,
+        "secondsToIncrement": 2,
+        "rainWaterAmount": 0.1,
+        "calendarStart": 1577862106293
+      },
       "description": "in a computing lab"
     },
     {
@@ -35466,6 +35506,16 @@
       ],
       "backgroundImage": null,
       "roomGrid": null,
+      "environment": {
+        "rainTicksMin": 500,
+        "rainTicksMax": 1500,
+        "chanceForRain": 1.0E-5,
+        "dayTimeStart": 6,
+        "dayTimeEnd": 18,
+        "secondsToIncrement": 2,
+        "rainWaterAmount": 0.1,
+        "calendarStart": 1577862106293
+      },
       "description": "in the computing admin office"
     }
   ],
@@ -35482,48 +35532,48 @@
           "Fertilizer": {
             "defaultImageFile": null,
             "name": "Manure",
-            "value": 25,
-            "sellBackRate": 0,
-            "remaining": 3,
-            "capacity": 0,
-            "consumptionRate": 1
+            "value": 25.0,
+            "sellBackRate": 0.0,
+            "remaining": 3.0,
+            "capacity": 0.0,
+            "consumptionRate": 1.0
           }
         },
         {
           "Harvester": {
             "defaultImageFile": null,
             "name": "Sickle",
-            "value": 0,
-            "sellBackRate": 0
+            "value": 0.0,
+            "sellBackRate": 0.0
           }
         },
         {
           "Irrigator": {
             "defaultImageFile": null,
             "name": "Hose",
-            "remaining": 0,
-            "capacity": 0,
-            "consumptionRate": 1,
-            "value": 0,
-            "sellBackRate": 0
+            "value": 0.0,
+            "sellBackRate": 0.0,
+            "remaining": 0.0,
+            "capacity": 0.0,
+            "consumptionRate": 1.0
           }
         },
         {
           "Seed": {
             "defaultImageFile": null,
             "name": "Corn",
-            "value": 0,
-            "sellBackRate": 0,
-            "remaining": 3,
-            "capacity": 0,
-            "consumptionRate": 1,
+            "value": 0.0,
+            "sellBackRate": 0.0,
+            "remaining": 3.0,
+            "capacity": 0.0,
+            "consumptionRate": 1.0,
             "maxSeeds": 0,
             "minSeeds": 0
           }
         }
       ]
     },
-    "balance": 0
+    "balance": 0.0
   },
   "market": {
     "stock": [
@@ -35531,79 +35581,79 @@
         "Fertilizer": {
           "defaultImageFile": null,
           "name": "Fertilizer",
-          "value": 320,
+          "value": 320.0,
           "sellBackRate": 0.975,
-          "remaining": 0,
-          "capacity": 0,
-          "consumptionRate": 1
+          "remaining": 0.0,
+          "capacity": 0.0,
+          "consumptionRate": 1.0
         }
       },
       {
         "Harvester": {
           "defaultImageFile": null,
           "name": "Hands",
-          "value": 0,
-          "sellBackRate": 0
+          "value": 0.0,
+          "sellBackRate": 0.0
         }
       },
       {
         "Harvester": {
           "defaultImageFile": null,
           "name": "Sickle",
-          "value": 230,
-          "sellBackRate": 0
+          "value": 230.0,
+          "sellBackRate": 0.0
         }
       },
       {
         "Harvester": {
           "defaultImageFile": null,
           "name": "Scythe",
-          "value": 2000,
-          "sellBackRate": 0
+          "value": 2000.0,
+          "sellBackRate": 0.0
         }
       },
       {
         "Irrigator": {
           "defaultImageFile": null,
           "name": "Bucket",
-          "value": 320,
-          "sellBackRate": 0,
-          "remaining": 0,
-          "capacity": 0,
-          "consumptionRate": 1
+          "value": 320.0,
+          "sellBackRate": 0.0,
+          "remaining": 0.0,
+          "capacity": 0.0,
+          "consumptionRate": 1.0
         }
       },
       {
         "Irrigator": {
           "defaultImageFile": null,
           "name": "Watering Can",
-          "value": 300,
-          "sellBackRate": 0,
-          "remaining": 0,
-          "capacity": 0,
-          "consumptionRate": 1
+          "value": 300.0,
+          "sellBackRate": 0.0,
+          "remaining": 0.0,
+          "capacity": 0.0,
+          "consumptionRate": 1.0
         }
       },
       {
         "Irrigator": {
           "defaultImageFile": null,
           "name": "Hose",
-          "value": 400,
-          "sellBackRate": 0,
-          "remaining": 0,
-          "capacity": 0,
-          "consumptionRate": 1
+          "value": 400.0,
+          "sellBackRate": 0.0,
+          "remaining": 0.0,
+          "capacity": 0.0,
+          "consumptionRate": 1.0
         }
       },
       {
         "Plant": {
           "defaultImageFile": null,
           "name": "Corn",
-          "value": 2,
+          "value": 2.0,
           "sellBackRate": 0.3,
-          "seedQuality": 1,
-          "waterNeeded": 1000,
-          "nutritionNeeded": 1000,
+          "seedQuality": 1.0,
+          "waterNeeded": 1000.0,
+          "nutritionNeeded": 1000.0,
           "growthTime": 1000,
           "maxTimeWithoutWater": 100
         }
@@ -35612,11 +35662,11 @@
         "Plant": {
           "defaultImageFile": null,
           "name": "Cashew",
-          "value": 2,
+          "value": 2.0,
           "sellBackRate": 0.4,
-          "seedQuality": 1,
-          "waterNeeded": 1000,
-          "nutritionNeeded": 1000,
+          "seedQuality": 1.0,
+          "waterNeeded": 1000.0,
+          "nutritionNeeded": 1000.0,
           "growthTime": 1000,
           "maxTimeWithoutWater": 100
         }
@@ -35625,11 +35675,11 @@
         "Plant": {
           "defaultImageFile": null,
           "name": "Rice",
-          "value": 4,
+          "value": 4.0,
           "sellBackRate": 0.2,
-          "seedQuality": 1,
-          "waterNeeded": 1000,
-          "nutritionNeeded": 1000,
+          "seedQuality": 1.0,
+          "waterNeeded": 1000.0,
+          "nutritionNeeded": 1000.0,
           "growthTime": 1000,
           "maxTimeWithoutWater": 100
         }
@@ -35638,11 +35688,11 @@
         "Plant": {
           "defaultImageFile": null,
           "name": "Mango",
-          "value": 10,
+          "value": 10.0,
           "sellBackRate": 0.7,
-          "seedQuality": 1,
-          "waterNeeded": 1000,
-          "nutritionNeeded": 1000,
+          "seedQuality": 1.0,
+          "waterNeeded": 1000.0,
+          "nutritionNeeded": 1000.0,
           "growthTime": 1000,
           "maxTimeWithoutWater": 100
         }
@@ -35651,11 +35701,11 @@
         "Plant": {
           "defaultImageFile": null,
           "name": "Cowpea",
-          "value": 20,
+          "value": 20.0,
           "sellBackRate": 0.01,
-          "seedQuality": 1,
-          "waterNeeded": 1000,
-          "nutritionNeeded": 1000,
+          "seedQuality": 1.0,
+          "waterNeeded": 1000.0,
+          "nutritionNeeded": 1000.0,
           "growthTime": 1000,
           "maxTimeWithoutWater": 100
         }
@@ -35664,11 +35714,11 @@
         "Seed": {
           "defaultImageFile": null,
           "name": "CornSeeds",
-          "value": 13,
+          "value": 13.0,
           "sellBackRate": 0.98,
-          "remaining": 5,
-          "capacity": 0,
-          "consumptionRate": 1,
+          "remaining": 5.0,
+          "capacity": 0.0,
+          "consumptionRate": 1.0,
           "maxSeeds": 0,
           "minSeeds": 0
         }
@@ -35677,11 +35727,11 @@
         "Seed": {
           "defaultImageFile": null,
           "name": "CashewSeeds",
-          "value": 32,
+          "value": 32.0,
           "sellBackRate": 0.98,
-          "remaining": 5,
-          "capacity": 0,
-          "consumptionRate": 1,
+          "remaining": 5.0,
+          "capacity": 0.0,
+          "consumptionRate": 1.0,
           "maxSeeds": 0,
           "minSeeds": 0
         }
@@ -35690,11 +35740,11 @@
         "Seed": {
           "defaultImageFile": null,
           "name": "RiceSeeds",
-          "value": 42,
+          "value": 42.0,
           "sellBackRate": 0.98,
-          "remaining": 5,
-          "capacity": 0,
-          "consumptionRate": 1,
+          "remaining": 5.0,
+          "capacity": 0.0,
+          "consumptionRate": 1.0,
           "maxSeeds": 0,
           "minSeeds": 0
         }
@@ -35703,11 +35753,11 @@
         "Seed": {
           "defaultImageFile": null,
           "name": "MangoSeeds",
-          "value": 93,
+          "value": 93.0,
           "sellBackRate": 0.98,
-          "remaining": 5,
-          "capacity": 0,
-          "consumptionRate": 1,
+          "remaining": 5.0,
+          "capacity": 0.0,
+          "consumptionRate": 1.0,
           "maxSeeds": 0,
           "minSeeds": 0
         }
@@ -35716,11 +35766,11 @@
         "Seed": {
           "defaultImageFile": null,
           "name": "CowpeaSeeds",
-          "value": 10,
+          "value": 10.0,
           "sellBackRate": 0.98,
-          "remaining": 5,
-          "capacity": 0,
-          "consumptionRate": 1,
+          "remaining": 5.0,
+          "capacity": 0.0,
+          "consumptionRate": 1.0,
           "maxSeeds": 0,
           "minSeeds": 0
         }
