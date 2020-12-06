@@ -3,6 +3,7 @@ package worldofzuul.world;
 import worldofzuul.item.Item;
 import worldofzuul.item.Plant;
 import worldofzuul.parsing.Command;
+import worldofzuul.util.MessageHelper;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,7 +27,7 @@ public class NPC extends GameObject {
         dialog.add(dialogText);
 
 
-        return super.interact();
+        return null;
     }
 
     @Override

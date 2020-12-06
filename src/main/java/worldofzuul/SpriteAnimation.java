@@ -162,6 +162,16 @@ public abstract class SpriteAnimation extends Sprite {
         return animationTimeline;
     }
 
+    public void setDefaultImage(Object animationKey){
+        if (imageAnimations.values().size() > 0 && imageAnimations.containsKey(animationKey)) {
+            Image[] images = imageAnimations.get(animationKey);
+            if (images.length > 0) {
+                setImage(images[images.length - 1]);
+                display();
+            }
+        }
+    }
+
     @Override
     public Image getImage() {
         if (super.getImage() != null) {

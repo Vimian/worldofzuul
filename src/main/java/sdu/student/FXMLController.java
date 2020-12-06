@@ -123,12 +123,14 @@ public class FXMLController implements Initializable {
 
         enableGameUpdater();
 
+
+
+
         //Configure custom PrintStream
         System.setOut(printStream);
         printStream.printListProperty().addListener((observable, oldValue, newValue) -> {
-           Platform.runLater(() -> displayTextMessage(newValue.get(newValue.size() - 1), textDisplayDeletionDelay));
+            Platform.runLater(() -> displayTextMessage(newValue.get(newValue.size() - 1), textDisplayDeletionDelay));
         });
-
 
     }
 
@@ -442,23 +444,40 @@ public class FXMLController implements Initializable {
 
     public void roomPaneClicked(MouseEvent mouseEvent) {
 
-        if (mouseEvent.getButton() == MouseButton.SECONDARY){
+        selectedGamePosition = positionClickedOnPane(getBackgroundTileDim(), getBackgroundTileDim(), mouseEvent.getX(), mouseEvent.getY());
+        if (selectedGamePosition.getX() < 0 || selectedGamePosition.getY() < 0 || selectedGamePosition.getX() > getBackgroundRowCount() || selectedGamePosition.getY() > getBackgroundRowCount()) {
+            return;
+        }
 
-            selectedGamePosition = positionClickedOnPane(getBackgroundTileDim(), getBackgroundTileDim(), mouseEvent.getX(), mouseEvent.getY());
-            if (selectedGamePosition.getX() < 0 || selectedGamePosition.getY() < 0 || selectedGamePosition.getX() > getBackgroundRowCount() || selectedGamePosition.getY() > getBackgroundRowCount()) {
-                return;
-            }
-
-            try {
-                rightClickGameObject(model.getRoom().getGridGameObject(selectedGamePosition));
-            } catch (ArrayIndexOutOfBoundsException e) { // Handle exceptions caused by non-matching RoomGrid sizes or invalid positions
-                System.out.println(e.getMessage());
+        if (vectorDifference(model.getPlayer().getPos(), selectedGamePosition) == 1) {
+            switch (mouseEvent.getButton()) {
+                case PRIMARY -> {
+                    model.interact(selectedGamePosition, false);
+                    faceDirection(vectorDirection(model.getPlayer().getPos(), selectedGamePosition));
+                }
+                case SECONDARY -> {
+                    model.interact(selectedGamePosition, true);
+                    faceDirection(vectorDirection(model.getPlayer().getPos(), selectedGamePosition));
+                }
             }
         }
+
+    }
+
+    private void faceDirection(Direction vectorDirection) {
+        model.getPlayer().setDefaultImage(vectorDirection);
     }
 
 
     private void rightClickGameObject(GameObject object){
+
+               /*
+               call using
+            try {
+                rightClickGameObject(model.getRoom().getGridGameObject(selectedGamePosition));
+            } catch (ArrayIndexOutOfBoundsException e) { // Handle exceptions caused by non-matching RoomGrid sizes or invalid positions
+                System.out.println(e.getMessage());
+            }*/
 
         if(object instanceof Field && selectedGamePosition != null){
 
