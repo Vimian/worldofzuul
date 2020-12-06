@@ -3,8 +3,11 @@ package worldofzuul.item;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import static worldofzuul.item.GrowthStage.*;
+import static worldofzuul.item.crops.*;
 
-public class Plant extends Item {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import worldofzuul.world.*;
+public class Plant extends Sellable {
     private GrowthStage state = GrowthStage.SEED;
     private float seedQuality = 1;
     private float waterNeeded = 1000;
@@ -14,17 +17,22 @@ public class Plant extends Item {
     private float maxNutrition = nutritionNeeded;
 
     
-    private int timeTillDeath = 100;
-
+    private int maxTimeWithoutWater = 100;
     private int ticksNotWatered;
 
     private int growTicks = 0;
+    private crops crops;
 
     public Plant(){}
     public Plant(String name) {
         super(name);
     }
- 
+
+    public Plant(String name, Double value, Double sellbackRate) {
+        super(name);
+        setValue(value);
+        setSellBackRate(sellbackRate);
+    }
 
     public void grow(float water, float nutrition) {
         
@@ -44,10 +52,101 @@ public class Plant extends Item {
         growTicks++;
     }
 
+
+    public void grow(float water, float nutrition, Double pH) {
+        switch (crops) {
+            case CORN:
+                if (pH <= 5.8 && pH >= 7) {
+                    if (water == 0) {
+                        witherPlant();
+                    } else if (ticksNotWatered != 0) {
+                        ticksNotWatered = 0;
+                    }
+
+                    consumeNutrition(nutrition);
+                    consumeWater(water);
+
+                    if (readyForNextStage()) {
+                        advanceStage();
+                    }
+
+                    growTicks++;
+                }
+            case RICE:
+                if (pH <= 5.5 && pH >= 7) {
+                    if (water == 0) {
+                        witherPlant();
+                    } else if (ticksNotWatered != 0) {
+                        ticksNotWatered = 0;
+                    }
+
+                    consumeNutrition(nutrition);
+                    consumeWater(water);
+
+                    if (readyForNextStage()) {
+                        advanceStage();
+                    }
+
+                    growTicks++;
+                }
+            case CASHEW:
+                if (pH <= 5 && pH >= 6.5) {
+                    if (water == 0) {
+                        witherPlant();
+                    } else if (ticksNotWatered != 0) {
+                        ticksNotWatered = 0;
+                    }
+
+                    consumeNutrition(nutrition);
+                    consumeWater(water);
+
+                    if (readyForNextStage()) {
+                        advanceStage();
+                    }
+
+                    growTicks++;
+                }
+            case COWPEA:
+                if (pH <= 5.5 && pH >= 6.5) {
+                    if (water == 0) {
+                        witherPlant();
+                    } else if (ticksNotWatered != 0) {
+                        ticksNotWatered = 0;
+                    }
+
+                    consumeNutrition(nutrition);
+                    consumeWater(water);
+
+                    if (readyForNextStage()) {
+                        advanceStage();
+                    }
+
+                    growTicks++;
+                }
+            case MANGO:
+                if (pH <= 6 && pH >= 7.2) {
+                    if (water == 0) {
+                        witherPlant();
+                    } else if (ticksNotWatered != 0) {
+                        ticksNotWatered = 0;
+                    }
+
+                    consumeNutrition(nutrition);
+                    consumeWater(water);
+
+                    if (readyForNextStage()) {
+                        advanceStage();
+                    }
+
+                    growTicks++;
+                }
+        }
+    }
+
     private void witherPlant() {
         ticksNotWatered++;
         
-        if(ticksNotWatered >= timeTillDeath){
+        if(ticksNotWatered >= maxTimeWithoutWater){
             state = GrowthStage.DEAD;
         }
         
@@ -140,11 +239,20 @@ public class Plant extends Item {
         this.growthTime = growthTime;
     }
 
+    @JsonIgnore
     public int getGrowTicks() {
         return growTicks;
     }
 
     public void setGrowTicks(int growTicks) {
         this.growTicks = growTicks;
+    }
+
+    public int getMaxTimeWithoutWater() {
+        return maxTimeWithoutWater;
+    }
+
+    public void setMaxTimeWithoutWater(int maxTimeWithoutWater) {
+        this.maxTimeWithoutWater = maxTimeWithoutWater;
     }
 }

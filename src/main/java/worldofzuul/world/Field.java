@@ -10,11 +10,16 @@ import worldofzuul.util.MessageHelper;
 import java.util.ArrayList;
 
 public class Field extends GameObject {
+    private float maxWater = 20000;
+    private float maxNutrition = 20000;
+
+
     private Fertilizer fertilizer;
     private Plant plant;
     private ArrayList<Plant> plants;
+    private Double pH;
 
-    private final FloatProperty water = new SimpleFloatProperty(10);
+    private final FloatProperty water = new SimpleFloatProperty(20000);
     private final FloatProperty nutrition = new SimpleFloatProperty(10000);
     private final FloatProperty depletionRate = new SimpleFloatProperty(5);
     private boolean ripePlantSeen = false;
@@ -31,6 +36,12 @@ public class Field extends GameObject {
         setWater(water);
     }
 
+    public Field(Fertilizer fertilizer, float water, Double pH) {
+        this(fertilizer);
+        setWater(water);
+        this.pH = pH;
+    }
+
 
     public void addWater(float water) {
         if (isPlantGrowing()) {
@@ -38,11 +49,20 @@ public class Field extends GameObject {
         }
     }
 
+    public Double getPH(){
+        return pH;
+    }
+
+    public void setPH(){
+        this.pH = pH;
+    }
+
     @Override
     public Command[] update() {
         if (plant != null) {
             if(isPlantGrowing()){
                 plant.grow(depleteWater(), depleteNutrition());
+                //plant.grow(depleteWater(), depleteNutrition(), getPH());
             } if(plant.isRipe() && !ripePlantSeen){
                 MessageHelper.Info.plantBecameRipe(plant.getName());
                 playAnimation(GrowthStage.RIPE);
@@ -88,11 +108,11 @@ public class Field extends GameObject {
 
         Command[] commands = new Command[1];
 
-        if (item.getSeedCount() > 0) {
+        if (item.getRemaining() > 0) {
             plantSeed(item);
         }
 
-        if (item.getSeedCount() == 0) {
+        if (item.getRemaining() == 0) {
             commands[0] = new Command(CommandWord.REMOVEITEM, null);
         }
 
@@ -190,5 +210,22 @@ public class Field extends GameObject {
 
     public FloatProperty depletionRateProperty() {
         return depletionRate;
+    }
+
+
+    public float getMaxWater() {
+        return maxWater;
+    }
+
+    public void setMaxWater(float maxWater) {
+        this.maxWater = maxWater;
+    }
+
+    public float getMaxNutrition() {
+        return maxNutrition;
+    }
+
+    public void setMaxNutrition(float maxNutrition) {
+        this.maxNutrition = maxNutrition;
     }
 }

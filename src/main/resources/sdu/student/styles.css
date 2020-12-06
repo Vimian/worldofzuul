@@ -1,3 +1,13 @@
 .label {
-    -fx-text-fill: blue;
+    -fx-text-fill: black;
+}
+
+#textDisplayLabel {
+    -fx-font-family: "Calisto MT";
+    -fx-font-size: 32;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+#anchor {
+    -fx-background-color: darkgrey;
 }

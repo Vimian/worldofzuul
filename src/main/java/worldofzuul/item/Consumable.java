@@ -4,50 +4,70 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleFloatProperty;
 
-public interface IConsumable {
+public abstract class Consumable extends Sellable {
 
     FloatProperty remaining = new SimpleFloatProperty();
     FloatProperty capacity = new SimpleFloatProperty();
-    FloatProperty consumptionRate = new SimpleFloatProperty();
+    FloatProperty consumptionRate = new SimpleFloatProperty(1);
 
 
+    public Consumable() {
+    }
 
-    default float getConsumptionRate(){
+    public Consumable(String name) {
+        super(name);
+    }
+
+    public Consumable(String name, double value, double sellBackRate) {
+        super(name, value, sellBackRate);
+    }
+
+    public Consumable(String name, float remaining, float capacity, float consumptionRate) {
+        this(name, 0, 0, remaining, capacity, consumptionRate);
+    }
+
+    public Consumable(String name, double value, double sellBackRate, float remaining, float capacity, float consumptionRate) {
+        this(name);
+        this.remaining.setValue(remaining);
+        this.capacity.setValue(capacity);
+        this.consumptionRate.setValue(consumptionRate);
+    }
+
+
+    public float getConsumptionRate(){
         return consumptionRate.get();
     }
-    default void setConsumptionRate(float value){
+    public void setConsumptionRate(float value){
         consumptionRate.set(value);
     }
-    default float getCapacity(){
+    public float getCapacity(){
         return capacity.get();
     }
-    default void setCapacity(float value){
+    public void setCapacity(float value){
         capacity.set(value);
     }
-
-    default Float getRemaining() {
+    public Float getRemaining() {
         return remaining.get();
     }
-
-    default void setRemaining(float value) {
+    public void setRemaining(float value) {
         remaining.set(value);
     }
 
     @JsonIgnore
-    default FloatProperty remainingProperty() {
+    public FloatProperty remainingProperty() {
         return remaining;
     }
     @JsonIgnore
-    default FloatProperty capacityProperty() {
+    public FloatProperty capacityProperty() {
         return capacity;
     }
     @JsonIgnore
-    default FloatProperty consumptionRateProperty() {
+    public FloatProperty consumptionRateProperty() {
         return consumptionRate;
     }
 
     @JsonIgnore
-    default float deplete() {
+    public float deplete() {
         float depletionAmount = 0;
         if (getRemaining() > getConsumptionRate()) {
             setRemaining(getRemaining() - getConsumptionRate());
@@ -60,7 +80,7 @@ public interface IConsumable {
         return depletionAmount;
     }
     @JsonIgnore
-    default boolean deplete(float amount){
+    public boolean deplete(float amount){
         if(amount >= getRemaining()){
             setRemaining(getRemaining() - amount);
             return true;
@@ -68,7 +88,7 @@ public interface IConsumable {
             return false;
         }
     }
-    default void refill() {
+    public void refill() {
         setRemaining(getCapacity());
     }
 

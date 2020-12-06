@@ -16,13 +16,12 @@ import worldofzuul.Sprite;
 })
 public abstract class Item extends Sprite {
     private String name;
-    private Double value;
-    private Double sellbackRate;
 
     public Item(){}
     public Item(String name) {
         this.name = name;
     }
+
 
     public String getName() {
         return name;

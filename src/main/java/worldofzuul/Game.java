@@ -18,6 +18,7 @@ import worldofzuul.util.Vector;
 import worldofzuul.world.*;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -32,6 +33,7 @@ public class Game {
             FXCollections.observableArrayList());
     private Player player;
     private ScheduledExecutorService scheduledThreadPool;
+    private Market market = new Market();
 
     public Game() {
         //createRooms();
@@ -50,6 +52,16 @@ public class Game {
     public void setRoom(Room room){
         currentRoom = room;
     }
+
+
+    public Market getMarket() {
+        return market;
+    }
+
+    public void setMarket(Market market) {
+        this.market = market;
+    }
+
     public void move(Direction direction) {
         processCommandInternal(new Command(CommandWord.MOVE, direction.toString()));
     }
@@ -58,15 +70,20 @@ public class Game {
     }
 
 
+
     public void reconfigureRooms(){
         for (Room room : rooms) {
             if (room.getExitStrings().size() <= 0) {
                 continue;
             }
 
+
+
             MapProperty<String, Room> exits = new SimpleMapProperty<>(
                     FXCollections.observableHashMap()
             );
+
+
 
             for (Room.Exit exit : room.getExitStrings()) {
                 Room exitRoom = findRoom(exit.getExitValue());
@@ -125,6 +142,17 @@ public class Game {
         player.getInventory().addItem(new Harvester("Sickle"));
         player.getInventory().addItem(new Irrigator("Hose"));
         player.getInventory().setSelectedItem(new Seed("Corn", 3));
+
+        /*
+        *
+
+          player.getInventory().addItem(new Fertilizer("Manure", 3.0, 2.0, 2.0));
+        player.getInventory().addItem(new Harvester("Sickle",0.0, 2.0));
+        player.getInventory().addItem(new Irrigator("Hose",2.0 , 2.0));
+        player.getInventory().setSelectedItem(new Seed("Corn", 3, 2.0, 2.0));
+
+
+        * */
 
 
         //DBG End
@@ -364,7 +392,7 @@ public class Game {
         }
 
         if (canPlayerMoveToPoint(x, y)) {
-            MessageHelper.Command.moveCommand(secondWord);
+            //MessageHelper.Command.moveCommand(secondWord);
             setPlayerPosition(new Vector(x, y));
         }
     }
