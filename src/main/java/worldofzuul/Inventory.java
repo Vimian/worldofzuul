@@ -27,6 +27,9 @@ public class Inventory {
             return null;
         }
     }
+    public void unselectItem(){
+        selectedItem = null;
+    }
 
     public void setSelectedItem(Item item) {
         if (getItems().contains(item)) {

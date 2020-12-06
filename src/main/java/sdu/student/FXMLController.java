@@ -113,12 +113,6 @@ public class FXMLController implements Initializable {
         String javafxVersion = System.getProperty("javafx.version");
         label.setText("Hello, JavaFX " + javafxVersion + "\nRunning on Java " + javaVersion + ".");
 
-        //Configure custom PrintStream
-        System.setOut(printStream);
-        printStream.printListProperty().addListener((observable, oldValue, newValue) -> {
-            Platform.runLater(() -> displayTextMessage(newValue.get(newValue.size() - 1), textDisplayDeletionDelay));
-        });
-
         loadedImages = getImages(spriteDirectory, getClass());
         loadGame();
 
@@ -131,6 +125,12 @@ public class FXMLController implements Initializable {
 
 
 
+
+        //Configure custom PrintStream
+        System.setOut(printStream);
+        printStream.printListProperty().addListener((observable, oldValue, newValue) -> {
+            Platform.runLater(() -> displayTextMessage(newValue.get(newValue.size() - 1), textDisplayDeletionDelay));
+        });
 
     }
 

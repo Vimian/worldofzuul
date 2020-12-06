@@ -324,15 +324,17 @@ public class Game {
     }
 
     private void removeItem(Command command) {
-        int itemIndex = 0;
         if (command.hasItem()) {
             player.getInventory().removeItem(command.getItem());
-            return;
         } else if (command.hasSecondWord()) {
-            itemIndex = tryParse(command.getSecondWord(), 0);
+            player.getInventory().removeItem(tryParse(command.getSecondWord(), 0));
+
         }
 
-        player.getInventory().removeItem(itemIndex);
+        if(!player.getInventory().getItems().contains(player.getInventory().getSelectedItem())){
+            player.getInventory().unselectItem();
+        }
+
     }
 
     private void printHelp() {
