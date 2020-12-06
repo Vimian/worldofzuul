@@ -65,7 +65,8 @@ public class Quest {
                 }
             }
         } else {
-            System.out.println("The Quest does not accept that item.");
+            System.out.println("Bring me " + turnInQuantity + " " + turnInClass.getSimpleName() + "s instead." );
+
         }
 
         return commands.toArray(new Command[0]);
