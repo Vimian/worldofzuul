@@ -1,5 +1,7 @@
 package worldofzuul.item;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import static worldofzuul.item.GrowthStage.*;
 import static worldofzuul.item.crops.*;
 

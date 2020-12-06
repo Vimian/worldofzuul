@@ -8241,10 +8241,79 @@
             }
           },
           {
-            "Block": {
+            "NPC": {
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
-              "colliding": false
+              "colliding": false,
+              "quests": [
+                {
+                  "rewards": [
+                    {
+                      "Plant": {
+                        "defaultImageFile": null,
+                        "name": "aa",
+                        "seedQuality": 1.0,
+                        "waterNeeded": 1000.0,
+                        "nutritionNeeded": 1000.0,
+                        "growthTime": 1000,
+                        "growTicks": 0
+                      }
+                    },
+                    {
+                      "Plant": {
+                        "defaultImageFile": null,
+                        "name": "asdasd",
+                        "seedQuality": 1.0,
+                        "waterNeeded": 1000.0,
+                        "nutritionNeeded": 1000.0,
+                        "growthTime": 1000,
+                        "growTicks": 0
+                      }
+                    }
+                  ],
+                  "questTitle": "title",
+                  "introductionMessage": "hello",
+                  "completionMessage": "bye",
+                  "turnInQuantity": 12.0,
+                  "turnInType": "worldofzuul.item.Seed"
+                },
+                {
+                  "rewards": [
+                    {
+                      "Plant": {
+                        "defaultImageFile": null,
+                        "name": "aa",
+                        "seedQuality": 1.0,
+                        "waterNeeded": 1000.0,
+                        "nutritionNeeded": 1000.0,
+                        "growthTime": 1000,
+                        "growTicks": 0
+                      }
+                    },
+                    {
+                      "Plant": {
+                        "defaultImageFile": null,
+                        "name": "asdasd",
+                        "seedQuality": 1.0,
+                        "waterNeeded": 1000.0,
+                        "nutritionNeeded": 1000.0,
+                        "growthTime": 1000,
+                        "growTicks": 0
+                      }
+                    }
+                  ],
+                  "questTitle": "asdas",
+                  "introductionMessage": "asdd",
+                  "completionMessage": "dsaa",
+                  "turnInQuantity": 14.0,
+                  "turnInType": "worldofzuul.item.Fertilizer"
+                }
+              ],
+              "dialog": [
+                "aa",
+                "ab",
+                "ac"
+              ]
             }
           },
           {
@@ -35342,6 +35411,7 @@
           "Irrigator": {
             "defaultImageFile": null,
             "name": "Hose",
+
             "value": 0.0,
             "sellBackRate": 0.0,
             "remaining": 3.0,
