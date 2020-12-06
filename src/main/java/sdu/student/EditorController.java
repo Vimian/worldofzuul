@@ -14,12 +14,18 @@ import sdu.student.editor.BlockEditor;
 import sdu.student.editor.DoorEditor;
 import sdu.student.editor.FieldEditor;
 import worldofzuul.Game;
+import worldofzuul.item.Fertilizer;
+import worldofzuul.item.Item;
+import worldofzuul.item.Plant;
+import worldofzuul.item.Seed;
 import worldofzuul.util.Vector;
 import worldofzuul.world.*;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import static worldofzuul.util.Data.*;
@@ -93,6 +99,25 @@ public class EditorController implements Initializable {
 
         drawRoom();
         addListeners();
+
+        NPC npc = new NPC();
+        npc.getDialog().add("aa");
+        npc.getDialog().add("ab");
+        npc.getDialog().add("ac");
+
+        List<Item> itemList = new LinkedList<>();
+        itemList.add(new Plant("aa"));
+        itemList.add(new Plant("asdasd"));
+
+        Quest q1 = new Quest(itemList, "title", "hello", "bye", Seed.class, 12f);
+        Quest q2 = new Quest(itemList, "asdas", "asdd", "dsaa", Fertilizer.class, 14f);
+
+        npc.getQuests().add(q1);
+        npc.getQuests().add(q2);
+
+
+
+        model.getRoom().setGridGameObject(npc, new Vector(13, 23));
     }
 
 

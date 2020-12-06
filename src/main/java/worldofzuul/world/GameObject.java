@@ -12,7 +12,8 @@ import worldofzuul.util.MessageHelper;
 @JsonSubTypes({
         @JsonSubTypes.Type(value= Block.class, name="Block"),
         @JsonSubTypes.Type(value= Field.class, name="Field"),
-        @JsonSubTypes.Type(value= Door.class, name="Door")
+        @JsonSubTypes.Type(value= Door.class, name="Door"),
+        @JsonSubTypes.Type(value= NPC.class, name="NPC")
 })
 public abstract class GameObject extends SpriteAnimation {
     private final BooleanProperty colliding = new SimpleBooleanProperty();

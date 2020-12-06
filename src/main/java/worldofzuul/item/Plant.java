@@ -1,5 +1,7 @@
 package worldofzuul.item;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import static worldofzuul.item.GrowthStage.*;
 
 public class Plant extends Item {
@@ -51,6 +53,7 @@ public class Plant extends Item {
         
     }
 
+    @JsonIgnore
     public boolean isRipe() {
         return waterNeeded <= 0 && nutritionNeeded <= 0 && growTicks >= growthTime && state == RIPE;
     }
