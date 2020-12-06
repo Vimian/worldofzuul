@@ -75,6 +75,8 @@ public class FXMLController implements Initializable {
     private static final int backgroundScaling = 6;
     private static final double paneTransDelayCoefficient = 1.2;
     private static final int updateDelay = 60;
+    private static final double nightChangeOpacity = 0.6;
+    private static final int nightChangeFadeDelay = 6000;
 
     private static final int textDisplayDeletionDelay = 8000;
     private static final int textDisplayFadeDelay = 1500;
@@ -84,6 +86,10 @@ public class FXMLController implements Initializable {
     public VBox textDisplayBox;
     public StackPane mainPane;
     public VBox boxName;
+    public Pane environmentLayerPane;
+    public ImageView rainImageView;
+    public Pane nightLayerPane;
+    public Pane rainImagePane;
 
     @FXML
     private ListView playerItems;
@@ -114,6 +120,8 @@ public class FXMLController implements Initializable {
         label.setText("Hello, JavaFX " + javafxVersion + "\nRunning on Java " + javaVersion + ".");
 
         loadedImages = getImages(spriteDirectory, getClass());
+
+
         loadGame();
 
 
@@ -297,7 +305,61 @@ public class FXMLController implements Initializable {
 
         playerItems.itemsProperty().bindBidirectional(model.getPlayer().getInventory().itemsProperty());
 
+        subscribeToEnvironmentChanges(model.getRoom().getEnvironment());
 
+        //Listen to Room change
+        model.roomProperty().addListener((observable, oldValue, newValue) -> {
+            unsubscribeToEnvironmentChanges(oldValue.getEnvironment());
+            subscribeToEnvironmentChanges(newValue.getEnvironment());
+
+        });
+
+
+
+    }
+
+    private void subscribeToEnvironmentChanges(Environment environment){
+        environment.rainStateProperty().addListener((observable1, oldValue1, newValue1) -> {
+            changeRainState(newValue1);
+        });
+        environment.nightStateProperty().addListener((observable1, oldValue1, newValue1) -> {
+            changeNightStage(newValue1);
+        });
+    }
+
+    private void unsubscribeToEnvironmentChanges(Environment environment){
+        environment.rainStateProperty().removeListener((observable1, oldValue1, newValue1) -> {
+            changeRainState(newValue1);
+        });
+        environment.nightStateProperty().removeListener((observable1, oldValue1, newValue1) -> {
+            changeNightStage(newValue1);
+        });
+    }
+
+    private void changeRainState(boolean isRaining){
+        FadeTransition ft = new FadeTransition(Duration.millis(nightChangeFadeDelay), rainImagePane);
+        if(isRaining){
+            ft.setFromValue(0.0);
+            ft.setToValue(1);
+
+        } else {
+            ft.setFromValue(1);
+            ft.setToValue(0);
+        }
+        ft.play();
+
+    }
+    private void changeNightStage(boolean isNight){
+        FadeTransition ft = new FadeTransition(Duration.millis(nightChangeFadeDelay), nightLayerPane);
+        if(isNight){
+            ft.setFromValue(0.0);
+            ft.setToValue(nightChangeOpacity);
+
+        } else {
+            ft.setFromValue(nightChangeOpacity);
+            ft.setToValue(0);
+        }
+        ft.play();
     }
 
     private void setBackground(Room room) {

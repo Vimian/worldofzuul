@@ -11,3 +11,6 @@
 #anchor {
     -fx-background-color: darkgrey;
 }
+#rainBackgroundImage {
+    -fx-background-image: url("sprites/room/clipart-rain-gif-transparent-12.gif");
+}

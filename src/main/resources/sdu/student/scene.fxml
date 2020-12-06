@@ -28,6 +28,10 @@
                         mouseTransparent="true"
                         preserveRatio="true"
                 />
+                <StackPane fx:id="environmentLayerPane" style="-fx-background-color: transparent;" mouseTransparent="true">
+                    <Pane fx:id="nightLayerPane" mouseTransparent="true"  style="-fx-background-color: black;" opacity="0" />
+                    <Pane fx:id="rainImagePane" mouseTransparent="true" opacity="0" id="rainBackgroundImage"  />
+                </StackPane>
             </StackPane>
         </HBox>
     </VBox>
@@ -54,7 +58,7 @@
     </HBox>
 
 
-       <VBox fx:id="textDisplayBox" mouseTransparent="true" pickOnBounds="false" alignment="TOP_CENTER" maxHeight="600.0" maxWidth="800.0" StackPane.alignment="TOP_CENTER">
+       <VBox fx:id="textDisplayBox"   mouseTransparent="true" pickOnBounds="false" alignment="TOP_CENTER" maxHeight="600.0" maxWidth="800.0" StackPane.alignment="TOP_CENTER">
       <padding>
          <Insets top="20.0" />
       </padding>

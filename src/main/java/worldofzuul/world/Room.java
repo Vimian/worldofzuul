@@ -25,11 +25,10 @@ public class Room {
     private final StringProperty backgroundImage = new SimpleStringProperty();
 
     private GameObject[][] roomGrid;
-    private Environment environment;
+    private Environment environment = new Environment();
     private String description; //TODO: Consider converting to StringProperty
 
     public Room() {
-        this.environment = new Environment();
         /*
         //Listen for room exit change
         exitStringsProperty().forEach(e -> {
@@ -144,6 +143,14 @@ public class Room {
         this.description = description;
     }
 
+
+    public Environment getEnvironment() {
+        return environment;
+    }
+
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
+    }
 
     public String getBackgroundImage() {
         return backgroundImage.get();
