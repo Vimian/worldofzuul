@@ -48,9 +48,10 @@ public class Environment {
 
     public void update(GameObject gameObject){
         if(gameObject instanceof Field){
-            if(isRaining()){
+            if(getRainState()){
                 ((Field) gameObject).addWater(rainWaterAmount);
-            } else if(dayTime()){
+            }
+            if(dayTime()){
                 ((Field) gameObject).shineLight();      //#Svær kode annotering (Casting).
             }
         }

@@ -734,7 +734,7 @@
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
               "colliding": false,
-              "water": 20000.0,
+              "water": 10000.0,
               "nutrition": 10000.0,
               "depletionRate": 5.0,
               "maxWater": 20000.0,
@@ -4827,10 +4827,10 @@
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
               "colliding": false,
-              "water": 20000.0,
+              "water": 10000.0,
               "nutrition": 10000.0,
               "depletionRate": 5.0,
-              "maxWater": 20000.0,
+              "maxWater": 30000.0,
               "maxNutrition": 20000.0,
               "ph": 0.0
             }
@@ -4868,10 +4868,10 @@
               "defaultImageFile": null,
               "animationCycleLengthMillis": 1000,
               "colliding": false,
-              "water": 20000.0,
+              "water": 10000.0,
               "nutrition": 10000.0,
               "depletionRate": 5.0,
-              "maxWater": 20000.0,
+              "maxWater": 40000.0,
               "maxNutrition": 20000.0,
               "ph": 0.0
             }
@@ -17818,8 +17818,8 @@
         "chanceForRain": 1.0E-4,
         "dayTimeStart": 6,
         "dayTimeEnd": 18,
-        "secondsToIncrement": 4,
-        "rainWaterAmount": 0.1,
+        "secondsToIncrement": 6,
+        "rainWaterAmount": 10.0,
         "calendarStart": 1577862106224
       },
       "description": "outside the main entrance of the university"
@@ -35551,11 +35551,11 @@
           "Irrigator": {
             "defaultImageFile": null,
             "name": "Hose",
-            "value": 0.0,
-            "sellBackRate": 0.0,
-            "remaining": 0.0,
-            "capacity": 0.0,
-            "consumptionRate": 1.0
+            "value": 12.0,
+            "sellBackRate": 0.8,
+            "remaining": 20000.0,
+            "capacity": 20000.0,
+            "consumptionRate": 100.0
           }
         },
         {

@@ -50,7 +50,7 @@ public class Field extends GameObject {
 
 
     public void addWater(float water) {
-        if (isPlantGrowing()) {
+        if(getWater() + water <= getMaxWater()){
             setWater(getWater() + water);
         }
     }
@@ -132,7 +132,15 @@ public class Field extends GameObject {
         MessageHelper.Item.usedItemOn(item.getName(), this.getClass().getSimpleName());
         plant = (item.getPlant());
         ripePlantSeen = false;
-        playAnimation(GrowthStage.ADULT);
+
+        plant.stateProperty().addListener((observable, oldValue, newValue) -> {
+            plantStateChanged(oldValue, newValue);
+        });
+
+    }
+
+    private void plantStateChanged(GrowthStage oldValue, GrowthStage newValue) {
+        playAnimation(newValue);
     }
 
     private Command[] useHarvester(Harvester item) {
@@ -142,8 +150,6 @@ public class Field extends GameObject {
                 MessageHelper.Item.harvested(plant.getName());
                 commands[0] = new Command(CommandWord.ADDITEM, null, item.harvest(plant));
                 removePlant();
-
-                playAnimation(GrowthStage.SEED);
 
             } else {
                 MessageHelper.Item.unripePlant();
@@ -156,6 +162,10 @@ public class Field extends GameObject {
     }
 
     private void removePlant() {
+        playAnimation(GrowthStage.SEED);
+        plant.stateProperty().removeListener((observable, oldValue, newValue) -> {
+            plantStateChanged(oldValue, newValue);
+        });
         this.plant = null;
     }
 

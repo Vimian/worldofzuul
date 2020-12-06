@@ -6,9 +6,12 @@ import static worldofzuul.item.GrowthStage.*;
 import static worldofzuul.item.crops.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
 import worldofzuul.world.*;
 public class Plant extends Sellable {
-    private GrowthStage state = GrowthStage.SEED;
+    private final ObjectProperty<GrowthStage> state = new SimpleObjectProperty<>(SEED);
     private float seedQuality = 1;
     private float waterNeeded = 1000;
     private float nutritionNeeded = 1000;
@@ -147,14 +150,14 @@ public class Plant extends Sellable {
         ticksNotWatered++;
         
         if(ticksNotWatered >= maxTimeWithoutWater){
-            state = GrowthStage.DEAD;
+           setState(DEAD);
         }
         
     }
 
     @JsonIgnore
     public boolean isRipe() {
-        return waterNeeded <= 0 && nutritionNeeded <= 0 && growTicks >= growthTime && state == RIPE;
+        return waterNeeded <= 0 && nutritionNeeded <= 0 && growTicks >= growthTime && getState() == RIPE;
     }
 
 
@@ -168,7 +171,7 @@ public class Plant extends Sellable {
 
 
     private boolean readyForNextStage() {
-        switch (state) {
+        switch (getState()) {
             case SEED -> {
                 return requiredPropertiesReady(2);
             }
@@ -193,16 +196,15 @@ public class Plant extends Sellable {
     }
 
     private void advanceStage() {
-
-        switch (state) {
+        switch (getState()) {
             case SEED -> {
-                state = SPROUT;
+                setState(SPROUT);
             }
             case SPROUT -> {
-                state = ADULT;
+                setState(ADULT);
             }
             case ADULT -> {
-                state = RIPE;
+                setState(RIPE);
             }
         }
     }
@@ -254,5 +256,20 @@ public class Plant extends Sellable {
 
     public void setMaxTimeWithoutWater(int maxTimeWithoutWater) {
         this.maxTimeWithoutWater = maxTimeWithoutWater;
+    }
+
+    @JsonIgnore
+    public GrowthStage getState() {
+        return state.get();
+    }
+
+    @JsonIgnore
+    public Property<GrowthStage> stateProperty() {
+        return state;
+    }
+
+    @JsonIgnore
+    public void setState(GrowthStage state) {
+        this.state.set(state);
     }
 }
