@@ -87,6 +87,9 @@ public class FXMLController implements Initializable {
     public StackPane mainPane;
     public VBox boxName;
     public Pane environmentLayerPane;
+    public ImageView rainImageView;
+    public Pane nightLayerPane;
+    public Pane rainImagePane;
 
     @FXML
     private ListView playerItems;
@@ -117,6 +120,8 @@ public class FXMLController implements Initializable {
         label.setText("Hello, JavaFX " + javafxVersion + "\nRunning on Java " + javaVersion + ".");
 
         loadedImages = getImages(spriteDirectory, getClass());
+
+
         loadGame();
 
 
@@ -332,13 +337,20 @@ public class FXMLController implements Initializable {
     }
 
     private void changeRainState(boolean isRaining){
+        FadeTransition ft = new FadeTransition(Duration.millis(nightChangeFadeDelay), rainImagePane);
         if(isRaining){
-            //Play animation on environmentLayer
+            ft.setFromValue(0.0);
+            ft.setToValue(1);
+
+        } else {
+            ft.setFromValue(1);
+            ft.setToValue(0);
         }
+        ft.play();
 
     }
     private void changeNightStage(boolean isNight){
-        FadeTransition ft = new FadeTransition(Duration.millis(nightChangeFadeDelay), environmentLayerPane);
+        FadeTransition ft = new FadeTransition(Duration.millis(nightChangeFadeDelay), nightLayerPane);
         if(isNight){
             ft.setFromValue(0.0);
             ft.setToValue(nightChangeOpacity);
@@ -347,7 +359,6 @@ public class FXMLController implements Initializable {
             ft.setFromValue(nightChangeOpacity);
             ft.setToValue(0);
         }
-
         ft.play();
     }
 
