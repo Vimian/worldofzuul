@@ -449,7 +449,7 @@ public class FXMLController implements Initializable {
             return;
         }
 
-        if (vectorDifference(model.getPlayer().getPos(), selectedGamePosition) == 1) {
+        if (vectorDifference(model.getPlayer().getPos(), selectedGamePosition) <= 1) {
             switch (mouseEvent.getButton()) {
                 case PRIMARY -> {
                     model.interact(selectedGamePosition, false);

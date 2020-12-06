@@ -25,7 +25,7 @@
                 <ImageView
                         fx:id="imageView"
                         fitHeight="150.0"
-                        pickOnBounds="false"
+                        mouseTransparent="true"
                         preserveRatio="true"
                 />
             </StackPane>
@@ -54,7 +54,7 @@
     </HBox>
 
 
-       <VBox fx:id="textDisplayBox" pickOnBounds="false" alignment="TOP_CENTER" maxHeight="600.0" maxWidth="800.0" StackPane.alignment="TOP_CENTER">
+       <VBox fx:id="textDisplayBox" mouseTransparent="true" pickOnBounds="false" alignment="TOP_CENTER" maxHeight="600.0" maxWidth="800.0" StackPane.alignment="TOP_CENTER">
       <padding>
          <Insets top="20.0" />
       </padding>
