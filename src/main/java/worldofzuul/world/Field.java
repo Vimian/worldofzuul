@@ -1,6 +1,9 @@
 package worldofzuul.world;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.FloatProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import worldofzuul.item.*;
 import worldofzuul.parsing.Command;
@@ -10,18 +13,21 @@ import worldofzuul.util.MessageHelper;
 import java.util.ArrayList;
 
 public class Field extends GameObject {
-    private float maxWater = 20000;
-    private float maxNutrition = 20000;
+
 
 
     private Fertilizer fertilizer;
     private Plant plant;
     private ArrayList<Plant> plants;
-    private Double pH;
 
+
+    private DoubleProperty pH = new SimpleDoubleProperty();
     private final FloatProperty water = new SimpleFloatProperty(20000);
     private final FloatProperty nutrition = new SimpleFloatProperty(10000);
     private final FloatProperty depletionRate = new SimpleFloatProperty(5);
+    private FloatProperty maxWater = new SimpleFloatProperty(20000);
+    private FloatProperty maxNutrition = new SimpleFloatProperty(20000);
+
     private boolean ripePlantSeen = false;
 
     public Field() {
@@ -39,7 +45,7 @@ public class Field extends GameObject {
     public Field(Fertilizer fertilizer, float water, Double pH) {
         this(fertilizer);
         setWater(water);
-        this.pH = pH;
+
     }
 
 
@@ -47,14 +53,6 @@ public class Field extends GameObject {
         if (isPlantGrowing()) {
             setWater(getWater() + water);
         }
-    }
-
-    public Double getPH(){
-        return pH;
-    }
-
-    public void setPH(Double value){
-        pH = value;
     }
 
     @Override
@@ -213,19 +211,41 @@ public class Field extends GameObject {
     }
 
 
+    public double getPH() {
+        return pH.get();
+    }
+
+    @JsonIgnore
+    public DoubleProperty phProperty() {
+        return pH;
+    }
+
+    public void setPH(double pH) {
+        this.pH.set(pH);
+    }
+
     public float getMaxWater() {
+        return maxWater.get();
+    }
+
+    @JsonIgnore
+    public FloatProperty maxWaterProperty() {
         return maxWater;
     }
 
     public void setMaxWater(float maxWater) {
-        this.maxWater = maxWater;
+        this.maxWater.set(maxWater);
     }
 
     public float getMaxNutrition() {
+        return maxNutrition.get();
+    }
+    @JsonIgnore
+    public FloatProperty maxNutritionProperty() {
         return maxNutrition;
     }
 
     public void setMaxNutrition(float maxNutrition) {
-        this.maxNutrition = maxNutrition;
+        this.maxNutrition.set(maxNutrition);
     }
 }

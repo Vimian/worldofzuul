@@ -13,6 +13,7 @@ import javafx.scene.layout.*;
 import sdu.student.editor.BlockEditor;
 import sdu.student.editor.DoorEditor;
 import sdu.student.editor.FieldEditor;
+import sdu.student.editor.NPCEditor;
 import worldofzuul.Game;
 import worldofzuul.item.Fertilizer;
 import worldofzuul.item.Item;
@@ -164,6 +165,13 @@ public class EditorController implements Initializable {
 
                 objectToAdd = new Door();
                 break;
+            case "NPC":
+                if (currentGameObject instanceof Door) {
+                    return;
+                }
+
+                objectToAdd = new NPC();
+                break;
             default:
                 return;
         }
@@ -255,6 +263,10 @@ public class EditorController implements Initializable {
             nodeToLoad = "editor/fieldEditor.fxml";
             loader.setControllerFactory(aClass -> new FieldEditor((Field) gameObject));
             gameObjectTypeBox.getSelectionModel().select(2);
+        } else if (gameObject instanceof NPC) {
+            nodeToLoad = "editor/npcEditor.fxml";
+            loader.setControllerFactory(aClass -> new NPCEditor((NPC) gameObject));
+            gameObjectTypeBox.getSelectionModel().select(3);
         }
 
         loader.setLocation(getClass().getResource(nodeToLoad));
