@@ -91,7 +91,17 @@ public class Field extends GameObject {
     }
 
     private Command[] useFertilizer(Fertilizer item) {
-        return null; //TODO: Implement method.
+        Command[] commands = new Command[1];
+        if(nutrition.get() + item.getConsumptionRate() < maxNutrition.get()) {
+            nutrition.set(nutrition.get() + item.deplete());
+        }
+
+
+        if (item.getRemaining() == 0) {
+            commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
+        }
+
+        return commands;
     }
 
     private void useIrrigator(Irrigator item) {
