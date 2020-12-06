@@ -3,7 +3,7 @@ package worldofzuul.world;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import worldofzuul.item.IConsumable;
+import worldofzuul.item.Consumable;
 import worldofzuul.item.Item;
 import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
@@ -39,13 +39,13 @@ public class Quest {
         List<Command> commands = new LinkedList<>();
 
         if(turnInClass.isInstance(item)){
-            if(item instanceof IConsumable){
-                if(((IConsumable) item).getRemaining() >= turnInQuantity){
-                    ((IConsumable) item).deplete(turnInQuantity);
+            if(item instanceof Consumable){
+                if(((Consumable) item).getRemaining() >= turnInQuantity){
+                    ((Consumable) item).deplete(turnInQuantity);
                     commands.addAll(completeQuest());
                 } else {
-                    turnInQuantity -= ((IConsumable) item).getRemaining();
-                    ((IConsumable) item).deplete(((IConsumable) item).getRemaining());
+                    turnInQuantity -= ((Consumable) item).getRemaining();
+                    ((Consumable) item).deplete(((Consumable) item).getRemaining());
                 }
             } else {
                 commands.add(new Command(CommandWord.REMOVEITEM, null, item));

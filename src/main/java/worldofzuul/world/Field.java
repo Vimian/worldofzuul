@@ -53,8 +53,8 @@ public class Field extends GameObject {
         return pH;
     }
 
-    public void setPH(){
-        this.pH = pH;
+    public void setPH(Double value){
+        pH = value;
     }
 
     @Override
