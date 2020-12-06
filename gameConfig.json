@@ -17814,8 +17814,8 @@
       ],
       "environment": {
         "rainTicksMin": 500,
-        "rainTicksMax": 1500,
-        "chanceForRain": 1.0E-5,
+        "rainTicksMax": 1000,
+        "chanceForRain": 1.0E-3,
         "dayTimeStart": 6,
         "dayTimeEnd": 18,
         "secondsToIncrement": 2,
