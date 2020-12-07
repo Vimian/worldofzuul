@@ -3,6 +3,10 @@ package worldofzuul;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import worldofzuul.item.*;
 
 import java.util.Arrays;
@@ -11,14 +15,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Market {
-    private List<Item> stock = new LinkedList<>();
+    private ListProperty<Item> stock = new SimpleListProperty<>(
+            FXCollections.observableArrayList()
+    );
 
 
     public Market() {
         this(null);
-
-
-
     }
 
    public Market(HashMap<Item, Double> stock){
@@ -141,11 +144,20 @@ public class Market {
    }
 
 
-    public List<Item> getStock() {
+    public ListProperty<Item> getStock() {
         return stock;
     }
 
-    public void setStock(List<Item> stock) {
+    public ListProperty<Item> itemsProperty() {
+        return stock;
+    }
+
+    public void setStock(ObservableList<Item> items) {
+        this.stock.set(stock);
+    }
+   /* public void setStock(List<Item> stock) {
         this.stock = stock;
     }
+
+    */
 }

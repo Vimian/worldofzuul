@@ -98,7 +98,6 @@ public class FXMLController implements Initializable {
     private ImageView imageView;
     public Button marketButton;
 
-
     private TranslateTransition paneTranslation;
     private HashMap<String, Image> loadedImages;
     public Game model;
@@ -531,13 +530,10 @@ public class FXMLController implements Initializable {
         } else {
 
         }
-
-
-
+        
     }
 
     public void selectItem(MouseEvent mouseEvent) {
         model.getPlayer().getInventory().setSelectedItem(inventoryTableView.getSelectionModel().getSelectedItem());
     }
-
 }
