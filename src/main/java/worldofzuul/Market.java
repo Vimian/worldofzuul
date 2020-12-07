@@ -25,13 +25,13 @@ public class Market {
        this.stock.put(seed4, 93.0);
        this.stock.put(seed5, 10.0);
    }
-   Harvester harvester1 = new Harvester("Hands", 0.0, 0.0);
+   Harvester harvester1 = new Harvester("Cloves", 0.0, 0.0);
    Harvester harvester2 = new Harvester("Sickle", 230.0, 0.0);
    Harvester harvester3 = new Harvester("Scythe", 2000.0,0.0);
     Fertilizer fertilizer = new Fertilizer("Fertilizer", 2, 320.0, 0.975);
-    Irrigator irrigator1 = new Irrigator("Bucket", 320.0, 0.0);
-    Irrigator irrigator2 = new Irrigator("Watering Can", 300.0, 0.0 );
-    Irrigator irrigator3 = new Irrigator("Hose", 400.0, 0.0);
+    Irrigator irrigator1 = new Irrigator("Bucket", 10,10, 320.0, 0.0);
+    Irrigator irrigator2 = new Irrigator("Watering Can",10,50, 300.0, 0.0 );
+    Irrigator irrigator3 = new Irrigator("Hose",100, 9999, 400.0, 0.0);
     Plant plant1 = new Plant("Corn", 2.0, 0.30);
     Plant plant2 = new Plant("Cashew", 2.0, 0.40);
     Plant plant3 = new Plant("Rice", 4.0, 0.20);
