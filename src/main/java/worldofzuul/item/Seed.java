@@ -92,7 +92,7 @@ switch (crops) {
     case MANGO:
         if(player.getInventory().getItems().contains(plant)){
             player.getInventory().removeItem(plant);
-            seedCount = seedCount + CashewSeedCount;
+            seedCount = seedCount + MangoSeedCount;
             Item Seed = new Seed("MangoSeed", seedCount, 2.0, 0.50);
             player.getInventory().addItem(Seed);
         } else {
