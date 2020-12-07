@@ -1,5 +1,6 @@
 .label {
     -fx-text-fill: black;
+    -fx-font-family: BitStyleFont;
 }
 
 #textDisplayLabel {
@@ -15,7 +16,22 @@
     -fx-background-image: url("sprites/room/clipart-rain-gif-transparent-12.gif");
     -fx-background-color: rgba(0,0,0,0.3);
 }
+@font-face {
+    font-family: BitStyleFont;
+    src: url("fonts/vcrOSDMono.ttf");
+}
+#gameMenuHeader {
+    -fx-font-family: BitStyleFont;
+}
 
+#menuBackground{
+    -fx-background-image: url("sprites/misc/menuBG.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
 .accordion .titled-pane > *.content{
     -fx-background-color: transparent ;
+}
+#transparentBackground {
+    -fx-background-color: rgba(0,0,0,0);
 }

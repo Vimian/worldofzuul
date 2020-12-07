@@ -36,6 +36,21 @@ public class Plant extends Sellable {
         setValue(value);
         setSellBackRate(sellbackRate);
     }
+    public Plant(Plant plant){
+        super(plant.getName());
+
+        this.seedQuality = plant.getSeedQuality();
+        this.waterNeeded = plant.getWaterNeeded();
+        this.nutritionNeeded = plant.getNutritionNeeded();
+        this.growthTime = plant.getGrowthTime();
+        this.maxWater = waterNeeded;
+        this.maxNutrition = nutritionNeeded;
+        this.maxTimeWithoutWater = plant.getMaxTimeWithoutWater();
+        setValue(plant.getValue());
+        setSellBackRate(plant.getSellBackRate());
+        setDefaultImageFile(plant.getDefaultImageFile());
+
+    }
 
     public void grow(float water, float nutrition) {
         

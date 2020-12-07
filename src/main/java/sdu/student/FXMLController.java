@@ -77,7 +77,6 @@ public class FXMLController implements Initializable {
     private static final int updateDelay = 60;
     private static final double nightChangeOpacity = 0.6;
     private static final int nightChangeFadeDelay = 6000;
-
     private static final int textDisplayDeletionDelay = 8000;
     private static final int textDisplayFadeDelay = 1500;
 

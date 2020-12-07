@@ -130,7 +130,7 @@ public class Field extends GameObject {
 
     private void plantSeed(Seed item) {
         MessageHelper.Item.usedItemOn(item.getName(), this.getClass().getSimpleName());
-        plant = (item.getPlant());
+        plant = (item.useSeed());
         ripePlantSeen = false;
 
         plant.stateProperty().addListener((observable, oldValue, newValue) -> {
