@@ -35572,9 +35572,9 @@
             "plant": {
               "Plant": {
                 "defaultImageFile": null,
-                "name": null,
-                "value": 0.0,
-                "sellBackRate": 0.0,
+                "name": "Corn plant",
+                "value": 40.0,
+                "sellBackRate": 0.5,
                 "seedQuality": 1.0,
                 "waterNeeded": 1000.0,
                 "nutritionNeeded": 1000.0,
