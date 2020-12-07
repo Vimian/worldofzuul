@@ -35302,37 +35302,7 @@
         {
           "Harvester": {
             "defaultImageFile": null,
-            "name": "Cloves"
-          }
-        },
-        {
-          "Harvester": {
-            "defaultImageFile": null,
             "name": "Sickle"
-          }
-        },
-        {
-          "Harvester": {
-            "defaultImageFile": null,
-            "name": "Scythe"
-          }
-        },
-        {
-          "Irrigator": {
-            "defaultImageFile": null,
-            "name": "Bucket",
-            "remaining": 0.0,
-            "consumptionRate": 0.0,
-            "capacity": 0.0
-          }
-        },
-        {
-          "Irrigator": {
-            "defaultImageFile": null,
-            "name": "Watering Can",
-            "remaining": 0.0,
-            "consumptionRate": 0.0,
-            "capacity": 0.0
           }
         },
         {
@@ -35348,35 +35318,7 @@
           "Seed": {
             "defaultImageFile": null,
             "name": "Corn Seed",
-            "seedCount": 1
-          }
-        },
-        {
-          "Seed": {
-            "defaultImageFile": null,
-            "name": "Rice Seed",
-            "seedCount": 1
-          }
-        },
-        {
-          "Seed": {
-            "defaultImageFile": null,
-            "name": "Cashew Seed",
-            "seedCount": 1
-          }
-        },
-        {
-          "Seed": {
-            "defaultImageFile": null,
-            "name": "Cowpea Seed",
-            "seedCount": 1
-          }
-        },
-        {
-          "Seed": {
-            "defaultImageFile": null,
-            "name": "Mango Seed",
-            "seedCount": 1
+            "seedCount": 3
           }
         }
       ]
