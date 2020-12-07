@@ -9,6 +9,7 @@ import static java.lang.Float.valueOf;
 
 public class Seed extends Consumable {
     private static final String nameDelimiter = " ";
+
     private int maxSeeds;
     private int minSeeds;
 
@@ -21,9 +22,9 @@ public class Seed extends Consumable {
     private int minCowpeaSeedCount = 6;
     private int MangoSeedCount = 1;
     private crops crops;
+    private Plant plant = new Plant();
 
     public Seed() {
-
     }
 
     public Seed(String name, Float seedCount) {
@@ -47,10 +48,11 @@ public class Seed extends Consumable {
 
 
     @JsonIgnore
-    public Plant getPlant() {
+    public Plant useSeed() {
         deplete();
-        return new Plant(super.getName());
+        return new Plant(plant);
     }
+
 
     public void getSeedsFromPlant(Plant plant, Player player) {
         switch (crops) {
@@ -132,4 +134,13 @@ public class Seed extends Consumable {
     public void setMinSeeds(int minSeeds) {
         this.minSeeds = minSeeds;
     }
+
+    public Plant getPlant() {
+        return plant;
+    }
+
+    public void setPlant(Plant plant) {
+        this.plant = plant;
+    }
+
 }

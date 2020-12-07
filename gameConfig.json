@@ -35568,7 +35568,20 @@
             "capacity": 0.0,
             "consumptionRate": 1.0,
             "maxSeeds": 0,
-            "minSeeds": 0
+            "minSeeds": 0,
+            "plant": {
+              "Plant": {
+                "defaultImageFile": null,
+                "name": null,
+                "value": 0.0,
+                "sellBackRate": 0.0,
+                "seedQuality": 1.0,
+                "waterNeeded": 1000.0,
+                "nutritionNeeded": 1000.0,
+                "growthTime": 1000,
+                "maxTimeWithoutWater": 100
+              }
+            }
           }
         }
       ]
@@ -35720,7 +35733,20 @@
           "capacity": 0.0,
           "consumptionRate": 1.0,
           "maxSeeds": 0,
-          "minSeeds": 0
+          "minSeeds": 0,
+          "plant": {
+            "Plant": {
+              "defaultImageFile": null,
+              "name": "Corn",
+              "value": 0.0,
+              "sellBackRate": 0.0,
+              "seedQuality": 1.0,
+              "waterNeeded": 1000.0,
+              "nutritionNeeded": 1000.0,
+              "growthTime": 1000,
+              "maxTimeWithoutWater": 100
+            }
+          }
         }
       },
       {
@@ -35733,7 +35759,20 @@
           "capacity": 0.0,
           "consumptionRate": 1.0,
           "maxSeeds": 0,
-          "minSeeds": 0
+          "minSeeds": 0,
+          "plant": {
+            "Plant": {
+              "defaultImageFile": null,
+              "name": null,
+              "value": 0.0,
+              "sellBackRate": 0.0,
+              "seedQuality": 1.0,
+              "waterNeeded": 1000.0,
+              "nutritionNeeded": 1000.0,
+              "growthTime": 1000,
+              "maxTimeWithoutWater": 100
+            }
+          }
         }
       },
       {
@@ -35746,7 +35785,20 @@
           "capacity": 0.0,
           "consumptionRate": 1.0,
           "maxSeeds": 0,
-          "minSeeds": 0
+          "minSeeds": 0,
+          "plant": {
+            "Plant": {
+              "defaultImageFile": null,
+              "name": null,
+              "value": 0.0,
+              "sellBackRate": 0.0,
+              "seedQuality": 1.0,
+              "waterNeeded": 1000.0,
+              "nutritionNeeded": 1000.0,
+              "growthTime": 1000,
+              "maxTimeWithoutWater": 100
+            }
+          }
         }
       },
       {
@@ -35759,7 +35811,20 @@
           "capacity": 0.0,
           "consumptionRate": 1.0,
           "maxSeeds": 0,
-          "minSeeds": 0
+          "minSeeds": 0,
+          "plant": {
+            "Plant": {
+              "defaultImageFile": null,
+              "name": null,
+              "value": 0.0,
+              "sellBackRate": 0.0,
+              "seedQuality": 1.0,
+              "waterNeeded": 1000.0,
+              "nutritionNeeded": 1000.0,
+              "growthTime": 1000,
+              "maxTimeWithoutWater": 100
+            }
+          }
         }
       },
       {
@@ -35772,7 +35837,20 @@
           "capacity": 0.0,
           "consumptionRate": 1.0,
           "maxSeeds": 0,
-          "minSeeds": 0
+          "minSeeds": 0,
+          "plant": {
+            "Plant": {
+              "defaultImageFile": null,
+              "name": null,
+              "value": 0.0,
+              "sellBackRate": 0.0,
+              "seedQuality": 1.0,
+              "waterNeeded": 1000.0,
+              "nutritionNeeded": 1000.0,
+              "growthTime": 1000,
+              "maxTimeWithoutWater": 100
+            }
+          }
         }
       }
     ]
