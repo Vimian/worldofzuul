@@ -144,17 +144,33 @@ public class Market {
    }
 
 
+    @JsonGetter
     public ListProperty<Item> getStock() {
         return stock;
     }
 
+    @JsonIgnore
     public ListProperty<Item> itemsProperty() {
         return stock;
     }
 
+    @JsonGetter
     public void setStock(ObservableList<Item> items) {
         this.stock.set(stock);
     }
+
+    @JsonSetter
+    public void setStock(LinkedList<Item> items) {
+        ListProperty<Item> temp = new SimpleListProperty<>(
+                FXCollections.observableArrayList());
+
+        temp.addAll(items);
+
+        setStock(temp);
+    }
+
+
+
    /* public void setStock(List<Item> stock) {
         this.stock = stock;
     }
