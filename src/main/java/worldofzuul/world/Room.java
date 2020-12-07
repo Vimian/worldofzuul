@@ -113,11 +113,13 @@ public class Room {
 
         environment.update();
 
-        for (GameObject[] gameObjects : roomGrid) {
-            for (GameObject gameObject : gameObjects) {
-                if (gameObject != null) {
-                    commands.add(gameObject.update());
-                    environment.update(gameObject);
+        if(roomGrid != null){
+            for (GameObject[] gameObjects : roomGrid) {
+                for (GameObject gameObject : gameObjects) {
+                    if (gameObject != null) {
+                        commands.add(gameObject.update());
+                        environment.update(gameObject);
+                    }
                 }
             }
         }

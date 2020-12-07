@@ -209,7 +209,8 @@ public class Game {
     }
 
     public void update() {
-        getRoom().update().forEach(this::processCommandInternal);
+        rooms.forEach(room -> room.update().forEach(this::processCommandInternal));
+        //getRoom().update().forEach(this::processCommandInternal);
     }
 
 
