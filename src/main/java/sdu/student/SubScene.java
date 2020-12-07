@@ -22,11 +22,11 @@ public class SubScene implements Initializable {
     }
 
     @FXML
-    private ListView inventoryView;
+    private ListView<Item> inventoryView;
     //Wack
 
     @FXML
-    private ListView marketView;
+    private ListView<Item> marketView;
 
     Game model = new Game();
     private FXMLController fxmlController = new FXMLController();
@@ -34,7 +34,7 @@ public class SubScene implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         inventoryView.itemsProperty().bindBidirectional(model.getPlayer().getInventory().itemsProperty());
-        marketView.itemsProperty().bindBidirectional(model.getMarket().itemsProperty());
+        marketView.itemsProperty().bindBidirectional(model.getMarket().stockProperty());
     }
 
     public void inventoryClicked(MouseEvent mouseEventInventory){
@@ -42,12 +42,12 @@ public class SubScene implements Initializable {
     }
 
     public void sellClicked(MouseEvent mouseEvent) {
-        model.getMarket().sellItem((Item)inventoryView.getSelectionModel().getSelectedItem(), model.getPlayer());
+        model.getMarket().sellItem(inventoryView.getSelectionModel().getSelectedItem(), model.getPlayer());
 
     }
 
     public void buyClicked(MouseEvent mouseEvent) {
-        model.getMarket().purchaseItem((Item) marketView.getSelectionModel().getSelectedItem(), model.getPlayer());
+        model.getMarket().purchaseItem(marketView.getSelectionModel().getSelectedItem(), model.getPlayer());
     }
 
     public void exitClicked(MouseEvent mouseEvent) {

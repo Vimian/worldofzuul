@@ -115,6 +115,7 @@ public class FXMLController implements Initializable {
 
         loadGame();
 
+        var a = model.getMarket().stockProperty();
 
 
         bindProperties();
@@ -394,6 +395,7 @@ public class FXMLController implements Initializable {
     }
 
     public void openMarket(ActionEvent actionEvent) {
+
         FXMLLoader loader = new FXMLLoader();
 
         //Defines our controller

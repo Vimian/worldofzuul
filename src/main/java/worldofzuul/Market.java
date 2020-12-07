@@ -15,13 +15,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Market {
-    private ListProperty<Item> stock = new SimpleListProperty<>(
+    private final ListProperty<Item> stock = new SimpleListProperty<>(
             FXCollections.observableArrayList()
     );
 
 
     public Market() {
-        this(null);
+
     }
 
    public Market(HashMap<Item, Double> stock){
@@ -145,18 +145,18 @@ public class Market {
 
 
     @JsonGetter
-    public ListProperty<Item> getStock() {
+    public ObservableList<Item> getStock() {
+        return stock.get();
+    }
+
+    @JsonIgnore
+    public ListProperty<Item> stockProperty() {
         return stock;
     }
 
     @JsonIgnore
-    public ListProperty<Item> itemsProperty() {
-        return stock;
-    }
-
-    @JsonGetter
     public void setStock(ObservableList<Item> items) {
-        this.stock.set(stock);
+        this.stock.set(items);
     }
 
     @JsonSetter
@@ -168,7 +168,6 @@ public class Market {
 
         setStock(temp);
     }
-
 
 
    /* public void setStock(List<Item> stock) {
