@@ -75,7 +75,7 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
       </GridPane>
-      <GridPane fx:id="instructionsPane" style="-fx-background-color: #545452;">
+      <GridPane fx:id="instructionsPane" opacity="0.0" style="-fx-background-color: #545452;" visible="false">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
