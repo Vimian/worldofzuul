@@ -35348,34 +35348,35 @@
           "Seed": {
             "defaultImageFile": null,
             "name": "Corn Seed",
-            "seedCount": 3
+            "seedCount": 1
           }
         },
         {
           "Seed": {
             "defaultImageFile": null,
             "name": "Rice Seed",
-            "seedCount": 3}
+            "seedCount": 1
+          }
         },
         {
           "Seed": {
             "defaultImageFile": null,
             "name": "Cashew Seed",
-            "seedCount": 3
+            "seedCount": 1
           }
         },
         {
           "Seed": {
             "defaultImageFile": null,
             "name": "Cowpea Seed",
-            "seedCount": 3
+            "seedCount": 1
           }
         },
         {
           "Seed": {
             "defaultImageFile": null,
             "name": "Mango Seed",
-            "seedCount": 3
+            "seedCount": 1
           }
         }
       ]
