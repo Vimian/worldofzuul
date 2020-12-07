@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import worldofzuul.Game;
 
 import java.net.URL;
@@ -13,6 +14,8 @@ import java.util.ResourceBundle;
 
 
 public class SubScene implements Initializable {
+    public Pane marketScene;
+
     public SubScene(Game game) {
         model = game;
     }
@@ -39,4 +42,15 @@ public class SubScene implements Initializable {
         //fxmlController.playerItemsClicked(mouseEventInventory);
     }
 
+    public void sellClicked(MouseEvent mouseEvent) {
+        inventoryView.getSelectionModel().getSelectedItem();
+    }
+
+    public void buyClicked(MouseEvent mouseEvent) {
+        marketView.getSelectionModel().getSelectedItem();
+    }
+
+    public void exitClicked(MouseEvent mouseEvent) {
+        marketScene.setVisible(false);
+    }
 }
