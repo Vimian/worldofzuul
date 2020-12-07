@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import worldofzuul.Game;
+import worldofzuul.item.Item;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,9 +34,7 @@ public class SubScene implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         inventoryView.itemsProperty().bindBidirectional(model.getPlayer().getInventory().itemsProperty());
-        marketView.itemsProperty().bindBidirectional(model.getPlayer().getInventory().itemsProperty());
-
-
+        marketView.itemsProperty().bindBidirectional(model.getMarket().itemsProperty());
     }
 
     public void inventoryClicked(MouseEvent mouseEventInventory){
@@ -43,11 +42,12 @@ public class SubScene implements Initializable {
     }
 
     public void sellClicked(MouseEvent mouseEvent) {
-        inventoryView.getSelectionModel().getSelectedItem();
+        model.getMarket().sellItem((Item)inventoryView.getSelectionModel().getSelectedItem(), model.getPlayer());
+
     }
 
     public void buyClicked(MouseEvent mouseEvent) {
-        marketView.getSelectionModel().getSelectedItem();
+        model.getMarket().purchaseItem((Item) marketView.getSelectionModel().getSelectedItem(), model.getPlayer());
     }
 
     public void exitClicked(MouseEvent mouseEvent) {

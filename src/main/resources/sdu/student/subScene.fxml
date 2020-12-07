@@ -23,8 +23,8 @@
    <ListView fx:id="marketView" layoutX="230.0" layoutY="95.0" maxHeight="-Infinity" prefHeight="480.0" prefWidth="155.0">
        <TableColumn prefWidth="154.20001220703125" text="Market Stock" />
    </ListView>
-   <Button layoutX="174.0" layoutY="250.0" mnemonicParsing="false" onMouseClicked="#sellClicked" prefHeight="25.0" prefWidth="52.0" text="Buy" />
-   <Button layoutX="174.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#buyClicked" prefWidth="52.0" text="Sell" />
+   <Button layoutX="174.0" layoutY="250.0" mnemonicParsing="false" onMouseClicked="#buyClicked" prefHeight="25.0" prefWidth="52.0" text="Buy" />
+   <Button layoutX="174.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#sellClicked" prefWidth="52.0" text="Sell" />
    <Button layoutX="365.0" layoutY="5.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#exitClicked" prefHeight="30.0" prefWidth="30.0" text="X" wrapText="true">
       <font>
          <Font size="15.0" />
