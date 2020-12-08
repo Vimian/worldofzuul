@@ -132,6 +132,7 @@ public class Field extends GameObject {
         MessageHelper.Item.usedItemOn(item.getName(), this.getClass().getSimpleName());
         plant = (item.useSeed());
         ripePlantSeen = false;
+        playAnimation(GrowthStage.SEED);
 
         plant.stateProperty().addListener((observable, oldValue, newValue) -> {
             plantStateChanged(oldValue, newValue);
@@ -162,11 +163,12 @@ public class Field extends GameObject {
     }
 
     private void removePlant() {
-        playAnimation(GrowthStage.SEED);
         plant.stateProperty().removeListener((observable, oldValue, newValue) -> {
             plantStateChanged(oldValue, newValue);
         });
         this.plant = null;
+        playAnimation((Object) null);
+
     }
 
     private boolean isPlantGrowing() { return plant != null && !plant.isRipe(); }

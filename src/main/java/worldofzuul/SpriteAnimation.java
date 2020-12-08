@@ -106,6 +106,9 @@ public abstract class SpriteAnimation extends Sprite {
     }
 
     private void playAnimation(ImageView view, int cycles, Image[] images) {
+        if(images.length <= 0)
+            return;
+
         setImage(Arrays.stream(images).findFirst().orElseThrow());
         stopAnimation();
 

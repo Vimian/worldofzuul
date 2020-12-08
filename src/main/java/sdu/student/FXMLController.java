@@ -185,11 +185,13 @@ public class FXMLController implements Initializable {
             if (gameObject instanceof Field) {
 
                 List<Image[]> imgs = new ArrayList<>();
+                imgs.add(new Image[]{loadedImages.get("sprites/misc/null.png")});
                 imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0000.png")});
                 imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0003.png")});
                 imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0008.png")});
 
                 List<Object> keys = new ArrayList<>();
+                keys.add(null);
                 keys.add(GrowthStage.SEED);
                 keys.add(GrowthStage.ADULT);
                 keys.add(GrowthStage.RIPE);
