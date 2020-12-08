@@ -10,7 +10,10 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import worldofzuul.world.*;
-public class Plant extends Sellable {
+
+import java.util.Objects;
+
+public class Plant extends Item {
     private final ObjectProperty<GrowthStage> state = new SimpleObjectProperty<>(SEED);
     private float seedQuality = 1;
     private float waterNeeded = 1000;
@@ -32,9 +35,7 @@ public class Plant extends Sellable {
     }
 
     public Plant(String name, Double value, Double sellbackRate) {
-        super(name);
-        setValue(value);
-        setSellBackRate(sellbackRate);
+        super(name, value, sellbackRate);
     }
     public Plant(Plant plant){
         super(plant.getName());
@@ -286,5 +287,25 @@ public class Plant extends Sellable {
     @JsonIgnore
     public void setState(GrowthStage state) {
         this.state.set(state);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Plant)) return false;
+        if (!super.equals(o)) return false;
+        Plant plant = (Plant) o;
+        return Float.compare(plant.seedQuality, seedQuality) == 0 &&
+                Float.compare(plant.waterNeeded, waterNeeded) == 0 &&
+                Float.compare(plant.nutritionNeeded, nutritionNeeded) == 0 &&
+                growthTime == plant.growthTime &&
+                Float.compare(plant.maxWater, maxWater) == 0 &&
+                Float.compare(plant.maxNutrition, maxNutrition) == 0 &&
+                maxTimeWithoutWater == plant.maxTimeWithoutWater;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), seedQuality, waterNeeded, nutritionNeeded, growthTime, maxWater, maxNutrition, maxTimeWithoutWater);
     }
 }

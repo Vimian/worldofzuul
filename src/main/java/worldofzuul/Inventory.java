@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import worldofzuul.item.Item;
 
 import java.util.LinkedList;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Inventory {
     private final ListProperty<Item> items = new SimpleListProperty<>(
@@ -66,7 +67,28 @@ public class Inventory {
     }
 
     public void addItem(Item item) {
-        this.getItems().add(item);
+        AtomicReference<Boolean> addItem = new AtomicReference<>(true);
+
+        items.forEach( item1 -> {
+            if(item1.equals(item)){
+                if(item1.getRemaining() != item1.getCapacity()){
+                    var newVal = item1.getRemaining() + item.getRemaining();
+                    var newItemVal = newVal - item1.getCapacity();
+                    item1.setRemaining(newVal - newItemVal);
+                    item.setRemaining(newItemVal);
+
+                    if(item.getRemaining() <= 0){
+                        addItem.set(false);
+                    }
+
+                }
+            }
+        });
+
+        if(addItem.get()){
+            this.getItems().add(item);
+        }
+
     }
 
     public void removeItem(Item item) {

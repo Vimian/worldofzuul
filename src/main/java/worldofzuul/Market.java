@@ -71,9 +71,9 @@ public class Market {
 
 
     public void purchaseItem(Item item, Player player) {
-        if(item instanceof Sellable){
-            if (player.getBalance() >= ((Sellable) item).getValue()) {
-                player.setBalance(player.getBalance() - ((Sellable) item).getValue());
+        if(item != null){
+            if (player.getBalance() >= item.getValue()) {
+                player.setBalance(player.getBalance() - item.getValue());
                 player.getInventory().addItem(item);
             } else {
                 System.out.println("Not enough money!");
@@ -82,31 +82,31 @@ public class Market {
     }
 
     public void purchaseUpgradeToItems(Item item, Player player){
-        if (item instanceof Sellable) {
+        if (item != null) {
             if (player.getInventory().getItems().contains(irrigator1)) {
-                if (player.getBalance() >= ((Sellable) item).getValue()) {
-                    player.setBalance(player.getBalance() - ((Sellable) item).getValue());
+                if (player.getBalance() >= item.getValue()) {
+                    player.setBalance(player.getBalance() - item.getValue());
                     player.getInventory().addItem(irrigator2);
                     player.getInventory().removeItem(irrigator1);
                 }
             }
             if (player.getInventory().getItems().contains(irrigator2)) {
-                if (player.getBalance() >= ((Sellable) item).getValue()) {
-                    player.setBalance(player.getBalance() - ((Sellable) item).getValue());
+                if (player.getBalance() >= item.getValue()) {
+                    player.setBalance(player.getBalance() - item.getValue());
                     player.getInventory().addItem(irrigator3);
                     player.getInventory().removeItem(irrigator2);
                 }
             }
             if (player.getInventory().getItems().contains(harvester2)) {
-                if (player.getBalance() >= ((Sellable) item).getValue()) {
-                    player.setBalance(player.getBalance() - ((Sellable) item).getValue());
+                if (player.getBalance() >= item.getValue()) {
+                    player.setBalance(player.getBalance() - item.getValue());
                     player.getInventory().addItem(harvester2);
                     player.getInventory().removeItem(harvester1);
                 }
             }
             if (player.getInventory().getItems().contains(harvester3)) {
-                if (player.getBalance() >= ((Sellable) item).getValue()) {
-                    player.setBalance(player.getBalance() - ((Sellable) item).getValue());
+                if (player.getBalance() >= item.getValue()) {
+                    player.setBalance(player.getBalance() - item.getValue());
                     player.getInventory().addItem(harvester3);
                     player.getInventory().removeItem(harvester2);
                 }
@@ -121,8 +121,8 @@ public class Market {
 
     @JsonIgnore
    public void sellItem(Item item, Player player){
-        if(player.getInventory().getItems().contains(item) && item instanceof Sellable) {
-            player.setBalance(player.getBalance() + (((Sellable) item).getValue() * ((Sellable) item).getSellBackRate()));
+        if(player.getInventory().getItems().contains(item) && item != null) {
+            player.setBalance(player.getBalance() + item.getValue() * item.getSellBackRate());
             player.getInventory().removeItem(item);
         }
         else {
@@ -131,11 +131,11 @@ public class Market {
     }
     @JsonIgnore
    public Double getItems(Item item){
-        if(item instanceof Sellable){
+        if(item != null){
             for (Item value : stock) {
                 System.out.println(value);
             }
-            return  ((Sellable) item).getValue();
+            return  item.getValue();
         }
         else {
             return 0d;

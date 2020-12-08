@@ -3,7 +3,7 @@ package worldofzuul.item;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import worldofzuul.world.Field;
 
-public class Irrigator extends Consumable {
+public class Irrigator extends Item {
 
     public Irrigator(){}
     public Irrigator(String name) {

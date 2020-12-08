@@ -1,7 +1,7 @@
 package worldofzuul.item;
 
 
-public class Fertilizer extends Consumable {
+public class Fertilizer extends Item {
 
 
     public Fertilizer(){}

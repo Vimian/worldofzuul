@@ -3,12 +3,10 @@ package worldofzuul.world;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import worldofzuul.item.Consumable;
 import worldofzuul.item.Item;
 import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,19 +37,19 @@ public class Quest {
         List<Command> commands = new LinkedList<>();
 
         if(turnInClass.isInstance(item)){
-            if(item instanceof Consumable){
-                if(((Consumable) item).getRemaining() >= turnInQuantity){
+            if(item.getRemaining() > 0){
+                if(item.getRemaining() >= turnInQuantity){
                     System.out.println("You turned in " +turnInQuantity + " " + item.getName() + "s.");
 
-                    ((Consumable) item).deplete(turnInQuantity);
+                    item.deplete(turnInQuantity);
                     commands.addAll(completeQuest());
 
                 } else {
-                    turnInQuantity -= ((Consumable) item).getRemaining();
-                    System.out.println("You turned in " + ((Consumable) item).getRemaining() + " " + item.getName() + "s.");
-                    ((Consumable) item).deplete(((Consumable) item).getRemaining());
+                    turnInQuantity -= item.getRemaining();
+                    System.out.println("You turned in " + item.getRemaining() + " " + item.getName() + "s.");
+                    item.deplete(item.getRemaining());
 
-                    if(((Consumable) item).getRemaining() == 0){
+                    if(item.getRemaining() == 0){
                         commands.add(new Command(CommandWord.REMOVEITEM, null, item));
                     }
                 }

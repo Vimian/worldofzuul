@@ -3,11 +3,12 @@ package worldofzuul.item;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import worldofzuul.Player;
 
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static java.lang.Float.valueOf;
 
-public class Seed extends Consumable {
+public class Seed extends Item {
     private static final String nameDelimiter = " ";
 
     private int maxSeeds;
@@ -143,4 +144,19 @@ public class Seed extends Consumable {
         this.plant = plant;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Seed)) return false;
+        if (!super.equals(o)) return false;
+        Seed seed = (Seed) o;
+        return maxSeeds == seed.maxSeeds &&
+                minSeeds == seed.minSeeds &&
+                Objects.equals(plant, seed.plant);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), maxSeeds, minSeeds, plant);
+    }
 }
