@@ -121,7 +121,7 @@ public class Field extends GameObject {
         }
 
         if (item.getRemaining() == 0) {
-            commands[0] = new Command(CommandWord.REMOVEITEM, null);
+            commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
         }
 
 
