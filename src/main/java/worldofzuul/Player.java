@@ -1,6 +1,9 @@
 package worldofzuul;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import worldofzuul.util.Vector;
 import worldofzuul.world.GameObject;
 
@@ -9,7 +12,7 @@ public class Player extends SpriteAnimation {
     private final Vector pos;
     private GameObject currentGameObject;
     private final Inventory inventory = new Inventory();
-    private Double balance = 0.0;
+    private DoubleProperty balance = new SimpleDoubleProperty();
     private float Velocity;
     private Sprite sprite;
 
@@ -20,9 +23,6 @@ public class Player extends SpriteAnimation {
         pos = new Vector(x, y);
     }
 
-    public Double getBalance() {
-        return balance;
-    }
 
     public Inventory getInventory(){
         return inventory;
@@ -32,8 +32,18 @@ public class Player extends SpriteAnimation {
         return pos;
     }
 
-    public void setBalance(Double balance){
-        this.balance = balance;
+
+    public double getBalance() {
+        return balance.get();
+    }
+
+    @JsonGetter
+    public DoubleProperty balanceProperty() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance.set(balance);
     }
 
     public void setPos(Vector pos){
