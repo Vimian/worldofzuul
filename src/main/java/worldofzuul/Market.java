@@ -14,8 +14,12 @@ public class Market {
        this.stock.put(irrigator1, 320.0);
        this.stock.put(irrigator2, 300.0);
        this.stock.put(irrigator3, 300.0);
+       this.stock.put(pHNeutrilizers1,10.0);
+       this.stock.put(pHNeutrilizers2,10.0);
+       this.stock.put(pHNeutrilizers3,10.0);
+       this.stock.put(pHNeutrilizers4,10.0);
        this.stock.put(plant1, 2.0);
-       this.stock.put(plant2, 2.0);//a
+       this.stock.put(plant2, 2.0);
        this.stock.put(plant3, 4.0);
        this.stock.put(plant4, 10.0);
        this.stock.put(plant5, 20.0);
@@ -32,6 +36,10 @@ public class Market {
    Irrigator irrigator1 = new Irrigator("Bucket", 10,10, 320.0, 0.0);
    Irrigator irrigator2 = new Irrigator("Watering Can",10,50, 300.0, 0.0 );
    Irrigator irrigator3 = new Irrigator("Hose",100, 9999, 400.0, 0.0);
+   pHNeutrilizers pHNeutrilizers1 = new pHNeutrilizers("AgLimestone", 10.0,0.0);
+   pHNeutrilizers pHNeutrilizers2 = new pHNeutrilizers("HydratedLimestone",10.0,0.0);
+   pHNeutrilizers pHNeutrilizers3 = new pHNeutrilizers("Sulfur",10.0,0.0);
+   pHNeutrilizers pHNeutrilizers4 = new pHNeutrilizers("Aluminium sulfate",10.0,0.0);
    Plant plant1 = new Plant("Corn", 2.0, 0.30);
    Plant plant2 = new Plant("Cashew", 2.0, 0.40);
    Plant plant3 = new Plant("Rice", 4.0, 0.20);
