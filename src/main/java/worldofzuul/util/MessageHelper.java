@@ -14,6 +14,17 @@ public class MessageHelper {
             System.out.println("There is not a plant in the field.");
         }
 
+        public static void increasedpH(String field) {
+            System.out.println("You increased the field pH to " + field + ".");
+        }
+        public static void decreasedpH(String field) {
+            System.out.println("You decreased the field pH to " + field + ".");
+        }
+        public static void plantOnField() {
+            System.out.println("Their is a plant growing there.");
+        }
+
+
 
         public static void cantUseItem(String item){
             System.out.println("You can't use that "+ item +" here.");
