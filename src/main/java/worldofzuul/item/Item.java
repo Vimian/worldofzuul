@@ -161,11 +161,11 @@ public abstract class Item extends Sprite {
         if (this == o) return true;
         if (!(o instanceof Item)) return false;
         Item item = (Item) o;
-        return Objects.equals(name, item.name) &&
-                Objects.equals(value, item.value) &&
-                Objects.equals(sellBackRate, item.sellBackRate) &&
-                Objects.equals(capacity, item.capacity) &&
-                Objects.equals(consumptionRate, item.consumptionRate);
+        return Objects.equals(name.get(), item.name.get()) &&
+                Objects.equals(value.get(), item.value.get()) &&
+                Objects.equals(sellBackRate.get(), item.sellBackRate.get()) &&
+                Objects.equals(capacity.get(), item.capacity.get()) &&
+                Objects.equals(consumptionRate.get(), item.consumptionRate.get());
     }
 
     @Override

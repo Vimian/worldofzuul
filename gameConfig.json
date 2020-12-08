@@ -3712,16 +3712,29 @@
                 {
                   "rewards": [
                     {
-                      "Plant": {
+                      "Seed": {
                         "defaultImageFile": null,
-                        "name": "aa",
+                        "name": "Corn",
                         "value": 0.0,
                         "sellBackRate": 0.0,
-                        "seedQuality": 1.0,
-                        "waterNeeded": 1000.0,
-                        "nutritionNeeded": 1000.0,
-                        "growthTime": 1000,
-                        "maxTimeWithoutWater": 100
+                        "remaining": 40.0,
+                        "capacity": 200.0,
+                        "consumptionRate": 1.0,
+                        "maxSeeds": 0,
+                        "minSeeds": 0,
+                        "plant": {
+                          "Plant": {
+                            "defaultImageFile": null,
+                            "name": "Corn plant",
+                            "value": 40.0,
+                            "sellBackRate": 0.5,
+                            "seedQuality": 1.0,
+                            "waterNeeded": 1000.0,
+                            "nutritionNeeded": 1000.0,
+                            "growthTime": 1000,
+                            "maxTimeWithoutWater": 100
+                          }
+                        }
                       }
                     },
                     {
@@ -3741,7 +3754,7 @@
                   "questTitle": "title",
                   "introductionMessage": "hello",
                   "completionMessage": "bye",
-                  "turnInQuantity": 12.0,
+                  "turnInQuantity": 2.0,
                   "turnInType": "worldofzuul.item.Seed"
                 },
                 {
@@ -3776,7 +3789,7 @@
                   "questTitle": "asdas",
                   "introductionMessage": "asdd",
                   "completionMessage": "dsaa",
-                  "turnInQuantity": 14.0,
+                  "turnInQuantity": 2.0,
                   "turnInType": "worldofzuul.item.Fertilizer"
                 }
               ],
@@ -8331,16 +8344,29 @@
                 {
                   "rewards": [
                     {
-                      "Plant": {
+                      "Seed": {
                         "defaultImageFile": null,
-                        "name": "aa",
+                        "name": "Corn",
                         "value": 0.0,
                         "sellBackRate": 0.0,
-                        "seedQuality": 1.0,
-                        "waterNeeded": 1000.0,
-                        "nutritionNeeded": 1000.0,
-                        "growthTime": 1000,
-                        "maxTimeWithoutWater": 100
+                        "remaining": 40.0,
+                        "capacity": 200.0,
+                        "consumptionRate": 1.0,
+                        "maxSeeds": 0,
+                        "minSeeds": 0,
+                        "plant": {
+                          "Plant": {
+                            "defaultImageFile": null,
+                            "name": "Corn plant",
+                            "value": 40.0,
+                            "sellBackRate": 0.5,
+                            "seedQuality": 1.0,
+                            "waterNeeded": 1000.0,
+                            "nutritionNeeded": 1000.0,
+                            "growthTime": 1000,
+                            "maxTimeWithoutWater": 100
+                          }
+                        }
                       }
                     },
                     {
@@ -8360,7 +8386,7 @@
                   "questTitle": "title",
                   "introductionMessage": "hello",
                   "completionMessage": "bye",
-                  "turnInQuantity": 12.0,
+                  "turnInQuantity": 2.0,
                   "turnInType": "worldofzuul.item.Seed"
                 },
                 {
@@ -8395,7 +8421,7 @@
                   "questTitle": "asdas",
                   "introductionMessage": "asdd",
                   "completionMessage": "dsaa",
-                  "turnInQuantity": 14.0,
+                  "turnInQuantity": 2.0,
                   "turnInType": "worldofzuul.item.Fertilizer"
                 }
               ],
@@ -35565,7 +35591,7 @@
             "value": 0.0,
             "sellBackRate": 0.0,
             "remaining": 3.0,
-            "capacity": 0.0,
+            "capacity": 200.0,
             "consumptionRate": 1.0,
             "maxSeeds": 0,
             "minSeeds": 0,

@@ -69,13 +69,13 @@ public class Inventory {
     public void addItem(Item item) {
         AtomicReference<Boolean> addItem = new AtomicReference<>(true);
 
-        items.forEach( item1 -> {
+        items.forEach(item1 -> {
             if(item1.equals(item)){
-                if(item1.getRemaining() != item1.getCapacity()){
+                if(item1.getRemaining() < item1.getCapacity()){
                     var newVal = item1.getRemaining() + item.getRemaining();
-                    var newItemVal = newVal - item1.getCapacity();
-                    item1.setRemaining(newVal - newItemVal);
-                    item.setRemaining(newItemVal);
+                    var newItemVal = item1.getCapacity() - newVal;
+                    item.setRemaining(newVal - newItemVal);
+                    item1.setRemaining(newItemVal);
 
                     if(item.getRemaining() <= 0){
                         addItem.set(false);
