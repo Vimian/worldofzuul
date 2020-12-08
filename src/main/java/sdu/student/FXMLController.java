@@ -3,16 +3,18 @@ package sdu.student;
 import javafx.animation.FadeTransition;
 
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -91,6 +93,7 @@ public class FXMLController implements Initializable {
     public Pane rainImagePane;
     public TableView<Item> inventoryTableView;
     public Label currentlySelectedItemLabel;
+    public Label timeLabel;
 
     @FXML
     private Pane roomPane;
@@ -104,18 +107,14 @@ public class FXMLController implements Initializable {
     private ScheduledExecutorService scheduledThreadPool;
     private Vector selectedGamePosition;
     private Node instanceOfInventory;
-
-
-
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         loadedImages = getImages(spriteDirectory, getClass());
 
-
         loadGame();
-
 
 
         bindProperties();
@@ -123,15 +122,14 @@ public class FXMLController implements Initializable {
 
         enableGameUpdater();
 
-
-
-
         //Configure custom PrintStream
         System.setOut(printStream);
         printStream.printListProperty().addListener((observable, oldValue, newValue) -> {
             Platform.runLater(() -> displayTextMessage(newValue.get(newValue.size() - 1), textDisplayDeletionDelay));
         });
 
+
+        //timeLabel.setText("" + dateFormat.format(model.getRoom().getEnvironment().getCalendar().getTime()));
     }
 
     private void enableGameUpdater() {
@@ -416,9 +414,6 @@ public class FXMLController implements Initializable {
             e.printStackTrace();
         }
         */
-
-
-
     }
 
 
@@ -530,7 +525,7 @@ public class FXMLController implements Initializable {
         } else {
 
         }
-        
+
     }
 
     public void selectItem(MouseEvent mouseEvent) {

@@ -1,7 +1,9 @@
 package worldofzuul.item;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.FloatProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleFloatProperty;
 
 public abstract class Consumable extends Sellable {
@@ -9,6 +11,7 @@ public abstract class Consumable extends Sellable {
     FloatProperty remaining = new SimpleFloatProperty();
     FloatProperty capacity = new SimpleFloatProperty();
     FloatProperty consumptionRate = new SimpleFloatProperty(1);
+    DoubleProperty sellValue = new SimpleDoubleProperty();
 
 
     public Consumable() {
@@ -31,6 +34,7 @@ public abstract class Consumable extends Sellable {
         this.remaining.setValue(remaining);
         this.capacity.setValue(capacity);
         this.consumptionRate.setValue(consumptionRate);
+        this.sellValue.setValue(value*sellBackRate);
     }
 
 
@@ -49,9 +53,9 @@ public abstract class Consumable extends Sellable {
     public Float getRemaining() {
         return remaining.get();
     }
-    public void setRemaining(float value) {
-        remaining.set(value);
-    }
+    public void setRemaining(float value) {remaining.set(value); }
+    public void setSellValue(double value) {sellValue.set(value);}
+    public double getSellValue() {return sellValue.get();}
 
     @JsonIgnore
     public FloatProperty remainingProperty() {

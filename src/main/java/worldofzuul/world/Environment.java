@@ -5,6 +5,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import worldofzuul.util.MessageHelper;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
@@ -20,7 +22,6 @@ public class Environment {
     private int dayTimeEnd = 18;
     private int secondsToIncrement = 2;
     private float rainWaterAmount = 0.1f;
-
 
     private final Calendar calendar = Calendar.getInstance();
     private final Random random = new Random();
@@ -180,6 +181,10 @@ public class Environment {
     }
     public void setCalendarStart(Date date){
         calendar.setTime(date);
+    }
+
+    public Calendar getCalendar(){
+        return calendar;
     }
 
 }
