@@ -217,7 +217,7 @@ public abstract class SpriteAnimation extends Sprite {
 
     public void configureImages(HashMap<String, Image> images){
         for (String animationStringValue : animationStringValues) {
-            if(images.containsKey(animationStringValue) && animationStringValues.indexOf(animationStringValue) > animationStringKeys.size() -1){
+            if(images.containsKey(animationStringValue) && animationStringValues.indexOf(animationStringValue) < animationStringKeys.size()){
                 imageAnimations.put(getAnimationStringKeys().get(animationStringValues.indexOf(animationStringValue)), new Image[]{images.get(animationStringValue)});
             }
 
