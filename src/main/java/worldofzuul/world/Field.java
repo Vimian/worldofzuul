@@ -2,7 +2,9 @@ package worldofzuul.world;
 
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleFloatProperty;
+import worldofzuul.Player;
 import worldofzuul.item.*;
+import worldofzuul.Inventory;
 import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
 import worldofzuul.util.MessageHelper;
@@ -14,6 +16,8 @@ public class Field extends GameObject {
     private Plant plant;
     private ArrayList<Plant> plants;
     private Double pH;
+    private LimeStoneTypes limeStoneTypes;
+    private SulfurType sulfurType;
 
     private final FloatProperty water = new SimpleFloatProperty(10);
     private final FloatProperty nutrition = new SimpleFloatProperty(10000);
@@ -37,6 +41,7 @@ public class Field extends GameObject {
         setWater(water);
         this.pH = pH;
     }
+    Field field = new Field(fertilizer,200,7.0);
 
 
     public void addWater(float water) {
@@ -83,6 +88,9 @@ public class Field extends GameObject {
             MessageHelper.Item.usedItem(item.getName());
             useIrrigator((Irrigator) item);
             return null;
+        } else if (item instanceof pHNeutralizers){
+            MessageHelper.Item.usedItem(item.getName());
+            return usepHNeutralizers((pHNeutralizers) item);
         }
 
         return super.interact(item);
@@ -142,6 +150,36 @@ public class Field extends GameObject {
 
         return commands;
     }
+    //Do not know if it works, but it should decrease and increase pH on Field with specific items.
+    public Command[] usepHNeutralizers(pHNeutralizers item){
+        Command[] commands = new Command[1];
+        if (pH.get() + item.getConsumtionRate() <= 14){
+            switch (limeStoneTypes){
+                case AGLIME:
+            decreasePH();
+
+                case HYDRATEDLIME:
+            decreasePH();
+
+            }
+            if(pH.get() + item.getConsumtionRate() >= 0) {
+                switch (sulfurType) {
+                    case SULFUR:
+
+                        increasePH();
+
+                    case ALUMINIUMSULFATE:
+                        increasePH();
+                }
+            }
+            if (item.getRemainin() == 0){
+                commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
+            }
+        } else {
+            MessageHelper.Item.plantOnField();
+        }
+        return commands;
+    }
 
     private void removePlant() {
         this.plant = null;
@@ -167,6 +205,14 @@ public class Field extends GameObject {
         }
     }
 
+    private Double depletepHNeutralizers() {
+        if (getPH() > 0) {
+            increasePH();
+        }
+        if (getPH() < 14) {
+            decreasePH();
+        } return pH;
+    }
 
     public void shineLight() {
     }
@@ -206,5 +252,12 @@ public class Field extends GameObject {
 
     public FloatProperty depletionRateProperty() {
         return depletionRate;
+    }
+
+    public void increasePH(){
+        pH=pH+0.5;
+    }
+    public void decreasePH(){
+        pH=pH-0.5;
     }
 }
