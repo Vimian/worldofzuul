@@ -36,35 +36,38 @@ public class Quest {
     public Command[] turnIn(Item item){
         List<Command> commands = new LinkedList<>();
 
+
+
+
+
+
+
+
         if(turnInClass.isInstance(item)){
-            if(item.getRemaining() > 0){
-                if(item.getRemaining() >= turnInQuantity){
-                    System.out.println("You turned in " +turnInQuantity + " " + item.getName() + "s.");
 
-                    item.deplete(turnInQuantity);
-                    commands.addAll(completeQuest());
 
-                } else {
-                    turnInQuantity -= item.getRemaining();
-                    System.out.println("You turned in " + item.getRemaining() + " " + item.getName() + "s.");
-                    item.deplete(item.getRemaining());
-
-                    if(item.getRemaining() == 0){
-                        commands.add(new Command(CommandWord.REMOVEITEM, null, item));
-                    }
-                }
-            } else {
-                commands.add(new Command(CommandWord.REMOVEITEM, null, item));
-                System.out.println("You turned in one " + item.getName());
-
-                turnInQuantity--;
-                if(turnInQuantity <= 0){
-                    commands.addAll(completeQuest());
-                }
+            if(item.getRemaining() >= turnInQuantity){
+                item.deplete(turnInQuantity);
+                System.out.println("You turned in " +turnInQuantity + " " + item.getName() + "s.");
+                commands.addAll(completeQuest());
             }
+            else if(item.getRemaining() < 0) {
+                float amountTurnedIn = item.getRemaining();
+                System.out.println("You turned in " + amountTurnedIn + " " + item.getName() + "s.");
+                item.deplete(amountTurnedIn);
+                turnInQuantity -= amountTurnedIn;
+
+
+            } else {
+                System.out.println("You can't turn in nothing!");
+            }
+
+            if(item.getRemaining() <= 0){
+                commands.add(new Command(CommandWord.REMOVEITEM, null, item));
+            }
+
         } else {
             System.out.println("Bring me " + turnInQuantity + " " + turnInClass.getSimpleName() + "s instead." );
-
         }
 
         return commands.toArray(new Command[0]);

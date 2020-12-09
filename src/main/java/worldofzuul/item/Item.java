@@ -145,7 +145,7 @@ public abstract class Item extends Sprite {
     }
     @JsonIgnore
     public boolean deplete(float amount){
-        if(amount >= getRemaining()){
+        if(amount <= getRemaining()){
             setRemaining(getRemaining() - amount);
             return true;
         } else{
