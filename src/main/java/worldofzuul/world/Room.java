@@ -25,11 +25,12 @@ public class Room {
     private final StringProperty backgroundImage = new SimpleStringProperty();
 
     private GameObject[][] roomGrid;
-    private Environment environment;
+    private Environment environment = new Environment();
     private String description; //TODO: Consider converting to StringProperty
+    private int roomTileDim = 24;
+    private int roomBGScale = 1;
 
     public Room() {
-        this.environment = new Environment();
         /*
         //Listen for room exit change
         exitStringsProperty().forEach(e -> {
@@ -114,11 +115,13 @@ public class Room {
 
         environment.update();
 
-        for (GameObject[] gameObjects : roomGrid) {
-            for (GameObject gameObject : gameObjects) {
-                if (gameObject != null) {
-                    commands.add(gameObject.update());
-                    environment.update(gameObject);
+        if(roomGrid != null){
+            for (GameObject[] gameObjects : roomGrid) {
+                for (GameObject gameObject : gameObjects) {
+                    if (gameObject != null) {
+                        commands.add(gameObject.update());
+                        environment.update(gameObject);
+                    }
                 }
             }
         }
@@ -145,6 +148,14 @@ public class Room {
     }
 
 
+    public Environment getEnvironment() {
+        return environment;
+    }
+
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
+    }
+
     public String getBackgroundImage() {
         return backgroundImage.get();
     }
@@ -155,6 +166,22 @@ public class Room {
 
     public StringProperty backgroundImageProperty() {
         return backgroundImage;
+    }
+
+    public int getRoomTileDim() {
+        return roomTileDim;
+    }
+
+    public void setRoomTileDim(int roomTileDim) {
+        this.roomTileDim = roomTileDim;
+    }
+
+    public int getRoomBGScale() {
+        return roomBGScale;
+    }
+
+    public void setRoomBGScale(int roomBGScale) {
+        this.roomBGScale = roomBGScale;
     }
 
     @JsonIgnore

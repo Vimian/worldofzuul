@@ -1,10 +1,28 @@
 package worldofzuul;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import worldofzuul.item.*;
+
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Market {
-   public HashMap<Item, Double> stock = new HashMap<Item, Double>();
+    private final ListProperty<Item> stock = new SimpleListProperty<>(
+            FXCollections.observableArrayList()
+    );
+
+
+    public Market() {
+
+    }
 
    public Market(HashMap<Item, Double> stock){
        this.stock.put(fertilizer, 320.0);
@@ -28,6 +46,31 @@ public class Market {
        this.stock.put(seed3, 42.0);
        this.stock.put(seed4, 93.0);
        this.stock.put(seed5, 10.0);
+       this.stock.clear();
+
+       this.stock.addAll(Arrays.asList(
+                fertilizer,
+                harvester1,
+                harvester2,
+                harvester3,
+                irrigator1,
+                irrigator2,
+                irrigator3,
+                plant1,
+                plant2,
+                plant3,
+                plant4,
+                plant5,
+                seed1,
+                seed2,
+                seed3,
+                seed4,
+                seed5
+        ));
+
+
+
+
    }
    Harvester harvester1 = new Harvester("Cloves", 0.0, 0.0);
    Harvester harvester2 = new Harvester("Sickle", 230.0, 0.0);
@@ -51,63 +94,109 @@ public class Market {
    Seed seed4 = new Seed("MangoSeeds", 5,93.0,0.98);
    Seed seed5 = new Seed("CowpeaSeeds",5,10.0, 0.98);
 
+
     public void purchaseItem(Item item, Player player) {
-        if (player.getBalance() >= item.getValue()) {
-            player.setBalance(player.getBalance() - item.getValue());
-            player.getInventory().addItem(item);
-        } else {
-            System.out.println("Not enough money!");
+        if(item != null){
+            if (player.getBalance() >= item.getValue()) {
+                player.setBalance(player.getBalance() - item.getValue());
+                player.getInventory().addItem(item);
+            } else {
+                System.out.println("Not enough money!");
+            }
         }
     }
 
     public void purchaseUpgradeToItems(Item item, Player player){
-        if(player.getInventory().getItems().contains(irrigator1)){
-            if (player.getBalance() >= item.getValue()){
-                player.setBalance(player.getBalance() - item.getValue());
-                player.getInventory().addItem(irrigator2);
-                player.getInventory().removeItem(irrigator1);
+        if (item != null) {
+            if (player.getInventory().getItems().contains(irrigator1)) {
+                if (player.getBalance() >= item.getValue()) {
+                    player.setBalance(player.getBalance() - item.getValue());
+                    player.getInventory().addItem(irrigator2);
+                    player.getInventory().removeItem(irrigator1);
+                }
             }
-        }
-        if(player.getInventory().getItems().contains(irrigator2)){
-            if(player.getBalance() >= item.getValue()){
-                player.setBalance(player.getBalance() - item.getValue());
-                player.getInventory().addItem(irrigator3);
-                player.getInventory().removeItem(irrigator2);
+            if (player.getInventory().getItems().contains(irrigator2)) {
+                if (player.getBalance() >= item.getValue()) {
+                    player.setBalance(player.getBalance() - item.getValue());
+                    player.getInventory().addItem(irrigator3);
+                    player.getInventory().removeItem(irrigator2);
+                }
             }
-        }
-        if(player.getInventory().getItems().contains(harvester2)) {
-            if (player.getBalance() >= item.getValue()) {
-                player.setBalance(player.getBalance() - item.getValue());
-                player.getInventory().addItem(harvester2);
-                player.getInventory().removeItem(harvester1);
+            if (player.getInventory().getItems().contains(harvester2)) {
+                if (player.getBalance() >= item.getValue()) {
+                    player.setBalance(player.getBalance() - item.getValue());
+                    player.getInventory().addItem(harvester2);
+                    player.getInventory().removeItem(harvester1);
+                }
             }
-        }
-        if(player.getInventory().getItems().contains(harvester3)){
-            if(player.getBalance() >= item.getValue()) {
-                player.setBalance(player.getBalance() - item.getValue());
-                player.getInventory().addItem(harvester3);
-                player.getInventory().removeItem(harvester2);
+            if (player.getInventory().getItems().contains(harvester3)) {
+                if (player.getBalance() >= item.getValue()) {
+                    player.setBalance(player.getBalance() - item.getValue());
+                    player.getInventory().addItem(harvester3);
+                    player.getInventory().removeItem(harvester2);
+                }
+            } else {
+                System.out.println("Cannot purchase that!!!");
             }
-        }
-        else {
-            System.out.println("Cannot purchase that!!!");
+        } else {
+            return;
         }
     }
 
+    @JsonIgnore
    public void sellItem(Item item, Player player){
-        if(player.getInventory().getItems().contains(item)) {
-            player.setBalance(player.getBalance() + (item.getValue() * item.getSellbackRate()));
+        if(player.getInventory().getItems().contains(item) && item != null) {
+            player.setBalance(player.getBalance() + item.getValue() * item.getSellBackRate());
             player.getInventory().removeItem(item);
         }
         else {
             System.out.println("Player does not have that item");
         }
     }
+    @JsonIgnore
    public Double getItems(Item item){
-
-        for(int i = 0; i< stock.keySet().toArray().length; i++){
-            System.out.println(stock.keySet().toArray()[i]);
+        if(item != null){
+            for (Item value : stock) {
+                System.out.println(value);
+            }
+            return  item.getValue();
         }
-       return stock.get(item);
+        else {
+            return 0d;
+        }
+
    }
+
+
+    @JsonGetter
+    public ObservableList<Item> getStock() {
+        return stock.get();
+    }
+
+    @JsonIgnore
+    public ListProperty<Item> stockProperty() {
+        return stock;
+    }
+
+    @JsonIgnore
+    public void setStock(ObservableList<Item> items) {
+        this.stock.set(items);
+    }
+
+    @JsonSetter
+    public void setStock(LinkedList<Item> items) {
+        ListProperty<Item> temp = new SimpleListProperty<>(
+                FXCollections.observableArrayList());
+
+        temp.addAll(items);
+
+        setStock(temp);
+    }
+
+
+   /* public void setStock(List<Item> stock) {
+        this.stock = stock;
+    }
+
+    */
 }

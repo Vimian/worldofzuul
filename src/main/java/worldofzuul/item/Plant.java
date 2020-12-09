@@ -1,11 +1,20 @@
 package worldofzuul.item;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import static worldofzuul.item.GrowthStage.*;
 import static worldofzuul.item.crops.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
 import worldofzuul.world.*;
+
+import java.util.Objects;
+
 public class Plant extends Item {
-    private GrowthStage state = GrowthStage.SEED;
+    private final ObjectProperty<GrowthStage> state = new SimpleObjectProperty<>(SEED);
     private float seedQuality = 1;
     private float waterNeeded = 1000;
     private float nutritionNeeded = 1000;
@@ -14,8 +23,7 @@ public class Plant extends Item {
     private float maxNutrition = nutritionNeeded;
 
     
-    private int timeTillDeath = 100;
-
+    private int maxTimeWithoutWater = 100;
     private int ticksNotWatered;
 
     private int growTicks = 0;
@@ -27,8 +35,22 @@ public class Plant extends Item {
     }
 
     public Plant(String name, Double value, Double sellbackRate) {
-        super(name, value ,sellbackRate);
-        this.growthTime = 0;
+        super(name, value, sellbackRate);
+    }
+    public Plant(Plant plant){
+        super(plant.getName());
+
+        this.seedQuality = plant.getSeedQuality();
+        this.waterNeeded = plant.getWaterNeeded();
+        this.nutritionNeeded = plant.getNutritionNeeded();
+        this.growthTime = plant.getGrowthTime();
+        this.maxWater = waterNeeded;
+        this.maxNutrition = nutritionNeeded;
+        this.maxTimeWithoutWater = plant.getMaxTimeWithoutWater();
+        setValue(plant.getValue());
+        setSellBackRate(plant.getSellBackRate());
+        setDefaultImageFile(plant.getDefaultImageFile());
+
     }
 
     public void grow(float water, float nutrition) {
@@ -143,14 +165,15 @@ public class Plant extends Item {
     private void witherPlant() {
         ticksNotWatered++;
         
-        if(ticksNotWatered >= timeTillDeath){
-            state = GrowthStage.DEAD;
+        if(ticksNotWatered >= maxTimeWithoutWater){
+           setState(DEAD);
         }
         
     }
 
+    @JsonIgnore
     public boolean isRipe() {
-        return waterNeeded <= 0 && nutritionNeeded <= 0 && growTicks >= growthTime && state == RIPE;
+        return waterNeeded <= 0 && nutritionNeeded <= 0 && growTicks >= growthTime && getState() == RIPE;
     }
 
 
@@ -164,7 +187,7 @@ public class Plant extends Item {
 
 
     private boolean readyForNextStage() {
-        switch (state) {
+        switch (getState()) {
             case SEED -> {
                 return requiredPropertiesReady(2);
             }
@@ -189,16 +212,15 @@ public class Plant extends Item {
     }
 
     private void advanceStage() {
-
-        switch (state) {
+        switch (getState()) {
             case SEED -> {
-                state = SPROUT;
+                setState(SPROUT);
             }
             case SPROUT -> {
-                state = ADULT;
+                setState(ADULT);
             }
             case ADULT -> {
-                state = RIPE;
+                setState(RIPE);
             }
         }
     }
@@ -235,11 +257,55 @@ public class Plant extends Item {
         this.growthTime = growthTime;
     }
 
+    @JsonIgnore
     public int getGrowTicks() {
         return growTicks;
     }
 
     public void setGrowTicks(int growTicks) {
         this.growTicks = growTicks;
+    }
+
+    public int getMaxTimeWithoutWater() {
+        return maxTimeWithoutWater;
+    }
+
+    public void setMaxTimeWithoutWater(int maxTimeWithoutWater) {
+        this.maxTimeWithoutWater = maxTimeWithoutWater;
+    }
+
+    @JsonIgnore
+    public GrowthStage getState() {
+        return state.get();
+    }
+
+    @JsonIgnore
+    public Property<GrowthStage> stateProperty() {
+        return state;
+    }
+
+    @JsonIgnore
+    public void setState(GrowthStage state) {
+        this.state.set(state);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Plant)) return false;
+        if (!super.equals(o)) return false;
+        Plant plant = (Plant) o;
+        return Float.compare(plant.seedQuality, seedQuality) == 0 &&
+                Float.compare(plant.waterNeeded, waterNeeded) == 0 &&
+                Float.compare(plant.nutritionNeeded, nutritionNeeded) == 0 &&
+                growthTime == plant.growthTime &&
+                Float.compare(plant.maxWater, maxWater) == 0 &&
+                Float.compare(plant.maxNutrition, maxNutrition) == 0 &&
+                maxTimeWithoutWater == plant.maxTimeWithoutWater;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), seedQuality, waterNeeded, nutritionNeeded, growthTime, maxWater, maxNutrition, maxTimeWithoutWater);
     }
 }

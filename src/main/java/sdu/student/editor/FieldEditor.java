@@ -1,9 +1,6 @@
 package sdu.student.editor;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.util.converter.NumberStringConverter;
 import worldofzuul.world.Field;
 
@@ -12,51 +9,65 @@ import java.util.ResourceBundle;
 
 import static worldofzuul.util.Math.tryParse;
 
-public class FieldEditor implements Initializable {
+public class FieldEditor extends GameObjectEditor {
 
-    private final Field model;
-    public TextField imageFileTextField;
-    public TextField animationLengthTextField;
+
     public TextField nutritionTextField;
     public TextField depletionRateTextField;
     public TextField waterTextField;
-    public ToggleButton toggleButton;
+
+
+
+    public TextField maxWaterTextField;
+    public TextField maxNutritionTextField;
+    public TextField phLevelTextField;
+
+
 
     public FieldEditor(Field fieldModel) {
-        this.model = fieldModel;
+        super(fieldModel);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        toggleButton.setSelected(model.isColliding());
+        bindProperties();
 
-        imageFileTextField.textProperty().bindBidirectional(this.model.defaultImageFileProperty());
 
-        animationLengthTextField.textProperty().bindBidirectional(this.model.animationCycleLengthMillisProperty(), new NumberStringConverter());
-        nutritionTextField.textProperty().bindBidirectional(this.model.nutritionProperty(), new NumberStringConverter());
-        depletionRateTextField.textProperty().bindBidirectional(this.model.depletionRateProperty(), new NumberStringConverter());
-        waterTextField.textProperty().bindBidirectional(this.model.waterProperty(), new NumberStringConverter());
+        nutritionTextField.textProperty().bindBidirectional(getModel().nutritionProperty(), new NumberStringConverter());
+        depletionRateTextField.textProperty().bindBidirectional(getModel().depletionRateProperty(), new NumberStringConverter());
+        waterTextField.textProperty().bindBidirectional(getModel().waterProperty(), new NumberStringConverter());
 
-        imageFileTextField.textProperty().addListener(ev -> {
-            this.model.setDefaultImageFile(imageFileTextField.textProperty().getValue());
-        });
-        animationLengthTextField.textProperty().addListener(ev -> {
-            this.model.setAnimationCycleLengthMillis(tryParse(animationLengthTextField.textProperty().get().replace(",", ""), 0));
-        });
+        maxWaterTextField.textProperty().bindBidirectional(getModel().maxWaterProperty(), new NumberStringConverter());
+        maxNutritionTextField.textProperty().bindBidirectional(getModel().maxNutritionProperty(), new NumberStringConverter());
+        phLevelTextField.textProperty().bindBidirectional(getModel().phProperty(), new NumberStringConverter());
 
         nutritionTextField.textProperty().addListener(ev -> {
-            this.model.setNutrition(tryParse(nutritionTextField.textProperty().get().replace(",", ""), 0));
+            getModel().setNutrition(tryParse(nutritionTextField.textProperty().get().replace(",", ""), 0));
         });
         depletionRateTextField.textProperty().addListener(ev -> {
-            this.model.setDepletionRate(tryParse(depletionRateTextField.textProperty().get().replace(",", ""), 0));
+            getModel().setDepletionRate(tryParse(depletionRateTextField.textProperty().get().replace(",", ""), 0));
         });
         waterTextField.textProperty().addListener(ev -> {
-            this.model.setWater(tryParse(waterTextField.textProperty().get().replace(",", ""), 0));
+            getModel().setWater(tryParse(waterTextField.textProperty().get().replace(",", ""), 0));
         });
+
+        maxWaterTextField.textProperty().addListener(ev -> {
+            getModel().setMaxWater(tryParse(maxWaterTextField.textProperty().get().replace(",", ""), 0));
+        });
+        maxNutritionTextField.textProperty().addListener(ev -> {
+            getModel().setMaxNutrition(tryParse(maxNutritionTextField.textProperty().get().replace(",", ""), 0));
+        });
+        phLevelTextField.textProperty().addListener(ev -> {
+            getModel().setPH(tryParse(phLevelTextField.textProperty().get().replace(",", ""), 0));
+        });
+
+
+
+
     }
 
-
-    public void toggleColliding(ActionEvent actionEvent) {
-        model.setColliding(!model.isColliding());
+    @Override
+    public Field getModel() {
+        return (Field) super.getModel();
     }
 }

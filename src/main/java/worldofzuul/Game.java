@@ -3,10 +3,7 @@ package worldofzuul;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.MapProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleMapProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import worldofzuul.item.*;
@@ -28,11 +25,12 @@ import static worldofzuul.util.Math.tryParse;
 public class Game {
     private final static int updateDelay = 60;
     private Parser parser;
-    private Room currentRoom;
+    private Property<Room> currentRoom = new SimpleObjectProperty<>();
     private final ListProperty<Room> rooms = new SimpleListProperty<>(
             FXCollections.observableArrayList());
     private Player player;
     private ScheduledExecutorService scheduledThreadPool;
+    private Market market = new Market();
 
     public Game() {
         //createRooms();
@@ -46,17 +44,48 @@ public class Game {
 
     @JsonIgnore
     public Room getRoom(){
+        return currentRoom.getValue();
+    }
+    @JsonIgnore
+    public void setRoom(Room room){
+        currentRoom.setValue(room);
+    }
+    @JsonIgnore
+    public Property<Room> roomProperty(){
         return currentRoom;
     }
-    public void setRoom(Room room){
-        currentRoom = room;
+
+
+    public Market getMarket() {
+        return market;
     }
+
+    public void setMarket(Market market) {
+        this.market = market;
+    }
+
     public void move(Direction direction) {
         processCommandInternal(new Command(CommandWord.MOVE, direction.toString()));
     }
     public void interact() {
         processCommandInternal(new Command(CommandWord.INTERACT, null));
     }
+
+    public void interact(Vector gameObjectPos, boolean useItem) {
+        Command[] commands;
+        if (useItem) {
+            commands = getRoom()
+                    .getGridGameObject(gameObjectPos)
+                    .interact(player.getInventory().getSelectedItem());
+        } else {
+            commands = getRoom()
+                    .getGridGameObject(gameObjectPos)
+                    .interact();
+            }
+
+       processCommandInternal(commands);
+    }
+
 
 
     public void reconfigureRooms(){
@@ -65,9 +94,13 @@ public class Game {
                 continue;
             }
 
+
+
             MapProperty<String, Room> exits = new SimpleMapProperty<>(
                     FXCollections.observableHashMap()
             );
+
+
 
             for (Room.Exit exit : room.getExitStrings()) {
                 Room exitRoom = findRoom(exit.getExitValue());
@@ -151,11 +184,11 @@ public class Game {
         setRooms(roomsA);
 
 
-        currentRoom = outside;
+        setRoom(outside);
     }
 
     public void play() {
-        MessageHelper.Info.welcomeMessage(currentRoom.getLongDescription());
+        MessageHelper.Info.welcomeMessage(getRoom().getLongDescription());
 
         enableGameUpdater();
 
@@ -176,7 +209,8 @@ public class Game {
     }
 
     public void update() {
-        currentRoom.update().forEach(this::processCommandInternal);
+        rooms.forEach(room -> room.update().forEach(this::processCommandInternal));
+        //getRoom().update().forEach(this::processCommandInternal);
     }
 
 
@@ -280,11 +314,11 @@ public class Game {
         Command[] commands;
 
         if (item == null) {
-            commands = currentRoom
+            commands = getRoom()
                     .getGridGameObject(player.getPos())
                     .interact();
         } else {
-            commands = currentRoom
+            commands = getRoom()
                     .getGridGameObject(player.getPos())
                     .interact(item);
         }
@@ -293,15 +327,17 @@ public class Game {
     }
 
     private void removeItem(Command command) {
-        int itemIndex = 0;
         if (command.hasItem()) {
             player.getInventory().removeItem(command.getItem());
-            return;
         } else if (command.hasSecondWord()) {
-            itemIndex = tryParse(command.getSecondWord(), 0);
+            player.getInventory().removeItem(tryParse(command.getSecondWord(), 0));
+
         }
 
-        player.getInventory().removeItem(itemIndex);
+        if(!player.getInventory().getItems().contains(player.getInventory().getSelectedItem())){
+            player.getInventory().unselectItem();
+        }
+
     }
 
     private void printHelp() {
@@ -317,14 +353,14 @@ public class Game {
 
         String direction = command.getSecondWord();
 
-        Room nextRoom = currentRoom.getExit(direction);
+        Room nextRoom = getRoom().getExit(direction);
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
         }
         else {
-            currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
+            setRoom(nextRoom);
+            System.out.println(getRoom().getLongDescription());
         }
     }
 
@@ -376,7 +412,7 @@ public class Game {
         }
 
         if (canPlayerMoveToPoint(x, y)) {
-            MessageHelper.Command.moveCommand(secondWord);
+            //MessageHelper.Command.moveCommand(secondWord);
             setPlayerPosition(new Vector(x, y));
         }
     }
@@ -400,7 +436,7 @@ public class Game {
 
         GameObject currentTile = player.getCurrentGameObject();
         player.setPos(position);
-        GameObject newTile = currentRoom.getGridGameObject(position);
+        GameObject newTile = getRoom().getGridGameObject(position);
         player.setCurrentGameObject(newTile);
 
         if(currentTile != null){
@@ -411,8 +447,8 @@ public class Game {
     }
 
     private boolean canPlayerMoveToPoint(int x, int y) {
-        int roomDimensionsY = currentRoom.getRoomGrid().length;
-        int roomDimensionsX = currentRoom.getRoomGrid()[0].length;
+        int roomDimensionsY = getRoom().getRoomGrid().length;
+        int roomDimensionsX = getRoom().getRoomGrid()[0].length;
 
         //Player exceeds bounds of array
         if (x < 0 || y < 0 || x >= roomDimensionsX || y >= roomDimensionsY) {
@@ -420,7 +456,7 @@ public class Game {
             return false;
         }
 
-        GameObject targetPosition = currentRoom.getGridGameObject(new Vector(x, y));
+        GameObject targetPosition = getRoom().getGridGameObject(new Vector(x, y));
         if (targetPosition.isColliding()) {
             MessageHelper.Command.objectIsCollidable();
         }

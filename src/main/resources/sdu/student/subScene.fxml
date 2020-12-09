@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane id="anchor" fx:id="marketScene" maxHeight="600.0" maxWidth="400.0" minHeight="300.0" minWidth="670.0" prefHeight="600.0" prefWidth="500.0" styleClass="header-bar" stylesheets="@styles.css" visible="true" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sdu.student.SubScene">
+
+    <Pane layoutX="400.0" layoutY="400.0" prefHeight="24.0" prefWidth="400.0" />
+     <Label layoutX="175.0" prefHeight="61.0" prefWidth="319.0" text="Welcome to the shop">
+      <font>
+         <Font size="30.0" />
+      </font>
+   </Label>
+   <TableView fx:id="inventoryView" layoutX="15.0" layoutY="71.0" maxHeight="-Infinity" minWidth="280.0" onMouseClicked="#inventoryClicked" prefHeight="484.0" prefWidth="280.0">
+        <columns>
+            <TableColumn prefWidth="120.0" text="Your inventory">
+                <cellValueFactory>
+                    <PropertyValueFactory property="name" />
+                </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn prefWidth="85.0" text="Quantity">
+                <cellValueFactory>
+                    <PropertyValueFactory property="remaining" />
+                </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn minWidth="0.0" prefWidth="75.0" text="Value">
+                <cellValueFactory>
+                    <PropertyValueFactory property="sellValue" />
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+   </TableView>
+
+   <TableView fx:id="marketView" layoutX="375.0" layoutY="71.0" maxHeight="-Infinity" minWidth="280.0" prefHeight="484.0" prefWidth="280.0">
+       <columns>
+           <TableColumn prefWidth="120.0" text="Market Stock">
+                <cellValueFactory>
+                    <PropertyValueFactory property="name" />
+                </cellValueFactory>
+           </TableColumn>
+
+           <TableColumn minWidth="0.0" prefWidth="85.0" text="Quantity">
+               <cellValueFactory>
+                   <PropertyValueFactory property="remaining" />
+               </cellValueFactory>
+           </TableColumn>
+
+           <TableColumn minWidth="0.0" prefWidth="75.0" text="Price">
+               <cellValueFactory>
+                   <PropertyValueFactory property="value" />
+               </cellValueFactory>
+           </TableColumn>
+       </columns>
+   </TableView>
+
+   <Button layoutX="310.0" layoutY="250.0" minHeight="-Infinity" minWidth="50.0" mnemonicParsing="false" onMouseClicked="#buyClicked" prefHeight="25.0" prefWidth="50.0" text="Buy" />
+   <Button layoutX="310.0" layoutY="300.0" minWidth="50.0" mnemonicParsing="false" onMouseClicked="#sellClicked" prefWidth="50.0" text="Sell" />
+   <Button layoutX="640.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#exitClicked" prefHeight="30.0" prefWidth="30.0" text="X" wrapText="true">
+      <font>
+         <Font size="15.0" />
+      </font>
+   </Button>
+</Pane>

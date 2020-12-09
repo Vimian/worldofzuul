@@ -7,7 +7,7 @@ public class Harvester extends Item {
         super(name);
     }
     public Harvester(String name, Double value, Double sellbackRate ) {
-        super(name,value,sellbackRate);
+        super(name, value, sellbackRate);
     }
     public Plant harvest(Plant plant) {
         return plant;

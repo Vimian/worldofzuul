@@ -1,10 +1,11 @@
 package worldofzuul.world;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.FloatProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleFloatProperty;
-import worldofzuul.Player;
 import worldofzuul.item.*;
-import worldofzuul.Inventory;
 import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
 import worldofzuul.util.MessageHelper;
@@ -12,6 +13,9 @@ import worldofzuul.util.MessageHelper;
 import java.util.ArrayList;
 
 public class Field extends GameObject {
+
+
+
     private Fertilizer fertilizer;
     private Plant plant;
     private ArrayList<Plant> plants;
@@ -19,9 +23,14 @@ public class Field extends GameObject {
     private LimeStoneTypes limeStoneTypes;
     private SulfurType sulfurType;
 
-    private final FloatProperty water = new SimpleFloatProperty(10);
+
+    private DoubleProperty pH = new SimpleDoubleProperty();
+    private final FloatProperty water = new SimpleFloatProperty(20000);
     private final FloatProperty nutrition = new SimpleFloatProperty(10000);
     private final FloatProperty depletionRate = new SimpleFloatProperty(5);
+    private FloatProperty maxWater = new SimpleFloatProperty(20000);
+    private FloatProperty maxNutrition = new SimpleFloatProperty(20000);
+
     private boolean ripePlantSeen = false;
 
     public Field() {
@@ -39,23 +48,15 @@ public class Field extends GameObject {
     public Field(Fertilizer fertilizer, float water, Double pH) {
         this(fertilizer);
         setWater(water);
-        this.pH = pH;
+
     }
     Field field = new Field(fertilizer,200,7.0);
 
 
     public void addWater(float water) {
-        if (isPlantGrowing()) {
+        if(getWater() + water <= getMaxWater()){
             setWater(getWater() + water);
         }
-    }
-
-    public Double getPH(){
-        return pH;
-    }
-
-    public void setPH(){
-        this.pH = pH;
     }
 
     @Override
@@ -97,7 +98,17 @@ public class Field extends GameObject {
     }
 
     private Command[] useFertilizer(Fertilizer item) {
-        return null; //TODO: Implement method.
+        Command[] commands = new Command[1];
+        if(nutrition.get() + item.getConsumptionRate() < maxNutrition.get()) {
+            nutrition.set(nutrition.get() + item.deplete());
+        }
+
+
+        if (item.getRemaining() == 0) {
+            commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
+        }
+
+        return commands;
     }
 
     private void useIrrigator(Irrigator item) {
@@ -112,12 +123,12 @@ public class Field extends GameObject {
 
         Command[] commands = new Command[1];
 
-        if (item.getSeedCount() > 0) {
+        if (item.getRemaining() > 0) {
             plantSeed(item);
         }
 
-        if (item.getSeedCount() == 0) {
-            commands[0] = new Command(CommandWord.REMOVEITEM, null);
+        if (item.getRemaining() == 0) {
+            commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
         }
 
 
@@ -126,9 +137,18 @@ public class Field extends GameObject {
 
     private void plantSeed(Seed item) {
         MessageHelper.Item.usedItemOn(item.getName(), this.getClass().getSimpleName());
-        plant = (item.getPlant());
+        plant = (item.useSeed());
         ripePlantSeen = false;
-        playAnimation(GrowthStage.ADULT);
+        playAnimation(GrowthStage.SEED);
+
+        plant.stateProperty().addListener((observable, oldValue, newValue) -> {
+            plantStateChanged(oldValue, newValue);
+        });
+
+    }
+
+    private void plantStateChanged(GrowthStage oldValue, GrowthStage newValue) {
+        playAnimation(newValue);
     }
 
     private Command[] useHarvester(Harvester item) {
@@ -138,8 +158,6 @@ public class Field extends GameObject {
                 MessageHelper.Item.harvested(plant.getName());
                 commands[0] = new Command(CommandWord.ADDITEM, null, item.harvest(plant));
                 removePlant();
-
-                playAnimation(GrowthStage.SEED);
 
             } else {
                 MessageHelper.Item.unripePlant();
@@ -182,7 +200,12 @@ public class Field extends GameObject {
     }
 
     private void removePlant() {
+        plant.stateProperty().removeListener((observable, oldValue, newValue) -> {
+            plantStateChanged(oldValue, newValue);
+        });
         this.plant = null;
+        playAnimation((Object) null);
+
     }
 
     private boolean isPlantGrowing() { return plant != null && !plant.isRipe(); }
@@ -252,6 +275,45 @@ public class Field extends GameObject {
 
     public FloatProperty depletionRateProperty() {
         return depletionRate;
+    }
+
+
+    public double getPH() {
+        return pH.get();
+    }
+
+    @JsonIgnore
+    public DoubleProperty phProperty() {
+        return pH;
+    }
+
+    public void setPH(double pH) {
+        this.pH.set(pH);
+    }
+
+    public float getMaxWater() {
+        return maxWater.get();
+    }
+
+    @JsonIgnore
+    public FloatProperty maxWaterProperty() {
+        return maxWater;
+    }
+
+    public void setMaxWater(float maxWater) {
+        this.maxWater.set(maxWater);
+    }
+
+    public float getMaxNutrition() {
+        return maxNutrition.get();
+    }
+    @JsonIgnore
+    public FloatProperty maxNutritionProperty() {
+        return maxNutrition;
+    }
+
+    public void setMaxNutrition(float maxNutrition) {
+        this.maxNutrition.set(maxNutrition);
     }
 
     public void increasePH(){
