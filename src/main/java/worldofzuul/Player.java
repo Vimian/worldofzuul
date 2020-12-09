@@ -12,7 +12,7 @@ public class Player extends SpriteAnimation {
     private final Vector pos;
     private GameObject currentGameObject;
     private final Inventory inventory = new Inventory();
-    private DoubleProperty balance = new SimpleDoubleProperty();
+    private final DoubleProperty balance = new SimpleDoubleProperty();
     private float Velocity;
     private Sprite sprite;
 
@@ -36,8 +36,7 @@ public class Player extends SpriteAnimation {
     public double getBalance() {
         return balance.get();
     }
-
-    @JsonGetter
+    @JsonIgnore
     public DoubleProperty balanceProperty() {
         return balance;
     }

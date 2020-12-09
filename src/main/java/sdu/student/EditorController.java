@@ -38,8 +38,8 @@ import static worldofzuul.util.Math.tryParse;
 public class EditorController implements Initializable {
     private static final String configFileName = "gameConfig.json";
     private static final String spriteDirectory = "sprites";
-    private static final int defaultGameTileDim = 16;
-    private static final int defaultBackgroundScaling = 3;
+    private int defaultGameTileDim = 48;
+    private int defaultBackgroundScaling = 3;
 
     @FXML
     private Pane propertyEditorPane;
@@ -84,12 +84,7 @@ public class EditorController implements Initializable {
 
         tileDimTextField.setText(String.valueOf(defaultGameTileDim));
         backgroundScalingTextField.setText(String.valueOf(defaultBackgroundScaling));
-        backgroundScalingTextField.textProperty().addListener(ev -> {
-            backgroundScaling = tryParse(backgroundScalingTextField.getText(), defaultBackgroundScaling);
-        });
-        tileDimTextField.textProperty().addListener(ev -> {
-            gameTileDim = tryParse(tileDimTextField.getText(), defaultGameTileDim);
-        });
+
 
         exitRoomRow.setCellFactory(TextFieldTableCell.forTableColumn());
         exitKeyRow.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -107,13 +102,22 @@ public class EditorController implements Initializable {
     private void addListeners() {
 
         roomExitsTable.itemsProperty().bindBidirectional(model.getRoom().exitStringsProperty());
-
+        backgroundScalingTextField.setText(String.valueOf(model.getRoom().getRoomBGScale()));
+        tileDimTextField.setText(String.valueOf(model.getRoom().getRoomTileDim()));
 
         currentRoomLabel.setText(model.getRoom().toString());
 
         backgroundImgTextField.setText(model.getRoom().getBackgroundImage());
         backgroundImgTextField.textProperty().addListener(ev -> {
             model.getRoom().setBackgroundImage(backgroundImgTextField.getText());
+        });
+        backgroundScalingTextField.textProperty().addListener(ev -> {
+            backgroundScaling = tryParse(backgroundScalingTextField.getText(), defaultBackgroundScaling);
+            model.getRoom().setRoomBGScale(backgroundScaling);
+        });
+        tileDimTextField.textProperty().addListener(ev -> {
+            gameTileDim = tryParse(tileDimTextField.getText(), defaultGameTileDim);
+            model.getRoom().setRoomTileDim(gameTileDim);
         });
 
     }
@@ -127,8 +131,15 @@ public class EditorController implements Initializable {
             backgroundImgTextField.textProperty().removeListener(ev -> {
                 model.getRoom().setBackgroundImage(backgroundImgTextField.getText());
             });
+            backgroundScalingTextField.textProperty().removeListener(ev -> {
+                backgroundScaling = tryParse(backgroundScalingTextField.getText(), defaultBackgroundScaling);
+                model.getRoom().setRoomBGScale(backgroundScaling);
+            });
+            tileDimTextField.textProperty().removeListener(ev -> {
+                gameTileDim = tryParse(tileDimTextField.getText(), defaultGameTileDim);
+                model.getRoom().setRoomTileDim(gameTileDim);
+            });
             model.setRoom(clickedElement);
-
             addListeners();
             drawRoom();
         }
@@ -291,6 +302,9 @@ public class EditorController implements Initializable {
     }
 
     public void redrawGame(ActionEvent actionEvent) {
+
+
+
         drawRoom();
     }
 

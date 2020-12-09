@@ -27,6 +27,8 @@ public class Room {
     private GameObject[][] roomGrid;
     private Environment environment = new Environment();
     private String description; //TODO: Consider converting to StringProperty
+    private int roomTileDim = 24;
+    private int roomBGScale = 1;
 
     public Room() {
         /*
@@ -164,6 +166,22 @@ public class Room {
 
     public StringProperty backgroundImageProperty() {
         return backgroundImage;
+    }
+
+    public int getRoomTileDim() {
+        return roomTileDim;
+    }
+
+    public void setRoomTileDim(int roomTileDim) {
+        this.roomTileDim = roomTileDim;
+    }
+
+    public int getRoomBGScale() {
+        return roomBGScale;
+    }
+
+    public void setRoomBGScale(int roomBGScale) {
+        this.roomBGScale = roomBGScale;
     }
 
     @JsonIgnore

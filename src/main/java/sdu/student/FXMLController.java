@@ -74,8 +74,8 @@ public class FXMLController implements Initializable {
     private final PrintStream systemPrintStream = System.out;
     private static final String configFileName = "gameConfig.json";
     private static final String spriteDirectory = "sprites";
-    private static final int gameTileDim = 16;
-    private static final int backgroundScaling = 6;
+    private int gameTileDim = 16;
+    private int backgroundScaling = 6;
     private static final double paneTransDelayCoefficient = 1.2;
     private static final int updateDelay = 60;
     private static final double nightChangeOpacity = 0.6;
@@ -119,8 +119,11 @@ public class FXMLController implements Initializable {
 
         bindProperties();
         examplePlayAnimation();
-
         enableGameUpdater();
+
+
+        gameTileDim = model.getRoom().getRoomTileDim();
+        backgroundScaling = model.getRoom().getRoomBGScale();
 
         //Configure custom PrintStream
         System.setOut(printStream);
@@ -304,6 +307,9 @@ public class FXMLController implements Initializable {
         model.roomProperty().addListener((observable, oldValue, newValue) -> {
             unsubscribeToEnvironmentChanges(oldValue.getEnvironment());
             subscribeToEnvironmentChanges(newValue.getEnvironment());
+
+            gameTileDim = newValue.getRoomTileDim();
+            backgroundScaling = newValue.getRoomBGScale();
 
         });
 
