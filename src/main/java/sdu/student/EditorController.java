@@ -15,19 +15,13 @@ import sdu.student.editor.DoorEditor;
 import sdu.student.editor.FieldEditor;
 import sdu.student.editor.NPCEditor;
 import worldofzuul.Game;
-import worldofzuul.item.Fertilizer;
-import worldofzuul.item.Item;
-import worldofzuul.item.Plant;
-import worldofzuul.item.Seed;
+import worldofzuul.item.*;
 import worldofzuul.util.Vector;
 import worldofzuul.world.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static worldofzuul.util.Data.*;
 import static worldofzuul.util.Drawing.drawGameObjects;
@@ -95,6 +89,23 @@ public class EditorController implements Initializable {
 
         drawRoom();
         addListeners();
+
+
+        for (Room room : model.getRooms()) {
+            if(room != null && room.getRoomGrid() != null){
+                Arrays.stream(room.getRoomGrid()).forEach(t -> {
+                    Arrays.stream(t).forEach(gameObject -> {
+
+                        gameObject.configureImages(loadedImages);
+
+                    });
+                });
+
+            }
+        }
+
+
+
 
     }
 

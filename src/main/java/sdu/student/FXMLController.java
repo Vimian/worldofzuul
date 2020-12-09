@@ -182,26 +182,42 @@ public class FXMLController implements Initializable {
         model.getPlayer().display();
 
         //Example add sprites to fields
-        Arrays.stream(model.getRoom().getRoomGrid()).forEach(t -> Arrays.stream(t).forEach(gameObject -> {
-            if (gameObject instanceof Field) {
 
-                List<Image[]> imgs = new ArrayList<>();
-                imgs.add(new Image[]{loadedImages.get("sprites/misc/null.png")});
-                imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0000.png")});
-                imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0003.png")});
-                imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0008.png")});
 
-                List<Object> keys = new ArrayList<>();
-                keys.add(null);
-                keys.add(GrowthStage.SEED);
-                keys.add(GrowthStage.ADULT);
-                keys.add(GrowthStage.RIPE);
+        for (Room room : model.getRooms()) {
+            if(room != null && room.getRoomGrid() != null){
+                Arrays.stream(room.getRoomGrid()).forEach(t -> {
+                    Arrays.stream(t).forEach(gameObject -> {
 
-                gameObject.addAnimation(keys, imgs);
-                gameObject.setAnimationCycleLengthMillis(400);
+
+                        if (gameObject instanceof Field) {
+
+                            List<Image[]> imgs = new ArrayList<>();
+                            imgs.add(new Image[]{loadedImages.get("sprites/misc/null.png")});
+                            imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0000.png")});
+                            imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0003.png")});
+                            imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0008.png")});
+
+                            List<Object> keys = new ArrayList<>();
+                            keys.add(null);
+                            keys.add(GrowthStage.SEED);
+                            keys.add(GrowthStage.ADULT);
+                            keys.add(GrowthStage.RIPE);
+                            gameObject.addAnimation(keys, imgs);
+                            gameObject.setAnimationCycleLengthMillis(400);
+
+
+
+                        }
+                    });
+                });
 
             }
-        }));
+        }
+
+
+
+
 
 
         drawRoom();
