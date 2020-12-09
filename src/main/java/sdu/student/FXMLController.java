@@ -46,6 +46,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.util.converter.NumberStringConverter;
 import sdu.student.editor.BlockEditor;
 import sdu.student.editor.DoorEditor;
 import sdu.student.editor.FieldEditor;
@@ -92,6 +93,7 @@ public class FXMLController implements Initializable {
     public Pane rainImagePane;
     public TableView<Item> inventoryTableView;
     public Label currentlySelectedItemLabel;
+    public Label playerBalanceLabel;
     public Label timeLabel;
 
     @FXML
@@ -114,8 +116,6 @@ public class FXMLController implements Initializable {
         loadedImages = getImages(spriteDirectory, getClass());
 
         loadGame();
-
-        var a = model.getMarket().stockProperty();
 
         bindProperties();
         examplePlayAnimation();
@@ -297,6 +297,8 @@ public class FXMLController implements Initializable {
         inventoryTableView.itemsProperty().bindBidirectional(model.getPlayer().getInventory().itemsProperty());
         subscribeToEnvironmentChanges(model.getRoom().getEnvironment());
         currentlySelectedItemLabel.textProperty().bindBidirectional(model.getPlayer().getInventory().selectedItemNameProperty());
+
+        playerBalanceLabel.textProperty().bindBidirectional(model.getPlayer().balanceProperty(), new NumberStringConverter());
 
         //Listen to Room change
         model.roomProperty().addListener((observable, oldValue, newValue) -> {
