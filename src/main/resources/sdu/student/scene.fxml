@@ -22,10 +22,8 @@
 
     <VBox alignment="CENTER" pickOnBounds="false">
         <HBox alignment="CENTER" pickOnBounds="false">
-
-
             <StackPane fx:id="gameContainerPane">
-                <Pane fx:id="roomPane" onMouseClicked="#roomPaneClicked" />
+                <Pane fx:id="roomPane" onMouseClicked="#roomPaneClicked"/>
                 <ImageView fx:id="imageView" fitHeight="150.0" mouseTransparent="true" preserveRatio="true" />
                 <StackPane fx:id="environmentLayerPane" mouseTransparent="true" style="-fx-background-color: transparent;">
                     <Pane fx:id="nightLayerPane" mouseTransparent="true" opacity="0" style="-fx-background-color: black;" />
@@ -38,6 +36,7 @@
     <HBox pickOnBounds="false">
       <FlowPane hgap="10.0" vgap="10.0">
          <children>
+
             <MenuButton mnemonicParsing="false" text="Menu">
               <items>
                 <MenuItem mnemonicParsing="false" text="Help" />
@@ -45,6 +44,7 @@
               </items>
             </MenuButton>
                <Button fx:id="marketButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#openMarket" text="Market" />
+             <Label fx:id="timeLabel" pickOnBounds="false" visible="true" alignment="TOP_CENTER"/>
          </children>
          <HBox.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
