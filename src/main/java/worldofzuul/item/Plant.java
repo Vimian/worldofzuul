@@ -59,6 +59,7 @@ public class Plant extends Item {
         setAnimationStringKeys(plant.getAnimationStringKeys());
         setAnimationStringValues(plant.getAnimationStringValues());
         setImageAnimations(plant.getImageAnimations());
+        setAnimationCycleLengthMillis(plant.getAnimationCycleLengthMillis());
 
     }
 

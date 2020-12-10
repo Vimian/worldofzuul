@@ -5,6 +5,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleFloatProperty;
+import javafx.scene.image.ImageView;
 import worldofzuul.item.*;
 import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
@@ -133,7 +134,8 @@ public class Field extends GameObject {
         plant = (item.useSeed());
         ripePlantSeen = false;
 
-        plant.playAnimation(getImageView(), GrowthStage.SEED);
+        plant.setImageView(getImageView());
+        plant.playAnimation(GrowthStage.SEED);
         plant.stateProperty().addListener((observable, oldValue, newValue) -> {
             plantStateChanged(oldValue, newValue);
         });
@@ -141,9 +143,7 @@ public class Field extends GameObject {
     }
 
     private void plantStateChanged(GrowthStage oldValue, GrowthStage newValue) {
-
-        plant.playAnimation(getImageView(), newValue);
-
+        plant.playAnimation(newValue);
     }
 
     private Command[] useHarvester(Harvester item) {
@@ -168,7 +168,8 @@ public class Field extends GameObject {
         plant.stateProperty().removeListener((observable, oldValue, newValue) -> {
             plantStateChanged(oldValue, newValue);
         });
-        plant.playAnimation(getImageView(), null);
+        plant.playAnimation((Object) null);
+        plant.setImageView(null);
         this.plant = null;
 
     }
@@ -271,5 +272,16 @@ public class Field extends GameObject {
 
     public void setMaxNutrition(float maxNutrition) {
         this.maxNutrition.set(maxNutrition);
+    }
+
+    @Override
+    public void setImageView(ImageView imageView) {
+        super.setImageView(imageView);
+
+        if(plant != null){
+            plant.setImageView(imageView);
+            plant.playAnimation(plant.getState());
+        }
+
     }
 }

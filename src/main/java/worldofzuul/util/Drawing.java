@@ -155,6 +155,7 @@ public class Drawing {
                 imageView.setImage(object.getImage());
             }
 
+            object.display();
 
             roomPane.getChildren().add(imageView);
         }
