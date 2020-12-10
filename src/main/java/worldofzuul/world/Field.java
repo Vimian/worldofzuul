@@ -13,8 +13,8 @@ import worldofzuul.util.MessageHelper;
 import java.util.ArrayList;
 
 public class Field extends GameObject {
-
-
+    private final static double minpH = 0.0;
+    private final static double maxpH = 14.0;
 
     private Fertilizer fertilizer;
     private Plant plant;
@@ -22,13 +22,12 @@ public class Field extends GameObject {
 
 
     private final DoubleProperty pH = new SimpleDoubleProperty(7);
-    private DoubleProperty minpH = new SimpleDoubleProperty(0);
-    private DoubleProperty maxpH = new SimpleDoubleProperty(14);
+
     private final FloatProperty water = new SimpleFloatProperty(20000);
     private final FloatProperty nutrition = new SimpleFloatProperty(10000);
     private final FloatProperty depletionRate = new SimpleFloatProperty(5);
-    private FloatProperty maxWater = new SimpleFloatProperty(20000);
-    private FloatProperty maxNutrition = new SimpleFloatProperty(20000);
+    private final FloatProperty maxWater = new SimpleFloatProperty(20000);
+    private final FloatProperty maxNutrition = new SimpleFloatProperty(20000);
 
     private boolean ripePlantSeen = false;
 
@@ -167,16 +166,30 @@ public class Field extends GameObject {
     }
     public Command[] usepHNeutralizers(pHNeutralizers item){
         Command[] commands = new Command[1];
-        if (pH.get() >= maxpH.get()) {
-            setPH(item.getpHChange() * -1.0 + getFieldpH());
-            MessageHelper.Item.decreasedpH(pH.getName());
+
+        if(item.getpHChange() > 0){
+            if(pH.get() + item.getpHChange() <= maxpH){
+                setPH(pH.get() + item.getpHChange());
+                MessageHelper.Item.increasedpH(pH.getName());
+            }
+            else {
+                setPH(maxpH);
+            }
+            item.deplete();
+        } else if (item.getpHChange() < 0){
+            if(pH.get() + item.getpHChange() >= minpH){
+                setPH(getPH() + item.getpHChange());
+                MessageHelper.Item.decreasedpH(pH.getName());
+            } else {
+                setPH(minpH);
+            }
+            item.deplete();
+        }
+
+        if(item.getRemaining() <= 0){
             commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
         }
-        else if(pH.get() <= minpH.get()) {
-            setPH(item.getpHChange() + getFieldpH());
-            MessageHelper.Item.increasedpH(pH.getName());
-            commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
-        }
+
         return commands;
     }
 
@@ -288,6 +301,8 @@ public class Field extends GameObject {
         this.maxNutrition.set(maxNutrition);
     }
 
-    public Double getFieldpH(){
-        return pH.get(); }
 }
+
+
+
+
