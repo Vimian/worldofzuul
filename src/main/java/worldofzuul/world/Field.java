@@ -44,8 +44,8 @@ public class Field extends GameObject {
     }
 
     public Field(Fertilizer fertilizer, float water, DoubleProperty pH) {
-        this(fertilizer);
-        setWater(water);
+        this(fertilizer,water);
+        this.setPH(pH.get());
     }
 
 
