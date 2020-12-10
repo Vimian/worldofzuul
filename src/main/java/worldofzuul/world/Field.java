@@ -176,10 +176,12 @@ public class Field extends GameObject {
             switch (limeStoneTypes){
                 case AGLIME:
                     setPH(pH.get()-0.5);
+                    MessageHelper.Item.decreasedpH(pH.getName());
                     commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
 
                 case HYDRATEDLIME:
                     setPH(pH.get()-1);
+                    MessageHelper.Item.decreasedpH(pH.getName());
                     commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
 
             }
@@ -187,15 +189,15 @@ public class Field extends GameObject {
                 switch (sulfurType) {
                     case SULFUR:
                         setPH(pH.get()+1);
+                        MessageHelper.Item.increasedpH(pH.getName());
                         commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
 
                     case ALUMINIUMSULFATE:
                         setPH(pH.get()+0.5);
+                        MessageHelper.Item.increasedpH(pH.getName());
                         commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
                 }
             }
-        } else {
-            MessageHelper.Item.plantOnField();
         }
         return commands;
     }
@@ -227,14 +229,6 @@ public class Field extends GameObject {
         } else {
             return 0;
         }
-    }
-
-    private DoubleProperty depletepHNeutralizers() {
-        if (getPH() > 0) {
-                    }
-        if (getPH() < 14) {
-
-        } return pH;
     }
 
     public void shineLight() {
