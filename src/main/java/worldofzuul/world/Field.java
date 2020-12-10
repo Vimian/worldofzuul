@@ -19,8 +19,6 @@ public class Field extends GameObject {
     private Fertilizer fertilizer;
     private Plant plant;
     private ArrayList<Plant> plants;
-    private LimeStoneTypes limeStoneTypes;
-    private SulfurType sulfurType;
 
 
     private final DoubleProperty pH = new SimpleDoubleProperty(7);
@@ -46,12 +44,10 @@ public class Field extends GameObject {
         setWater(water);
     }
 
-    public Field(Fertilizer fertilizer, float water, Double pH) {
+    public Field(Fertilizer fertilizer, float water, DoubleProperty pH) {
         this(fertilizer);
         setWater(water);
-
     }
-    Field field = new Field(fertilizer,200,7.0);
 
 
     public void addWater(float water) {
@@ -169,35 +165,17 @@ public class Field extends GameObject {
 
         return commands;
     }
-    //Do not know if it works, but it should decrease and increase pH on Field with specific items.
     public Command[] usepHNeutralizers(pHNeutralizers item){
         Command[] commands = new Command[1];
-        if (pH.get() >= maxpH.get()){
-            switch (limeStoneTypes){
-                case AGLIME:
-                    setPH(pH.get()-0.5);
-                    MessageHelper.Item.decreasedpH(pH.getName());
-                    commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
-
-                case HYDRATEDLIME:
-                    setPH(pH.get()-1);
-                    MessageHelper.Item.decreasedpH(pH.getName());
-                    commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
-
-            }
-            if(pH.get() >= minpH.get()) {
-                switch (sulfurType) {
-                    case SULFUR:
-                        setPH(pH.get()+1);
-                        MessageHelper.Item.increasedpH(pH.getName());
-                        commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
-
-                    case ALUMINIUMSULFATE:
-                        setPH(pH.get()+0.5);
-                        MessageHelper.Item.increasedpH(pH.getName());
-                        commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
-                }
-            }
+        if (pH.get() >= maxpH.get()) {
+            setPH(item.getpHChange() * -1.0 + getFieldpH());
+            MessageHelper.Item.decreasedpH(pH.getName());
+            commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
+        }
+        else if(pH.get() <= minpH.get()) {
+            setPH(item.getpHChange() + getFieldpH());
+            MessageHelper.Item.increasedpH(pH.getName());
+            commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
         }
         return commands;
     }
@@ -309,4 +287,7 @@ public class Field extends GameObject {
     public void setMaxNutrition(float maxNutrition) {
         this.maxNutrition.set(maxNutrition);
     }
+
+    public Double getFieldpH(){
+        return pH.get(); }
 }

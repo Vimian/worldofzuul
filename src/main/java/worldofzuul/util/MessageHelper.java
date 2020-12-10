@@ -15,7 +15,7 @@ public class MessageHelper {
         }
 
         public static void increasedpH(String pH) {
-            System.out.println("You increased the field pH to " + pH+ ".");
+            System.out.println("You increased the field pH to " + pH + ".");
         }
         public static void decreasedpH(String pH) {
             System.out.println("You decreased the field pH to " + pH + ".");
