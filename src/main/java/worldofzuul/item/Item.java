@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import javafx.beans.property.*;
-import worldofzuul.Sprite;
 import worldofzuul.SpriteAnimation;
 
 import java.util.Objects;
@@ -16,7 +15,6 @@ import java.util.Objects;
         @JsonSubTypes.Type(value=Harvester.class, name="Harvester"),
         @JsonSubTypes.Type(value=Fertilizer.class, name="Fertilizer"),
         @JsonSubTypes.Type(value=Irrigator.class, name="Irrigator"),
-        @JsonSubTypes.Type(value=Money.class, name="Money"),
         @JsonSubTypes.Type(value=Plant.class, name="Plant"),
 })
 public abstract class Item extends SpriteAnimation {
@@ -145,16 +143,10 @@ public abstract class Item extends SpriteAnimation {
         return depletionAmount;
     }
     @JsonIgnore
-    public boolean deplete(float amount){
+    public void deplete(float amount){
         if(amount <= getRemaining()){
             setRemaining(getRemaining() - amount);
-            return true;
-        } else{
-            return false;
         }
-    }
-    public void refill() {
-        setRemaining(getCapacity());
     }
 
     @Override

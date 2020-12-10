@@ -1,18 +1,13 @@
 package worldofzuul.item;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import static worldofzuul.item.GrowthStage.*;
-import static worldofzuul.item.crops.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
-import worldofzuul.SpriteAnimation;
-import worldofzuul.world.*;
 
 import java.util.Objects;
+
+import static worldofzuul.item.GrowthStage.*;
 
 public class Plant extends Item {
     private final ObjectProperty<GrowthStage> state = new SimpleObjectProperty<>(SEED);
@@ -33,9 +28,6 @@ public class Plant extends Item {
     private crops crops;
 
     public Plant(){}
-    public Plant(String name) {
-        super(name);
-    }
 
     public Plant(String name, Double value, Double sellbackRate) {
         super(name, value, sellbackRate);
@@ -234,15 +226,9 @@ public class Plant extends Item {
 
     private void advanceStage() {
         switch (getState()) {
-            case SEED -> {
-                setState(SPROUT);
-            }
-            case SPROUT -> {
-                setState(ADULT);
-            }
-            case ADULT -> {
-                setState(RIPE);
-            }
+            case SEED -> setState(SPROUT);
+            case SPROUT -> setState(ADULT);
+            case ADULT -> setState(RIPE);
         }
     }
 
@@ -348,25 +334,4 @@ public class Plant extends Item {
         return Objects.hash(super.hashCode(), seedQuality, waterNeeded, waterDepletionRate, maxWater, nutritionNeeded, nutritionDepletionRate, maxNutrition, growthTime, maxTimeWithoutWater);
     }
 
-    /*
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Plant)) return false;
-        if (!super.equals(o)) return false;
-        Plant plant = (Plant) o;
-        return Float.compare(plant.seedQuality, seedQuality) == 0 &&
-                Float.compare(plant.waterNeeded, waterNeeded) == 0 &&
-                Float.compare(plant.nutritionNeeded, nutritionNeeded) == 0 &&
-                growthTime == plant.growthTime &&
-                Float.compare(plant.maxWater, maxWater) == 0 &&
-                Float.compare(plant.maxNutrition, maxNutrition) == 0 &&
-                maxTimeWithoutWater == plant.maxTimeWithoutWater;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), seedQuality, waterNeeded, nutritionNeeded, growthTime, maxWater, maxNutrition, maxTimeWithoutWater);
-    }
-    */
 }

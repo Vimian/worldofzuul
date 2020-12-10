@@ -23,21 +23,30 @@ import worldofzuul.item.Item;
 
 public class Command
 {
-    private CommandWord commandWord;
+    private final CommandWord commandWord;
     private String secondWord;
     private Item item;
 
+    public Command(CommandWord commandWord) {
+        this.commandWord = commandWord;
+    }
     public Command(CommandWord commandWord, String secondWord)
     {
-        this.commandWord = commandWord;
+        this(commandWord);
         this.secondWord = secondWord;
     }
 
     public Command(CommandWord commandWord, String secondWord, Item item) {
-        this.commandWord = commandWord;
-        this.secondWord = secondWord;
+        this(commandWord, secondWord);
         this.item = item;
     }
+
+    public Command(CommandWord commandWord, Item item) {
+        this(commandWord);
+        this.item = item;
+    }
+
+
 
     public CommandWord getCommandWord()
     {
@@ -52,12 +61,7 @@ public class Command
     public Item getItem() {
         return item;
     }
-
-    public boolean isUnknown()
-    {
-        return (commandWord == CommandWord.UNKNOWN);
-    }
-
+    
     public boolean hasSecondWord()
     {
         return (secondWord != null);

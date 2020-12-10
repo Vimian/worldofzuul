@@ -19,18 +19,9 @@ public class Quest {
     private Float turnInQuantity;
 
 
-    private BooleanProperty questComplete = new SimpleBooleanProperty(false);
+    private final BooleanProperty questComplete = new SimpleBooleanProperty(false);
 
     public Quest() {
-    }
-
-    public Quest(List<Item> rewards, String questTitle, String introductionMessage, String completionMessage, Class<?> turnInClass, Float turnInQuantity) {
-        this.rewards = rewards;
-        this.questTitle = questTitle;
-        this.introductionMessage = introductionMessage;
-        this.completionMessage = completionMessage;
-        this.turnInClass = turnInClass;
-        this.turnInQuantity = turnInQuantity;
     }
 
     public Command[] turnIn(Item item){
@@ -56,7 +47,7 @@ public class Quest {
             }
 
             if(item.getRemaining() <= 0){
-                commands.add(new Command(CommandWord.REMOVEITEM, null, item));
+                commands.add(new Command(CommandWord.REMOVE_ITEM, null, item));
             }
 
         } else {
@@ -73,7 +64,7 @@ public class Quest {
         List<Command> commands = new LinkedList<>();
 
         for (Item reward : rewards) {
-            commands.add(new Command(CommandWord.ADDITEM, null, reward));
+            commands.add(new Command(CommandWord.ADD_ITEM, null, reward));
         }
 
         System.out.println(completionMessage);

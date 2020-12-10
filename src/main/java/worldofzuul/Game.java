@@ -15,7 +15,6 @@ import worldofzuul.util.Vector;
 import worldofzuul.world.*;
 
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -66,9 +65,6 @@ public class Game {
 
     public void move(Direction direction) {
         processCommandInternal(new Command(CommandWord.MOVE, direction.toString()));
-    }
-    public void interact() {
-        processCommandInternal(new Command(CommandWord.INTERACT, null));
     }
 
     public void interact(Vector gameObjectPos, boolean useItem) {
@@ -150,7 +146,6 @@ public class Game {
 
         office.setExit("west", lab);
 
-        //DBG Start
         player = new Player();
 
         outside.fillRoomGridWithBlocks(50, 50);
@@ -163,20 +158,6 @@ public class Game {
         player.getInventory().addItem(new Harvester("Sickle"));
         player.getInventory().addItem(new Irrigator("Hose"));
         player.getInventory().setSelectedItem(new Seed("Corn", 3));
-
-        /*
-        *
-
-          player.getInventory().addItem(new Fertilizer("Manure", 3.0, 2.0, 2.0));
-        player.getInventory().addItem(new Harvester("Sickle",0.0, 2.0));
-        player.getInventory().addItem(new Irrigator("Hose",2.0 , 2.0));
-        player.getInventory().setSelectedItem(new Seed("Corn", 3, 2.0, 2.0));
-
-
-        * */
-
-
-        //DBG End
 
         Room[] roomsA = new Room[5];
         roomsA[0] = outside;
@@ -209,12 +190,11 @@ public class Game {
     private void enableGameUpdater() {
         scheduledThreadPool = Executors.newScheduledThreadPool(1);
         long delay = 1000000 / updateDelay;
-        scheduledThreadPool.scheduleAtFixedRate(() -> update(), 0, delay, TimeUnit.MICROSECONDS);
+        scheduledThreadPool.scheduleAtFixedRate(this::update, 0, delay, TimeUnit.MICROSECONDS);
     }
 
     public void update() {
         rooms.forEach(room -> room.update().forEach(this::processCommandInternal));
-        //getRoom().update().forEach(this::processCommandInternal);
     }
 
 
@@ -240,11 +220,6 @@ public class Game {
             selectItem(command);
         } else if (commandWord == CommandWord.INTERACT) {
             interactPlayer();
-        } else if (commandWord == CommandWord.EXAMINE){
-            examineObject(command);
-        }
-        else if (commandWord == CommandWord.HARVEST){
-            harvestObject(command);
         }
         return wantToQuit;
     }
@@ -285,9 +260,9 @@ public class Game {
 
         if (commandWord == CommandWord.TELEPORT) {
             teleportPlayer(command);
-        } else if (commandWord == CommandWord.REMOVEITEM) {
+        } else if (commandWord == CommandWord.REMOVE_ITEM) {
             removeItem(command);
-        } else if (commandWord == CommandWord.ADDITEM) {
+        } else if (commandWord == CommandWord.ADD_ITEM) {
             addItem(command);
         } else {
             processCommand(command);
@@ -369,27 +344,6 @@ public class Game {
     }
 
 
-    //Method for examining objects in room
-    private void examineObject(Command command){ //TODO: Missing implementation
-        if(!command.hasSecondWord()) {
-            System.out.println("Examine what?");
-            return;
-        }
-    }
-
-    private void harvestObject(Command command) { //TODO: Missing implementation
-        if (!command.hasSecondWord()) {
-            System.out.println("Harvest what?");
-        }
-        //Merge conflict possibly redundant
-        /*Field pfield = new Field(3,3);
-        if (currentRoom.getGridGameObject(player.pos) ==  pfield) {
-            Harvest pharvest = new Harvest(2);
-                pharvest.harvestPlantFromField();
-            } else {
-                System.out.println("Can not harvest that!");
-        }*/
-    }
 
     private void movePlayer(Command command) {
         if (!command.hasSecondWord()) {
@@ -416,7 +370,6 @@ public class Game {
         }
 
         if (canPlayerMoveToPoint(x, y)) {
-            //MessageHelper.Command.moveCommand(secondWord);
             setPlayerPosition(new Vector(x, y));
         }
     }
@@ -454,7 +407,6 @@ public class Game {
         int roomDimensionsY = getRoom().getRoomGrid().length;
         int roomDimensionsX = getRoom().getRoomGrid()[0].length;
 
-        //Player exceeds bounds of array
         if (x < 0 || y < 0 || x >= roomDimensionsX || y >= roomDimensionsY) {
             MessageHelper.Command.positionExceedsMap();
             return false;

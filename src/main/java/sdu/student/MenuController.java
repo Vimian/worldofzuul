@@ -1,19 +1,14 @@
 package sdu.student;
 
 import javafx.animation.FadeTransition;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,7 +27,7 @@ public class MenuController implements Initializable {
     }
 
 
-    public void changeSceneEditor(ActionEvent actionEvent) {
+    public void changeSceneEditor() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("gameEditor.fxml"));
             Stage stage = (Stage) gameButton.getScene().getWindow();
@@ -43,7 +38,7 @@ public class MenuController implements Initializable {
         }
     }
 
-    public void changeSceneGame(ActionEvent actionEvent) {
+    public void changeSceneGame() {
 
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -51,9 +46,7 @@ public class MenuController implements Initializable {
 
 
             loader.setControllerFactory(aClass -> controller);
-            //Defines the FXML file
             loader.setLocation(getClass().getResource("scene.fxml"));
-
 
 
             Stage stage = (Stage) gameButton.getScene().getWindow();
@@ -61,32 +54,14 @@ public class MenuController implements Initializable {
             scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
             stage.setScene(scene);
 
-//            scene.setOnKeyPressed(new EventHandler<KeyEvent>() { - non lampda implementation
-//                @Override
-//                public void handle(KeyEvent event) {
-//                    switch (event.getCode()) {
-//                        case A:
-//                            controller.moveEast(actionEvent);
-//                        ...
-//                    }
-//                }
-//            });
 
             scene.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
 
-                switch(e.getCode()){
-                    case W:
-                        controller.moveNorth(actionEvent);
-                        break;
-                    case D:
-                        controller.moveEast(actionEvent);
-                        break;
-                    case S:
-                        controller.moveSouth(actionEvent);
-                        break;
-                    case A:
-                        controller.moveWest(actionEvent);
-                        break;
+                switch (e.getCode()) {
+                    case W -> controller.moveNorth();
+                    case D -> controller.moveEast();
+                    case S -> controller.moveSouth();
+                    case A -> controller.moveWest();
                 }
 
 
@@ -100,7 +75,7 @@ public class MenuController implements Initializable {
 
     }
 
-    public void showInstructions(ActionEvent actionEvent) {
+    public void showInstructions() {
 
         instructionsPane.setVisible(true);
 
@@ -108,7 +83,6 @@ public class MenuController implements Initializable {
             ft.setFromValue(0.0);
             ft.setToValue(1);
         ft.play();
-
 
 
     }

@@ -1,6 +1,5 @@
 package sdu.student;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,13 +14,14 @@ import sdu.student.editor.DoorEditor;
 import sdu.student.editor.FieldEditor;
 import sdu.student.editor.NPCEditor;
 import worldofzuul.Game;
-import worldofzuul.item.*;
 import worldofzuul.util.Vector;
 import worldofzuul.world.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.ResourceBundle;
 
 import static worldofzuul.util.Data.*;
 import static worldofzuul.util.Drawing.drawGameObjects;
@@ -32,8 +32,8 @@ import static worldofzuul.util.Math.tryParse;
 public class EditorController implements Initializable {
     private static final String configFileName = "gameConfig.json";
     private static final String spriteDirectory = "sprites";
-    private int defaultGameTileDim = 48;
-    private int defaultBackgroundScaling = 3;
+    private final int defaultGameTileDim = 48;
+    private final int defaultBackgroundScaling = 3;
 
     @FXML
     private Pane propertyEditorPane;
@@ -94,11 +94,9 @@ public class EditorController implements Initializable {
         for (Room room : model.getRooms()) {
             if(room != null && room.getRoomGrid() != null){
                 Arrays.stream(room.getRoomGrid()).forEach(t -> {
-                    Arrays.stream(t).forEach(gameObject -> {
-
+                    for (GameObject gameObject : t) {
                         gameObject.configureImages(loadedImages);
-
-                    });
+                    }
                 });
 
             }
@@ -119,9 +117,7 @@ public class EditorController implements Initializable {
         currentRoomLabel.setText(model.getRoom().toString());
 
         backgroundImgTextField.setText(model.getRoom().getBackgroundImage());
-        backgroundImgTextField.textProperty().addListener(ev -> {
-            model.getRoom().setBackgroundImage(backgroundImgTextField.getText());
-        });
+        backgroundImgTextField.textProperty().addListener(ev -> model.getRoom().setBackgroundImage(backgroundImgTextField.getText()));
         backgroundScalingTextField.textProperty().addListener(ev -> {
             backgroundScaling = tryParse(backgroundScalingTextField.getText(), defaultBackgroundScaling);
             model.getRoom().setRoomBGScale(backgroundScaling);
@@ -134,14 +130,12 @@ public class EditorController implements Initializable {
     }
 
 
-    public void changeRoom(MouseEvent actionEvent) {
+    public void changeRoom() {
         Room clickedElement = roomSelector.getSelectionModel().getSelectedItem();
         if (clickedElement != null && clickedElement != model.getRoom()) {
 
             roomExitsTable.itemsProperty().unbindBidirectional(model.getRoom().exitStringsProperty());
-            backgroundImgTextField.textProperty().removeListener(ev -> {
-                model.getRoom().setBackgroundImage(backgroundImgTextField.getText());
-            });
+            backgroundImgTextField.textProperty().removeListener(ev -> model.getRoom().setBackgroundImage(backgroundImgTextField.getText()));
             backgroundScalingTextField.textProperty().removeListener(ev -> {
                 backgroundScaling = tryParse(backgroundScalingTextField.getText(), defaultBackgroundScaling);
                 model.getRoom().setRoomBGScale(backgroundScaling);
@@ -156,7 +150,7 @@ public class EditorController implements Initializable {
         }
     }
 
-    public void changeType(ActionEvent actionEvent) {
+    public void changeType() {
         if (model.getRoom().getGridGameObject(currentlyEditingPos) != currentGameObject) {
             return;
         }
@@ -230,7 +224,7 @@ public class EditorController implements Initializable {
             drawGrid(roomPane, getBackgroundRowCount());
         }
 
-        drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim(), getClass(), currentlyEditingPos);
+        drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim(), getClass(), currentlyEditingPos, true);
 
     }
 
@@ -303,7 +297,7 @@ public class EditorController implements Initializable {
     }
 
 
-    public void exportGame(ActionEvent actionEvent) {
+    public void exportGame() {
         final Clipboard clipboard = Clipboard.getSystemClipboard();
         final ClipboardContent content = new ClipboardContent();
 
@@ -312,14 +306,14 @@ public class EditorController implements Initializable {
 
     }
 
-    public void redrawGame(ActionEvent actionEvent) {
+    public void redrawGame() {
 
 
 
         drawRoom();
     }
 
-    public void addExitRow(ActionEvent actionEvent) {
+    public void addExitRow() {
         model.getRoom().exitStringsProperty().add(new Room.Exit("Empty", "Empty"));
     }
 
@@ -364,7 +358,7 @@ public class EditorController implements Initializable {
     }
 
 
-    public void propertyPaneMouseMoved(MouseEvent mouseEvent) {
+    public void propertyPaneMouseMoved() {
         drawRoom();
     }
 

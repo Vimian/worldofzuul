@@ -26,32 +26,16 @@ public class Room {
 
     private GameObject[][] roomGrid;
     private Environment environment = new Environment();
-    private String description; //TODO: Consider converting to StringProperty
-    private int roomTileDim = 24;
+    private String description;
+    private int roomTileDim = 16;
     private int roomBGScale = 1;
-    private boolean isPrintingEnabled = false;
 
     public Room() {
-        /*
-        //Listen for room exit change
-        exitStringsProperty().forEach(e -> {
-            listenToExitPropertyChange(e);
-        });
-
-        exitStringsProperty().addListener((object, oldV, newV) -> {
-            listenToNewObjects(oldV, newV);
-        });
-        */
 
     }
 
-    // method for adding GameObjects to roomGrid, give positions as coordinate system.
-    public void addToGrid(GameObject gameObject, int posX, int posY) {
-        roomGrid[posY][posX] = gameObject;
-    }
     public Room(String description)
     {
-        this();
         this.description = description;
     }
 
@@ -186,13 +170,7 @@ public class Room {
     }
 
     @JsonIgnore
-    public boolean isPrintingEnabled() {
-        return isPrintingEnabled;
-    }
-    @JsonIgnore
     public void setPrintingEnabled(boolean printingEnabled) {
-        this.isPrintingEnabled = printingEnabled;
-
         environment.setPrintingEnabled(printingEnabled);
     }
 

@@ -1,6 +1,5 @@
 package worldofzuul;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -13,14 +12,9 @@ public class Player extends SpriteAnimation {
     private GameObject currentGameObject;
     private final Inventory inventory = new Inventory();
     private final DoubleProperty balance = new SimpleDoubleProperty();
-    private float Velocity;
-    private Sprite sprite;
 
     Player(){
         pos = new Vector();
-    }
-    Player(int x, int y){
-        pos = new Vector(x, y);
     }
 
 

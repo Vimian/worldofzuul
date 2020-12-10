@@ -1,13 +1,8 @@
 package worldofzuul.world;
 
 import worldofzuul.item.Item;
-import worldofzuul.item.Plant;
 import worldofzuul.parsing.Command;
-import worldofzuul.util.MessageHelper;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 public class NPC extends GameObject {
@@ -48,8 +43,6 @@ public class NPC extends GameObject {
 
         return super.interact(item);
     }
-
-
 
     public LinkedList<Quest> getQuests() {
         return quests;

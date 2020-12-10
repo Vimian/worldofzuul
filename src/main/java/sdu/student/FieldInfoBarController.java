@@ -16,7 +16,7 @@ public class FieldInfoBarController implements Initializable {
     public Pane infoBarContainer;
     public ProgressBar waterInfoBar;
     public ProgressBar nutritionInfoBar;
-    private Field field;
+    private final Field field;
     private Timer timer;
     private final static int timeOutDelay = 12000;
 

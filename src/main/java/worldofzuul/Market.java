@@ -12,7 +12,6 @@ import worldofzuul.item.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 
 public class Market {
     private final ListProperty<Item> stock = new SimpleListProperty<>(
@@ -169,10 +168,4 @@ public class Market {
         setStock(temp);
     }
 
-
-   /* public void setStock(List<Item> stock) {
-        this.stock = stock;
-    }
-
-    */
 }

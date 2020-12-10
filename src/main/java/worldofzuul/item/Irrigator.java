@@ -14,14 +14,6 @@ public class Irrigator extends Item {
         super(name, value, sellbackRate);
     }
 
-    public Irrigator(String name, float flowRate, float waterCapacity, Double value, Double sellbackRate) {
-        super(name, value, sellbackRate, flowRate, waterCapacity, waterCapacity);
-    }
-
-    public Irrigator(String name, float flowRate, float waterCapacity) {
-        super(name, flowRate, waterCapacity, waterCapacity);
-
-    }
     @JsonIgnore
     public void water(Field field) {
         field.addWater(deplete());

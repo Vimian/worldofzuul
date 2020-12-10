@@ -1,12 +1,8 @@
 package sdu.student.editor;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.util.converter.NumberStringConverter;
 import worldofzuul.world.Door;
-import worldofzuul.world.GameObject;
 
 import java.net.URL;
 import java.util.ResourceBundle;

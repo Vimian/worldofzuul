@@ -10,7 +10,7 @@ public class Vector {
     private static final String delimiter = ",";
     private final IntegerProperty x = new SimpleIntegerProperty(0);
     private final IntegerProperty y = new SimpleIntegerProperty(0);
-    private final StringProperty vectorValue = new SimpleStringProperty(); //TODO: Refactor out
+    private final StringProperty vectorValue = new SimpleStringProperty();
 
     public Vector() {
         setVectorValue(this.toString());
@@ -25,20 +25,14 @@ public class Vector {
     public Vector(String s) {
         this();
         if(s.contains(delimiter)){
-            String[] vals = s.split(delimiter);
+            String[] values = s.split(delimiter);
 
-            if(vals.length == 2){
-                setX(Math.tryParse(vals[0], 0));
-                setY(Math.tryParse(vals[1], 0));
+            if(values.length == 2){
+                setX(Math.tryParse(values[0], 0));
+                setY(Math.tryParse(values[1], 0));
             }
         }
 
-    }
-    public Vector(Vector oldVector, Vector newVector){
-        this();
-
-        setX(newVector.getX() - oldVector.getX());
-        setY(newVector.getY() - oldVector.getY());
     }
 
 

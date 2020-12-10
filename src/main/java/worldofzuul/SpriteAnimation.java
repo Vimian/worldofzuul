@@ -15,38 +15,14 @@ import javafx.util.Duration;
 import java.util.*;
 
 public abstract class SpriteAnimation extends Sprite {
-
-
     private final IntegerProperty animationCycleLengthMillis = new SimpleIntegerProperty(1000);
-
-    //Is Linked as order matters in getImage()
     private LinkedHashMap<String, Image[]> imageAnimations = new LinkedHashMap<>();
     private Timeline animationTimeline;
-    private boolean animationActive;
-
     private LinkedList<String> animationStringKeys = new LinkedList<>();
     private LinkedList<String> animationStringValues = new LinkedList<>();
 
 
     public SpriteAnimation() {
-    }
-
-    public SpriteAnimation(Image defaultImage) {
-        super(defaultImage);
-    }
-
-    public SpriteAnimation(Image[] images) {
-        this(images[0]);
-        this.imageAnimations.put(getAnimationString(null), images);
-    }
-
-    public SpriteAnimation(List<Object> animationKeys, List<Image[]> imageAnimations) {
-        this(imageAnimations.stream().findFirst().stream().findFirst().orElseThrow());
-        addAnimation(animationKeys, imageAnimations);
-    }
-
-    public void addAnimation(Object animationKey, Image[] animation) {
-        imageAnimations.put(getAnimationString(animationKey), animation);
     }
 
     public void addAnimation(List<Object> animationKeys, List<Image[]> imageAnimations) {
@@ -64,23 +40,9 @@ public abstract class SpriteAnimation extends Sprite {
         }
     }
 
-    public void playAnimation() {
-        if (getImageView() != null) {
-            playAnimation(getImageView(), Animation.INDEFINITE);
-        }
-    }
-
     public void playAnimation(Object animationKey) {
         if (getImageView() != null) {
             playAnimation(getImageView(), Animation.INDEFINITE, animationKey);
-        }
-    }
-
-    public void playAnimation(int cycles) {
-        if (getImageView() != null) {
-            if (imageAnimations.values().size() > 0) {
-                playAnimation(getImageView(), cycles, imageAnimations.values().stream().findFirst());
-            }
         }
     }
 
@@ -89,20 +51,6 @@ public abstract class SpriteAnimation extends Sprite {
             if (imageAnimations.containsKey(getAnimationString(animationKey))) {
                 playAnimation(getImageView(), cycles, imageAnimations.get(getAnimationString(animationKey)));
             }
-        }
-    }
-
-    public void playAnimation(ImageView view) {
-        playAnimation(view, Animation.INDEFINITE);
-    }
-
-    public void playAnimation(ImageView view, Object animationKey) {
-        playAnimation(view, Animation.INDEFINITE, animationKey);
-    }
-
-    public void playAnimation(ImageView view, int cycles) {
-        if (imageAnimations.values().size() > 0) {
-            playAnimation(view, cycles, imageAnimations.values().stream().findFirst());
         }
     }
 
@@ -122,7 +70,6 @@ public abstract class SpriteAnimation extends Sprite {
         setImage(Arrays.stream(images).findFirst().orElseThrow());
         stopAnimation();
 
-        animationActive = true;
         animationTimeline = new Timeline(new KeyFrame(Duration.millis(getAnimationCycleLengthMillis()), ev -> {
             Transition animation = new Transition() {
                 {
@@ -137,10 +84,7 @@ public abstract class SpriteAnimation extends Sprite {
             };
             animation.play();
         }));
-        animationTimeline.setOnFinished(event -> {
-            animationActive = false;
-            display();
-        });
+        animationTimeline.setOnFinished(event -> display());
 
         animationTimeline.setCycleCount(cycles);
         animationTimeline.play();
@@ -232,7 +176,5 @@ public abstract class SpriteAnimation extends Sprite {
     public void setImageAnimations(LinkedHashMap<String, Image[]> animations) {
         this.imageAnimations = animations;
     }
-
-
 
 }

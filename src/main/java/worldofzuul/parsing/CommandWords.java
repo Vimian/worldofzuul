@@ -2,15 +2,16 @@ package worldofzuul.parsing;
 import worldofzuul.util.MessageHelper;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 
 public class CommandWords
 {
-    private HashMap<String, CommandWord> validCommands;
+    private final HashMap<String, CommandWord> validCommands;
 
     public CommandWords()
     {
-        validCommands = new HashMap<String, CommandWord>();
+        validCommands = new HashMap<>();
         for(CommandWord command : CommandWord.values()) {
             if(command != CommandWord.UNKNOWN) {
                 validCommands.put(command.toString(), command);
@@ -21,20 +22,10 @@ public class CommandWords
     public CommandWord getCommandWord(String commandWord)
     {
         CommandWord command = validCommands.get(commandWord);
-        if(command != null) {
-            return command;
-        }
-        else {
-            return CommandWord.UNKNOWN;
-        }
-    }
-    
-    public boolean isCommand(String aString)
-    {
-        return validCommands.containsKey(aString);
+        return Objects.requireNonNullElse(command, CommandWord.UNKNOWN);
     }
 
-    public void showAll() 
+    public void showAll()
     {
         for(String command : validCommands.keySet()) {
             MessageHelper.Command.stringSpace(command);

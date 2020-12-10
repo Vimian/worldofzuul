@@ -30,13 +30,6 @@ public class Drawing {
         return translateTransition;
     }
 
-    public static TranslateTransition translateNow(Node node, double x, double y, double z, int translationTime){
-
-        TranslateTransition translateTransition = translate(node,x,y,z,translationTime);
-        translateTransition.play();
-
-        return translateTransition;
-    }
     public static void drawGrid(Pane pane, double rowCount){
 
         double cubeDim = (pane.getMinWidth() / rowCount);
@@ -50,27 +43,19 @@ public class Drawing {
 
     }
 
-    public static void setNodePositionToVector(Node node, Vector position, double tileDim){
-        node.setTranslateX(position.getX() * tileDim);
-        node.setTranslateY(position.getY() * tileDim);
-    }
     public static void setNodePositionToVectorCorner(Node node, Vector position, double tileDim){
         node.setTranslateX(position.getX() * tileDim + tileDim / 3);
         node.setTranslateY(position.getY() * tileDim - tileDim / 3);
     }
 
-
-    public static void drawGameObjects(Room room, HashMap<String, Image> loadedImages, Pane roomPane, double backgroundTileDim, Class<?> callerController, Vector clickedPos) {
+    public static void drawGameObjects(Room room, HashMap<String, Image> loadedImages, Pane roomPane, double backgroundTileDim, Class<?> callerController, Vector clickedPos, boolean highlight) {
         for (int i = 0; i < room.getRoomGrid().length; i++) {
             for (int j = 0; j < room.getRoomGrid().length; j++) {
+
                 var rect = new Rectangle(j * backgroundTileDim, i * backgroundTileDim, backgroundTileDim, backgroundTileDim);
-
                 GameObject object = room.getGridGameObject(new Vector(j,i));
-
-                //Draw img
-                //TODO: Refactor & Optimize
                 drawGameObjectImage(loadedImages, roomPane, rect, object);
-                //Draw border
+
 
                 if (object instanceof Block) {
                     if (object.isColliding()) {
@@ -104,10 +89,11 @@ public class Drawing {
                     continue;
                 }
 
-                rect.setStrokeWidth(4);
-                rect.setFill(Color.TRANSPARENT);
-                roomPane.getChildren().add(rect);
-
+                if(highlight){
+                    rect.setStrokeWidth(4);
+                    rect.setFill(Color.TRANSPARENT);
+                    roomPane.getChildren().add(rect);
+                }
             }
         }
 
@@ -124,8 +110,6 @@ public class Drawing {
         }
 
     }
-
-
 
 
     private static void appendFieldInfoBar(Field field, Pane pane, Vector position, double tileDim, Class<?> callerController) {
@@ -156,7 +140,6 @@ public class Drawing {
             }
 
             object.display();
-
             roomPane.getChildren().add(imageView);
         }
     }

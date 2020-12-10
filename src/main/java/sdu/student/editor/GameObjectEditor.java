@@ -5,7 +5,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.util.converter.NumberStringConverter;
-import worldofzuul.world.Block;
 import worldofzuul.world.GameObject;
 
 import java.net.URL;

@@ -11,18 +11,13 @@ import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
 import worldofzuul.util.MessageHelper;
 
-import java.util.ArrayList;
-
 public class Field extends GameObject {
 
 
 
-    private Fertilizer fertilizer;
     private Plant plant;
-    private ArrayList<Plant> plants;
 
-
-    private DoubleProperty pH = new SimpleDoubleProperty();
+    private final DoubleProperty pH = new SimpleDoubleProperty();
     private final FloatProperty water = new SimpleFloatProperty(20000);
     private final FloatProperty nutrition = new SimpleFloatProperty(10000);
     private final FloatProperty depletionRate = new SimpleFloatProperty(1);
@@ -34,19 +29,13 @@ public class Field extends GameObject {
     public Field() {
     }
 
-    public Field(Fertilizer fertilizer) {
-        this.fertilizer = fertilizer;
-    }
 
-    public Field(Fertilizer fertilizer, float water) {
-        this(fertilizer);
+    public Field(float water) {
         setWater(water);
     }
 
-    public Field(Fertilizer fertilizer, float water, Double pH) {
-        this(fertilizer);
+    public Field(float water, Double pH) {
         setWater(water);
-
     }
 
 
@@ -108,7 +97,7 @@ public class Field extends GameObject {
 
 
         if (item.getRemaining() == 0) {
-            commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
+            commands[0] = new Command(CommandWord.REMOVE_ITEM, null, item);
         }
 
         return commands;
@@ -131,7 +120,7 @@ public class Field extends GameObject {
         }
 
         if (item.getRemaining() == 0) {
-            commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
+            commands[0] = new Command(CommandWord.REMOVE_ITEM, null, item);
         }
 
 
@@ -145,13 +134,11 @@ public class Field extends GameObject {
 
         plant.setImageView(getImageView());
         plant.playAnimation(GrowthStage.SEED);
-        plant.stateProperty().addListener((observable, oldValue, newValue) -> {
-            plantStateChanged(oldValue, newValue);
-        });
+        plant.stateProperty().addListener((observable, oldValue, newValue) -> plantStateChanged(newValue));
 
     }
 
-    private void plantStateChanged(GrowthStage oldValue, GrowthStage newValue) {
+    private void plantStateChanged(GrowthStage newValue) {
         plant.playAnimation(newValue);
     }
 
@@ -160,7 +147,7 @@ public class Field extends GameObject {
         if (plant != null) {
             if (plant.isRipe()) {
                 MessageHelper.Item.harvested(plant.getName());
-                commands[0] = new Command(CommandWord.ADDITEM, null, item.harvest(plant));
+                commands[0] = new Command(CommandWord.ADD_ITEM, null, item.harvest(plant));
                 removePlant();
 
             } else if(plant.getState() == GrowthStage.DEAD){
@@ -176,10 +163,8 @@ public class Field extends GameObject {
     }
 
     private void removePlant() {
-        plant.stateProperty().removeListener((observable, oldValue, newValue) -> {
-            plantStateChanged(oldValue, newValue);
-        });
-        plant.playAnimation((Object) null);
+        plant.stateProperty().removeListener((observable, oldValue, newValue) -> plantStateChanged(newValue));
+        plant.playAnimation(null);
         plant.setImageView(null);
         this.plant = null;
 
