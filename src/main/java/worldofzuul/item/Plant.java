@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
+import worldofzuul.SpriteAnimation;
 import worldofzuul.world.*;
 
 import java.util.Objects;
@@ -55,6 +56,9 @@ public class Plant extends Item {
         setDefaultImageFile(plant.getDefaultImageFile());
         setNutritionDepletionRate(plant.getNutritionDepletionRate());
         setWaterDepletionRate(plant.getWaterDepletionRate());
+        setAnimationStringKeys(plant.getAnimationStringKeys());
+        setAnimationStringValues(plant.getAnimationStringValues());
+        setImageAnimations(plant.getImageAnimations());
 
     }
 

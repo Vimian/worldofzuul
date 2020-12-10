@@ -63,7 +63,7 @@ public class Field extends GameObject {
                 //plant.grow(depleteWater(), depleteNutrition(), getPH());
             } if(plant.isRipe() && !ripePlantSeen){
                 MessageHelper.Info.plantBecameRipe(plant.getName());
-                playAnimation(GrowthStage.RIPE);
+                //playAnimation(GrowthStage.RIPE);
                 ripePlantSeen = true;
             }
         }
@@ -132,8 +132,8 @@ public class Field extends GameObject {
         MessageHelper.Item.usedItemOn(item.getName(), this.getClass().getSimpleName());
         plant = (item.useSeed());
         ripePlantSeen = false;
-        playAnimation(GrowthStage.SEED);
 
+        plant.playAnimation(getImageView(), GrowthStage.SEED);
         plant.stateProperty().addListener((observable, oldValue, newValue) -> {
             plantStateChanged(oldValue, newValue);
         });
@@ -141,7 +141,9 @@ public class Field extends GameObject {
     }
 
     private void plantStateChanged(GrowthStage oldValue, GrowthStage newValue) {
-        playAnimation(newValue);
+
+        plant.playAnimation(getImageView(), newValue);
+
     }
 
     private Command[] useHarvester(Harvester item) {
@@ -166,8 +168,8 @@ public class Field extends GameObject {
         plant.stateProperty().removeListener((observable, oldValue, newValue) -> {
             plantStateChanged(oldValue, newValue);
         });
+        plant.playAnimation(getImageView(), GrowthStage.SEED);
         this.plant = null;
-        playAnimation((Object) null);
 
     }
 

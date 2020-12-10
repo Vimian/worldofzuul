@@ -188,8 +188,6 @@ public class FXMLController implements Initializable {
             if(room != null && room.getRoomGrid() != null){
                 Arrays.stream(room.getRoomGrid()).forEach(t -> {
                     Arrays.stream(t).forEach(gameObject -> {
-
-
                         if (gameObject instanceof Field) {
                             gameObject.configureImages(loadedImages);
                         }
@@ -199,6 +197,8 @@ public class FXMLController implements Initializable {
             }
         }
 
+         model.getPlayer().getInventory().getItems().forEach(item -> item.configureImages(loadedImages));
+        model.getMarket().getStock().forEach(item -> item.configureImages(loadedImages));
 
 
 

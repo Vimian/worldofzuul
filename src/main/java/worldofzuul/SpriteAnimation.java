@@ -20,7 +20,7 @@ public abstract class SpriteAnimation extends Sprite {
     private final IntegerProperty animationCycleLengthMillis = new SimpleIntegerProperty(1000);
 
     //Is Linked as order matters in getImage()
-    private final LinkedHashMap<String, Image[]> imageAnimations = new LinkedHashMap<>();
+    private LinkedHashMap<String, Image[]> imageAnimations = new LinkedHashMap<>();
     private Timeline animationTimeline;
     private boolean animationActive;
 
@@ -223,4 +223,16 @@ public abstract class SpriteAnimation extends Sprite {
 
         }
     }
+
+    @JsonIgnore
+    public LinkedHashMap<String, Image[]> getImageAnimations() {
+        return imageAnimations;
+    }
+    @JsonIgnore
+    public void setImageAnimations(LinkedHashMap<String, Image[]> animations) {
+        this.imageAnimations = animations;
+    }
+
+
+
 }

@@ -1,8 +1,10 @@
 package worldofzuul.item;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javafx.scene.image.Image;
 import worldofzuul.Player;
 
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -142,6 +144,15 @@ public class Seed extends Item {
 
     public void setPlant(Plant plant) {
         this.plant = plant;
+    }
+
+    @Override
+    public void configureImages(HashMap<String, Image> images) {
+        super.configureImages(images);
+
+        if(plant != null){
+            plant.configureImages(images);
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import javafx.beans.property.*;
 import worldofzuul.Sprite;
+import worldofzuul.SpriteAnimation;
 
 import java.util.Objects;
 
@@ -18,7 +19,7 @@ import java.util.Objects;
         @JsonSubTypes.Type(value=Money.class, name="Money"),
         @JsonSubTypes.Type(value=Plant.class, name="Plant"),
 })
-public abstract class Item extends Sprite {
+public abstract class Item extends SpriteAnimation {
     private final StringProperty name = new SimpleStringProperty();
     private final DoubleProperty value = new SimpleDoubleProperty();
     private final DoubleProperty sellBackRate = new SimpleDoubleProperty(1);
