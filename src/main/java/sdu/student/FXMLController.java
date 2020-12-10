@@ -162,6 +162,8 @@ public class FXMLController implements Initializable {
             model = new Game();
             model.createRooms();
         }
+
+        model.getRoom().setPrintingEnabled(true);
     }
 
     private void examplePlayAnimation() {
@@ -305,11 +307,14 @@ public class FXMLController implements Initializable {
 
         //Listen to Room change
         model.roomProperty().addListener((observable, oldValue, newValue) -> {
+            oldValue.setPrintingEnabled(false);
+
             unsubscribeToEnvironmentChanges(oldValue.getEnvironment());
             subscribeToEnvironmentChanges(newValue.getEnvironment());
 
             gameTileDim = newValue.getRoomTileDim();
             backgroundScaling = newValue.getRoomBGScale();
+            oldValue.setPrintingEnabled(true);
 
         });
 

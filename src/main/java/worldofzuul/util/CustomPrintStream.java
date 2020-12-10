@@ -20,7 +20,8 @@ public class CustomPrintStream extends PrintStream {
 
     @Override
     public void println(String line) {
-        printList.add(line);
+            printList.add(line);
+
         super.println(line);
     }
 

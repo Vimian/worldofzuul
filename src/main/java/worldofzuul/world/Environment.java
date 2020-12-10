@@ -25,6 +25,7 @@ public class Environment {
 
     private final Calendar calendar = Calendar.getInstance();
     private final Random random = new Random();
+    private boolean isPrintingEnabled = true;
 
     private int rainTicks = 0;
 
@@ -40,7 +41,9 @@ public class Environment {
         if(isRaining()){
             rainTicks--;
         } else if (getRainState()) {
-            MessageHelper.Info.rainStopped();
+            if (isPrintingEnabled) {
+                MessageHelper.Info.rainStopped();
+            }
             setRainState(false);
         } else if (shouldItRain()) {
             startRaining();
@@ -75,10 +78,14 @@ public class Environment {
         boolean result = currentHour >= dayTimeStart && currentHour <= dayTimeEnd;
 
         if(getNightState() && result){
-            MessageHelper.Info.nightEnded();
+            if(isPrintingEnabled) {
+                MessageHelper.Info.nightEnded();
+            }
             setNightState(false);
         } else if (!getNightState() && !result){
-            MessageHelper.Info.nightStarted();
+            if(isPrintingEnabled){
+                MessageHelper.Info.nightStarted();
+            }
             setNightState(true);
         }
 
@@ -89,7 +96,9 @@ public class Environment {
             rainTicks = random.nextInt((rainTicksMax - rainTicksMin) + 1) + rainTicksMin;
             setRainState(true);
 
-            MessageHelper.Info.rainStarted();
+            if(isPrintingEnabled){
+                MessageHelper.Info.rainStarted();
+            }
     }
 
 
@@ -187,4 +196,7 @@ public class Environment {
         return calendar;
     }
 
+    public void setPrintingEnabled(boolean activeRoom) {
+        isPrintingEnabled = activeRoom;
+    }
 }

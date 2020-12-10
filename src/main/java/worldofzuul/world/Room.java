@@ -29,6 +29,7 @@ public class Room {
     private String description; //TODO: Consider converting to StringProperty
     private int roomTileDim = 24;
     private int roomBGScale = 1;
+    private boolean isPrintingEnabled = false;
 
     public Room() {
         /*
@@ -182,6 +183,17 @@ public class Room {
 
     public void setRoomBGScale(int roomBGScale) {
         this.roomBGScale = roomBGScale;
+    }
+
+    @JsonIgnore
+    public boolean isPrintingEnabled() {
+        return isPrintingEnabled;
+    }
+    @JsonIgnore
+    public void setPrintingEnabled(boolean printingEnabled) {
+        this.isPrintingEnabled = printingEnabled;
+
+        environment.setPrintingEnabled(printingEnabled);
     }
 
     @JsonIgnore

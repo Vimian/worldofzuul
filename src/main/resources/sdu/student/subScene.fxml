@@ -32,7 +32,7 @@
 
             <TableColumn minWidth="0.0" prefWidth="75.0" text="Value">
                 <cellValueFactory>
-                    <PropertyValueFactory property="sellValue" />
+                    <PropertyValueFactory property="value" />
                 </cellValueFactory>
             </TableColumn>
         </columns>
