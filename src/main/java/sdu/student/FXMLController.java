@@ -190,9 +190,7 @@ public class FXMLController implements Initializable {
             if(room != null && room.getRoomGrid() != null){
                 Arrays.stream(room.getRoomGrid()).forEach(t -> {
                     Arrays.stream(t).forEach(gameObject -> {
-                        if (gameObject instanceof Field) {
                             gameObject.configureImages(loadedImages);
-                        }
                     });
                 });
 
@@ -314,7 +312,7 @@ public class FXMLController implements Initializable {
 
             gameTileDim = newValue.getRoomTileDim();
             backgroundScaling = newValue.getRoomBGScale();
-            oldValue.setPrintingEnabled(true);
+            newValue.setPrintingEnabled(true);
 
         });
 

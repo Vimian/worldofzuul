@@ -154,6 +154,8 @@ public class Field extends GameObject {
                 commands[0] = new Command(CommandWord.ADDITEM, null, item.harvest(plant));
                 removePlant();
 
+            } else if(plant.getState() == GrowthStage.DEAD){
+                removePlant();
             } else {
                 MessageHelper.Item.unripePlant();
             }

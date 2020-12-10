@@ -25,7 +25,7 @@ public class Environment {
 
     private final Calendar calendar = Calendar.getInstance();
     private final Random random = new Random();
-    private boolean isPrintingEnabled = true;
+    private boolean isPrintingEnabled = false;
 
     private int rainTicks = 0;
 
