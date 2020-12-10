@@ -59,7 +59,7 @@
                   <DropShadow />
                </effect>
             </Button>
-            <Label id="gameMenuHeader" alignment="CENTER" style="-fx-border-color: white; -fx-border-width: 5;" stylesheets="@styles.css" text="Farm Africa" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Label id="gameMenuHeader" alignment="CENTER" style="-fx-border-color: white; -fx-border-width: 5;" stylesheets="@styles.css" text="Farmworld" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font name="Calibri Italic" size="72.0" />
                </font>

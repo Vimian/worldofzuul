@@ -168,7 +168,7 @@ public class Field extends GameObject {
         plant.stateProperty().removeListener((observable, oldValue, newValue) -> {
             plantStateChanged(oldValue, newValue);
         });
-        plant.playAnimation(getImageView(), GrowthStage.SEED);
+        plant.playAnimation(getImageView(), null);
         this.plant = null;
 
     }
