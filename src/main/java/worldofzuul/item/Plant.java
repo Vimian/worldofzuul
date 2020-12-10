@@ -17,10 +17,12 @@ public class Plant extends Item {
     private final ObjectProperty<GrowthStage> state = new SimpleObjectProperty<>(SEED);
     private float seedQuality = 1;
     private float waterNeeded = 1000;
-    private float nutritionNeeded = 1000;
-    private int growthTime = 1000;
+    private float waterDepletionRate = 5;
     private float maxWater = waterNeeded;
+    private float nutritionNeeded = 1000;
+    private float nutritionDepletionRate = 5;
     private float maxNutrition = nutritionNeeded;
+    private int growthTime = 1000;
 
     
     private int maxTimeWithoutWater = 100;
@@ -47,9 +49,12 @@ public class Plant extends Item {
         this.maxWater = waterNeeded;
         this.maxNutrition = nutritionNeeded;
         this.maxTimeWithoutWater = plant.getMaxTimeWithoutWater();
+        setCapacity(plant.getCapacity());
         setValue(plant.getValue());
         setSellBackRate(plant.getSellBackRate());
         setDefaultImageFile(plant.getDefaultImageFile());
+        setNutritionDepletionRate(plant.getNutritionDepletionRate());
+        setWaterDepletionRate(plant.getWaterDepletionRate());
 
     }
 
@@ -67,7 +72,9 @@ public class Plant extends Item {
         if (readyForNextStage()) {
             advanceStage();
        }
-  
+
+        //System.out.println( getName() + " " + waterNeeded + " " + nutritionNeeded + " " + growTicks);
+
         growTicks++;
     }
 
@@ -225,6 +232,22 @@ public class Plant extends Item {
         }
     }
 
+    public float getWaterDepletionRate() {
+        return waterDepletionRate;
+    }
+
+    public void setWaterDepletionRate(float waterDepletionRate) {
+        this.waterDepletionRate = waterDepletionRate;
+    }
+
+    public float getNutritionDepletionRate() {
+        return nutritionDepletionRate;
+    }
+
+    public void setNutritionDepletionRate(float nutritionDepletionRate) {
+        this.nutritionDepletionRate = nutritionDepletionRate;
+    }
+
     public float getSeedQuality() {
         return seedQuality;
     }
@@ -297,6 +320,29 @@ public class Plant extends Item {
         Plant plant = (Plant) o;
         return Float.compare(plant.seedQuality, seedQuality) == 0 &&
                 Float.compare(plant.waterNeeded, waterNeeded) == 0 &&
+                Float.compare(plant.waterDepletionRate, waterDepletionRate) == 0 &&
+                Float.compare(plant.maxWater, maxWater) == 0 &&
+                Float.compare(plant.nutritionNeeded, nutritionNeeded) == 0 &&
+                Float.compare(plant.nutritionDepletionRate, nutritionDepletionRate) == 0 &&
+                Float.compare(plant.maxNutrition, maxNutrition) == 0 &&
+                growthTime == plant.growthTime &&
+                maxTimeWithoutWater == plant.maxTimeWithoutWater;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), seedQuality, waterNeeded, waterDepletionRate, maxWater, nutritionNeeded, nutritionDepletionRate, maxNutrition, growthTime, maxTimeWithoutWater);
+    }
+
+    /*
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Plant)) return false;
+        if (!super.equals(o)) return false;
+        Plant plant = (Plant) o;
+        return Float.compare(plant.seedQuality, seedQuality) == 0 &&
+                Float.compare(plant.waterNeeded, waterNeeded) == 0 &&
                 Float.compare(plant.nutritionNeeded, nutritionNeeded) == 0 &&
                 growthTime == plant.growthTime &&
                 Float.compare(plant.maxWater, maxWater) == 0 &&
@@ -308,4 +354,5 @@ public class Plant extends Item {
     public int hashCode() {
         return Objects.hash(super.hashCode(), seedQuality, waterNeeded, nutritionNeeded, growthTime, maxWater, maxNutrition, maxTimeWithoutWater);
     }
+    */
 }

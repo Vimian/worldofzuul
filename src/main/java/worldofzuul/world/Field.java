@@ -24,7 +24,7 @@ public class Field extends GameObject {
     private DoubleProperty pH = new SimpleDoubleProperty();
     private final FloatProperty water = new SimpleFloatProperty(20000);
     private final FloatProperty nutrition = new SimpleFloatProperty(10000);
-    private final FloatProperty depletionRate = new SimpleFloatProperty(5);
+    private final FloatProperty depletionRate = new SimpleFloatProperty(1);
     private FloatProperty maxWater = new SimpleFloatProperty(20000);
     private FloatProperty maxNutrition = new SimpleFloatProperty(20000);
 
@@ -59,7 +59,7 @@ public class Field extends GameObject {
     public Command[] update() {
         if (plant != null) {
             if(isPlantGrowing()){
-                plant.grow(depleteWater(), depleteNutrition());
+                plant.grow(depleteWater(plant.getWaterDepletionRate()), depleteNutrition(plant.getNutritionDepletionRate()));
                 //plant.grow(depleteWater(), depleteNutrition(), getPH());
             } if(plant.isRipe() && !ripePlantSeen){
                 MessageHelper.Info.plantBecameRipe(plant.getName());
@@ -173,19 +173,19 @@ public class Field extends GameObject {
 
     private boolean isPlantGrowing() { return plant != null && !plant.isRipe(); }
 
-    private float depleteWater() {
-        if (getWater() > getDepletionRate()) {
-            setWater(getWater() - getDepletionRate());
-            return getDepletionRate();
+    private float depleteWater(float waterDepletionRate) {
+        if (getWater() > getDepletionRate() * waterDepletionRate) {
+            setWater(getWater() - getDepletionRate() * waterDepletionRate);
+            return getDepletionRate() * waterDepletionRate;
         } else {
             return 0;
         }
     }
 
-    private float depleteNutrition() {
-        if (getNutrition() > getDepletionRate()) {
-            setNutrition(getNutrition() - getDepletionRate());
-            return getDepletionRate();
+    private float depleteNutrition(float nutritionDepletionRate) {
+        if (getNutrition() > getDepletionRate() * nutritionDepletionRate) {
+            setNutrition(getNutrition() - getDepletionRate() * nutritionDepletionRate);
+            return getDepletionRate() * nutritionDepletionRate;
         } else {
             return 0;
         }
