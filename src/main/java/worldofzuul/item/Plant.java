@@ -68,8 +68,6 @@ public class Plant extends Item {
 
     }
 
-    private int dbgTickCounter = 0;
-
     public void grow(float water, float nutrition) {
         
         if(water == 0){
@@ -86,13 +84,7 @@ public class Plant extends Item {
        }
 
 
-        if(dbgTickCounter >= 60){
-            System.out.println( getName() + " " + waterNeeded + " " + nutritionNeeded + " " + growTicks);
-            dbgTickCounter = 0;
-        }
 
-
-        dbgTickCounter++;
         growTicks++;
     }
 
