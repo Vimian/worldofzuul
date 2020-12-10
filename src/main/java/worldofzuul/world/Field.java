@@ -26,8 +26,8 @@ public class Field extends GameObject {
     private final FloatProperty water = new SimpleFloatProperty(20000);
     private final FloatProperty nutrition = new SimpleFloatProperty(10000);
     private final FloatProperty depletionRate = new SimpleFloatProperty(1);
-    private FloatProperty maxWater = new SimpleFloatProperty(20000);
-    private FloatProperty maxNutrition = new SimpleFloatProperty(20000);
+    private final FloatProperty maxWater = new SimpleFloatProperty(20000);
+    private final FloatProperty maxNutrition = new SimpleFloatProperty(20000);
 
     private boolean ripePlantSeen = false;
 
@@ -60,7 +60,16 @@ public class Field extends GameObject {
     public Command[] update() {
         if (plant != null) {
             if(isPlantGrowing()){
-                plant.grow(depleteWater(plant.getWaterDepletionRate()), depleteNutrition(plant.getNutritionDepletionRate()));
+                float waterToAdd = 0;
+                float nutritionToAdd = 0;
+
+                if(plant.getWaterNeeded() > 0){
+                    waterToAdd = depleteWater(plant.getWaterDepletionRate());
+                }
+                if(plant.getNutritionNeeded() > 0){
+                    nutritionToAdd = depleteNutrition(plant.getNutritionDepletionRate());
+                }
+                plant.grow(waterToAdd, nutritionToAdd);
                 //plant.grow(depleteWater(), depleteNutrition(), getPH());
             } if(plant.isRipe() && !ripePlantSeen){
                 MessageHelper.Info.plantBecameRipe(plant.getName());

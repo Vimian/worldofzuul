@@ -82,7 +82,7 @@ public class FXMLController implements Initializable {
     private static final int nightChangeFadeDelay = 6000;
     private static final int textDisplayDeletionDelay = 8000;
     private static final int textDisplayFadeDelay = 1500;
-
+    private static final int playerInteractDistance = 1;
 
 
     public StackPane gameContainerPane;
@@ -502,7 +502,7 @@ public class FXMLController implements Initializable {
             return;
         }
 
-        if (vectorDifference(model.getPlayer().getPos(), selectedGamePosition) <= 1) {
+        if (vectorDifference(model.getPlayer().getPos(), selectedGamePosition) <= playerInteractDistance) {
             switch (mouseEvent.getButton()) {
                 case PRIMARY -> {
                     model.interact(selectedGamePosition, false);

@@ -40,16 +40,20 @@ public class Plant extends Item {
     public Plant(String name, Double value, Double sellbackRate) {
         super(name, value, sellbackRate);
     }
+
+
+
+
     public Plant(Plant plant){
         super(plant.getName());
 
-        this.seedQuality = plant.getSeedQuality();
-        this.waterNeeded = plant.getWaterNeeded();
-        this.nutritionNeeded = plant.getNutritionNeeded();
-        this.growthTime = plant.getGrowthTime();
+        setSeedQuality(plant.getSeedQuality());
+        setWaterNeeded(plant.getWaterNeeded());
+        setNutritionNeeded(plant.getNutritionNeeded());
+        setGrowthTime(plant.getGrowthTime());
         this.maxWater = waterNeeded;
         this.maxNutrition = nutritionNeeded;
-        this.maxTimeWithoutWater = plant.getMaxTimeWithoutWater();
+        setMaxTimeWithoutWater(plant.getMaxTimeWithoutWater());
         setCapacity(plant.getCapacity());
         setValue(plant.getValue());
         setSellBackRate(plant.getSellBackRate());
@@ -60,8 +64,11 @@ public class Plant extends Item {
         setAnimationStringValues(plant.getAnimationStringValues());
         setImageAnimations(plant.getImageAnimations());
         setAnimationCycleLengthMillis(plant.getAnimationCycleLengthMillis());
+        setRemaining(plant.getRemaining());
 
     }
+
+    private int dbgTickCounter = 0;
 
     public void grow(float water, float nutrition) {
         
@@ -78,8 +85,14 @@ public class Plant extends Item {
             advanceStage();
        }
 
-        //System.out.println( getName() + " " + waterNeeded + " " + nutritionNeeded + " " + growTicks);
 
+        if(dbgTickCounter >= 60){
+            System.out.println( getName() + " " + waterNeeded + " " + nutritionNeeded + " " + growTicks);
+            dbgTickCounter = 0;
+        }
+
+
+        dbgTickCounter++;
         growTicks++;
     }
 
@@ -175,6 +188,10 @@ public class Plant extends Item {
     }
 
     private void witherPlant() {
+        if(waterNeeded <= 0){
+            return;
+        }
+
         ticksNotWatered++;
         
         if(ticksNotWatered >= maxTimeWithoutWater){
@@ -218,9 +235,9 @@ public class Plant extends Item {
     }
 
     private boolean requiredPropertiesReady(int i) {
-        return (maxWater / 4) * i < maxWater - waterNeeded &&
-                (maxNutrition / 4) * i < maxWater - nutritionNeeded &&
-                (growthTime / 4) * i < growTicks;
+        return (maxWater / 4) * i <= maxWater - waterNeeded &&
+                (maxNutrition / 4) * i <= maxNutrition - nutritionNeeded &&
+                (growthTime / 4) * i <= growTicks;
     }
 
     private void advanceStage() {

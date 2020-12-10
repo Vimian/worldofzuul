@@ -74,6 +74,10 @@ public class Game {
     public void interact(Vector gameObjectPos, boolean useItem) {
         Command[] commands;
         if (useItem) {
+            if(player.getInventory().getSelectedItem() == null){
+                interact(gameObjectPos, false);
+            }
+
             commands = getRoom()
                     .getGridGameObject(gameObjectPos)
                     .interact(player.getInventory().getSelectedItem());
