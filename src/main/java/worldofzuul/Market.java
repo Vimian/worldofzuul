@@ -61,10 +61,10 @@ public class Market {
    Irrigator irrigator1 = new Irrigator("Bucket", 10,10, 320.0, 0.0);
    Irrigator irrigator2 = new Irrigator("Watering Can",10,50, 300.0, 0.0 );
    Irrigator irrigator3 = new Irrigator("Hose",100, 9999, 400.0, 0.0);
-   pHNeutralizers pHNeutralizers1 = new pHNeutralizers("AgLimestone", 10.0,0.0);
-   pHNeutralizers pHNeutralizers2 = new pHNeutralizers("HydratedLimestone",10.0,0.0);
-   pHNeutralizers pHNeutralizers3 = new pHNeutralizers("Sulfur",10.0,0.0);
-   pHNeutralizers pHNeutralizers4 = new pHNeutralizers("Aluminium sulfate",10.0,0.0);
+   pHNeutralizers pHNeutralizers1 = new pHNeutralizers("AgLimestone", 10.0,0.0,0.5);
+   pHNeutralizers pHNeutralizers2 = new pHNeutralizers("HydratedLimestone",10.0,0.0, 0.5);
+   pHNeutralizers pHNeutralizers3 = new pHNeutralizers("Sulfur",10.0,0.0,0.5);
+   pHNeutralizers pHNeutralizers4 = new pHNeutralizers("Aluminium sulfate",10.0,0.0, 0.5);
    Plant plant1 = new Plant("Corn", 2.0, 0.30);
    Plant plant2 = new Plant("Cashew", 2.0, 0.40);
    Plant plant3 = new Plant("Rice", 4.0, 0.20);
