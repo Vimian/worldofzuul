@@ -170,7 +170,7 @@ public class Field extends GameObject {
         if(item.getpHChange() > 0){
             if(pH.get() + item.getpHChange() <= maxpH){
                 setPH(pH.get() + item.getpHChange());
-                MessageHelper.Item.increasedpH(pH.getName());
+                MessageHelper.Item.increasedpH(String.valueOf(getPH()));
             }
             else {
                 setPH(maxpH);
@@ -179,7 +179,7 @@ public class Field extends GameObject {
         } else if (item.getpHChange() < 0){
             if(pH.get() + item.getpHChange() >= minpH){
                 setPH(getPH() + item.getpHChange());
-                MessageHelper.Item.decreasedpH(pH.getName());
+                MessageHelper.Item.decreasedpH(String.valueOf(getPH()));
             } else {
                 setPH(minpH);
             }
