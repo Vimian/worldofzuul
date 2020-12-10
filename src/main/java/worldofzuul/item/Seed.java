@@ -105,7 +105,7 @@ public class Seed extends Item {
     case MANGO:
         if (player.getInventory().getItems().contains(plant)) {
             player.getInventory().removeItem(plant);
-            setRemaining(getRemaining() + CashewSeedCount);
+            setRemaining(getRemaining() + MangoSeedCount);
             Item Seed = new Seed("MangoSeed", getRemaining(), 2.0, 0.50);
             player.getInventory().addItem(Seed);
         } else {

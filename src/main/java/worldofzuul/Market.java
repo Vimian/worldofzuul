@@ -25,28 +25,6 @@ public class Market {
     }
 
    public Market(HashMap<Item, Double> stock){
-       this.stock.put(fertilizer, 320.0);
-       this.stock.put(harvester1, 0.0);
-       this.stock.put(harvester2,230.0);
-       this.stock.put(harvester3, 2000.0);
-       this.stock.put(irrigator1, 320.0);
-       this.stock.put(irrigator2, 300.0);
-       this.stock.put(irrigator3, 300.0);
-       this.stock.put(pHNeutralizers1,10.0);
-       this.stock.put(pHNeutralizers2,10.0);
-       this.stock.put(pHNeutralizers3,10.0);
-       this.stock.put(pHNeutralizers4,10.0);
-       this.stock.put(plant1, 2.0);
-       this.stock.put(plant2, 2.0);
-       this.stock.put(plant3, 4.0);
-       this.stock.put(plant4, 10.0);
-       this.stock.put(plant5, 20.0);
-       this.stock.put(seed1, 13.0);
-       this.stock.put(seed2, 32.0);
-       this.stock.put(seed3, 42.0);
-       this.stock.put(seed4, 93.0);
-       this.stock.put(seed5, 10.0);
-       this.stock.clear();
 
        this.stock.addAll(Arrays.asList(
                 fertilizer,
@@ -56,6 +34,10 @@ public class Market {
                 irrigator1,
                 irrigator2,
                 irrigator3,
+                pHNeutralizers1,
+                pHNeutralizers2,
+                pHNeutralizers3,
+                pHNeutralizers4,
                 plant1,
                 plant2,
                 plant3,

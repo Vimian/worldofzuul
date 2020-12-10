@@ -17,6 +17,7 @@ import java.util.Objects;
         @JsonSubTypes.Type(value=Irrigator.class, name="Irrigator"),
         @JsonSubTypes.Type(value=Money.class, name="Money"),
         @JsonSubTypes.Type(value=Plant.class, name="Plant"),
+        @JsonSubTypes.Type(value=pHNeutralizers.class, name="pHNeutralizers")
 })
 public abstract class Item extends Sprite {
     private final StringProperty name = new SimpleStringProperty();
