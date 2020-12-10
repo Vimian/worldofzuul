@@ -36,22 +36,15 @@ public class Quest {
     public Command[] turnIn(Item item){
         List<Command> commands = new LinkedList<>();
 
-
-
-
-
-
-
-
         if(turnInClass.isInstance(item)){
-
 
             if(item.getRemaining() >= turnInQuantity){
                 item.deplete(turnInQuantity);
-                System.out.println("You turned in " +turnInQuantity + " " + item.getName() + "s.");
+                //System.out.println("You turned in " +turnInQuantity + " " + item.getName() + "s.");
+                //BUG - DOUBLE COMPLETEQUEST MESSAGE
                 commands.addAll(completeQuest());
             }
-            else if(item.getRemaining() < 0) {
+            else if(item.getRemaining() > 0) {
                 float amountTurnedIn = item.getRemaining();
                 System.out.println("You turned in " + amountTurnedIn + " " + item.getName() + "s.");
                 item.deplete(amountTurnedIn);
