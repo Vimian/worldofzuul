@@ -164,7 +164,9 @@ public class Game {
     }
 
     public void update() {
+        System.out.println("spam2");
         currentRoom.update().forEach(this::processCommandInternal);
+
     }
 
 

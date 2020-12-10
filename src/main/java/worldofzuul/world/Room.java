@@ -114,6 +114,7 @@ public class Room {
 
         environment.update();
 
+
         for (GameObject[] gameObjects : roomGrid) {
             for (GameObject gameObject : gameObjects) {
                 if (gameObject != null) {
@@ -122,7 +123,6 @@ public class Room {
                 }
             }
         }
-
         return commands;
     }
 

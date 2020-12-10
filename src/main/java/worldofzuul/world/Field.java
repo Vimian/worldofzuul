@@ -13,11 +13,14 @@ public class Field extends GameObject {
     private Fertilizer fertilizer;
     private Plant plant;
     private ArrayList<Plant> plants;
+    private float pH =6;
+
 
     private final FloatProperty water = new SimpleFloatProperty(10);
     private final FloatProperty nutrition = new SimpleFloatProperty(10000);
-    private final FloatProperty depletionRate = new SimpleFloatProperty(5);
+    private final FloatProperty depletionRate = new SimpleFloatProperty(5); //5 is default
     private boolean ripePlantSeen = false;
+
 
     public Field() {
     }
@@ -151,8 +154,14 @@ public class Field extends GameObject {
         }
     }
 
-
-    public void shineLight() {
+    public void growTimeModify(double tickAmount, boolean decreaseGrowTime) {
+        if(plant.getGrowthTime() != 0 && !plant.isRipe() ){
+            if(decreaseGrowTime){
+                plant.setGrowthTime(plant.getGrowthTime()-tickAmount);
+            } else {
+                plant.setGrowthTime(plant.getGrowthTime()+tickAmount);
+            }
+        }
     }
 
 
@@ -184,11 +193,31 @@ public class Field extends GameObject {
         return depletionRate.get();
     }
 
-    public void setDepletionRate(float depletionRate) {
-        this.depletionRate.set(depletionRate);
+    public void setDepletionRate(double depletionRate) {
+        this.depletionRate.set((float)depletionRate);
     }
 
     public FloatProperty depletionRateProperty() {
         return depletionRate;
     }
+
+    public boolean hasPlant(){
+        if(this.plant != null){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Plant getPlant(){
+        return this.plant;
+    }
+
+    public float getpH(){
+        return pH;
+    }
+    public void setpH(float ph){this.pH=ph;}
+
+
+
 }

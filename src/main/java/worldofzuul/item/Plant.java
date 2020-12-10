@@ -7,9 +7,12 @@ public class Plant extends Item {
     private float seedQuality = 1;
     private float waterNeeded = 1000;
     private float nutritionNeeded = 1000;
-    private int growthTime = 1000;
+    private double growthTime = 6000*5;
     private float maxWater = waterNeeded;
     private float maxNutrition = nutritionNeeded;
+    private double tempPref = 25;
+    private int pHPref = 6;
+
 
     
     private int timeTillDeath = 100;
@@ -95,12 +98,15 @@ public class Plant extends Item {
         switch (state) {
             case SEED -> {
                 state = SPROUT;
+                System.out.println("SPROUT");
             }
             case SPROUT -> {
                 state = ADULT;
+                System.out.println("ADULT");
             }
             case ADULT -> {
                 state = RIPE;
+                System.out.println("RIPE");
             }
         }
     }
@@ -129,11 +135,11 @@ public class Plant extends Item {
         this.nutritionNeeded = nutritionNeeded;
     }
 
-    public int getGrowthTime() {
+    public double getGrowthTime() {
         return growthTime;
     }
 
-    public void setGrowthTime(int growthTime) {
+    public void setGrowthTime(double growthTime) {
         this.growthTime = growthTime;
     }
 
@@ -144,4 +150,9 @@ public class Plant extends Item {
     public void setGrowTicks(int growTicks) {
         this.growTicks = growTicks;
     }
+
+    public int getPhPref(){return this.pHPref;}
+
+
 }
+
