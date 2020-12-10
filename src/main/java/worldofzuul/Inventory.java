@@ -77,7 +77,7 @@ public class Inventory {
                     var newItemVal = newVal - item1.getCapacity();
 
                     if(newItemVal <= 0){
-                        item.setRemaining(newVal);
+                        item1.setRemaining(newVal);
                         addItem.set(false);
                     } else {
                         item.setRemaining(newVal - newItemVal);
