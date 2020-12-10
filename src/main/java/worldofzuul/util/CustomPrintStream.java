@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CustomPrintStream extends PrintStream {
-    private ListProperty<String> printList = new SimpleListProperty<>(
+    private final ListProperty<String> printList = new SimpleListProperty<>(
             FXCollections.observableArrayList());
 
     public CustomPrintStream(PrintStream org) {
