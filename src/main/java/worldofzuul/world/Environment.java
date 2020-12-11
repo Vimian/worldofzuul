@@ -52,9 +52,6 @@ public class Environment {
             if (getRainState()) {
                 ((Field) gameObject).addWater(rainWaterAmount);
             }
-            if (dayTime()) {
-                ((Field) gameObject).shineLight();
-            }
         }
     }
 
