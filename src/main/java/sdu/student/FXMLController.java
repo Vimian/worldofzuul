@@ -416,6 +416,7 @@ public class FXMLController implements Initializable {
         DropShadow effect = new DropShadow(0.67, Color.WHITE);
         effect.setInput(new Glow(0.65));
         newLabel.setEffect(effect);
+        newLabel.setWrapText(true);
 
 
         textDisplayBox.getChildren().add(newLabel);
