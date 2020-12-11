@@ -15,12 +15,14 @@ public class NPC extends GameObject {
 
     @Override
     public Command[] interact() {
-        String dialogText = dialog.getFirst();
-        System.out.println(dialogText);
 
-        dialog.remove(dialogText);
-        dialog.add(dialogText);
+        if(dialog.size() > 0){
+            String dialogText = dialog.getFirst();
+            System.out.println(dialogText);
 
+            dialog.remove(dialogText);
+            dialog.add(dialogText);
+        }
 
         return null;
     }
