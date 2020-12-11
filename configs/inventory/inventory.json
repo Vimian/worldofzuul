@@ -1,0 +1,378 @@
+{
+  "defaultImageFile": null,
+  "animationCycleLengthMillis": 1000,
+  "animationStringKeys": [],
+  "animationStringValues": [],
+  "pos": {
+    "x": 22,
+    "y": 23
+  },
+  "inventory": {
+    "items": [
+      {
+        "Fertilizer": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": "Manure",
+          "value": 25.0,
+          "sellBackRate": 0.0,
+          "remaining": 100000.0,
+          "capacity": 100000.0,
+          "consumptionRate": 1000.0
+        }
+      },
+      {
+        "Harvester": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": "Sickle",
+          "value": 0.0,
+          "sellBackRate": 0.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 0.0
+        }
+      },
+      {
+        "Irrigator": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": "Hose",
+          "value": 12.0,
+          "sellBackRate": 0.8,
+          "remaining": 20000.0,
+          "capacity": 20000.0,
+          "consumptionRate": 100.0
+        }
+      },
+      {
+        "Seed": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": "Corn seed seed seed seed",
+          "value": 13.0,
+          "sellBackRate": 0.98,
+          "remaining": 5.0,
+          "capacity": 5.0,
+          "consumptionRate": 1.0,
+          "maxSeeds": 0,
+          "minSeeds": 0,
+          "plant": {
+            "Plant": {
+              "defaultImageFile": null,
+              "animationCycleLengthMillis": 5,
+              "animationStringKeys": [
+                "default",
+                "SEED",
+                "SPROUT",
+                "ADULT",
+                "RIPE",
+                "DEAD"
+              ],
+              "animationStringValues": [
+                "sprites/misc/null.png",
+                "sprites/crops/tiles/tile034.png",
+                "sprites/crops/tiles/tile368.png",
+                "sprites/crops/tiles/tile433.png",
+                "sprites/crops/tiles/tile636.png",
+                "sprites/crops/tiles/tile294.png"
+              ],
+              "name": "Corn plant",
+              "value": 40.0,
+              "sellBackRate": 0.0,
+              "remaining": 3.0,
+              "capacity": 200.0,
+              "consumptionRate": 1.0,
+              "seedQuality": 1.0,
+              "waterNeeded": 1000.0,
+              "waterDepletionRate": 5.0,
+              "nutritionNeeded": 1000.0,
+              "nutritionDepletionRate": 5.0,
+              "growthTime": 1000,
+              "maxTimeWithoutWater": 100
+            }
+          }
+        }
+      },
+      {
+        "pHNeutralizers": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": "AgLimestone",
+          "value": 100.0,
+          "sellBackRate": 0.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 1.0,
+          "pHChange": -0.5
+        }
+      },
+      {
+        "pHNeutralizers": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": null,
+          "value": 0.0,
+          "sellBackRate": 1.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 0.0,
+          "pHChange": null
+        }
+      },
+      {
+        "pHNeutralizers": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": null,
+          "value": 0.0,
+          "sellBackRate": 1.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 0.0,
+          "pHChange": null
+        }
+      },
+      {
+        "pHNeutralizers": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": null,
+          "value": 0.0,
+          "sellBackRate": 1.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 0.0,
+          "pHChange": null
+        }
+      },
+      {
+        "pHNeutralizers": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": null,
+          "value": 0.0,
+          "sellBackRate": 1.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 0.0,
+          "pHChange": null
+        }
+      },
+      {
+        "pHNeutralizers": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": null,
+          "value": 0.0,
+          "sellBackRate": 1.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 0.0,
+          "pHChange": null
+        }
+      },
+      {
+        "pHNeutralizers": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": null,
+          "value": 0.0,
+          "sellBackRate": 1.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 0.0,
+          "pHChange": null
+        }
+      },
+      {
+        "pHNeutralizers": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": null,
+          "value": 0.0,
+          "sellBackRate": 1.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 0.0,
+          "pHChange": null
+        }
+      },
+      {
+        "pHNeutralizers": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": null,
+          "value": 0.0,
+          "sellBackRate": 1.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 0.0,
+          "pHChange": null
+        }
+      },
+      {
+        "pHNeutralizers": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": null,
+          "value": 0.0,
+          "sellBackRate": 1.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 0.0,
+          "pHChange": null
+        }
+      },
+      {
+        "pHNeutralizers": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": null,
+          "value": 0.0,
+          "sellBackRate": 1.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 0.0,
+          "pHChange": null
+        }
+      },
+      {
+        "pHNeutralizers": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": null,
+          "value": 0.0,
+          "sellBackRate": 1.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 0.0,
+          "pHChange": null
+        }
+      },
+      {
+        "pHNeutralizers": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": null,
+          "value": 0.0,
+          "sellBackRate": 1.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 0.0,
+          "pHChange": null
+        }
+      },
+      {
+        "pHNeutralizers": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": null,
+          "value": 0.0,
+          "sellBackRate": 1.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 0.0,
+          "pHChange": null
+        }
+      },
+      {
+        "pHNeutralizers": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": null,
+          "value": 0.0,
+          "sellBackRate": 1.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 0.0,
+          "pHChange": null
+        }
+      },
+      {
+        "pHNeutralizers": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": null,
+          "value": 0.0,
+          "sellBackRate": 1.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 0.0,
+          "pHChange": null
+        }
+      },
+      {
+        "pHNeutralizers": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": null,
+          "value": 0.0,
+          "sellBackRate": 1.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 0.0,
+          "pHChange": null
+        }
+      },
+      {
+        "pHNeutralizers": {
+          "defaultImageFile": null,
+          "animationCycleLengthMillis": 1000,
+          "animationStringKeys": [],
+          "animationStringValues": [],
+          "name": null,
+          "value": 0.0,
+          "sellBackRate": 1.0,
+          "remaining": 1.0,
+          "capacity": 1.0,
+          "consumptionRate": 0.0,
+          "pHChange": null
+        }
+      }
+    ]
+  },
+  "balance": 900.0
+}

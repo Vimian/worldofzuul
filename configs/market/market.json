@@ -1,0 +1,417 @@
+{
+  "stock": [
+    {
+      "Fertilizer": {
+        "defaultImageFile": null,
+        "animationCycleLengthMillis": 1000,
+        "animationStringKeys": [],
+        "animationStringValues": [],
+        "name": "Fertilizer",
+        "value": 320.0,
+        "sellBackRate": 0.975,
+        "remaining": 0.0,
+        "capacity": 0.0,
+        "consumptionRate": 1.0
+      }
+    },
+    {
+      "Harvester": {
+        "defaultImageFile": null,
+        "animationCycleLengthMillis": 1000,
+        "animationStringKeys": [],
+        "animationStringValues": [],
+        "name": "Hands",
+        "value": 0.0,
+        "sellBackRate": 0.0,
+        "remaining": 1.0,
+        "capacity": 1.0,
+        "consumptionRate": 0.0
+      }
+    },
+    {
+      "Harvester": {
+        "defaultImageFile": null,
+        "animationCycleLengthMillis": 1000,
+        "animationStringKeys": [],
+        "animationStringValues": [],
+        "name": "Sickle",
+        "value": 230.0,
+        "sellBackRate": 0.0,
+        "remaining": 1.0,
+        "capacity": 1.0,
+        "consumptionRate": 0.0
+      }
+    },
+    {
+      "Harvester": {
+        "defaultImageFile": null,
+        "animationCycleLengthMillis": 1000,
+        "animationStringKeys": [],
+        "animationStringValues": [],
+        "name": "Scythe",
+        "value": 2000.0,
+        "sellBackRate": 0.0,
+        "remaining": 1.0,
+        "capacity": 1.0,
+        "consumptionRate": 0.0
+      }
+    },
+    {
+      "Irrigator": {
+        "defaultImageFile": null,
+        "animationCycleLengthMillis": 1000,
+        "animationStringKeys": [],
+        "animationStringValues": [],
+        "name": "Bucket",
+        "value": 320.0,
+        "sellBackRate": 0.0,
+        "remaining": 0.0,
+        "capacity": 0.0,
+        "consumptionRate": 1.0
+      }
+    },
+    {
+      "Irrigator": {
+        "defaultImageFile": null,
+        "animationCycleLengthMillis": 1000,
+        "animationStringKeys": [],
+        "animationStringValues": [],
+        "name": "Watering Can",
+        "value": 300.0,
+        "sellBackRate": 0.0,
+        "remaining": 0.0,
+        "capacity": 0.0,
+        "consumptionRate": 1.0
+      }
+    },
+    {
+      "Irrigator": {
+        "defaultImageFile": null,
+        "animationCycleLengthMillis": 1000,
+        "animationStringKeys": [],
+        "animationStringValues": [],
+        "name": "Hose",
+        "value": 400.0,
+        "sellBackRate": 0.0,
+        "remaining": 0.0,
+        "capacity": 0.0,
+        "consumptionRate": 1.0
+      }
+    },
+    {
+      "Seed": {
+        "defaultImageFile": null,
+        "animationCycleLengthMillis": 1000,
+        "animationStringKeys": [],
+        "animationStringValues": [],
+        "name": "Rice seed seed seed seed",
+        "value": 60.0,
+        "sellBackRate": 1.0,
+        "remaining": 1.0,
+        "capacity": 200.0,
+        "consumptionRate": 1.0,
+        "maxSeeds": 0,
+        "minSeeds": 0,
+        "plant": {
+          "Plant": {
+            "defaultImageFile": null,
+            "animationCycleLengthMillis": 5,
+            "animationStringKeys": [
+              "default",
+              "SEED",
+              "SPROUT",
+              "ADULT",
+              "RIPE",
+              "DEAD"
+            ],
+            "animationStringValues": [
+              "sprites/misc/null.png",
+              "sprites/crops/tiles/tile034.png",
+              "sprites/crops/tiles/tile368.png",
+              "sprites/crops/tiles/tile433.png",
+              "sprites/crops/tiles/tile310.png",
+              "sprites/crops/tiles/tile294.png"
+            ],
+            "name": "Rice plant",
+            "value": 30.0,
+            "sellBackRate": 1.0,
+            "remaining": 5.0,
+            "capacity": 200.0,
+            "consumptionRate": 1.0,
+            "seedQuality": 1.0,
+            "waterNeeded": 5000.0,
+            "waterDepletionRate": 2.0,
+            "nutritionNeeded": 700.0,
+            "nutritionDepletionRate": 5.0,
+            "growthTime": 3500,
+            "maxTimeWithoutWater": 2000
+          }
+        }
+      }
+    },
+    {
+      "Seed": {
+        "defaultImageFile": null,
+        "animationCycleLengthMillis": 1000,
+        "animationStringKeys": [],
+        "animationStringValues": [],
+        "name": "Cowpea seed seed seed seed",
+        "value": 35.0,
+        "sellBackRate": 0.5,
+        "remaining": 1.0,
+        "capacity": 200.0,
+        "consumptionRate": 1.0,
+        "maxSeeds": 0,
+        "minSeeds": 0,
+        "plant": {
+          "Plant": {
+            "defaultImageFile": null,
+            "animationCycleLengthMillis": 5,
+            "animationStringKeys": [
+              "default",
+              "SEED",
+              "SPROUT",
+              "ADULT",
+              "RIPE",
+              "DEAD"
+            ],
+            "animationStringValues": [
+              "sprites/misc/null.png",
+              "sprites/crops/tiles/tile034.png",
+              "sprites/crops/tiles/tile231.png",
+              "sprites/crops/tiles/tile240.png",
+              "sprites/crops/tiles/tile239.png",
+              "sprites/crops/tiles/tile294.png"
+            ],
+            "name": "Cowpea plant",
+            "value": 45.0,
+            "sellBackRate": 1.0,
+            "remaining": 10.0,
+            "capacity": 200.0,
+            "consumptionRate": 1.0,
+            "seedQuality": 1.0,
+            "waterNeeded": 1000.0,
+            "waterDepletionRate": 5.0,
+            "nutritionNeeded": 1000.0,
+            "nutritionDepletionRate": 5.0,
+            "growthTime": 1000,
+            "maxTimeWithoutWater": 2000
+          }
+        }
+      }
+    },
+    {
+      "Seed": {
+        "defaultImageFile": null,
+        "animationCycleLengthMillis": 1000,
+        "animationStringKeys": [],
+        "animationStringValues": [],
+        "name": "Cashew seed seed seed seed",
+        "value": 250.0,
+        "sellBackRate": 1.0,
+        "remaining": 1.0,
+        "capacity": 200.0,
+        "consumptionRate": 1.0,
+        "maxSeeds": 0,
+        "minSeeds": 0,
+        "plant": {
+          "Plant": {
+            "defaultImageFile": null,
+            "animationCycleLengthMillis": 5,
+            "animationStringKeys": [
+              "default",
+              "SEED",
+              "SPROUT",
+              "ADULT",
+              "RIPE",
+              "DEAD"
+            ],
+            "animationStringValues": [
+              "sprites/misc/null.png",
+              "sprites/crops/tiles/tile034.png",
+              "sprites/crops/tiles/tile051.png",
+              "sprites/crops/tiles/tile433.png",
+              "sprites/crops/tiles/tile330.png",
+              "sprites/crops/tiles/tile294.png"
+            ],
+            "name": "Cashew plant",
+            "value": 60.0,
+            "sellBackRate": 1.0,
+            "remaining": 10.0,
+            "capacity": 200.0,
+            "consumptionRate": 1.0,
+            "seedQuality": 1.0,
+            "waterNeeded": 1000.0,
+            "waterDepletionRate": 5.0,
+            "nutritionNeeded": 500.0,
+            "nutritionDepletionRate": 3.0,
+            "growthTime": 400,
+            "maxTimeWithoutWater": 2000
+          }
+        }
+      }
+    },
+    {
+      "Seed": {
+        "defaultImageFile": null,
+        "animationCycleLengthMillis": 1000,
+        "animationStringKeys": [],
+        "animationStringValues": [],
+        "name": "Maize seed seed seed seed",
+        "value": 150.0,
+        "sellBackRate": 0.5,
+        "remaining": 1.0,
+        "capacity": 200.0,
+        "consumptionRate": 1.0,
+        "maxSeeds": 0,
+        "minSeeds": 0,
+        "plant": {
+          "Plant": {
+            "defaultImageFile": null,
+            "animationCycleLengthMillis": 5,
+            "animationStringKeys": [
+              "default",
+              "SEED",
+              "SPROUT",
+              "ADULT",
+              "RIPE",
+              "DEAD"
+            ],
+            "animationStringValues": [
+              "sprites/misc/null.png",
+              "sprites/crops/tiles/tile034.png",
+              "sprites/crops/tiles/tile368.png",
+              "sprites/crops/tiles/tile442.png",
+              "sprites/crops/tiles/tile255.png",
+              "sprites/crops/tiles/tile294.png"
+            ],
+            "name": "Maize plant",
+            "value": 60.0,
+            "sellBackRate": 1.0,
+            "remaining": 6.0,
+            "capacity": 200.0,
+            "consumptionRate": 1.0,
+            "seedQuality": 1.0,
+            "waterNeeded": 700.0,
+            "waterDepletionRate": 5.0,
+            "nutritionNeeded": 5000.0,
+            "nutritionDepletionRate": 6.0,
+            "growthTime": 1500,
+            "maxTimeWithoutWater": 2000
+          }
+        }
+      }
+    },
+    {
+      "Seed": {
+        "defaultImageFile": null,
+        "animationCycleLengthMillis": 1000,
+        "animationStringKeys": [],
+        "animationStringValues": [],
+        "name": "Mango seed seed seed seed",
+        "value": 600.0,
+        "sellBackRate": 0.5,
+        "remaining": 1.0,
+        "capacity": 200.0,
+        "consumptionRate": 1.0,
+        "maxSeeds": 0,
+        "minSeeds": 0,
+        "plant": {
+          "Plant": {
+            "defaultImageFile": null,
+            "animationCycleLengthMillis": 5,
+            "animationStringKeys": [
+              "default",
+              "SEED",
+              "SPROUT",
+              "ADULT",
+              "RIPE",
+              "DEAD"
+            ],
+            "animationStringValues": [
+              "sprites/misc/null.png",
+              "sprites/crops/tiles/tile034.png",
+              "sprites/crops/tiles/tile368.png",
+              "sprites/crops/tiles/tile180.png",
+              "sprites/crops/tiles/tile244.png",
+              "sprites/crops/tiles/tile294.png"
+            ],
+            "name": "Mango plant",
+            "value": 80.0,
+            "sellBackRate": 1.0,
+            "remaining": 20.0,
+            "capacity": 200.0,
+            "consumptionRate": 1.0,
+            "seedQuality": 1.0,
+            "waterNeeded": 600.0,
+            "waterDepletionRate": 5.0,
+            "nutritionNeeded": 10000.0,
+            "nutritionDepletionRate": 3.0,
+            "growthTime": 3000,
+            "maxTimeWithoutWater": 2000
+          }
+        }
+      }
+    },
+    {
+      "pHNeutralizers": {
+        "defaultImageFile": null,
+        "animationCycleLengthMillis": 1000,
+        "animationStringKeys": [],
+        "animationStringValues": [],
+        "name": "AgLimestone",
+        "value": 100.0,
+        "sellBackRate": 0.0,
+        "remaining": 1.0,
+        "capacity": 1.0,
+        "consumptionRate": 1.0,
+        "pHChange": -0.5
+      }
+    },
+    {
+      "pHNeutralizers": {
+        "defaultImageFile": null,
+        "animationCycleLengthMillis": 1000,
+        "animationStringKeys": [],
+        "animationStringValues": [],
+        "name": "HydratedLimestone",
+        "value": 100.0,
+        "sellBackRate": 0.0,
+        "remaining": 1.0,
+        "capacity": 1.0,
+        "consumptionRate": 1.0,
+        "pHChange": -1.0
+      }
+    },
+    {
+      "pHNeutralizers": {
+        "defaultImageFile": null,
+        "animationCycleLengthMillis": 1000,
+        "animationStringKeys": [],
+        "animationStringValues": [],
+        "name": "Sulfur",
+        "value": 100.0,
+        "sellBackRate": 0.0,
+        "remaining": 1.0,
+        "capacity": 1.0,
+        "consumptionRate": 1.0,
+        "pHChange": 1.0
+      }
+    },
+    {
+      "pHNeutralizers": {
+        "defaultImageFile": null,
+        "animationCycleLengthMillis": 1000,
+        "animationStringKeys": [],
+        "animationStringValues": [],
+        "name": "Aluminum Sulfate",
+        "value": 100.0,
+        "sellBackRate": 0.0,
+        "remaining": 1.0,
+        "capacity": 1.0,
+        "consumptionRate": 1.0,
+        "pHChange": 0.5
+      }
+    }
+  ]
+}

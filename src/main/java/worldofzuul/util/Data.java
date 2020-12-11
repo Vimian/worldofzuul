@@ -39,6 +39,7 @@ public class Data {
         }
     }
 
+
     public static Game jsonToGame(String configJson) {
         try {
 
@@ -51,7 +52,42 @@ public class Data {
             return null;
         }
     }
+    public static Game jsonToRoom(String configJson) {
+        try {
 
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(configJson, Game.class);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    public static Game jsonToMarket(String configJson) {
+        try {
+
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(configJson, Game.class);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    public static Game jsonToPlayer(String configJson) {
+        try {
+
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(configJson, Game.class);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
     public static HashMap<String, Image> getImages(String directory, Class<? extends Initializable> CallerClass) {
         URI uri;
         try {

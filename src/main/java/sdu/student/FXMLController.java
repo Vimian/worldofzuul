@@ -28,6 +28,7 @@ import worldofzuul.world.Environment;
 import worldofzuul.world.GameObject;
 import worldofzuul.world.Room;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -116,6 +117,8 @@ public class FXMLController implements Initializable {
         long delay = ((long) 1e9) / updateDelay;
         scheduledThreadPool.scheduleAtFixedRate(() -> model.update(), 0, delay, TimeUnit.NANOSECONDS);
     }
+
+
 
     private void loadGame() {
 

@@ -18,11 +18,10 @@ import worldofzuul.item.pHNeutralizers;
 import worldofzuul.util.Vector;
 import worldofzuul.world.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static worldofzuul.util.Data.*;
 import static worldofzuul.util.Drawing.drawGameObjects;
@@ -32,6 +31,8 @@ import static worldofzuul.util.Math.tryParse;
 
 public class EditorController implements Initializable {
     private static final String configFileName = "gameConfig.json";
+
+
     private static final String spriteDirectory = "sprites";
     private final int defaultGameTileDim = 48;
     private final int defaultBackgroundScaling = 3;
@@ -199,8 +200,17 @@ public class EditorController implements Initializable {
     }
 
 
+
+
+
+
     private void loadGame() {
+
+
         model = jsonToGame(readConfigFile(configFileName));
+
+
+
         if (model != null) {
             model.reconfigureRooms();
         } else {
