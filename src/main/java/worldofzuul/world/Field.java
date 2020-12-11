@@ -166,28 +166,28 @@ public class Field extends GameObject {
     }
     public Command[] usepHNeutralizers(pHNeutralizers item){
         Command[] commands = new Command[1];
+        double currentpH = getPH();
 
-        if(item.getpHChange() > 0){
-            if(pH.get() + item.getpHChange() <= maxpH){
-                setPH(pH.get() + item.getpHChange());
-                MessageHelper.Item.increasedpH(String.valueOf(getPH()));
-            }
-            else {
-                setPH(maxpH);
-            }
-            item.deplete();
-        } else if (item.getpHChange() < 0){
-            if(pH.get() + item.getpHChange() >= minpH){
-                setPH(getPH() + item.getpHChange());
-                MessageHelper.Item.decreasedpH(String.valueOf(getPH()));
-            } else {
-                setPH(minpH);
-            }
-            item.deplete();
+        if ((currentpH == maxpH && item.getpHChange() > 0) || (currentpH == minpH && item.getpHChange() < 0)) {
+            System.out.println("You can not go below 0 or above 14 pH");
+            return commands;
+        }
+
+        if (!item.deplete(1)) {
+            System.out.println("You do not have enough Neutralizers! You only got " + item.getRemaining() + " left");
+            return commands;
         }
 
         if(item.getRemaining() <= 0){
             commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
+        }
+
+        setPH(getPH() + item.getpHChange());
+
+        if (currentpH < getPH()) {
+            MessageHelper.Item.increasedpH(Double.toString(getPH()));
+        } else {
+            MessageHelper.Item.decreasedpH(Double.toString(getPH()));
         }
 
         return commands;
@@ -274,6 +274,12 @@ public class Field extends GameObject {
 
     public void setPH(double pH) {
         this.pH.set(pH);
+
+        if (getPH() > maxpH) {
+            setPH(maxpH);
+        } else if (getPH() < minpH) {
+            setPH(minpH);
+        }
     }
 
     public float getMaxWater() {
