@@ -68,24 +68,6 @@ public class Environment {
         return chanceForRain > random.nextDouble();
     }
 
-    private boolean dayTime() {
-        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-        boolean result = currentHour >= dayTimeStart && currentHour <= dayTimeEnd;
-
-        if (getNightState() && result) {
-            if (isPrintingEnabled) {
-                MessageHelper.Info.nightEnded();
-            }
-            setNightState(false);
-        } else if (!getNightState() && !result) {
-            if (isPrintingEnabled) {
-                MessageHelper.Info.nightStarted();
-            }
-            setNightState(true);
-        }
-
-        return currentHour >= dayTimeStart && currentHour <= dayTimeEnd;
-    }
 
     private void startRaining() {
         rainTicks = random.nextInt((rainTicksMax - rainTicksMin) + 1) + rainTicksMin;
