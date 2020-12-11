@@ -11,9 +11,12 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Field extends GameObject {
+    public static final int plantHistLimit = 3;
+    public static final double nutritionOffset = 0.6;
+    public static final double nutritionCoefficient = 0.1;
     private Fertilizer fertilizer;
     private Plant plant;
-    private ArrayList<String> plantHist = new ArrayList<>(10); //arrayList i tilfælde af man ville lave noget sejt med score system/historik
+    private final ArrayList<String> plantHist = new ArrayList<>(10); //arrayList i tilfælde af man ville lave noget sejt med score system/historik
     private float pH =6;
 
 
@@ -112,15 +115,14 @@ public class Field extends GameObject {
 
 
         for (int i=0; i < plantHist.size(); i++){ //make sure item name and plant name is identical
-            if(plantHist.get(i).contains (item.getName())){
-                setNutrition((float) (getNutrition() * (i*0.1+0.6) ));
+            if(plantHist.get(i).contains(item.getName())){
+                setNutrition((float) (getNutrition() * (i* nutritionCoefficient + nutritionOffset) ));
             }
-            if(i==3){
+            if(i== plantHistLimit){
                 break; //Game mechanhics decreased nutrition only care about 4 plants in the past, maybe score implementation does not
             }
         }
         plantHist.add(item.getName());
-        System.out.println("nutrition: " + this.nutrition);
     }
 
     private Command[] useHarvester(Harvester item) {

@@ -98,15 +98,12 @@ public class Plant extends Item {
         switch (state) {
             case SEED -> {
                 state = SPROUT;
-                System.out.println("SPROUT");
             }
             case SPROUT -> {
                 state = ADULT;
-                System.out.println("ADULT");
             }
             case ADULT -> {
                 state = RIPE;
-                System.out.println("RIPE");
             }
         }
     }
@@ -155,6 +152,16 @@ public class Plant extends Item {
 
     public double getTempPref(){return this.tempPref;}
 
+    public void setTempPref(double tempPref) {
+        this.tempPref = tempPref;
+    }
 
+    public float getpHPref() {
+        return pHPref;
+    }
+
+    public void setpHPref(float pHPref) {
+        this.pHPref = pHPref;
+    }
 }
 

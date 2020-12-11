@@ -12,6 +12,10 @@ public class Environment {
     private static final double chanceForRain = 0.0001; //TODO: Tweak this
     private static final int dayTimeStart = 6;
     private static final int dayTimeEnd = 18;
+    private static final int tempOffsetMax = 30;
+    private static final int tempOffsetMin = 3;
+    private static final int uvOffsetMax = 15;
+    private static final int uvOffsetMin = 1;
 
 
     private final Calendar calendar = Calendar.getInstance();
@@ -25,6 +29,12 @@ public class Environment {
     private double UVIndex = 2; //Need ui element
     private double temp = 30; // need ui element + Need ui element for field pH value
     private int dateCount = 1;
+
+    private int uvSpread = 0;
+    private int uvMean = 0;
+    private int tempSpread = 0;
+    private int tempMean = 0;
+
 
     public Environment(){
         calendar.set(2020, Calendar.JANUARY,1,8, 1);
@@ -43,7 +53,7 @@ public class Environment {
         } else if (shouldItRain()) {
             startRaining();
         }
-        dayGen(0,0,0,0); //chance args per room
+        dayGen();
         if(nightStarted){
             UVIndex = 1;
 
@@ -52,20 +62,20 @@ public class Environment {
     }
 
 
-    private void dayGen(int UVspread, int UVMean,int tempSpread, int tempMean) { //parametre indstilles per rum
+    private void dayGen() {
         if (calendar.get(Calendar.DATE) == dateCount) {
             dateCount++;
 
-            UVIndex = random.nextGaussian()*(1+UVspread)+(15+tempSpread);
+            UVIndex = random.nextGaussian()*(uvOffsetMin+uvMean)+(uvOffsetMax+tempSpread);
             while (UVIndex == 0) {
-                UVIndex =  random.nextGaussian()*(1+UVspread)+(15+UVMean);
+                UVIndex =  random.nextGaussian()*(uvOffsetMin+uvSpread)+(uvOffsetMax+uvMean);
             }
             UVIndex = (int) UVIndex;
             System.out.println("UV: "+ UVIndex);
 
-            temp = random.nextGaussian() *(3+tempSpread)+(30+tempMean);
+            temp = random.nextGaussian() *(tempOffsetMin+tempSpread)+(tempOffsetMax+tempMean);
             while (temp < 0){
-                temp = random.nextGaussian() *(3+tempSpread)+(30+tempMean);
+                temp = random.nextGaussian() *(tempOffsetMin+tempSpread)+(tempOffsetMax+tempMean);
             }
             System.out.println("Temp: "+ temp);
 
@@ -73,7 +83,7 @@ public class Environment {
     }
 
     private void incrementOneSecond(){
-        calendar.add(Calendar.SECOND, 1);
+        calendar.add(Calendar.SECOND, 12);
     }
 
     public boolean isRaining(){
@@ -86,8 +96,6 @@ public class Environment {
             if(isRaining()){
                 ((Field) gameObject).addWater(rainWaterAmount);
                 ((Field) gameObject).setpH((float) (((Field) gameObject).getpH()-(rainTicks*0.000001)) );
-
-                System.out.println("ph: " + ((Field) gameObject).getpH());
             }
 
             //deplete field of water regardless of plant planted during daytime
@@ -105,8 +113,6 @@ public class Environment {
                 ((Field) gameObject).growTimeModify(Math.abs(this.temp - ((Field) gameObject).getPlant().getTempPref()),false);
                //UV intensity = growTime decrease
                 ((Field) gameObject).growTimeModify(UVIndex, true);
-
-                System.out.println("growTime:" + ((Field) gameObject).getPlant().getGrowthTime());
 
             }
         }
@@ -139,9 +145,37 @@ public class Environment {
             rainTicks = random.nextInt((rainTicksMax - rainTicksMin) + 1) + rainTicksMin;
             rainStarted = true;
             MessageHelper.Info.rainStarted();
-
-
     }
 
+    public int getUvSpread() {
+        return uvSpread;
+    }
 
+    public void setUvSpread(int uvSpread) {
+        this.uvSpread = uvSpread;
+    }
+
+    public int getUvMean() {
+        return uvMean;
+    }
+
+    public void setUvMean(int uvMean) {
+        this.uvMean = uvMean;
+    }
+
+    public int getTempSpread() {
+        return tempSpread;
+    }
+
+    public void setTempSpread(int tempSpread) {
+        this.tempSpread = tempSpread;
+    }
+
+    public int getTempMean() {
+        return tempMean;
+    }
+
+    public void setTempMean(int tempMean) {
+        this.tempMean = tempMean;
+    }
 }
