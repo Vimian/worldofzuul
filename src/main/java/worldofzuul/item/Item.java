@@ -56,6 +56,7 @@ public abstract class Item extends SpriteAnimation {
     }
 
     public Item(Item other) {
+        this.name.set(other.name.get());
         this.remaining = other.remaining;
         this.capacity = other.capacity;
         this.consumptionRate = other.consumptionRate;
