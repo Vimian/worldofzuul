@@ -56,7 +56,7 @@ public abstract class Item extends SpriteAnimation {
     }
 
     public Item(Item other) {
-        this(other.getName(), other.getValue(), other.getSellBackRate(), other.getRemaining(), other.getCapacity(), other.getConsumptionRate());
+        this(other.nameProperty().get(), other.getValue(), other.getSellBackRate(), other.getRemaining(), other.getCapacity(), other.getConsumptionRate());
     }
 
     public abstract Item copyItem();
