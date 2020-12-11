@@ -40,6 +40,7 @@ public class Environment {
     private int uvMean = 0;
     private int tempSpread = 0;
     private int tempMean = 0;
+    private boolean nightStarted;
 
 
     public Environment(){
@@ -74,16 +75,19 @@ public class Environment {
         if (calendar.get(Calendar.DATE) == dateCount) {
             dateCount++;
 
-            UVIndex = random.nextGaussian()*(uvOffsetMin+uvMean)+(uvOffsetMax+tempSpread);
+            UVIndex = random.nextGaussian() * (uvOffsetMin + uvMean) + (uvOffsetMax + tempSpread);
             while (UVIndex == 0) {
-                UVIndex =  random.nextGaussian()*(uvOffsetMin+uvSpread)+(uvOffsetMax+uvMean);
+                UVIndex = random.nextGaussian() * (uvOffsetMin + uvSpread) + (uvOffsetMax + uvMean);
             }
             UVIndex = (int) UVIndex;
-            System.out.println("UV: "+ UVIndex);
+            System.out.println("UV: " + UVIndex);
 
-            temp = random.nextGaussian() *(tempOffsetMin+tempSpread)+(tempOffsetMax+tempMean);
-            while (temp < 0){
-                temp = random.nextGaussian() *(tempOffsetMin+tempSpread)+(tempOffsetMax+tempMean);
+            temp = random.nextGaussian() * (tempOffsetMin + tempSpread) + (tempOffsetMax + tempMean);
+            while (temp < 0) {
+                temp = random.nextGaussian() * (tempOffsetMin + tempSpread) + (tempOffsetMax + tempMean);
+            }
+            System.out.println("Temp: "+ temp);
+        }
     }
 
     public void update(GameObject gameObject){
@@ -94,13 +98,8 @@ public class Environment {
             if(dayTime()){
                 ((Field) gameObject).shineLight();      //#Svær kode annotering (Casting).
             }
-            System.out.println("Temp: "+ temp);
 
         }
-    }
-
-    private void incrementOneSecond(){
-        calendar.add(Calendar.SECOND, 12);
     }
 
     @JsonIgnore
@@ -108,35 +107,45 @@ public class Environment {
         return rainTicks > 0;
     }
 
-    public void update(GameObject gameObject, bool withDayGen){
-        if(gameObject instanceof Field){
+    public void update(GameObject gameObject, boolean withDayGen) {
+        if (gameObject instanceof Field) {
 
-            if(isRaining()){
+            if (isRaining()) {
                 ((Field) gameObject).addWater(rainWaterAmount);
-                ((Field) gameObject).setpH((float) (((Field) gameObject).getpH()-(rainTicks*0.000001)) );
+                ((Field) gameObject).setPH((float) (((Field) gameObject).getPH() - (rainTicks * 0.000001)));
             }
 
             //deplete field of water regardless of plant planted during daytime
-            if(dayTime()){
+            if (dayTime()) {
                 //depletion rate UP
-            } else if ( !dayTime() ){
+            } else if (!dayTime()) {
                 //depletion rateDOWN
             }
 
-            if(((Field) gameObject).hasPlant() && !((Field) gameObject).getPlant().isRipe()) {
-
-                //ph diff = growTime increase
-                ((Field) gameObject).growTimeModify( Math.abs( ((Field) gameObject).getpH() - ((Field) gameObject).getPlant().getPhPref() ) , false);
-                //temp diff = growTime increase
-                ((Field) gameObject).growTimeModify(Math.abs(this.temp - ((Field) gameObject).getPlant().getTempPref()),false);
-               //UV intensity = growTime decrease
-                ((Field) gameObject).growTimeModify(UVIndex, true);
-
+            if (((Field) gameObject).hasPlant() && !((Field) gameObject).getPlant().isRipe()) {
+                increaseModifierPH((Field) gameObject);
+                increaseModifierUV((Field) gameObject);
+                decreaseModifierTemp((Field) gameObject);
             }
         }
+    }
+
+    private void increaseModifierPH(Field gameObject) {
+        gameObject.growTimeModify((int) Math.floor(Math.abs(gameObject.getPH() - gameObject.getPlant().getPhPref())), false);
+    }
+
+    private void decreaseModifierTemp(Field gameObject) {
+        gameObject.growTimeModify((int) Math.floor(UVIndex), true);
+    }
+
+    private void increaseModifierUV(Field gameObject) {
+        gameObject.growTimeModify((int) Math.floor(Math.abs(this.temp - gameObject.getPlant().getTempPref())), false);
+    }
+
     private void incrementTime(){
         calendar.add(Calendar.SECOND, secondsToIncrement);
     }
+
 
 
 

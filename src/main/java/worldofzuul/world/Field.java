@@ -25,7 +25,6 @@ public class Field extends GameObject {
     private final DoubleProperty pH = new SimpleDoubleProperty(7);
     private final FloatProperty water = new SimpleFloatProperty(20000);
     private final FloatProperty nutrition = new SimpleFloatProperty(10000);
-    private final FloatProperty depletionRate = new SimpleFloatProperty(5); //5 is default
     private final FloatProperty depletionRate = new SimpleFloatProperty(1);
     private final FloatProperty maxWater = new SimpleFloatProperty(20000);
     private final FloatProperty maxNutrition = new SimpleFloatProperty(20000);
@@ -242,14 +241,15 @@ public class Field extends GameObject {
         }
     }
 
-    public void growTimeModify(double tickAmount, boolean decreaseGrowTime) {
-        if(plant.getGrowthTime() != 0 && !plant.isRipe() ){
-            if(decreaseGrowTime){
-                plant.setGrowthTime(plant.getGrowthTime()-tickAmount);
+    public void growTimeModify(int tickAmount, boolean decreaseGrowTime) {
+        if (plant.getGrowthTime() != 0 && !plant.isRipe()) {
+            if (decreaseGrowTime) {
+                plant.setGrowthTime(plant.getGrowthTime() - tickAmount);
             } else {
-                plant.setGrowthTime(plant.getGrowthTime()+tickAmount);
+                plant.setGrowthTime(plant.getGrowthTime() + tickAmount);
             }
         }
+    }
     public void shineLight() {
     }
 

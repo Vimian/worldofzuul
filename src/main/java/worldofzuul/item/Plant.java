@@ -275,11 +275,11 @@ public class Plant extends Item {
         this.nutritionNeeded = nutritionNeeded;
     }
 
-    public double getGrowthTime() {
+    public int getGrowthTime() {
         return growthTime;
     }
 
-    public void setGrowthTime(double growthTime) {
+    public void setGrowthTime(int growthTime) {
         this.growthTime = growthTime;
     }
 
