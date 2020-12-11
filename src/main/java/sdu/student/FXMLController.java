@@ -37,8 +37,7 @@ import java.util.concurrent.TimeUnit;
 
 import static sdu.student.MenuController.loadGameScene;
 import static worldofzuul.util.Data.*;
-import static worldofzuul.util.Drawing.drawGameObjects;
-import static worldofzuul.util.Drawing.translate;
+import static worldofzuul.util.Drawing.*;
 import static worldofzuul.util.Math.*;
 
 public class FXMLController implements Initializable {
@@ -260,7 +259,7 @@ public class FXMLController implements Initializable {
         } else {
             setBackground(loadedImages.get("sprites/room/test.png"));
         }
-        //drawGrid(roomPane, getBackgroundRowCount());
+        drawGrid(roomPane, getBackgroundRowCount());
         drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim(), getClass(), selectedGamePosition, false);
     }
 
