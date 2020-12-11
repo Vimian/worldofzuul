@@ -3,10 +3,12 @@ package worldofzuul.world;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.image.Image;
 import worldofzuul.item.Item;
 import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -148,4 +150,12 @@ public class Quest {
     public void setQuestComplete(boolean questComplete) {
         this.questComplete.set(questComplete);
     }
+
+    public void configureImages(HashMap<String, Image> images){
+        for (Item reward : rewards) {
+            reward.configureImages(images);
+        }
+    }
+
+
 }

@@ -1,8 +1,10 @@
 package worldofzuul.world;
 
+import javafx.scene.image.Image;
 import worldofzuul.item.Item;
 import worldofzuul.parsing.Command;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class NPC extends GameObject {
@@ -60,5 +62,15 @@ public class NPC extends GameObject {
 
     public void setDialog(LinkedList<String> dialog) {
         this.dialog = dialog;
+    }
+
+    @Override
+    public void configureImages(HashMap<String, Image> images) {
+        super.configureImages(images);
+
+        for (Quest quest : quests) {
+            quest.configureImages(images);
+        }
+
     }
 }
