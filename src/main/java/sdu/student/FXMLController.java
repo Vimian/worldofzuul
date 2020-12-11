@@ -37,16 +37,15 @@ import java.util.concurrent.TimeUnit;
 
 import static sdu.student.MenuController.loadGameScene;
 import static worldofzuul.util.Data.*;
-import static worldofzuul.util.Drawing.drawGameObjects;
-import static worldofzuul.util.Drawing.translate;
+import static worldofzuul.util.Drawing.*;
 import static worldofzuul.util.Math.*;
 
 public class FXMLController implements Initializable {
     private final CustomPrintStream printStream = new CustomPrintStream(System.out);
     private static final String configFileName = "gameConfig.json";
     private static final String spriteDirectory = "sprites";
-    private int gameTileDim = 16;
-    private int backgroundScaling = 6;
+    private int gameTileDim = 64;
+    private int backgroundScaling = 2;
     private static final double paneTransDelayCoefficient = 1.2;
     private static final int updateDelay = 60;
     private static final double nightChangeOpacity = 0.6;
@@ -260,7 +259,7 @@ public class FXMLController implements Initializable {
         } else {
             setBackground(loadedImages.get("sprites/room/test.png"));
         }
-        //drawGrid(roomPane, getBackgroundRowCount());
+        drawGrid(roomPane, getBackgroundRowCount());
         drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim(), getClass(), selectedGamePosition, false);
     }
 
