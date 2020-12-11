@@ -42,23 +42,23 @@ public class FieldEditor extends GameObjectEditor {
         phLevelTextField.textProperty().bindBidirectional(getModel().phProperty(), new NumberStringConverter());
 
         nutritionTextField.textProperty().addListener(ev -> {
-            getModel().setNutrition(tryParse(nutritionTextField.textProperty().get().replace(",", ""), 0));
+            getModel().setNutrition(tryParse(nutritionTextField.textProperty().get().replace(",", "").replace(".", ""), 0));
         });
         depletionRateTextField.textProperty().addListener(ev -> {
-            getModel().setDepletionRate(tryParse(depletionRateTextField.textProperty().get().replace(",", ""), 0));
+            getModel().setDepletionRate(tryParse(depletionRateTextField.textProperty().get().replace(",", "").replace(".", ""), 0));
         });
         waterTextField.textProperty().addListener(ev -> {
-            getModel().setWater(tryParse(waterTextField.textProperty().get().replace(",", ""), 0));
+            getModel().setWater(tryParse(waterTextField.textProperty().get().replace(",", "").replace(".", ""), 0));
         });
 
         maxWaterTextField.textProperty().addListener(ev -> {
-            getModel().setMaxWater(tryParse(maxWaterTextField.textProperty().get().replace(",", ""), 0));
+            getModel().setMaxWater(tryParse(maxWaterTextField.textProperty().get().replace(",", "").replace(".", ""), 0));
         });
         maxNutritionTextField.textProperty().addListener(ev -> {
-            getModel().setMaxNutrition(tryParse(maxNutritionTextField.textProperty().get().replace(",", ""), 0));
+            getModel().setMaxNutrition(tryParse(maxNutritionTextField.textProperty().get().replace(",", "").replace(".", ""), 0));
         });
         phLevelTextField.textProperty().addListener(ev -> {
-            getModel().setPH(tryParse(phLevelTextField.textProperty().get().replace(",", ""), 0));
+            getModel().setPH(tryParse(phLevelTextField.textProperty().get().replace(",", "").replace(".", ""), 0));
         });
 
 

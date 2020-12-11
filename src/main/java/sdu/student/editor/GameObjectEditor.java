@@ -36,7 +36,8 @@ public abstract class GameObjectEditor implements Initializable {
             this.model.setDefaultImageFile(imageFileTextField.textProperty().getValue());
         });
         animationLengthTextField.textProperty().addListener(ev -> {
-            this.model.setAnimationCycleLengthMillis(tryParse(animationLengthTextField.textProperty().get().replace(",", ""), 0));
+            animationLengthTextField.textProperty().get().replace(".", "");
+            this.model.setAnimationCycleLengthMillis(tryParse(animationLengthTextField.textProperty().get().replace(".", "").replace(",", ""), 0));
         });
     }
 

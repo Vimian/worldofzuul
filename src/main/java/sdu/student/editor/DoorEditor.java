@@ -33,10 +33,10 @@ public class DoorEditor extends GameObjectEditor {
         });
 
         linkedXCoordTextField.textProperty().addListener(ev -> {
-            getModel().getLinkedLocation().setX(tryParse(linkedXCoordTextField.textProperty().get().replace(",", ""), 0));
+            getModel().getLinkedLocation().setX(tryParse(linkedXCoordTextField.textProperty().get().replace(",", "").replace(".", ""), 0));
         });
         linkedYCoordTextField.textProperty().addListener(ev -> {
-            getModel().getLinkedLocation().setY(tryParse(linkedYCoordTextField.textProperty().get().replace(",", ""), 0));
+            getModel().getLinkedLocation().setY(tryParse(linkedYCoordTextField.textProperty().get().replace(",", "").replace(".", ""), 0));
         });
     }
 
