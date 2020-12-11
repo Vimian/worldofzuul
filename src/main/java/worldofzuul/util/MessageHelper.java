@@ -1,6 +1,7 @@
 package worldofzuul.util;
 
 import worldofzuul.parsing.CommandWord;
+import worldofzuul.world.Field;
 
 public class MessageHelper {
     public static class Item {
@@ -13,6 +14,14 @@ public class MessageHelper {
         public static void noPlantOnField(){
             System.out.println("There is not a plant in the field.");
         }
+
+        public static void increasedpH(String pH) {
+            System.out.println("You increased the field pH to " + pH + ".");
+        }
+        public static void decreasedpH(String pH) {
+            System.out.println("You decreased the field pH to " + pH + ".");
+        }
+
 
 
         public static void cantUseItem(String item){
@@ -30,6 +39,7 @@ public class MessageHelper {
         public static void alreadyPlanted() {
             System.out.println("A plant already exists here.");
         }
+
     }
     public static class Command {
 
@@ -129,6 +139,9 @@ public class MessageHelper {
 
         public static void plantBecameRipe(String plant) {
             System.out.println(plant + " became ripe!");
+        }
+        public static void println(String string){
+            System.out.println(string);
         }
     }
 

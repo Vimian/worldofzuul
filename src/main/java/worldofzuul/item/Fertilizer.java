@@ -1,15 +1,20 @@
 package worldofzuul.item;
 
+
 public class Fertilizer extends Item {
-    private Double amount;
+
 
     public Fertilizer(){}
-    public Fertilizer(String name, double amount) {
+    public Fertilizer(String name, float amount) {
         super(name);
-        this.amount = amount;
+        this.setRemaining(amount);
     }
 
-    public double getAmount() { return this.amount; }
+    public Fertilizer(String name, float amount, Double value, Double sellbackRate) {
+        super(name, value, sellbackRate);
+    }
 
-    public void setAmount(double amount) { this.amount = amount; }
+
+
+
 }

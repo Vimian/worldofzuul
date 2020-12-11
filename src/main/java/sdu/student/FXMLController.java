@@ -1,75 +1,116 @@
 package sdu.student;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
-import javafx.event.ActionEvent;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.util.converter.NumberStringConverter;
 import worldofzuul.Game;
-import worldofzuul.item.GrowthStage;
 import worldofzuul.item.Item;
+import worldofzuul.util.CustomPrintStream;
 import worldofzuul.util.Vector;
 import worldofzuul.world.Direction;
-import worldofzuul.world.Field;
+import worldofzuul.world.Environment;
+import worldofzuul.world.GameObject;
 import worldofzuul.world.Room;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import static sdu.student.MenuController.loadGameScene;
 import static worldofzuul.util.Data.*;
-import static worldofzuul.util.Drawing.*;
-import static worldofzuul.util.Math.vectorDifference;
-import static worldofzuul.util.Math.vectorDirection;
+import static worldofzuul.util.Drawing.drawGameObjects;
+import static worldofzuul.util.Drawing.translate;
+import static worldofzuul.util.Math.*;
 
 public class FXMLController implements Initializable {
+    private final CustomPrintStream printStream = new CustomPrintStream(System.out);
     private static final String configFileName = "gameConfig.json";
     private static final String spriteDirectory = "sprites";
-    private static final int gameTileDim = 16;
-    private static final int backgroundScaling = 6;
+    private int gameTileDim = 16;
+    private int backgroundScaling = 6;
     private static final double paneTransDelayCoefficient = 1.2;
     private static final int updateDelay = 60;
-    @FXML
-    private ListView playerItems;
+    private static final double nightChangeOpacity = 0.6;
+    private static final int nightChangeFadeDelay = 6000;
+    private static final int textDisplayDeletionDelay = 8000;
+    private static final int textDisplayFadeDelay = 1500;
+    private static final int playerInteractDistance = 1;
+
+
+    public StackPane gameContainerPane;
+    public VBox textDisplayBox;
+    public StackPane mainPane;
+    public Pane environmentLayerPane;
+    public Pane nightLayerPane;
+    public Pane rainImagePane;
+    public TableView<Item> inventoryTableView;
+    public Label currentlySelectedItemLabel;
+    public Label playerBalanceLabel;
+    public Label timeLabel;
+
     @FXML
     private Pane roomPane;
     @FXML
-    private Label label;
-    @FXML
-    private Label playerPositionProperty;
-    @FXML
     private ImageView imageView;
+    public Button marketButton;
 
     private TranslateTransition paneTranslation;
     private HashMap<String, Image> loadedImages;
-    private Game model;
+    public Game model;
+    private Vector selectedGamePosition;
+    private final Stage stage;
     private ScheduledExecutorService scheduledThreadPool;
 
+    public FXMLController(Stage stage) {
+        this.stage = stage;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        String javaVersion = System.getProperty("java.version");
-        String javafxVersion = System.getProperty("javafx.version");
-        label.setText("Hello, JavaFX " + javafxVersion + "\nRunning on Java " + javaVersion + ".");
 
         loadedImages = getImages(spriteDirectory, getClass());
+
         loadGame();
-
-
 
         bindProperties();
         examplePlayAnimation();
-
         enableGameUpdater();
+
+
+        gameTileDim = model.getRoom().getRoomTileDim();
+        backgroundScaling = model.getRoom().getRoomBGScale();
+
+        //Configure custom PrintStream
+        System.setOut(printStream);
+        printStream.printListProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> displayTextMessage(newValue.get(newValue.size() - 1))));
     }
+
+
+    public void reloadScene() {
+        scheduledThreadPool.shutdown();
+        loadGameScene(stage, getClass(), this);
+    }
+
+
 
     private void enableGameUpdater() {
 
@@ -79,16 +120,14 @@ public class FXMLController implements Initializable {
             return thread;
         });
 
-        long delay = ((long) 1e9)/ updateDelay;
+        long delay = ((long) 1e9) / updateDelay;
         scheduledThreadPool.scheduleAtFixedRate(() -> model.update(), 0, delay, TimeUnit.NANOSECONDS);
     }
 
     private void loadGame() {
 
-        var gamee = new Game();
-        gamee.createRooms();
-
-        var aa = gameToJson(gamee);
+        var game = new Game();
+        game.createRooms();
 
         model = jsonToGame(readConfigFile(configFileName));
         if (model != null) {
@@ -98,6 +137,8 @@ public class FXMLController implements Initializable {
             model = new Game();
             model.createRooms();
         }
+
+        model.getRoom().setPrintingEnabled(true);
     }
 
     private void examplePlayAnimation() {
@@ -118,24 +159,24 @@ public class FXMLController implements Initializable {
         model.getPlayer().display();
 
         //Example add sprites to fields
-        Arrays.stream(model.getRoom().getRoomGrid()).forEach(t -> Arrays.stream(t).forEach(gameObject -> {
-            if (gameObject instanceof Field) {
 
-                List<Image[]> imgs = new ArrayList<>();
-                imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0000.png")});
-                imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0003.png")});
-                imgs.add(new Image[]{loadedImages.get("sprites/asteriskAnim/asterisk_circle0008.png")});
 
-                List<Object> keys = new ArrayList<>();
-                keys.add(GrowthStage.SEED);
-                keys.add(GrowthStage.ADULT);
-                keys.add(GrowthStage.RIPE);
-
-                gameObject.addAnimation(keys, imgs);
-                gameObject.setAnimationCycleLengthMillis(400);
+        for (Room room : model.getRooms()) {
+            if(room != null && room.getRoomGrid() != null){
+                for (GameObject[] t : room.getRoomGrid()) {
+                    for (GameObject gameObject : t) {
+                        gameObject.configureImages(loadedImages);
+                    }
+                }
 
             }
-        }));
+        }
+
+         model.getPlayer().getInventory().getItems().forEach(item -> item.configureImages(loadedImages));
+        model.getMarket().getStock().forEach(item -> item.configureImages(loadedImages));
+
+
+
 
 
         drawRoom();
@@ -146,9 +187,7 @@ public class FXMLController implements Initializable {
 
     private void subscribeToPlayerMovement() {
         //Upon player position change, move pane and activate player walk animation
-        model.getPlayer().getPos().vectorValueProperty().addListener((observable, oldValue, newValue) -> {
-            repositionPlayer(new Vector(oldValue), new Vector(newValue));
-        });
+        model.getPlayer().getPos().vectorValueProperty().addListener((observable, oldValue, newValue) -> repositionPlayer(new Vector(oldValue), new Vector(newValue)));
     }
 
     private void repositionPlayer(Vector pos, Vector pos2) {
@@ -174,16 +213,12 @@ public class FXMLController implements Initializable {
                 transY *= -1;
                 transX = 0;
             }
-            case NORTH -> {
-                transX = 0;
-            }
+            case NORTH -> transX = 0;
             case WEST -> {
                 transY = 0;
                 transX *= -1;
             }
-            case EAST -> {
-                transY = 0;
-            }
+            case EAST -> transY = 0;
             default -> throw new IllegalStateException("Unexpected value: " + direction);
         }
 
@@ -225,16 +260,69 @@ public class FXMLController implements Initializable {
         } else {
             setBackground(loadedImages.get("sprites/room/test.png"));
         }
-        drawGrid(roomPane, getBackgroundRowCount());
-        drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim());
+        //drawGrid(roomPane, getBackgroundRowCount());
+        drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim(), getClass(), selectedGamePosition, false);
     }
 
     private void bindProperties() {
-        playerPositionProperty.textProperty().bindBidirectional(model.getPlayer().getPos().vectorValueProperty());
 
-        playerItems.itemsProperty().bindBidirectional(model.getPlayer().getInventory().itemsProperty());
+        inventoryTableView.itemsProperty().bindBidirectional(model.getPlayer().getInventory().itemsProperty());
+        subscribeToEnvironmentChanges(model.getRoom().getEnvironment());
+        currentlySelectedItemLabel.textProperty().bindBidirectional(model.getPlayer().getInventory().selectedItemNameProperty());
+
+        playerBalanceLabel.textProperty().bindBidirectional(model.getPlayer().balanceProperty(), new NumberStringConverter());
+
+        //Listen to Room change
+        model.roomProperty().addListener((observable, oldValue, newValue) -> {
+            oldValue.setPrintingEnabled(false);
+
+            unsubscribeToEnvironmentChanges(oldValue.getEnvironment());
+            subscribeToEnvironmentChanges(newValue.getEnvironment());
+
+            gameTileDim = newValue.getRoomTileDim();
+            backgroundScaling = newValue.getRoomBGScale();
+            newValue.setPrintingEnabled(true);
+
+        });
 
 
+
+    }
+
+    private void subscribeToEnvironmentChanges(Environment environment){
+        environment.rainStateProperty().addListener((observable1, oldValue1, newValue1) -> changeRainState(newValue1));
+        environment.nightStateProperty().addListener((observable1, oldValue1, newValue1) -> changeNightStage(newValue1));
+    }
+
+    private void unsubscribeToEnvironmentChanges(Environment environment){
+        environment.rainStateProperty().removeListener((observable1, oldValue1, newValue1) -> changeRainState(newValue1));
+        environment.nightStateProperty().removeListener((observable1, oldValue1, newValue1) -> changeNightStage(newValue1));
+    }
+
+    private void changeRainState(boolean isRaining){
+        FadeTransition ft = new FadeTransition(Duration.millis(nightChangeFadeDelay), rainImagePane);
+        if(isRaining){
+            ft.setFromValue(0.0);
+            ft.setToValue(1);
+
+        } else {
+            ft.setFromValue(1);
+            ft.setToValue(0);
+        }
+        ft.play();
+
+    }
+    private void changeNightStage(boolean isNight){
+        FadeTransition ft = new FadeTransition(Duration.millis(nightChangeFadeDelay), nightLayerPane);
+        if(isNight){
+            ft.setFromValue(0.0);
+            ft.setToValue(nightChangeOpacity);
+
+        } else {
+            ft.setFromValue(nightChangeOpacity);
+            ft.setToValue(0);
+        }
+        ft.play();
     }
 
     private void setBackground(Room room) {
@@ -242,6 +330,10 @@ public class FXMLController implements Initializable {
     }
 
     private void setBackground(Image backgroundImage) {
+        if(backgroundImage == null){
+            return;
+        }
+
         BackgroundImage myBI = new BackgroundImage(backgroundImage,
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(0, 0, false, false, false, true));
@@ -250,62 +342,61 @@ public class FXMLController implements Initializable {
         roomPane.setBackground(new Background(myBI));
     }
 
-    public void moveNorth(ActionEvent actionEvent) {
-        if (!isPlayerMoving()) {
+    public void moveNorth() {
+        if (isPlayerNotMoving()) {
             model.move(Direction.NORTH);
         }
     }
 
-    public void moveSouth(ActionEvent actionEvent) {
-        if (!isPlayerMoving()) {
+    public void moveSouth() {
+        if (isPlayerNotMoving()) {
             model.move(Direction.SOUTH);
         }
     }
 
-    public void moveEast(ActionEvent actionEvent) {
-        if (!isPlayerMoving()) {
+    public void moveEast() {
+        if (isPlayerNotMoving()) {
             model.move(Direction.EAST);
         }
     }
 
-    public void moveWest(ActionEvent actionEvent) {
-        if (!isPlayerMoving()) {
+    public void moveWest() {
+        if (isPlayerNotMoving()) {
             model.move(Direction.WEST);
         }
     }
 
-    public void interact(ActionEvent actionEvent) {
-        model.interact();
-    }
+    public void openMarket() {
 
+        FXMLLoader loader = new FXMLLoader();
 
-    private boolean isPlayerMoving() {
+        //Defines our controller
+        loader.setControllerFactory(aClass -> new sdu.student.SubScene(model));
+        //Defines the FXML file
+        loader.setLocation(getClass().getResource("subScene.fxml"));
 
-        if (model.getPlayer().getAnimationTimeline() != null) {
-            return model.getPlayer().isAnimationActive();
+        try {
+            gameContainerPane.getChildren().add(loader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        return false;
         /*
-
-        //TODO: Solve pane translation flicker caused by animation cancelling
-        if (paneTranslation != null) {
-            if (paneTranslation.getStatus().equals(Animation.Status.RUNNING)) {
-                return true;
-            }
+        try {
+            Node subRoot = FXMLLoader.load(getClass().getResource("subScene.fxml"));
+            loader.setControllerFactory(aClass -> new FieldInfoBarController(field));
+            stackPane.getChildren().add(subRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-
-        return false;*/
+        */
     }
 
-    public void playerItemsClicked(MouseEvent mouseEvent) {
 
-        Object clickedElement = playerItems.getSelectionModel().getSelectedItem();
-        if(clickedElement instanceof Item){
-            model.getPlayer().getInventory().setSelectedItem((Item) clickedElement);
+    private boolean isPlayerNotMoving() {
+        if (model.getPlayer().getAnimationTimeline() != null) {
+            return !model.getPlayer().isAnimationActive();
         }
-
+        return true;
     }
 
     private double getBackgroundTileDim() {
@@ -314,6 +405,72 @@ public class FXMLController implements Initializable {
 
     private double getBackgroundRowCount() {
         return (roomPane.getMinWidth() / backgroundScaling) / gameTileDim;
+    }
+
+    private void displayTextMessage(String text){
+
+        Label newLabel = new Label(text);
+        newLabel.setId("textDisplayLabel");
+        newLabel.setPickOnBounds(false);
+
+        DropShadow effect = new DropShadow(0.67, Color.WHITE);
+        effect.setInput(new Glow(0.65));
+        newLabel.setEffect(effect);
+
+
+        textDisplayBox.getChildren().add(newLabel);
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run()
+            {
+                Platform.runLater(() -> { //Platform.runLater is used to avoid cross thread UI invocation exceptions
+
+                    FadeTransition ft = new FadeTransition(Duration.millis(textDisplayFadeDelay), newLabel);
+                    ft.setFromValue(1.0);
+                    ft.setToValue(0.0);
+                    ft.setOnFinished(event -> textDisplayBox.getChildren().remove(newLabel));
+
+                    ft.play();
+                });
+                this.cancel();
+            }
+        }, FXMLController.textDisplayDeletionDelay);
+
+
+
+
+
+    }
+
+    public void roomPaneClicked(MouseEvent mouseEvent) {
+
+        selectedGamePosition = positionClickedOnPane(getBackgroundTileDim(), getBackgroundTileDim(), mouseEvent.getX(), mouseEvent.getY());
+        if (selectedGamePosition.getX() < 0 || selectedGamePosition.getY() < 0 || selectedGamePosition.getX() > getBackgroundRowCount() || selectedGamePosition.getY() > getBackgroundRowCount()) {
+            return;
+        }
+
+        if (vectorDifference(model.getPlayer().getPos(), selectedGamePosition) <= playerInteractDistance) {
+            switch (mouseEvent.getButton()) {
+                case PRIMARY -> {
+                    model.interact(selectedGamePosition, false);
+                    faceDirection(vectorDirection(model.getPlayer().getPos(), selectedGamePosition));
+                }
+                case SECONDARY -> {
+                    model.interact(selectedGamePosition, true);
+                    faceDirection(vectorDirection(model.getPlayer().getPos(), selectedGamePosition));
+                }
+            }
+        }
+
+    }
+
+    private void faceDirection(Direction vectorDirection) {
+        model.getPlayer().setDefaultImage(vectorDirection);
+    }
+
+    public void selectItem() {
+        model.getPlayer().getInventory().setSelectedItem(inventoryTableView.getSelectionModel().getSelectedItem());
     }
 
 }

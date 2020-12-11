@@ -1,65 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.ImageView?>
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-           prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="sdu.student.FXMLController">
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-    <VBox alignment="CENTER">
-        <HBox alignment="CENTER">
+<?import javafx.scene.layout.Region?>
+<StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sdu.student.FXMLController">
 
-            <StackPane>
-                <Pane fx:id="roomPane"/>
-
-
-                <ImageView
-                        fx:id="imageView"
-                        fitHeight="150.0"
-                        pickOnBounds="true"
-                        preserveRatio="true"
-
-                />
-
-
-
-
+    <VBox alignment="CENTER" pickOnBounds="false">
+        <HBox alignment="CENTER" pickOnBounds="false">
+            <StackPane fx:id="gameContainerPane">
+                <Pane fx:id="roomPane" onMouseClicked="#roomPaneClicked"/>
+                <ImageView fx:id="imageView" fitHeight="150.0" mouseTransparent="true" preserveRatio="true" />
+                <StackPane fx:id="environmentLayerPane" mouseTransparent="true" style="-fx-background-color: transparent;">
+                    <Pane fx:id="nightLayerPane" mouseTransparent="true" opacity="0" style="-fx-background-color: black;" />
+                    <Pane id="rainBackgroundImage" fx:id="rainImagePane" mouseTransparent="true" opacity="0" />
+                </StackPane>
             </StackPane>
-
-
-
         </HBox>
-
-
     </VBox>
 
-    <HBox>
-        <VBox HBox.hgrow="ALWAYS">
+    <HBox pickOnBounds="false">
+      <FlowPane hgap="10.0" vgap="10.0">
+         <children>
 
-            <Label fx:id="label" text="Label"/>
-            <Button text="North" onAction="#moveNorth"/>
-            <Button text="South" onAction="#moveSouth"/>
-            <Button text="East" onAction="#moveEast"/>
-            <Button text="West" onAction="#moveWest"/>
-
-
-            <Button text="Interact" onAction="#interact"/>
-
-
-            <Label fx:id="playerPositionProperty" />
-
-            <ListView fx:id="playerItems" maxWidth="100" onMouseClicked="#playerItemsClicked" />
-
-
-
-        </VBox>
-        <VBox HBox.hgrow="ALWAYS">
-
-        </VBox>
+            <MenuButton mnemonicParsing="false" text="Menu">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Help" />
+                  <MenuItem mnemonicParsing="false" text="Reload" onAction="#reloadScene" />
+                <MenuItem mnemonicParsing="false" text="Exit" />
+              </items>
+            </MenuButton>
+               <Button fx:id="marketButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#openMarket" text="Market" />
+             <Label fx:id="timeLabel" pickOnBounds="false" visible="true" alignment="TOP_CENTER"/>
+         </children>
+         <HBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </HBox.margin>
+      </FlowPane>
     </HBox>
+
+
+       <VBox fx:id="textDisplayBox" alignment="TOP_CENTER" maxHeight="600.0" maxWidth="800.0" mouseTransparent="true" pickOnBounds="false" StackPane.alignment="TOP_CENTER">
+      <padding>
+         <Insets top="20.0" />
+      </padding>
+   </VBox>
+      <TitledPane animated="false" maxHeight="200.0" maxWidth="500.0" pickOnBounds="false" prefHeight="50.0" prefWidth="584.0" text="Inventory" StackPane.alignment="TOP_RIGHT">
+          <content>
+         <FlowPane hgap="25.0" vgap="10.0">
+            <children>
+               <Label text="Currently selected:">
+                  <font>
+                     <Font size="32.0" />
+                  </font>
+               </Label>
+               <Label fx:id="currentlySelectedItemLabel" text="Nothing">
+                  <font>
+                     <Font size="32.0" />
+                  </font>
+               </Label>
+                <Region prefWidth="40" />
+                <Label text="Balance:">
+                    <font>
+                        <Font size="32.0" />
+                    </font>
+                </Label>
+
+                <Label fx:id="playerBalanceLabel">
+                    <font>
+                        <Font size="32.0" />
+                    </font>
+                </Label>
+                      <TableView fx:id="inventoryTableView" minHeight="150.0" onMouseClicked="#selectItem" pickOnBounds="false" prefHeight="50.0" prefWidth="516.0">
+                          <columns>
+                              <TableColumn editable="false" prefWidth="96.00000154972076" resizable="false" sortable="false" text="Item">
+                                  <cellValueFactory>
+                                      <PropertyValueFactory property="name" />
+                                  </cellValueFactory>
+                              </TableColumn>
+                              <TableColumn editable="false" prefWidth="92.99999237060547" resizable="false" sortable="false" text="Quantity">
+                                  <cellValueFactory>
+                                      <PropertyValueFactory property="remaining" />
+                                  </cellValueFactory>
+                              </TableColumn>
+                              <TableColumn editable="false" prefWidth="96.0" resizable="false" sortable="false" text="Capacity">
+                                  <cellValueFactory>
+                                      <PropertyValueFactory property="capacity" />
+                                  </cellValueFactory>
+                              </TableColumn>
+                              <TableColumn editable="false" prefWidth="117.0" resizable="false" sortable="false" text="Consumption Rate">
+                                  <cellValueFactory>
+                                      <PropertyValueFactory property="consumptionRate" />
+                                  </cellValueFactory>
+                              </TableColumn>
+                              <TableColumn editable="false" prefWidth="90.0" resizable="false" sortable="false" text="Value">
+                                  <cellValueFactory>
+                                      <PropertyValueFactory property="value" />
+                                  </cellValueFactory>
+                              </TableColumn>
+                          </columns>
+                          <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                          </columnResizePolicy>
+                          <effect>
+                              <DropShadow />
+                          </effect>
+                      </TableView>
+            </children>
+         </FlowPane>
+          </content>
+      </TitledPane>
 
 
 </StackPane>

@@ -1,5 +1,8 @@
 package worldofzuul.world;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import worldofzuul.util.MessageHelper;
 
 import java.util.Calendar;
@@ -7,24 +10,27 @@ import java.util.Date;
 import java.util.Random;
 
 public class Environment {
-    private static final int rainTicksMin = 500;
-    private static final int rainTicksMax = 1500;
-    private static final double chanceForRain = 0.0001; //TODO: Tweak this
-    private static final int dayTimeStart = 6;
-    private static final int dayTimeEnd = 18;
+
+    private final BooleanProperty rainState = new SimpleBooleanProperty(false);
+    private final BooleanProperty nightState = new SimpleBooleanProperty(false);
+
+    private int rainTicksMin = 500;
+    private int rainTicksMax = 1500;
+    private double chanceForRain = 0.00001;
+    private int dayTimeStart = 6;
+    private int dayTimeEnd = 18;
+    private int secondsToIncrement = 2;
+    private float rainWaterAmount = 0.1f;
     private static final int tempOffsetMax = 30;
     private static final int tempOffsetMin = 3;
     private static final int uvOffsetMax = 15;
     private static final int uvOffsetMin = 1;
 
-
     private final Calendar calendar = Calendar.getInstance();
     private final Random random = new Random();
+    private boolean isPrintingEnabled = false;
 
     private int rainTicks = 0;
-    private boolean rainStarted = false;
-    private boolean nightStarted = false;
-    private float rainWaterAmount = 0.1f;
 
     private double UVIndex = 2; //Need ui element
     private double temp = 30; // need ui element + Need ui element for field pH value
@@ -44,12 +50,14 @@ public class Environment {
     }
 
     public void update(){
-        incrementOneSecond();
+        incrementTime();
         if(isRaining()){
             rainTicks--;
-        } else if (rainStarted) {
-            MessageHelper.Info.rainStopped();
-            rainStarted = false;
+        } else if (getRainState()) {
+            if (isPrintingEnabled) {
+                MessageHelper.Info.rainStopped();
+            }
+            setRainState(false);
         } else if (shouldItRain()) {
             startRaining();
         }
@@ -76,6 +84,15 @@ public class Environment {
             temp = random.nextGaussian() *(tempOffsetMin+tempSpread)+(tempOffsetMax+tempMean);
             while (temp < 0){
                 temp = random.nextGaussian() *(tempOffsetMin+tempSpread)+(tempOffsetMax+tempMean);
+    }
+
+    public void update(GameObject gameObject){
+        if(gameObject instanceof Field){
+            if(getRainState()){
+                ((Field) gameObject).addWater(rainWaterAmount);
+            }
+            if(dayTime()){
+                ((Field) gameObject).shineLight();      //#Svær kode annotering (Casting).
             }
             System.out.println("Temp: "+ temp);
 
@@ -86,11 +103,12 @@ public class Environment {
         calendar.add(Calendar.SECOND, 12);
     }
 
+    @JsonIgnore
     public boolean isRaining(){
         return rainTicks > 0;
     }
 
-    public void update(GameObject gameObject){
+    public void update(GameObject gameObject, bool withDayGen){
         if(gameObject instanceof Field){
 
             if(isRaining()){
@@ -116,6 +134,8 @@ public class Environment {
 
             }
         }
+    private void incrementTime(){
+        calendar.add(Calendar.SECOND, secondsToIncrement);
     }
 
 
@@ -128,12 +148,16 @@ public class Environment {
         int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
         boolean result = currentHour >= dayTimeStart && currentHour <= dayTimeEnd;
 
-        if(nightStarted && result){
-            MessageHelper.Info.nightEnded();
-            nightStarted = false;
-        } else if (!nightStarted && !result){
-            MessageHelper.Info.nightStarted();
-            nightStarted = true;
+        if(getNightState() && result){
+            if(isPrintingEnabled) {
+                MessageHelper.Info.nightEnded();
+            }
+            setNightState(false);
+        } else if (!getNightState() && !result){
+            if(isPrintingEnabled){
+                MessageHelper.Info.nightStarted();
+            }
+            setNightState(true);
         }
 
         return currentHour >= dayTimeStart && currentHour <= dayTimeEnd;
@@ -143,8 +167,11 @@ public class Environment {
 
     private void startRaining() {
             rainTicks = random.nextInt((rainTicksMax - rainTicksMin) + 1) + rainTicksMin;
-            rainStarted = true;
-            MessageHelper.Info.rainStarted();
+            setRainState(true);
+
+            if(isPrintingEnabled){
+                MessageHelper.Info.rainStarted();
+            }
     }
 
     public int getUvSpread() {
@@ -177,5 +204,106 @@ public class Environment {
 
     public void setTempMean(int tempMean) {
         this.tempMean = tempMean;
+
+    }
+
+
+    public int getRainTicksMin() {
+        return rainTicksMin;
+    }
+
+    public void setRainTicksMin(int rainTicksMin) {
+        this.rainTicksMin = rainTicksMin;
+    }
+
+    public int getRainTicksMax() {
+        return rainTicksMax;
+    }
+
+    public void setRainTicksMax(int rainTicksMax) {
+        this.rainTicksMax = rainTicksMax;
+    }
+
+    public double getChanceForRain() {
+        return chanceForRain;
+    }
+
+    public void setChanceForRain(double chanceForRain) {
+        this.chanceForRain = chanceForRain;
+    }
+
+    public int getDayTimeStart() {
+        return dayTimeStart;
+    }
+
+    public void setDayTimeStart(int dayTimeStart) {
+        this.dayTimeStart = dayTimeStart;
+    }
+
+    public int getDayTimeEnd() {
+        return dayTimeEnd;
+    }
+
+    public void setDayTimeEnd(int dayTimeEnd) {
+        this.dayTimeEnd = dayTimeEnd;
+    }
+
+    public int getSecondsToIncrement() {
+        return secondsToIncrement;
+    }
+
+    public void setSecondsToIncrement(int secondsToIncrement) {
+        this.secondsToIncrement = secondsToIncrement;
+    }
+
+    public float getRainWaterAmount() {
+        return rainWaterAmount;
+    }
+
+    public void setRainWaterAmount(float rainWaterAmount) {
+        this.rainWaterAmount = rainWaterAmount;
+    }
+
+    @JsonIgnore
+    public boolean getRainState() {
+        return rainState.get();
+    }
+
+    @JsonIgnore
+    public BooleanProperty rainStateProperty() {
+        return rainState;
+    }
+
+    @JsonIgnore
+    public void setRainState(boolean rainState) {
+        this.rainState.set(rainState);
+    }
+    @JsonIgnore
+    public boolean getNightState() {
+        return nightState.get();
+    }
+    @JsonIgnore
+    public BooleanProperty nightStateProperty() {
+        return nightState;
+    }
+    @JsonIgnore
+    public void setNightState(boolean nightState) {
+        this.nightState.set(nightState);
+    }
+
+    public Date getCalendarStart(){
+        return calendar.getTime();
+    }
+
+    public void setCalendarStart(Date date){
+        calendar.setTime(date);
+    }
+
+    public Calendar getCalendar(){
+        return calendar;
+    }
+
+    public void setPrintingEnabled(boolean activeRoom) {
+        isPrintingEnabled = activeRoom;
     }
 }

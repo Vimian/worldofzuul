@@ -6,8 +6,8 @@ import java.util.Scanner;
 
 public class Parser 
 {
-    private CommandWords commands;
-    private Scanner reader;
+    private final CommandWords commands;
+    private final Scanner reader;
 
     public Parser() 
     {
