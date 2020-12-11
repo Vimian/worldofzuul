@@ -81,7 +81,7 @@ public class Market {
             if (player.getBalance() >= item.getValue()) {
                 player.setBalance(player.getBalance() - item.getValue());
 
-                player.getInventory().addItem(item);
+                player.getInventory().addItem(item.copyItem());
             } else {
                 System.out.println("Not enough money!");
             }
