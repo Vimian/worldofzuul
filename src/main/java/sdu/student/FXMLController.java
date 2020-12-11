@@ -44,8 +44,8 @@ public class FXMLController implements Initializable {
     private final CustomPrintStream printStream = new CustomPrintStream(System.out);
     private static final String configFileName = "gameConfig.json";
     private static final String spriteDirectory = "sprites";
-    private int gameTileDim = 16;
-    private int backgroundScaling = 6;
+    private int gameTileDim = 64;
+    private int backgroundScaling = 2;
     private static final double paneTransDelayCoefficient = 1.2;
     private static final int updateDelay = 60;
     private static final double nightChangeOpacity = 0.6;
