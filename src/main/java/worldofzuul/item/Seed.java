@@ -56,6 +56,17 @@ public class Seed extends Item {
         return new Plant(plant);
     }
 
+    public Seed(Seed other) {
+        super(other);
+        if(other.plant != null){
+            this.plant = (Plant) other.plant.copyItem();
+        }
+    }
+
+    @Override
+    public Item copyItem() {
+        return new Seed(this);
+    }
 
     public void getSeedsFromPlant(Plant plant, Player player) {
         switch (crops) {

@@ -4,6 +4,17 @@ public class pHNeutralizers extends Item {
     private Double pHChange;
 
     public pHNeutralizers(){}
+
+    public pHNeutralizers(pHNeutralizers other) {
+        super(other);
+        this.pHChange = other.pHChange;
+    }
+
+    @Override
+    public Item copyItem() {
+        return new pHNeutralizers(this);
+    }
+
     public pHNeutralizers(String name, Double value, Double sellbackRate) {
         super(name, value, sellbackRate);
     }

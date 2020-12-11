@@ -10,6 +10,15 @@ public class Irrigator extends Item {
         super(name);
     }
 
+    public Irrigator(Irrigator irrigator) {
+        super(irrigator);
+    }
+
+    @Override
+    public Item copyItem() {
+        return new Irrigator(this);
+    }
+
     public Irrigator(String name, Double value, Double sellbackRate) {
         super(name, value, sellbackRate);
     }

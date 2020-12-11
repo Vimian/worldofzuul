@@ -45,6 +45,9 @@ public abstract class Item extends SpriteAnimation {
 
     }
 
+
+
+
     public Item(String name, float consumptionRate, float remaining, float capacity) {
         this(name);
         this.remaining.setValue(remaining);
@@ -52,6 +55,13 @@ public abstract class Item extends SpriteAnimation {
         this.consumptionRate.setValue(consumptionRate);
     }
 
+    public Item(Item other) {
+        this.remaining = other.remaining;
+        this.capacity = other.capacity;
+        this.consumptionRate = other.consumptionRate;
+    }
+
+    public abstract Item copyItem();
 
     public String getName() {
         return name.get();

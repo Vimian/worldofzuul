@@ -29,6 +29,11 @@ public class Plant extends Item {
 
     public Plant(){}
 
+    @Override
+    public Item copyItem() {
+        return new Plant(this);
+    }
+
     public Plant(String name, Double value, Double sellbackRate) {
         super(name, value, sellbackRate);
     }
@@ -57,7 +62,6 @@ public class Plant extends Item {
         setImageAnimations(plant.getImageAnimations());
         setAnimationCycleLengthMillis(plant.getAnimationCycleLengthMillis());
         setRemaining(plant.getRemaining());
-
     }
 
     public void grow(float water, float nutrition) {
