@@ -7,11 +7,11 @@ public class Plant extends Item {
     private float seedQuality = 1;
     private float waterNeeded = 1000;
     private float nutritionNeeded = 1000;
-    private double growthTime = 6000*5;
+    private double growthTime = 60*5;
     private float maxWater = waterNeeded;
     private float maxNutrition = nutritionNeeded;
     private double tempPref = 25;
-    private int pHPref = 6;
+    private float pHPref = 6;
 
 
     
@@ -151,7 +151,9 @@ public class Plant extends Item {
         this.growTicks = growTicks;
     }
 
-    public int getPhPref(){return this.pHPref;}
+    public float getPhPref(){return this.pHPref;}
+
+    public double getTempPref(){return this.tempPref;}
 
 
 }

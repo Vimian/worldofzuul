@@ -22,8 +22,8 @@ public class Environment {
     private boolean nightStarted = false;
     private float rainWaterAmount = 0.1f;
 
-    private double UVIndex = 2;
-    private double temp = 30;
+    private double UVIndex = 2; //Need ui element
+    private double temp = 30; // need ui element + Need ui element for field pH value
     private int dateCount = 1;
 
     public Environment(){
@@ -43,30 +43,32 @@ public class Environment {
         } else if (shouldItRain()) {
             startRaining();
         }
-        dayGen(0,0); //ændre parametre for daygen for at sætte nye forhold for hvert rum
+        dayGen(0,0,0,0); //chance args per room
         if(nightStarted){
             UVIndex = 1;
+
         }
 
     }
 
 
-    private void dayGen(int stdPlusDefault, int meanPlusDefault) {
+    private void dayGen(int UVspread, int UVMean,int tempSpread, int tempMean) { //parametre indstilles per rum
         if (calendar.get(Calendar.DATE) == dateCount) {
             dateCount++;
 
-            UVIndex = random.nextGaussian()*2+6;
+            UVIndex = random.nextGaussian()*(1+UVspread)+(15+tempSpread);
             while (UVIndex == 0) {
-                UVIndex =  random.nextGaussian()*4+6;
+                UVIndex =  random.nextGaussian()*(1+UVspread)+(15+UVMean);
             }
             UVIndex = (int) UVIndex;
-            System.out.println("UV: " +UVIndex);
+            System.out.println("UV: "+ UVIndex);
 
-            temp = random.nextGaussian() *(5+stdPlusDefault)+(30+meanPlusDefault);
+            temp = random.nextGaussian() *(3+tempSpread)+(30+tempMean);
             while (temp < 0){
-                temp = random.nextGaussian() *(5+stdPlusDefault)+(30+meanPlusDefault);
+                temp = random.nextGaussian() *(3+tempSpread)+(30+tempMean);
             }
-            System.out.println("temp: " +temp);
+            System.out.println("Temp: "+ temp);
+
         }
     }
 
@@ -80,32 +82,34 @@ public class Environment {
 
     public void update(GameObject gameObject){
         if(gameObject instanceof Field){
+
             if(isRaining()){
                 ((Field) gameObject).addWater(rainWaterAmount);
-                ((Field) gameObject).setpH((float) (((Field) gameObject).getpH()+rainTicks*0.001)); //ph ændring ved regn
+                ((Field) gameObject).setpH((float) (((Field) gameObject).getpH()-(rainTicks*0.000001)) );
 
+                System.out.println("ph: " + ((Field) gameObject).getpH());
             }
-            System.out.println("ph: " + ((Field) gameObject).getpH());
 
-            //jord tørrer ud så depletionrate stiger
+            //deplete field of water regardless of plant planted during daytime
             if(dayTime()){
-                //depletionrateUP
+                //depletion rate UP
             } else if ( !dayTime() ){
-                //depletionrateDOWN
+                //depletion rateDOWN
             }
-            System.out.println("water: " +((Field) gameObject).getWater());
 
-            //forskellen mellem pH værdi på mark og plantens ønsket pH værdi = hvor meget growtime stiger
-            if(((Field) gameObject).hasPlant()) {
+            if(((Field) gameObject).hasPlant() && !((Field) gameObject).getPlant().isRipe()) {
+
+                //ph diff = growTime increase
                 ((Field) gameObject).growTimeModify( Math.abs( ((Field) gameObject).getpH() - ((Field) gameObject).getPlant().getPhPref() ) , false);
-            }
-
-            if(dayTime() && ((Field) gameObject).hasPlant()){
+                //temp diff = growTime increase
+                ((Field) gameObject).growTimeModify(Math.abs(this.temp - ((Field) gameObject).getPlant().getTempPref()),false);
+               //UV intensity = growTime decrease
                 ((Field) gameObject).growTimeModify(UVIndex, true);
-            }
-            System.out.println("plantgrowthtime: "+((Field) gameObject).getPlant().getGrowthTime());
-        }
 
+                System.out.println("growTime:" + ((Field) gameObject).getPlant().getGrowthTime());
+
+            }
+        }
     }
 
 

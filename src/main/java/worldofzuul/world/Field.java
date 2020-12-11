@@ -7,12 +7,13 @@ import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
 import worldofzuul.util.MessageHelper;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Field extends GameObject {
     private Fertilizer fertilizer;
     private Plant plant;
-    private ArrayList<Plant> plants;
+    private ArrayList<String> plantHist = new ArrayList<>(10); //arrayList i tilfælde af man ville lave noget sejt med score system/historik
     private float pH =6;
 
 
@@ -108,6 +109,18 @@ public class Field extends GameObject {
         plant = (item.getPlant());
         ripePlantSeen = false;
         playAnimation(GrowthStage.ADULT);
+
+
+        for (int i=0; i < plantHist.size(); i++){ //make sure item name and plant name is identical
+            if(plantHist.get(i).contains (item.getName())){
+                setNutrition((float) (getNutrition() * (i*0.1+0.6) ));
+            }
+            if(i==3){
+                break; //Game mechanhics decreased nutrition only care about 4 plants in the past, maybe score implementation does not
+            }
+        }
+        plantHist.add(item.getName());
+        System.out.println("nutrition: " + this.nutrition);
     }
 
     private Command[] useHarvester(Harvester item) {
@@ -117,6 +130,7 @@ public class Field extends GameObject {
                 MessageHelper.Item.harvested(plant.getName());
                 commands[0] = new Command(CommandWord.ADDITEM, null, item.harvest(plant));
                 removePlant();
+
 
                 playAnimation(GrowthStage.SEED);
 
@@ -218,6 +232,9 @@ public class Field extends GameObject {
     }
     public void setpH(float ph){this.pH=ph;}
 
+    public ArrayList<String> getPlantHist(){
+        return plantHist;
+    }
 
 
 }
