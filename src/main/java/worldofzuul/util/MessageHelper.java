@@ -1,6 +1,7 @@
 package worldofzuul.util;
 
 import worldofzuul.parsing.CommandWord;
+import worldofzuul.world.Field;
 
 public class MessageHelper {
     public static class Item {
