@@ -9,14 +9,14 @@ import worldofzuul.SpriteAnimation;
 import java.util.Objects;
 
 
-@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, include= JsonTypeInfo.As.WRAPPER_OBJECT, property="type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT, property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value=Seed.class, name="Seed"),
-        @JsonSubTypes.Type(value=Harvester.class, name="Harvester"),
-        @JsonSubTypes.Type(value=Fertilizer.class, name="Fertilizer"),
-        @JsonSubTypes.Type(value=Irrigator.class, name="Irrigator"),
-        @JsonSubTypes.Type(value=Plant.class, name="Plant"),
-        @JsonSubTypes.Type(value=pHNeutralizers.class, name="pHNeutralizers")
+        @JsonSubTypes.Type(value = Seed.class, name = "Seed"),
+        @JsonSubTypes.Type(value = Harvester.class, name = "Harvester"),
+        @JsonSubTypes.Type(value = Fertilizer.class, name = "Fertilizer"),
+        @JsonSubTypes.Type(value = Irrigator.class, name = "Irrigator"),
+        @JsonSubTypes.Type(value = Plant.class, name = "Plant"),
+        @JsonSubTypes.Type(value = pHNeutralizers.class, name = "pHNeutralizers")
 })
 public abstract class Item extends SpriteAnimation {
     private final StringProperty name = new SimpleStringProperty();
@@ -26,12 +26,14 @@ public abstract class Item extends SpriteAnimation {
     FloatProperty capacity = new SimpleFloatProperty(1);
     FloatProperty consumptionRate = new SimpleFloatProperty(0);
 
-    public Item(){}
+    public Item() {
+    }
+
     public Item(String name) {
         setName(name);
     }
 
-    public Item(String name, double value, double sellBackRate){
+    public Item(String name, double value, double sellBackRate) {
         this(name);
         this.value.setValue(value);
         this.sellBackRate.setValue(sellBackRate);
@@ -44,8 +46,6 @@ public abstract class Item extends SpriteAnimation {
 
 
     }
-
-
 
 
     public Item(String name, float consumptionRate, float remaining, float capacity) {
@@ -65,13 +65,13 @@ public abstract class Item extends SpriteAnimation {
         return name.get();
     }
 
+    public void setName(String name) {
+        this.name.set(name);
+    }
+
     @JsonIgnore
     public StringProperty nameProperty() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name.set(name);
     }
 
     @Override
@@ -84,43 +84,48 @@ public abstract class Item extends SpriteAnimation {
         return value.get();
     }
 
+    public void setValue(double value) {
+        this.value.set(value);
+    }
+
     @JsonIgnore
     public DoubleProperty valueProperty() {
         return value;
     }
 
-    public void setValue(double value) {
-        this.value.set(value);
-    }
-
     public double getSellBackRate() {
         return sellBackRate.get();
-    }
-    @JsonIgnore
-    public DoubleProperty sellBackRateProperty() {
-        return sellBackRate;
     }
 
     public void setSellBackRate(double sellBackRate) {
         this.sellBackRate.set(sellBackRate);
     }
 
+    @JsonIgnore
+    public DoubleProperty sellBackRateProperty() {
+        return sellBackRate;
+    }
 
-    public float getConsumptionRate(){
+    public float getConsumptionRate() {
         return consumptionRate.get();
     }
-    public void setConsumptionRate(float value){
+
+    public void setConsumptionRate(float value) {
         consumptionRate.set(value);
     }
-    public float getCapacity(){
+
+    public float getCapacity() {
         return capacity.get();
     }
-    public void setCapacity(float value){
+
+    public void setCapacity(float value) {
         capacity.set(value);
     }
+
     public Float getRemaining() {
         return remaining.get();
     }
+
     public void setRemaining(float value) {
         remaining.set(value);
     }
@@ -129,10 +134,12 @@ public abstract class Item extends SpriteAnimation {
     public FloatProperty remainingProperty() {
         return remaining;
     }
+
     @JsonIgnore
     public FloatProperty capacityProperty() {
         return capacity;
     }
+
     @JsonIgnore
     public FloatProperty consumptionRateProperty() {
         return consumptionRate;
@@ -151,9 +158,10 @@ public abstract class Item extends SpriteAnimation {
 
         return depletionAmount;
     }
+
     @JsonIgnore
-    public void deplete(float amount){
-        if(amount <= getRemaining()){
+    public void deplete(float amount) {
+        if (amount <= getRemaining()) {
             setRemaining(getRemaining() - amount);
         }
     }

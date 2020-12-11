@@ -13,18 +13,18 @@ import java.util.TimerTask;
 
 public class FieldInfoBarController implements Initializable {
 
+    private final static int timeOutDelay = 12000;
+    private final Field field;
     public Pane infoBarContainer;
     public ProgressBar waterInfoBar;
     public ProgressBar nutritionInfoBar;
-    private final Field field;
     private Timer timer;
-    private final static int timeOutDelay = 12000;
 
     public FieldInfoBarController(Field field) {
         this.field = field;
     }
 
-    private void resetTimer(){
+    private void resetTimer() {
         infoBarContainer.setVisible(true);
 
         if (timer != null) {
@@ -48,8 +48,8 @@ public class FieldInfoBarController implements Initializable {
 
 
         field.waterProperty().addListener((observable, oldValue, newValue) -> {
-           setWaterProgress();
-           resetTimer();
+            setWaterProgress();
+            resetTimer();
         });
         field.nutritionProperty().addListener((observable, oldValue, newValue) -> {
             setNutritionProgress();
@@ -59,16 +59,14 @@ public class FieldInfoBarController implements Initializable {
         infoBarContainer.setVisible(false);
     }
 
-    private void setWaterProgress()
-    {
+    private void setWaterProgress() {
         waterInfoBar.setProgress(field.getWater() / field.getMaxWater());
 
     }
 
-    private void setNutritionProgress(){
+    private void setNutritionProgress() {
         nutritionInfoBar.setProgress(field.getNutrition() / field.getMaxNutrition());
     }
-    
-    
-    
+
+
 }

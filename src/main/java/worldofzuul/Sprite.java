@@ -7,9 +7,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public abstract class Sprite {
+    private final StringProperty defaultImageFile = new SimpleStringProperty();
     private Image image;
     private ImageView imageView;
-    private final StringProperty defaultImageFile = new SimpleStringProperty();
 
 
     public Sprite() {

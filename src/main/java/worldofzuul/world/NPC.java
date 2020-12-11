@@ -18,7 +18,7 @@ public class NPC extends GameObject {
     @Override
     public Command[] interact() {
 
-        if(dialog.size() > 0){
+        if (dialog.size() > 0) {
             String dialogText = dialog.getFirst();
             System.out.println(dialogText);
 
@@ -32,7 +32,7 @@ public class NPC extends GameObject {
     @Override
     public Command[] interact(Item item) {
 
-        if(quests.size() > 0){
+        if (quests.size() > 0) {
             Quest currentQuest = quests.getFirst();
 
             currentQuest.questCompleteProperty().removeListener((o, oV, nV) -> quests.remove(currentQuest));
@@ -41,8 +41,6 @@ public class NPC extends GameObject {
             if (currentQuest != null) {
                 return currentQuest.turnIn(item);
             }
-        } else {
-            //Notify no quests available
         }
 
         return super.interact(item);

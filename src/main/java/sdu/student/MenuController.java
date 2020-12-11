@@ -20,35 +20,9 @@ public class MenuController implements Initializable {
     public Button gameButton;
     public GridPane instructionsPane;
 
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
-
-
-    public void changeSceneEditor() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("gameEditor.fxml"));
-            Stage stage = (Stage) gameButton.getScene().getWindow();
-            Scene scene = new Scene(loader.load());
-            stage.setScene(scene);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    public void changeSceneGame() {
-        Stage stage = (Stage) gameButton.getScene().getWindow();
-
-        loadGameScene(stage, getClass(), null);
-
-    }
-
-
     public static void loadGameScene(Stage stage, Class<?> controllerClass, FXMLController fxmlController) {
 
-        if(fxmlController != null){
+        if (fxmlController != null) {
             fxmlController = null;
         }
 
@@ -77,13 +51,36 @@ public class MenuController implements Initializable {
                 }
 
 
-            } );
+            });
             stage.setScene(scene);
 
 
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    public void changeSceneEditor() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("gameEditor.fxml"));
+            Stage stage = (Stage) gameButton.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void changeSceneGame() {
+        Stage stage = (Stage) gameButton.getScene().getWindow();
+
+        loadGameScene(stage, getClass(), null);
+
     }
 
     public void showInstructions() {
@@ -91,8 +88,8 @@ public class MenuController implements Initializable {
         instructionsPane.setVisible(true);
 
         FadeTransition ft = new FadeTransition(Duration.millis(instructionsShowDelay), instructionsPane);
-            ft.setFromValue(0.0);
-            ft.setToValue(1);
+        ft.setFromValue(0.0);
+        ft.setToValue(1);
         ft.play();
 
 

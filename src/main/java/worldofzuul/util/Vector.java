@@ -24,10 +24,10 @@ public class Vector {
 
     public Vector(String s) {
         this();
-        if(s.contains(delimiter)){
+        if (s.contains(delimiter)) {
             String[] values = s.split(delimiter);
 
-            if(values.length == 2){
+            if (values.length == 2) {
                 setX(Math.tryParse(values[0], 0));
                 setY(Math.tryParse(values[1], 0));
             }
@@ -36,11 +36,14 @@ public class Vector {
     }
 
 
-
     @JsonIgnore
-    public final String getVectorValue(){return vectorValue.get();}
+    public final String getVectorValue() {
+        return vectorValue.get();
+    }
 
-    public final void setVectorValue(String value){vectorValue.set(value);}
+    public final void setVectorValue(String value) {
+        vectorValue.set(value);
+    }
 
     @JsonIgnore
     public StringProperty vectorValueProperty() {

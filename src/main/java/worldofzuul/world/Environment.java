@@ -12,7 +12,8 @@ import java.util.Random;
 public class Environment {
     private final BooleanProperty rainState = new SimpleBooleanProperty(false);
     private final BooleanProperty nightState = new SimpleBooleanProperty(false);
-
+    private final Calendar calendar = Calendar.getInstance();
+    private final Random random = new Random();
     private int rainTicksMin = 500;
     private int rainTicksMax = 1500;
     private double chanceForRain = 0.00001;
@@ -20,23 +21,21 @@ public class Environment {
     private int dayTimeEnd = 18;
     private int secondsToIncrement = 2;
     private float rainWaterAmount = 0.1f;
-
-    private final Calendar calendar = Calendar.getInstance();
-    private final Random random = new Random();
     private boolean isPrintingEnabled = false;
 
     private int rainTicks = 0;
 
-    public Environment(){
-        calendar.set(2020, Calendar.JANUARY,1,8, 1);
+    public Environment() {
+        calendar.set(2020, Calendar.JANUARY, 1, 8, 1);
     }
-    public Environment(Date date){
+
+    public Environment(Date date) {
         calendar.setTime(date);
     }
 
-    public void update(){
+    public void update() {
         incrementTime();
-        if(isRaining()){
+        if (isRaining()) {
             rainTicks--;
         } else if (getRainState()) {
             if (isPrintingEnabled) {
@@ -48,40 +47,41 @@ public class Environment {
         }
     }
 
-    public void update(GameObject gameObject){
-        if(gameObject instanceof Field){
-            if(getRainState()){
+    public void update(GameObject gameObject) {
+        if (gameObject instanceof Field) {
+            if (getRainState()) {
                 ((Field) gameObject).addWater(rainWaterAmount);
             }
-            if(dayTime()){
-                ((Field) gameObject).shineLight();      //#Svær kode annotering (Casting).
+            if (dayTime()) {
+                ((Field) gameObject).shineLight();
             }
         }
     }
+
     @JsonIgnore
-    public boolean isRaining(){
+    public boolean isRaining() {
         return rainTicks > 0;
     }
 
-    private void incrementTime(){
+    private void incrementTime() {
         calendar.add(Calendar.SECOND, secondsToIncrement);
     }
 
-    private boolean shouldItRain(){
+    private boolean shouldItRain() {
         return chanceForRain > random.nextDouble();
     }
 
-    private boolean dayTime(){
+    private boolean dayTime() {
         int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
         boolean result = currentHour >= dayTimeStart && currentHour <= dayTimeEnd;
 
-        if(getNightState() && result){
-            if(isPrintingEnabled) {
+        if (getNightState() && result) {
+            if (isPrintingEnabled) {
                 MessageHelper.Info.nightEnded();
             }
             setNightState(false);
-        } else if (!getNightState() && !result){
-            if(isPrintingEnabled){
+        } else if (!getNightState() && !result) {
+            if (isPrintingEnabled) {
                 MessageHelper.Info.nightStarted();
             }
             setNightState(true);
@@ -91,12 +91,12 @@ public class Environment {
     }
 
     private void startRaining() {
-            rainTicks = random.nextInt((rainTicksMax - rainTicksMin) + 1) + rainTicksMin;
-            setRainState(true);
+        rainTicks = random.nextInt((rainTicksMax - rainTicksMin) + 1) + rainTicksMin;
+        setRainState(true);
 
-            if(isPrintingEnabled){
-                MessageHelper.Info.rainStarted();
-            }
+        if (isPrintingEnabled) {
+            MessageHelper.Info.rainStarted();
+        }
     }
 
 
@@ -162,36 +162,39 @@ public class Environment {
     }
 
     @JsonIgnore
+    public void setRainState(boolean rainState) {
+        this.rainState.set(rainState);
+    }
+
+    @JsonIgnore
     public BooleanProperty rainStateProperty() {
         return rainState;
     }
 
     @JsonIgnore
-    public void setRainState(boolean rainState) {
-        this.rainState.set(rainState);
-    }
-    @JsonIgnore
     public boolean getNightState() {
         return nightState.get();
     }
-    @JsonIgnore
-    public BooleanProperty nightStateProperty() {
-        return nightState;
-    }
+
     @JsonIgnore
     public void setNightState(boolean nightState) {
         this.nightState.set(nightState);
     }
 
-    public Date getCalendarStart(){
+    @JsonIgnore
+    public BooleanProperty nightStateProperty() {
+        return nightState;
+    }
+
+    public Date getCalendarStart() {
         return calendar.getTime();
     }
 
-    public void setCalendarStart(Date date){
+    public void setCalendarStart(Date date) {
         calendar.setTime(date);
     }
 
-    public Calendar getCalendar(){
+    public Calendar getCalendar() {
         return calendar;
     }
 

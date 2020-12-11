@@ -17,7 +17,7 @@ public class CustomPrintStream extends PrintStream {
 
     @Override
     public void println(String line) {
-            printList.add(line);
+        printList.add(line);
 
         super.println(line);
     }
@@ -27,11 +27,11 @@ public class CustomPrintStream extends PrintStream {
         return printList.get();
     }
 
-    public ListProperty<String> printListProperty() {
-        return printList;
-    }
-
     public void setPrintList(ObservableList<String> printList) {
         this.printList.set(printList);
+    }
+
+    public ListProperty<String> printListProperty() {
+        return printList;
     }
 }

@@ -27,15 +27,14 @@ public abstract class SpriteAnimation extends Sprite {
 
     public void addAnimation(List<Object> animationKeys, List<Image[]> imageAnimations) {
         for (int i = 0; i < animationKeys.size(); i++) {
-                this.imageAnimations.put(getAnimationString(animationKeys.get(i)), imageAnimations.get(i));
+            this.imageAnimations.put(getAnimationString(animationKeys.get(i)), imageAnimations.get(i));
         }
     }
 
-    private String getAnimationString(Object obj){
-        if(obj != null){
+    private String getAnimationString(Object obj) {
+        if (obj != null) {
             return obj.toString();
-        }
-        else{
+        } else {
             return "default";
         }
     }
@@ -64,7 +63,7 @@ public abstract class SpriteAnimation extends Sprite {
     }
 
     private void playAnimation(ImageView view, int cycles, Image[] images) {
-        if(images.length <= 0)
+        if (images.length <= 0)
             return;
 
         setImage(Arrays.stream(images).findFirst().orElseThrow());
@@ -119,7 +118,7 @@ public abstract class SpriteAnimation extends Sprite {
         return animationTimeline;
     }
 
-    public void setDefaultImage(Object animationKey){
+    public void setDefaultImage(Object animationKey) {
         if (imageAnimations.values().size() > 0 && imageAnimations.containsKey(getAnimationString(animationKey))) {
             Image[] images = imageAnimations.get(getAnimationString(animationKey));
             if (images.length > 0) {
@@ -159,9 +158,9 @@ public abstract class SpriteAnimation extends Sprite {
         this.animationStringValues = animationStringValues;
     }
 
-    public void configureImages(HashMap<String, Image> images){
+    public void configureImages(HashMap<String, Image> images) {
         for (String animationStringValue : animationStringValues) {
-            if(images.containsKey(animationStringValue) && animationStringValues.indexOf(animationStringValue) < animationStringKeys.size()){
+            if (images.containsKey(animationStringValue) && animationStringValues.indexOf(animationStringValue) < animationStringKeys.size()) {
                 imageAnimations.put(getAnimationStringKeys().get(animationStringValues.indexOf(animationStringValue)), new Image[]{images.get(animationStringValue)});
             }
 
@@ -172,6 +171,7 @@ public abstract class SpriteAnimation extends Sprite {
     public LinkedHashMap<String, Image[]> getImageAnimations() {
         return imageAnimations;
     }
+
     @JsonIgnore
     public void setImageAnimations(LinkedHashMap<String, Image[]> animations) {
         this.imageAnimations = animations;

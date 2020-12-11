@@ -6,7 +6,6 @@ module worldofzuul {
     requires javafx.fxml;
 
 
-
     opens sdu.student to javafx.fxml, com.fasterxml.jackson.annotation, com.fasterxml.jackson.core, com.fasterxml.jackson.databind;
     opens sdu.student.editor to javafx.fxml, com.fasterxml.jackson.annotation, com.fasterxml.jackson.core, com.fasterxml.jackson.databind;
     opens worldofzuul to javafx.fxml, com.fasterxml.jackson.annotation, com.fasterxml.jackson.core, com.fasterxml.jackson.databind;

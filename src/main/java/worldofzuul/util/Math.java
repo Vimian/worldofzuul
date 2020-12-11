@@ -18,17 +18,17 @@ public class Math {
 
         if (y != 0) {
 
-            if (y > 0) {//SOUTH
+            if (y > 0) {
                 return Direction.SOUTH;
-            } else {//NORTH
+            } else {
                 return Direction.NORTH;
             }
 
         } else if (x != 0) {
-            if (x < 0) {//EAST
+            if (x < 0) {
                 return Direction.EAST;
 
-            } else {//WEST
+            } else {
                 return Direction.WEST;
             }
         }

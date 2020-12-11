@@ -11,22 +11,16 @@ import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
 import worldofzuul.util.MessageHelper;
 
-import java.util.ArrayList;
-
 public class Field extends GameObject {
     private final static double minpH = 0.0;
     private final static double maxpH = 14.0;
-
-    private Plant plant;
-
-
     private final DoubleProperty pH = new SimpleDoubleProperty(7);
     private final FloatProperty water = new SimpleFloatProperty(20000);
     private final FloatProperty nutrition = new SimpleFloatProperty(10000);
     private final FloatProperty depletionRate = new SimpleFloatProperty(1);
     private final FloatProperty maxWater = new SimpleFloatProperty(20000);
     private final FloatProperty maxNutrition = new SimpleFloatProperty(20000);
-
+    private Plant plant;
     private boolean ripePlantSeen = false;
 
     public Field() {
@@ -44,7 +38,7 @@ public class Field extends GameObject {
 
 
     public void addWater(float water) {
-        if(getWater() + water <= getMaxWater()){
+        if (getWater() + water <= getMaxWater()) {
             setWater(getWater() + water);
         }
     }
@@ -52,21 +46,22 @@ public class Field extends GameObject {
     @Override
     public Command[] update() {
         if (plant != null) {
-            if(isPlantGrowing()){
+            if (isPlantGrowing()) {
                 float waterToAdd = 0;
                 float nutritionToAdd = 0;
 
-                if(plant.getWaterNeeded() > 0){
+                if (plant.getWaterNeeded() > 0) {
                     waterToAdd = depleteWater(plant.getWaterDepletionRate());
                 }
-                if(plant.getNutritionNeeded() > 0){
+                if (plant.getNutritionNeeded() > 0) {
                     nutritionToAdd = depleteNutrition(plant.getNutritionDepletionRate());
                 }
                 plant.grow(waterToAdd, nutritionToAdd);
-                //plant.grow(depleteWater(), depleteNutrition(), getPH());
-            } if(plant.isRipe() && !ripePlantSeen){
+
+            }
+            if (plant.isRipe() && !ripePlantSeen) {
                 MessageHelper.Info.plantBecameRipe(plant.getName());
-                //playAnimation(GrowthStage.RIPE);
+
                 ripePlantSeen = true;
             }
         }
@@ -88,8 +83,7 @@ public class Field extends GameObject {
             MessageHelper.Item.usedItem(item.getName());
             useIrrigator((Irrigator) item);
             return null;
-        } else if (item instanceof pHNeutralizers){
-            //MessageHelper.Item.usedItem(item.getName()); CAUSES DOUBLE MESSSAGE
+        } else if (item instanceof pHNeutralizers) {
             return usepHNeutralizers((pHNeutralizers) item);
         }
 
@@ -98,7 +92,7 @@ public class Field extends GameObject {
 
     private Command[] useFertilizer(Fertilizer item) {
         Command[] commands = new Command[1];
-        if(nutrition.get() + item.getConsumptionRate() < maxNutrition.get()) {
+        if (nutrition.get() + item.getConsumptionRate() < maxNutrition.get()) {
             nutrition.set(nutrition.get() + item.deplete());
         }
 
@@ -157,7 +151,7 @@ public class Field extends GameObject {
                 commands[0] = new Command(CommandWord.ADD_ITEM, null, item.harvest(plant));
                 removePlant();
 
-            } else if(plant.getState() == GrowthStage.DEAD){
+            } else if (plant.getState() == GrowthStage.DEAD) {
                 removePlant();
             } else {
                 MessageHelper.Item.unripePlant();
@@ -168,10 +162,11 @@ public class Field extends GameObject {
 
         return commands;
     }
-    public Command[] usepHNeutralizers(pHNeutralizers item){
+
+    public Command[] usepHNeutralizers(pHNeutralizers item) {
         Command[] commands = new Command[1];
 
-        if(item.getRemaining() <= 0){
+        if (item.getRemaining() <= 0) {
             System.out.println("You do not have enough Neutralizers! You only got " + item.getRemaining() + " left");
             return commands;
         }
@@ -185,7 +180,7 @@ public class Field extends GameObject {
 
         item.deplete();
 
-        if(item.getRemaining() <= 0){
+        if (item.getRemaining() <= 0) {
             commands[0] = new Command(CommandWord.REMOVE_ITEM, null, item);
         }
 
@@ -208,7 +203,9 @@ public class Field extends GameObject {
 
     }
 
-    private boolean isPlantGrowing() { return plant != null && !plant.isRipe(); }
+    private boolean isPlantGrowing() {
+        return plant != null && !plant.isRipe();
+    }
 
     private float depleteWater(float waterDepletionRate) {
         if (getWater() > getDepletionRate() * waterDepletionRate) {
@@ -227,10 +224,6 @@ public class Field extends GameObject {
             return 0;
         }
     }
-
-    public void shineLight() {
-    }
-
 
     public float getWater() {
         return water.get();
@@ -273,11 +266,6 @@ public class Field extends GameObject {
         return pH.get();
     }
 
-    @JsonIgnore
-    public DoubleProperty phProperty() {
-        return pH;
-    }
-
     public void setPH(double pH) {
         this.pH.set(pH);
 
@@ -288,8 +276,17 @@ public class Field extends GameObject {
         }
     }
 
+    @JsonIgnore
+    public DoubleProperty phProperty() {
+        return pH;
+    }
+
     public float getMaxWater() {
         return maxWater.get();
+    }
+
+    public void setMaxWater(float maxWater) {
+        this.maxWater.set(maxWater);
     }
 
     @JsonIgnore
@@ -297,27 +294,24 @@ public class Field extends GameObject {
         return maxWater;
     }
 
-    public void setMaxWater(float maxWater) {
-        this.maxWater.set(maxWater);
-    }
-
     public float getMaxNutrition() {
         return maxNutrition.get();
-    }
-    @JsonIgnore
-    public FloatProperty maxNutritionProperty() {
-        return maxNutrition;
     }
 
     public void setMaxNutrition(float maxNutrition) {
         this.maxNutrition.set(maxNutrition);
     }
 
+    @JsonIgnore
+    public FloatProperty maxNutritionProperty() {
+        return maxNutrition;
+    }
+
     @Override
     public void setImageView(ImageView imageView) {
         super.setImageView(imageView);
 
-        if(plant != null){
+        if (plant != null) {
             plant.setImageView(imageView);
             plant.playAnimation(plant.getState());
         }

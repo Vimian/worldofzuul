@@ -23,16 +23,15 @@ import static worldofzuul.util.Math.tryParse;
 
 public class Game {
     private final static int updateDelay = 60;
-    private Parser parser;
-    private Property<Room> currentRoom = new SimpleObjectProperty<>();
     private final ListProperty<Room> rooms = new SimpleListProperty<>(
             FXCollections.observableArrayList());
+    private final Parser parser;
+    private final Property<Room> currentRoom = new SimpleObjectProperty<>();
     private Player player;
     private ScheduledExecutorService scheduledThreadPool;
     private Market market = new Market();
 
     public Game() {
-        //createRooms();
         parser = new Parser();
 
     }
@@ -42,15 +41,17 @@ public class Game {
     }
 
     @JsonIgnore
-    public Room getRoom(){
+    public Room getRoom() {
         return currentRoom.getValue();
     }
+
     @JsonIgnore
-    public void setRoom(Room room){
+    public void setRoom(Room room) {
         currentRoom.setValue(room);
     }
+
     @JsonIgnore
-    public Property<Room> roomProperty(){
+    public Property<Room> roomProperty() {
         return currentRoom;
     }
 
@@ -70,7 +71,7 @@ public class Game {
     public void interact(Vector gameObjectPos, boolean useItem) {
         Command[] commands;
         if (useItem) {
-            if(player.getInventory().getSelectedItem() == null){
+            if (player.getInventory().getSelectedItem() == null) {
                 interact(gameObjectPos, false);
             }
 
@@ -81,25 +82,22 @@ public class Game {
             commands = getRoom()
                     .getGridGameObject(gameObjectPos)
                     .interact();
-            }
+        }
 
-       processCommandInternal(commands);
+        processCommandInternal(commands);
     }
 
 
-
-    public void reconfigureRooms(){
+    public void reconfigureRooms() {
         for (Room room : rooms) {
             if (room.getExitStrings().size() <= 0) {
                 continue;
             }
 
 
-
             MapProperty<String, Room> exits = new SimpleMapProperty<>(
                     FXCollections.observableHashMap()
             );
-
 
 
             for (Room.Exit exit : room.getExitStrings()) {
@@ -114,9 +112,9 @@ public class Game {
         setRoom(getRooms().get(0));
     }
 
-    private Room findRoom(String shortDescription){
+    private Room findRoom(String shortDescription) {
         for (Room room : rooms) {
-            if(room.getDescription().equals(shortDescription)){
+            if (room.getDescription().equals(shortDescription)) {
                 return room;
             }
         }
@@ -313,7 +311,7 @@ public class Game {
 
         }
 
-        if(!player.getInventory().getItems().contains(player.getInventory().getSelectedItem())){
+        if (!player.getInventory().getItems().contains(player.getInventory().getSelectedItem())) {
             player.getInventory().unselectItem();
         }
 
@@ -336,13 +334,11 @@ public class Game {
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
-        }
-        else {
+        } else {
             setRoom(nextRoom);
             System.out.println(getRoom().getLongDescription());
         }
     }
-
 
 
     private void movePlayer(Command command) {
@@ -384,7 +380,6 @@ public class Game {
         Vector pos = new Vector(secondWord);
 
         if (canPlayerMoveToPoint(pos.getX(), pos.getY())) {
-            MessageHelper.Command.teleported(pos);
             setPlayerPosition(pos);
         }
     }
@@ -396,7 +391,7 @@ public class Game {
         GameObject newTile = getRoom().getGridGameObject(position);
         player.setCurrentGameObject(newTile);
 
-        if(currentTile != null){
+        if (currentTile != null) {
             processCommandInternal(currentTile.uponExit());
         }
 

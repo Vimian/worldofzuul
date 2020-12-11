@@ -25,7 +25,7 @@ public class Door extends GameObject {
     @Override
     public Command[] uponEntry(GameObject previousGameObject) {
 
-        if(!(previousGameObject instanceof Door)){
+        if (!(previousGameObject instanceof Door)) {
             return getCommands();
         }
 

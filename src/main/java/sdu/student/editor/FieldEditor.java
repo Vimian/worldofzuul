@@ -17,11 +17,9 @@ public class FieldEditor extends GameObjectEditor {
     public TextField waterTextField;
 
 
-
     public TextField maxWaterTextField;
     public TextField maxNutritionTextField;
     public TextField phLevelTextField;
-
 
 
     public FieldEditor(Field fieldModel) {
@@ -60,8 +58,6 @@ public class FieldEditor extends GameObjectEditor {
         phLevelTextField.textProperty().addListener(ev -> {
             getModel().setPH(tryParse(phLevelTextField.textProperty().get().replace(",", "").replace(".", ""), 0));
         });
-
-
 
 
     }

@@ -4,15 +4,11 @@ package worldofzuul.item;
 public class Fertilizer extends Item {
 
 
-    public Fertilizer(){}
+    public Fertilizer() {
+    }
 
     public Fertilizer(Fertilizer fertilizer) {
         super(fertilizer);
-    }
-
-    @Override
-    public Item copyItem() {
-        return new Fertilizer(this);
     }
 
     public Fertilizer(String name, float amount) {
@@ -24,8 +20,10 @@ public class Fertilizer extends Item {
         super(name, value, sellbackRate);
     }
 
-
-
+    @Override
+    public Item copyItem() {
+        return new Fertilizer(this);
+    }
 
 
 }

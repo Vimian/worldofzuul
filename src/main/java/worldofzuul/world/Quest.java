@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Quest {
+    private final BooleanProperty questComplete = new SimpleBooleanProperty(false);
     private List<Item> rewards = new LinkedList<>();
     private String questTitle;
     private String introductionMessage;
@@ -20,24 +21,18 @@ public class Quest {
     private Class<?> turnInClass;
     private Float turnInQuantity;
 
-
-    private final BooleanProperty questComplete = new SimpleBooleanProperty(false);
-
     public Quest() {
     }
 
-    public Command[] turnIn(Item item){
+    public Command[] turnIn(Item item) {
         List<Command> commands = new LinkedList<>();
 
-        if(turnInClass.isInstance(item)){
+        if (turnInClass.isInstance(item)) {
 
-            if(item.getRemaining() >= turnInQuantity){
+            if (item.getRemaining() >= turnInQuantity) {
                 item.deplete(turnInQuantity);
-                //System.out.println("You turned in " +turnInQuantity + " " + item.getName() + "s.");
-                //BUG - DOUBLE COMPLETEQUEST MESSAGE
                 commands.addAll(completeQuest());
-            }
-            else if(item.getRemaining() > 0) {
+            } else if (item.getRemaining() > 0) {
                 float amountTurnedIn = item.getRemaining();
                 System.out.println("You turned in " + amountTurnedIn + " " + item.getName() + "s.");
                 item.deplete(amountTurnedIn);
@@ -48,18 +43,18 @@ public class Quest {
                 System.out.println("You can't turn in nothing!");
             }
 
-            if(item.getRemaining() <= 0){
+            if (item.getRemaining() <= 0) {
                 commands.add(new Command(CommandWord.REMOVE_ITEM, null, item));
             }
 
         } else {
-            System.out.println("Bring me " + turnInQuantity + " " + turnInClass.getSimpleName() + "s instead." );
+            System.out.println("Bring me " + turnInQuantity + " " + turnInClass.getSimpleName() + "s instead.");
         }
 
         return commands.toArray(new Command[0]);
     }
 
-    private List<Command>  completeQuest(){
+    private List<Command> completeQuest() {
         turnInQuantity = 0f;
         questComplete.set(true);
 
@@ -111,6 +106,7 @@ public class Quest {
     public Class<?> getTurnInClass() {
         return turnInClass;
     }
+
     @JsonIgnore
     public void setTurnInClass(Class<?> turnInClass) {
         this.turnInClass = turnInClass;
@@ -142,16 +138,16 @@ public class Quest {
     }
 
     @JsonIgnore
-    public BooleanProperty questCompleteProperty() {
-        return questComplete;
-    }
-
-    @JsonIgnore
     public void setQuestComplete(boolean questComplete) {
         this.questComplete.set(questComplete);
     }
 
-    public void configureImages(HashMap<String, Image> images){
+    @JsonIgnore
+    public BooleanProperty questCompleteProperty() {
+        return questComplete;
+    }
+
+    public void configureImages(HashMap<String, Image> images) {
         for (Item reward : rewards) {
             reward.configureImages(images);
         }

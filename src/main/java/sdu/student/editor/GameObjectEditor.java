@@ -28,7 +28,7 @@ public abstract class GameObjectEditor implements Initializable {
         bindProperties();
     }
 
-    public void bindProperties(){
+    public void bindProperties() {
         toggleButton.setSelected(model.isColliding());
         imageFileTextField.textProperty().bindBidirectional(this.model.defaultImageFileProperty());
         animationLengthTextField.textProperty().bindBidirectional(this.model.animationCycleLengthMillisProperty(), new NumberStringConverter());

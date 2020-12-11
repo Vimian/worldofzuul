@@ -97,7 +97,8 @@ public class Data {
         }
         return cutSprites;
     }
-    public static Image[][] singleImageToArrays(Image image){
+
+    public static Image[][] singleImageToArrays(Image image) {
         LinkedList<Image[]> images = new LinkedList<>();
         images.add(new Image[]{image});
         return images.toArray(new Image[1][1]);

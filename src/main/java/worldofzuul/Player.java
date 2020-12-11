@@ -9,39 +9,39 @@ import worldofzuul.world.GameObject;
 public class Player extends SpriteAnimation {
 
     private final Vector pos;
-    private GameObject currentGameObject;
     private final Inventory inventory = new Inventory();
     private final DoubleProperty balance = new SimpleDoubleProperty();
+    private GameObject currentGameObject;
 
-    Player(){
+    Player() {
         pos = new Vector();
     }
 
 
-    public Inventory getInventory(){
+    public Inventory getInventory() {
         return inventory;
     }
 
-    public Vector getPos(){
+    public Vector getPos() {
         return pos;
     }
 
+    public void setPos(Vector pos) {
+        this.pos.setY(pos.getY());
+        this.pos.setX(pos.getX());
+    }
 
     public double getBalance() {
         return balance.get();
-    }
-    @JsonIgnore
-    public DoubleProperty balanceProperty() {
-        return balance;
     }
 
     public void setBalance(double balance) {
         this.balance.set(balance);
     }
 
-    public void setPos(Vector pos){
-        this.pos.setY(pos.getY());
-        this.pos.setX(pos.getX());
+    @JsonIgnore
+    public DoubleProperty balanceProperty() {
+        return balance;
     }
 
     @JsonIgnore

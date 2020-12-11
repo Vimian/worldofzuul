@@ -5,18 +5,15 @@ import worldofzuul.world.Field;
 
 public class Irrigator extends Item {
 
-    public Irrigator(){}
+    public Irrigator() {
+    }
+
     public Irrigator(String name) {
         super(name);
     }
 
     public Irrigator(Irrigator irrigator) {
         super(irrigator);
-    }
-
-    @Override
-    public Item copyItem() {
-        return new Irrigator(this);
     }
 
     public Irrigator(String name, Double value, Double sellbackRate) {
@@ -28,6 +25,11 @@ public class Irrigator extends Item {
         this.setCapacity(capacity);
         this.setRemaining(remaining);
 
+    }
+
+    @Override
+    public Item copyItem() {
+        return new Irrigator(this);
     }
 
     @JsonIgnore

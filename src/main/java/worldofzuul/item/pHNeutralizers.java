@@ -3,11 +3,21 @@ package worldofzuul.item;
 public class pHNeutralizers extends Item {
     private Double pHChange;
 
-    public pHNeutralizers(){}
+    public pHNeutralizers() {
+    }
 
     public pHNeutralizers(pHNeutralizers other) {
         super(other);
         this.pHChange = other.pHChange;
+    }
+
+    public pHNeutralizers(String name, Double value, Double sellbackRate) {
+        super(name, value, sellbackRate);
+    }
+
+    public pHNeutralizers(String name, Double value, Double sellbackRate, Double pHChange) {
+        super(name, value, sellbackRate);
+        this.pHChange = pHChange;
     }
 
     @Override
@@ -15,14 +25,7 @@ public class pHNeutralizers extends Item {
         return new pHNeutralizers(this);
     }
 
-    public pHNeutralizers(String name, Double value, Double sellbackRate) {
-        super(name, value, sellbackRate);
-    }
-    public pHNeutralizers(String name, Double value, Double sellbackRate, Double pHChange){
-        super(name,value,sellbackRate);
-        this.pHChange = pHChange;
-    }
-    public Double getpHChange(){
+    public Double getpHChange() {
         return pHChange;
     }
 }

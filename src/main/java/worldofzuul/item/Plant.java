@@ -19,29 +19,19 @@ public class Plant extends Item {
     private float nutritionDepletionRate = 5;
     private float maxNutrition = nutritionNeeded;
     private int growthTime = 1000;
-
-    
     private int maxTimeWithoutWater = 100;
+
     private int ticksNotWatered;
-
     private int growTicks = 0;
-    private crops crops;
 
-    public Plant(){}
-
-    @Override
-    public Item copyItem() {
-        return new Plant(this);
+    public Plant() {
     }
 
     public Plant(String name, Double value, Double sellbackRate) {
         super(name, value, sellbackRate);
     }
 
-
-
-
-    public Plant(Plant plant){
+    public Plant(Plant plant) {
         super(plant.getName());
 
         setSeedQuality(plant.getSeedQuality());
@@ -64,11 +54,16 @@ public class Plant extends Item {
         setRemaining(plant.getRemaining());
     }
 
+    @Override
+    public Item copyItem() {
+        return new Plant(this);
+    }
+
     public void grow(float water, float nutrition) {
-        
-        if(water == 0){
+
+        if (water == 0) {
             witherPlant();
-        } else if (ticksNotWatered != 0){
+        } else if (ticksNotWatered != 0) {
             ticksNotWatered = 0;
         }
 
@@ -77,115 +72,24 @@ public class Plant extends Item {
 
         if (readyForNextStage()) {
             advanceStage();
-       }
-
+        }
 
 
         growTicks++;
     }
 
 
-    public void grow(float water, float nutrition, Double pH) {
-        switch (crops) {
-            case CORN:
-                if (pH <= 5.8 && pH >= 7) {
-                    if (water == 0) {
-                        witherPlant();
-                    } else if (ticksNotWatered != 0) {
-                        ticksNotWatered = 0;
-                    }
-
-                    consumeNutrition(nutrition);
-                    consumeWater(water);
-
-                    if (readyForNextStage()) {
-                        advanceStage();
-                    }
-
-                    growTicks++;
-                }
-            case RICE:
-                if (pH <= 5.5 && pH >= 7) {
-                    if (water == 0) {
-                        witherPlant();
-                    } else if (ticksNotWatered != 0) {
-                        ticksNotWatered = 0;
-                    }
-
-                    consumeNutrition(nutrition);
-                    consumeWater(water);
-
-                    if (readyForNextStage()) {
-                        advanceStage();
-                    }
-
-                    growTicks++;
-                }
-            case CASHEW:
-                if (pH <= 5 && pH >= 6.5) {
-                    if (water == 0) {
-                        witherPlant();
-                    } else if (ticksNotWatered != 0) {
-                        ticksNotWatered = 0;
-                    }
-
-                    consumeNutrition(nutrition);
-                    consumeWater(water);
-
-                    if (readyForNextStage()) {
-                        advanceStage();
-                    }
-
-                    growTicks++;
-                }
-            case COWPEA:
-                if (pH <= 5.5 && pH >= 6.5) {
-                    if (water == 0) {
-                        witherPlant();
-                    } else if (ticksNotWatered != 0) {
-                        ticksNotWatered = 0;
-                    }
-
-                    consumeNutrition(nutrition);
-                    consumeWater(water);
-
-                    if (readyForNextStage()) {
-                        advanceStage();
-                    }
-
-                    growTicks++;
-                }
-            case MANGO:
-                if (pH <= 6 && pH >= 7.2) {
-                    if (water == 0) {
-                        witherPlant();
-                    } else if (ticksNotWatered != 0) {
-                        ticksNotWatered = 0;
-                    }
-
-                    consumeNutrition(nutrition);
-                    consumeWater(water);
-
-                    if (readyForNextStage()) {
-                        advanceStage();
-                    }
-
-                    growTicks++;
-                }
-        }
-    }
-
     private void witherPlant() {
-        if(waterNeeded <= 0){
+        if (waterNeeded <= 0) {
             return;
         }
 
         ticksNotWatered++;
-        
-        if(ticksNotWatered >= maxTimeWithoutWater){
-           setState(DEAD);
+
+        if (ticksNotWatered >= maxTimeWithoutWater) {
+            setState(DEAD);
         }
-        
+
     }
 
     @JsonIgnore
@@ -307,13 +211,13 @@ public class Plant extends Item {
     }
 
     @JsonIgnore
-    public Property<GrowthStage> stateProperty() {
-        return state;
+    public void setState(GrowthStage state) {
+        this.state.set(state);
     }
 
     @JsonIgnore
-    public void setState(GrowthStage state) {
-        this.state.set(state);
+    public Property<GrowthStage> stateProperty() {
+        return state;
     }
 
     @Override

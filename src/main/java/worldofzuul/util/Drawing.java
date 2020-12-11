@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 public class Drawing {
 
-    public static TranslateTransition translate(Node node, double x, double y, double z, int translationTime){
+    public static TranslateTransition translate(Node node, double x, double y, double z, int translationTime) {
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(translationTime), node);
 
         translateTransition.setByX(x);
@@ -30,7 +30,7 @@ public class Drawing {
         return translateTransition;
     }
 
-    public static void drawGrid(Pane pane, double rowCount){
+    public static void drawGrid(Pane pane, double rowCount) {
 
         double cubeDim = (pane.getMinWidth() / rowCount);
         for (int i = 0; i < rowCount + 1; i++) {
@@ -43,7 +43,7 @@ public class Drawing {
 
     }
 
-    public static void setNodePositionToVectorCorner(Node node, Vector position, double tileDim){
+    public static void setNodePositionToVectorCorner(Node node, Vector position, double tileDim) {
         node.setTranslateX(position.getX() * tileDim + tileDim / 3);
         node.setTranslateY(position.getY() * tileDim - tileDim / 3);
     }
@@ -53,7 +53,7 @@ public class Drawing {
             for (int j = 0; j < room.getRoomGrid().length; j++) {
 
                 var rect = new Rectangle(j * backgroundTileDim, i * backgroundTileDim, backgroundTileDim, backgroundTileDim);
-                GameObject object = room.getGridGameObject(new Vector(j,i));
+                GameObject object = room.getGridGameObject(new Vector(j, i));
                 drawGameObjectImage(loadedImages, roomPane, rect, object);
 
 
@@ -84,12 +84,11 @@ public class Drawing {
                     } else {
                         rect.setStroke(Color.DARKMAGENTA);
                     }
-                }
-                else {
+                } else {
                     continue;
                 }
 
-                if(highlight){
+                if (highlight) {
                     rect.setStrokeWidth(4);
                     rect.setFill(Color.TRANSPARENT);
                     roomPane.getChildren().add(rect);
@@ -97,7 +96,7 @@ public class Drawing {
             }
         }
 
-        if(clickedPos != null && highlight){
+        if (clickedPos != null && highlight) {
             Rectangle rect = new Rectangle(clickedPos.getX() * backgroundTileDim,
                     clickedPos.getY() * backgroundTileDim,
                     backgroundTileDim,
@@ -110,8 +109,7 @@ public class Drawing {
         }
 
     }
-
-
+    
     private static void appendFieldInfoBar(Field field, Pane pane, Vector position, double tileDim, Class<?> callerController) {
         Node infoBar = loadFieldInfoBar(field, callerController);
         if (infoBar != null) {
@@ -122,33 +120,31 @@ public class Drawing {
 
     private static void drawGameObjectImage(HashMap<String, Image> loadedImages, Pane roomPane, Rectangle rect, GameObject object) {
 
-            ImageView imageView;
-            if (object.getImageView() == null || loadedImages.get(object.getDefaultImageFile()) != object.getImage()) {
-                imageView = new ImageView(loadedImages.get(object.getDefaultImageFile()));
-                imageView.setX(rect.getX());
-                imageView.setY(rect.getY());
-                imageView.setFitHeight(rect.getHeight());
-                imageView.setFitWidth(rect.getWidth());
+        ImageView imageView;
+        if (object.getImageView() == null || loadedImages.get(object.getDefaultImageFile()) != object.getImage()) {
+            imageView = new ImageView(loadedImages.get(object.getDefaultImageFile()));
+            imageView.setX(rect.getX());
+            imageView.setY(rect.getY());
+            imageView.setFitHeight(rect.getHeight());
+            imageView.setFitWidth(rect.getWidth());
 
-                object.setImageView(imageView);
-            } else {
-                imageView = object.getImageView();
-            }
+            object.setImageView(imageView);
+        } else {
+            imageView = object.getImageView();
+        }
 
-            if (object.getImage() != null && object.getImage() != imageView.getImage()) {
-                imageView.setImage(object.getImage());
-            }
+        if (object.getImage() != null && object.getImage() != imageView.getImage()) {
+            imageView.setImage(object.getImage());
+        }
 
-            object.display();
-            roomPane.getChildren().add(imageView);
+        object.display();
+        roomPane.getChildren().add(imageView);
     }
 
-    private static Node loadFieldInfoBar(Field field, Class<?> callerController){
+    private static Node loadFieldInfoBar(Field field, Class<?> callerController) {
         FXMLLoader loader = new FXMLLoader();
 
-        //Defines our controller
         loader.setControllerFactory(aClass -> new FieldInfoBarController(field));
-        //Defines the FXML file
         loader.setLocation(callerController.getResource("fieldInfoBar.fxml"));
 
         try {

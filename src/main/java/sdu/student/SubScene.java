@@ -13,13 +13,12 @@ import java.util.ResourceBundle;
 
 public class SubScene implements Initializable {
 
+    private final Game model;
     public Pane marketScene;
     @FXML
     private TableView<Item> inventoryView;
     @FXML
     private TableView<Item> marketView;
-
-    private final Game model;
 
     public SubScene(Game game) {
         model = game;
@@ -31,7 +30,7 @@ public class SubScene implements Initializable {
         marketView.itemsProperty().bindBidirectional(model.getMarket().stockProperty());
     }
 
-    public void inventoryClicked(){
+    public void inventoryClicked() {
     }
 
     public void sellClicked() {

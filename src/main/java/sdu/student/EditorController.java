@@ -93,7 +93,7 @@ public class EditorController implements Initializable {
 
 
         for (Room room : model.getRooms()) {
-            if(room != null && room.getRoomGrid() != null){
+            if (room != null && room.getRoomGrid() != null) {
                 Arrays.stream(room.getRoomGrid()).forEach(t -> {
                     for (GameObject gameObject : t) {
                         gameObject.configureImages(loadedImages);
@@ -104,7 +104,6 @@ public class EditorController implements Initializable {
         }
 
         model.getPlayer().getInventory().addItem(new pHNeutralizers());
-
 
 
     }
@@ -236,7 +235,7 @@ public class EditorController implements Initializable {
     }
 
     private void setBackground(Image backgroundImage) {
-        if(backgroundImage == null){
+        if (backgroundImage == null) {
             return;
         }
 
@@ -271,7 +270,6 @@ public class EditorController implements Initializable {
         String nodeToLoad = "";
         FXMLLoader loader = new FXMLLoader();
 
-        //Get fxml editor
         if (gameObject instanceof Block) {
             nodeToLoad = "editor/blockEditor.fxml";
             loader.setControllerFactory(aClass -> new BlockEditor((Block) gameObject));
@@ -315,7 +313,6 @@ public class EditorController implements Initializable {
     public void redrawGame() {
 
 
-
         drawRoom();
     }
 
@@ -352,10 +349,8 @@ public class EditorController implements Initializable {
             drawRoom();
 
 
-
-        } catch (ArrayIndexOutOfBoundsException e) { // Handle exceptions caused by non-matching RoomGrid sizes or invalid positions
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println(e.getMessage());
-            //Create fitting RoomGrid
             model.getRoom().fillRoomGridWithBlocks((int) getBackgroundRowCount(), (int) getBackgroundRowCount());
             if (model.getRoom().getGridGameObject(currentlyEditingPos) != null) {
                 paneClicked(event);

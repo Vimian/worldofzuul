@@ -34,8 +34,7 @@ public class Room {
 
     }
 
-    public Room(String description)
-    {
+    public Room(String description) {
         this.description = description;
     }
 
@@ -62,17 +61,7 @@ public class Room {
 
     @JsonIgnore
     public String getLongDescription() {
-        return "You are " + description + ".\n" + getExitString();
-    }
-
-
-    private String getExitString() {
-        String returnString = "Exits:";
-        Set<String> keys = exits.keySet();
-        for (String exit : keys) {
-            returnString += " " + exit;
-        }
-        return returnString;
+        return "You are " + description + ".\n";
     }
 
     public Room getExit(String direction) {
@@ -100,7 +89,7 @@ public class Room {
 
         environment.update();
 
-        if(roomGrid != null){
+        if (roomGrid != null) {
             for (GameObject[] gameObjects : roomGrid) {
                 for (GameObject gameObject : gameObjects) {
                     if (gameObject != null) {
@@ -119,6 +108,10 @@ public class Room {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public void fillRoomGridWithBlocks(int height, int width) {
         this.roomGrid = new GameObject[height][width];
         for (int h = 0; h < this.roomGrid.length; h++) {
@@ -127,11 +120,6 @@ public class Room {
             }
         }
     }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
 
     public Environment getEnvironment() {
         return environment;

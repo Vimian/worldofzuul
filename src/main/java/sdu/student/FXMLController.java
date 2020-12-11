@@ -41,11 +41,8 @@ import static worldofzuul.util.Drawing.*;
 import static worldofzuul.util.Math.*;
 
 public class FXMLController implements Initializable {
-    private final CustomPrintStream printStream = new CustomPrintStream(System.out);
     private static final String configFileName = "gameConfig.json";
     private static final String spriteDirectory = "sprites";
-    private int gameTileDim = 64;
-    private int backgroundScaling = 2;
     private static final double paneTransDelayCoefficient = 1.2;
     private static final int updateDelay = 60;
     private static final double nightChangeOpacity = 0.6;
@@ -53,8 +50,8 @@ public class FXMLController implements Initializable {
     private static final int textDisplayDeletionDelay = 8000;
     private static final int textDisplayFadeDelay = 1500;
     private static final int playerInteractDistance = 1;
-
-
+    private final CustomPrintStream printStream = new CustomPrintStream(System.out);
+    private final Stage stage;
     public StackPane gameContainerPane;
     public VBox textDisplayBox;
     public StackPane mainPane;
@@ -65,18 +62,17 @@ public class FXMLController implements Initializable {
     public Label currentlySelectedItemLabel;
     public Label playerBalanceLabel;
     public Label timeLabel;
-
+    public Button marketButton;
+    public Game model;
+    private int gameTileDim = 64;
+    private int backgroundScaling = 2;
     @FXML
     private Pane roomPane;
     @FXML
     private ImageView imageView;
-    public Button marketButton;
-
     private TranslateTransition paneTranslation;
     private HashMap<String, Image> loadedImages;
-    public Game model;
     private Vector selectedGamePosition;
-    private final Stage stage;
     private ScheduledExecutorService scheduledThreadPool;
 
     public FXMLController(Stage stage) {
@@ -91,14 +87,13 @@ public class FXMLController implements Initializable {
         loadGame();
 
         bindProperties();
-        examplePlayAnimation();
+        configureAnimations();
         enableGameUpdater();
 
 
         gameTileDim = model.getRoom().getRoomTileDim();
         backgroundScaling = model.getRoom().getRoomBGScale();
 
-        //Configure custom PrintStream
         System.setOut(printStream);
         printStream.printListProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> displayTextMessage(newValue.get(newValue.size() - 1))));
     }
@@ -108,7 +103,6 @@ public class FXMLController implements Initializable {
         scheduledThreadPool.shutdown();
         loadGameScene(stage, getClass(), this);
     }
-
 
 
     private void enableGameUpdater() {
@@ -140,7 +134,7 @@ public class FXMLController implements Initializable {
         model.getRoom().setPrintingEnabled(true);
     }
 
-    private void examplePlayAnimation() {
+    private void configureAnimations() {
 
         Image playerSpriteSheet = loadedImages.get("sprites/player/walkCycle.png");
         List<Image[]> spriteAnimations = cutSprites(playerSpriteSheet, 64);
@@ -157,11 +151,9 @@ public class FXMLController implements Initializable {
 
         model.getPlayer().display();
 
-        //Example add sprites to fields
-
 
         for (Room room : model.getRooms()) {
-            if(room != null && room.getRoomGrid() != null){
+            if (room != null && room.getRoomGrid() != null) {
                 for (GameObject[] t : room.getRoomGrid()) {
                     for (GameObject gameObject : t) {
                         gameObject.configureImages(loadedImages);
@@ -171,11 +163,8 @@ public class FXMLController implements Initializable {
             }
         }
 
-         model.getPlayer().getInventory().getItems().forEach(item -> item.configureImages(loadedImages));
+        model.getPlayer().getInventory().getItems().forEach(item -> item.configureImages(loadedImages));
         model.getMarket().getStock().forEach(item -> item.configureImages(loadedImages));
-
-
-
 
 
         drawRoom();
@@ -185,7 +174,6 @@ public class FXMLController implements Initializable {
     }
 
     private void subscribeToPlayerMovement() {
-        //Upon player position change, move pane and activate player walk animation
         model.getPlayer().getPos().vectorValueProperty().addListener((observable, oldValue, newValue) -> repositionPlayer(new Vector(oldValue), new Vector(newValue)));
     }
 
@@ -271,7 +259,6 @@ public class FXMLController implements Initializable {
 
         playerBalanceLabel.textProperty().bindBidirectional(model.getPlayer().balanceProperty(), new NumberStringConverter());
 
-        //Listen to Room change
         model.roomProperty().addListener((observable, oldValue, newValue) -> {
             oldValue.setPrintingEnabled(false);
 
@@ -285,22 +272,21 @@ public class FXMLController implements Initializable {
         });
 
 
-
     }
 
-    private void subscribeToEnvironmentChanges(Environment environment){
+    private void subscribeToEnvironmentChanges(Environment environment) {
         environment.rainStateProperty().addListener((observable1, oldValue1, newValue1) -> changeRainState(newValue1));
         environment.nightStateProperty().addListener((observable1, oldValue1, newValue1) -> changeNightStage(newValue1));
     }
 
-    private void unsubscribeToEnvironmentChanges(Environment environment){
+    private void unsubscribeToEnvironmentChanges(Environment environment) {
         environment.rainStateProperty().removeListener((observable1, oldValue1, newValue1) -> changeRainState(newValue1));
         environment.nightStateProperty().removeListener((observable1, oldValue1, newValue1) -> changeNightStage(newValue1));
     }
 
-    private void changeRainState(boolean isRaining){
+    private void changeRainState(boolean isRaining) {
         FadeTransition ft = new FadeTransition(Duration.millis(nightChangeFadeDelay), rainImagePane);
-        if(isRaining){
+        if (isRaining) {
             ft.setFromValue(0.0);
             ft.setToValue(1);
 
@@ -311,9 +297,10 @@ public class FXMLController implements Initializable {
         ft.play();
 
     }
-    private void changeNightStage(boolean isNight){
+
+    private void changeNightStage(boolean isNight) {
         FadeTransition ft = new FadeTransition(Duration.millis(nightChangeFadeDelay), nightLayerPane);
-        if(isNight){
+        if (isNight) {
             ft.setFromValue(0.0);
             ft.setToValue(nightChangeOpacity);
 
@@ -329,7 +316,7 @@ public class FXMLController implements Initializable {
     }
 
     private void setBackground(Image backgroundImage) {
-        if(backgroundImage == null){
+        if (backgroundImage == null) {
             return;
         }
 
@@ -369,9 +356,7 @@ public class FXMLController implements Initializable {
 
         FXMLLoader loader = new FXMLLoader();
 
-        //Defines our controller
         loader.setControllerFactory(aClass -> new sdu.student.SubScene(model));
-        //Defines the FXML file
         loader.setLocation(getClass().getResource("subScene.fxml"));
 
         try {
@@ -379,15 +364,6 @@ public class FXMLController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        /*
-        try {
-            Node subRoot = FXMLLoader.load(getClass().getResource("subScene.fxml"));
-            loader.setControllerFactory(aClass -> new FieldInfoBarController(field));
-            stackPane.getChildren().add(subRoot);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
     }
 
 
@@ -406,7 +382,7 @@ public class FXMLController implements Initializable {
         return (roomPane.getMinWidth() / backgroundScaling) / gameTileDim;
     }
 
-    private void displayTextMessage(String text){
+    private void displayTextMessage(String text) {
 
         Label newLabel = new Label(text);
         newLabel.setId("textDisplayLabel");
@@ -422,9 +398,8 @@ public class FXMLController implements Initializable {
 
         new Timer().schedule(new TimerTask() {
             @Override
-            public void run()
-            {
-                Platform.runLater(() -> { //Platform.runLater is used to avoid cross thread UI invocation exceptions
+            public void run() {
+                Platform.runLater(() -> {
 
                     FadeTransition ft = new FadeTransition(Duration.millis(textDisplayFadeDelay), newLabel);
                     ft.setFromValue(1.0);
@@ -436,9 +411,6 @@ public class FXMLController implements Initializable {
                 this.cancel();
             }
         }, FXMLController.textDisplayDeletionDelay);
-
-
-
 
 
     }

@@ -8,17 +8,18 @@ import worldofzuul.SpriteAnimation;
 import worldofzuul.parsing.Command;
 import worldofzuul.util.MessageHelper;
 
-@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, include= JsonTypeInfo.As.WRAPPER_OBJECT, property="type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT, property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value= Block.class, name="Block"),
-        @JsonSubTypes.Type(value= Field.class, name="Field"),
-        @JsonSubTypes.Type(value= Door.class, name="Door"),
-        @JsonSubTypes.Type(value= NPC.class, name="NPC")
+        @JsonSubTypes.Type(value = Block.class, name = "Block"),
+        @JsonSubTypes.Type(value = Field.class, name = "Field"),
+        @JsonSubTypes.Type(value = Door.class, name = "Door"),
+        @JsonSubTypes.Type(value = NPC.class, name = "NPC")
 })
 public abstract class GameObject extends SpriteAnimation {
     private final BooleanProperty colliding = new SimpleBooleanProperty();
 
-    public GameObject(){}
+    public GameObject() {
+    }
 
     public Command[] update() {
         return null;

@@ -7,11 +7,11 @@ public enum Direction {
     WEST;
 
 
+    Direction() {
+    }
+
     @Override
     public String toString() {
         return this.name().toLowerCase();
-    }
-
-    Direction() {
     }
 }

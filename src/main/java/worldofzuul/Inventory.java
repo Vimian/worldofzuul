@@ -19,7 +19,7 @@ public class Inventory {
 
     @JsonIgnore
     public Item getSelectedItem() {
-        if (selectedItem != null) {
+        if (selectedItem.getValue() != null) {
             return selectedItem.getValue();
         } else if (!getItems().isEmpty()) {
             setSelectedItem(getItems().stream().findFirst().orElseThrow());
@@ -27,9 +27,6 @@ public class Inventory {
         } else {
             return null;
         }
-    }
-    public void unselectItem(){
-        setSelectedItem(null);
     }
 
     @JsonIgnore
@@ -39,7 +36,7 @@ public class Inventory {
                 selectedItem.setValue(item);
                 setSelectedItemName(getSelectedItem().getName());
             }
-        } else if(item == null){
+        } else if (item == null) {
 
             selectedItem.setValue(null);
             setSelectedItemName("Nothing");
@@ -49,21 +46,28 @@ public class Inventory {
         }
     }
 
+    public void unselectItem() {
+        setSelectedItem(null);
+    }
+
     @JsonIgnore
     public Property<Item> selectedItemProperty() {
         return selectedItem;
     }
+
     @JsonIgnore
     public String getSelectedItemName() {
         return selectedItemName.get();
     }
-    @JsonIgnore
-    public StringProperty selectedItemNameProperty() {
-        return selectedItemName;
-    }
+
     @JsonIgnore
     public void setSelectedItemName(String selectedItemName) {
         this.selectedItemName.set(selectedItemName);
+    }
+
+    @JsonIgnore
+    public StringProperty selectedItemNameProperty() {
+        return selectedItemName;
     }
 
     public void addItem(Item item) {
@@ -71,12 +75,12 @@ public class Inventory {
 
 
         items.forEach(item1 -> {
-            if(item1.equals(item)){
-                if(item1.getRemaining() < item1.getCapacity()){
+            if (item1.equals(item)) {
+                if (item1.getRemaining() < item1.getCapacity()) {
                     var newVal = item1.getRemaining() + item.getRemaining();
                     var newItemVal = newVal - item1.getCapacity();
 
-                    if(newItemVal <= 0){
+                    if (newItemVal <= 0) {
                         item1.setRemaining(newVal);
                         addItem.set(false);
                     } else {
@@ -88,7 +92,7 @@ public class Inventory {
             }
         });
 
-        if(addItem.get()){
+        if (addItem.get()) {
             this.getItems().add(item);
         }
 
