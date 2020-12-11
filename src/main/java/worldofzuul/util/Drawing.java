@@ -121,7 +121,7 @@ public class Drawing {
     }
 
     private static void drawGameObjectImage(HashMap<String, Image> loadedImages, Pane roomPane, Rectangle rect, GameObject object) {
-        if (object.getImage() != null || object.getDefaultImageFile() != null && loadedImages.containsKey(object.getDefaultImageFile())) {
+
             ImageView imageView;
             if (object.getImageView() == null || loadedImages.get(object.getDefaultImageFile()) != object.getImage()) {
                 imageView = new ImageView(loadedImages.get(object.getDefaultImageFile()));
@@ -141,7 +141,6 @@ public class Drawing {
 
             object.display();
             roomPane.getChildren().add(imageView);
-        }
     }
 
     private static Node loadFieldInfoBar(Field field, Class<?> callerController){
