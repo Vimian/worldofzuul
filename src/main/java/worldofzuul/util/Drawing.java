@@ -97,7 +97,7 @@ public class Drawing {
             }
         }
 
-        if(clickedPos != null){
+        if(clickedPos != null && highlight){
             Rectangle rect = new Rectangle(clickedPos.getX() * backgroundTileDim,
                     clickedPos.getY() * backgroundTileDim,
                     backgroundTileDim,
