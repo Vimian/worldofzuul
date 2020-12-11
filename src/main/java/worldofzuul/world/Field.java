@@ -166,6 +166,12 @@ public class Field extends GameObject {
     }
     public Command[] usepHNeutralizers(pHNeutralizers item){
         Command[] commands = new Command[1];
+
+        if(item.getRemaining() <= 0){
+            System.out.println("You do not have enough Neutralizers! You only got " + item.getRemaining() + " left");
+            return commands;
+        }
+
         double currentpH = getPH();
 
         if ((currentpH == maxpH && item.getpHChange() > 0) || (currentpH == minpH && item.getpHChange() < 0)) {
@@ -173,10 +179,7 @@ public class Field extends GameObject {
             return commands;
         }
 
-        if (!item.deplete(1)) {
-            System.out.println("You do not have enough Neutralizers! You only got " + item.getRemaining() + " left");
-            return commands;
-        }
+        item.deplete();
 
         if(item.getRemaining() <= 0){
             commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
