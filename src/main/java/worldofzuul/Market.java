@@ -128,10 +128,11 @@ public class Market {
    public void sellItem(Item item, Player player){
         if(player.getInventory().getItems().contains(item) && item != null) {
             player.setBalance(player.getBalance() + item.getValue() * item.getSellBackRate());
-                item.deplete(1);
-                if(item.getRemaining() <= 0){
-                    player.getInventory().removeItem(item);
-                }
+            item.deplete(1);
+
+            if(item.getConsumptionRate() == 0 || item.getRemaining() <= 0){
+                player.getInventory().removeItem(item);
+            }
         }
         else {
             System.out.println("Player does not have that item");

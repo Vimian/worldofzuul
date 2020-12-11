@@ -39,19 +39,31 @@ public class MenuController implements Initializable {
     }
 
     public void changeSceneGame() {
+        Stage stage = (Stage) gameButton.getScene().getWindow();
+
+        loadGameScene(stage, getClass(), null);
+
+    }
+
+
+    public static void loadGameScene(Stage stage, Class<?> controllerClass, FXMLController fxmlController) {
+
+        if(fxmlController != null){
+            fxmlController = null;
+        }
+
 
         try {
             FXMLLoader loader = new FXMLLoader();
-            FXMLController controller = new FXMLController();
+            FXMLController controller = new FXMLController(stage);
 
 
             loader.setControllerFactory(aClass -> controller);
-            loader.setLocation(getClass().getResource("scene.fxml"));
+            loader.setLocation(controllerClass.getResource("scene.fxml"));
 
 
-            Stage stage = (Stage) gameButton.getScene().getWindow();
             Scene scene = new Scene(loader.load());
-            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            scene.getStylesheets().add(controllerClass.getResource("styles.css").toExternalForm());
             stage.setScene(scene);
 
 
@@ -72,7 +84,6 @@ public class MenuController implements Initializable {
         }catch (IOException e){
             e.printStackTrace();
         }
-
     }
 
     public void showInstructions() {

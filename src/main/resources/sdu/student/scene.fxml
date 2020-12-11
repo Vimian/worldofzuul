@@ -41,6 +41,7 @@
             <MenuButton mnemonicParsing="false" text="Menu">
               <items>
                 <MenuItem mnemonicParsing="false" text="Help" />
+                  <MenuItem mnemonicParsing="false" text="Reload" onAction="#reloadScene" />
                 <MenuItem mnemonicParsing="false" text="Exit" />
               </items>
             </MenuButton>

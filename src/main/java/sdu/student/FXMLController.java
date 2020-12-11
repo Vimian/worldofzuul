@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.converter.NumberStringConverter;
 import worldofzuul.Game;
@@ -34,6 +35,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import static sdu.student.MenuController.loadGameScene;
 import static worldofzuul.util.Data.*;
 import static worldofzuul.util.Drawing.drawGameObjects;
 import static worldofzuul.util.Drawing.translate;
@@ -75,7 +77,12 @@ public class FXMLController implements Initializable {
     private HashMap<String, Image> loadedImages;
     public Game model;
     private Vector selectedGamePosition;
+    private final Stage stage;
+    private ScheduledExecutorService scheduledThreadPool;
 
+    public FXMLController(Stage stage) {
+        this.stage = stage;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -97,9 +104,17 @@ public class FXMLController implements Initializable {
         printStream.printListProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> displayTextMessage(newValue.get(newValue.size() - 1))));
     }
 
+
+    public void reloadScene() {
+        scheduledThreadPool.shutdown();
+        loadGameScene(stage, getClass(), this);
+    }
+
+
+
     private void enableGameUpdater() {
 
-        ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(1, r -> {
+        scheduledThreadPool = Executors.newScheduledThreadPool(1, r -> {
             Thread thread = new Thread(r);
             thread.setDaemon(true);
             return thread;
@@ -453,4 +468,5 @@ public class FXMLController implements Initializable {
     public void selectItem() {
         model.getPlayer().getInventory().setSelectedItem(inventoryTableView.getSelectionModel().getSelectedItem());
     }
+
 }
