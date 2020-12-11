@@ -330,6 +330,10 @@ public class FXMLController implements Initializable {
     }
 
     private void setBackground(Image backgroundImage) {
+        if(backgroundImage == null){
+            return;
+        }
+
         BackgroundImage myBI = new BackgroundImage(backgroundImage,
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(0, 0, false, false, false, true));
