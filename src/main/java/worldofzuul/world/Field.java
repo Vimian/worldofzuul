@@ -21,8 +21,6 @@ public class Field extends GameObject {
 
 
     private final DoubleProperty pH = new SimpleDoubleProperty(7);
-
-    private final DoubleProperty pH = new SimpleDoubleProperty();
     private final FloatProperty water = new SimpleFloatProperty(20000);
     private final FloatProperty nutrition = new SimpleFloatProperty(10000);
     private final FloatProperty depletionRate = new SimpleFloatProperty(1);
@@ -34,17 +32,13 @@ public class Field extends GameObject {
     public Field() {
     }
 
-    public Field(Fertilizer fertilizer) {
-        this.fertilizer = fertilizer;
-    }
 
-    public Field(Fertilizer fertilizer, float water) {
-        this(fertilizer);
+    public Field(float water) {
         setWater(water);
     }
 
-    public Field(Fertilizer fertilizer, float water, DoubleProperty pH) {
-        this(fertilizer,water);
+    public Field(float water, DoubleProperty pH) {
+        this(water);
         this.setPH(pH.get());
     }
 
@@ -95,7 +89,7 @@ public class Field extends GameObject {
             useIrrigator((Irrigator) item);
             return null;
         } else if (item instanceof pHNeutralizers){
-            MessageHelper.Item.usedItem(item.getName());
+            //MessageHelper.Item.usedItem(item.getName()); CAUSES DOUBLE MESSSAGE
             return usepHNeutralizers((pHNeutralizers) item);
         }
 
@@ -192,7 +186,7 @@ public class Field extends GameObject {
         item.deplete();
 
         if(item.getRemaining() <= 0){
-            commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
+            commands[0] = new Command(CommandWord.REMOVE_ITEM, null, item);
         }
 
         setPH(getPH() + item.getpHChange());

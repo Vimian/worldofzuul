@@ -14,6 +14,13 @@ public class Irrigator extends Item {
         super(name, value, sellbackRate);
     }
 
+    public Irrigator(String bucket, int capacity, int remaining, double value, double sellbackRate) {
+        this(bucket, value, sellbackRate);
+        this.setCapacity(capacity);
+        this.setRemaining(remaining);
+
+    }
+
     @JsonIgnore
     public void water(Field field) {
         field.addWater(deplete());

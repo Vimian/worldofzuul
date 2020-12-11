@@ -14,6 +14,7 @@ import sdu.student.editor.DoorEditor;
 import sdu.student.editor.FieldEditor;
 import sdu.student.editor.NPCEditor;
 import worldofzuul.Game;
+import worldofzuul.item.pHNeutralizers;
 import worldofzuul.util.Vector;
 import worldofzuul.world.*;
 
