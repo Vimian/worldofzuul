@@ -11,11 +11,16 @@ import worldofzuul.parsing.Command;
 import worldofzuul.parsing.CommandWord;
 import worldofzuul.util.MessageHelper;
 
+import java.util.ArrayList;
+
 public class Field extends GameObject {
-
-
+    private final static double minpH = 0.0;
+    private final static double maxpH = 14.0;
 
     private Plant plant;
+
+
+    private final DoubleProperty pH = new SimpleDoubleProperty(7);
 
     private final DoubleProperty pH = new SimpleDoubleProperty();
     private final FloatProperty water = new SimpleFloatProperty(20000);
@@ -29,13 +34,18 @@ public class Field extends GameObject {
     public Field() {
     }
 
+    public Field(Fertilizer fertilizer) {
+        this.fertilizer = fertilizer;
+    }
 
-    public Field(float water) {
+    public Field(Fertilizer fertilizer, float water) {
+        this(fertilizer);
         setWater(water);
     }
 
-    public Field(float water, Double pH) {
-        setWater(water);
+    public Field(Fertilizer fertilizer, float water, DoubleProperty pH) {
+        this(fertilizer,water);
+        this.setPH(pH.get());
     }
 
 
@@ -84,6 +94,9 @@ public class Field extends GameObject {
             MessageHelper.Item.usedItem(item.getName());
             useIrrigator((Irrigator) item);
             return null;
+        } else if (item instanceof pHNeutralizers){
+            MessageHelper.Item.usedItem(item.getName());
+            return usepHNeutralizers((pHNeutralizers) item);
         }
 
         return super.interact(item);
@@ -161,6 +174,37 @@ public class Field extends GameObject {
 
         return commands;
     }
+    public Command[] usepHNeutralizers(pHNeutralizers item){
+        Command[] commands = new Command[1];
+
+        if(item.getRemaining() <= 0){
+            System.out.println("You do not have enough Neutralizers! You only got " + item.getRemaining() + " left");
+            return commands;
+        }
+
+        double currentpH = getPH();
+
+        if ((currentpH == maxpH && item.getpHChange() > 0) || (currentpH == minpH && item.getpHChange() < 0)) {
+            System.out.println("You can not go below 0 or above 14 pH");
+            return commands;
+        }
+
+        item.deplete();
+
+        if(item.getRemaining() <= 0){
+            commands[0] = new Command(CommandWord.REMOVEITEM, null, item);
+        }
+
+        setPH(getPH() + item.getpHChange());
+
+        if (currentpH < getPH()) {
+            MessageHelper.Item.increasedpH(Double.toString(getPH()));
+        } else {
+            MessageHelper.Item.decreasedpH(Double.toString(getPH()));
+        }
+
+        return commands;
+    }
 
     private void removePlant() {
         plant.stateProperty().removeListener((observable, oldValue, newValue) -> plantStateChanged(newValue));
@@ -189,7 +233,6 @@ public class Field extends GameObject {
             return 0;
         }
     }
-
 
     public void shineLight() {
     }
@@ -243,6 +286,12 @@ public class Field extends GameObject {
 
     public void setPH(double pH) {
         this.pH.set(pH);
+
+        if (getPH() > maxpH) {
+            setPH(maxpH);
+        } else if (getPH() < minpH) {
+            setPH(minpH);
+        }
     }
 
     public float getMaxWater() {

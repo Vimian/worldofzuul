@@ -24,7 +24,6 @@ public class Market {
     }
 
    public Market(HashMap<Item, Double> stock){
-       this.stock.clear();
 
        this.stock.addAll(Arrays.asList(
                 fertilizer,
@@ -34,6 +33,10 @@ public class Market {
                 irrigator1,
                 irrigator2,
                 irrigator3,
+                pHNeutralizers1,
+                pHNeutralizers2,
+                pHNeutralizers3,
+                pHNeutralizers4,
                 plant1,
                 plant2,
                 plant3,
@@ -50,23 +53,27 @@ public class Market {
 
 
    }
-   Harvester harvester1 = new Harvester("Hands", 0.0, 0.0);
+   Harvester harvester1 = new Harvester("Cloves", 0.0, 0.0);
    Harvester harvester2 = new Harvester("Sickle", 230.0, 0.0);
    Harvester harvester3 = new Harvester("Scythe", 2000.0,0.0);
-    Fertilizer fertilizer = new Fertilizer("Fertilizer", 2, 320.0, 0.975);
-    Irrigator irrigator1 = new Irrigator("Bucket", 320.0, 0.0);
-    Irrigator irrigator2 = new Irrigator("Watering Can", 300.0, 0.0 );
-    Irrigator irrigator3 = new Irrigator("Hose", 400.0, 0.0);
-    Plant plant1 = new Plant("Corn", 2.0, 0.30);
-    Plant plant2 = new Plant("Cashew", 2.0, 0.40);
-    Plant plant3 = new Plant("Rice", 4.0, 0.20);
-    Plant plant4 = new Plant("Mango", 10.0, 0.70);
-    Plant plant5 = new Plant("Cowpea", 20.0, 0.01);
-    Seed seed1 = new Seed("CornSeeds",5, 13.0, 0.98);
-    Seed seed2 = new Seed("CashewSeeds", 5, 32.0, 0.98);
-    Seed seed3 = new Seed("RiceSeeds" , 5, 42.0 , 0.98);
-    Seed seed4 = new Seed("MangoSeeds", 5,93.0,0.98);
-    Seed seed5 = new Seed("CowpeaSeeds",5,10.0, 0.98);
+   Fertilizer fertilizer = new Fertilizer("Fertilizer", 2, 320.0, 0.975);
+   Irrigator irrigator1 = new Irrigator("Bucket", 10,10, 320.0, 0.0);
+   Irrigator irrigator2 = new Irrigator("Watering Can",10,50, 300.0, 0.0 );
+   Irrigator irrigator3 = new Irrigator("Hose",100, 9999, 400.0, 0.0);
+   pHNeutralizers pHNeutralizers1 = new pHNeutralizers("AgLimestone", 10.0,0.0,0.5);
+   pHNeutralizers pHNeutralizers2 = new pHNeutralizers("HydratedLimestone",10.0,0.0, 0.5);
+   pHNeutralizers pHNeutralizers3 = new pHNeutralizers("Sulfur",10.0,0.0,0.5);
+   pHNeutralizers pHNeutralizers4 = new pHNeutralizers("Aluminium sulfate",10.0,0.0, 0.5);
+   Plant plant1 = new Plant("Corn", 2.0, 0.30);
+   Plant plant2 = new Plant("Cashew", 2.0, 0.40);
+   Plant plant3 = new Plant("Rice", 4.0, 0.20);
+   Plant plant4 = new Plant("Mango", 10.0, 0.70);
+   Plant plant5 = new Plant("Cowpea", 20.0, 0.01);
+   Seed seed1 = new Seed("CornSeeds",5, 13.0, 0.98);
+   Seed seed2 = new Seed("CashewSeeds", 5, 32.0, 0.98);
+   Seed seed3 = new Seed("RiceSeeds" , 5, 42.0 , 0.98);
+   Seed seed4 = new Seed("MangoSeeds", 5,93.0,0.98);
+   Seed seed5 = new Seed("CowpeaSeeds",5,10.0, 0.98);
 
 
     public void purchaseItem(Item item, Player player) {
@@ -115,7 +122,6 @@ public class Market {
         } else {
             return;
         }
-
     }
 
     @JsonIgnore

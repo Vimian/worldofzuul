@@ -102,6 +102,7 @@ public class EditorController implements Initializable {
             }
         }
 
+        model.getPlayer().getInventory().addItem(new pHNeutralizers());
 
 
 
