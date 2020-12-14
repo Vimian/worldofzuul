@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"m":"worldofzuul","l":"sdu.student"},{"m":"worldofzuul","l":"sdu.student.editor"},{"m":"worldofzuul","l":"worldofzuul"},{"m":"worldofzuul","l":"worldofzuul.item"},{"m":"worldofzuul","l":"worldofzuul.parsing"},{"m":"worldofzuul","l":"worldofzuul.util"},{"m":"worldofzuul","l":"worldofzuul.world"}]
