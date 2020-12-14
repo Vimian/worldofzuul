@@ -29,47 +29,122 @@ import static worldofzuul.util.Drawing.drawGrid;
 import static worldofzuul.util.Math.positionClickedOnPane;
 import static worldofzuul.util.Math.tryParse;
 
+/**
+ * The type Editor controller.
+ *
+ * Controller for the GameEditor.
+ *
+ */
 public class EditorController implements Initializable {
+    /**
+     * The constant name of the game configuration json-file.
+     */
     private static final String configFileName = "gameConfig.json";
 
 
+    /**
+     * The constant for the spite directory.
+     */
     private static final String spriteDirectory = "sprites";
+    /**
+     * The Default game tile dimensions.
+     */
     private final int defaultGameTileDim = 48;
+    /**
+     * The Default background pane scaling.
+     */
     private final int defaultBackgroundScaling = 3;
 
+    /**
+     * The Property editor pane.
+     */
     @FXML
     private Pane propertyEditorPane;
+    /**
+     * The Room selector.
+     */
     @FXML
     private ListView<Room> roomSelector;
+    /**
+     * The Background img text field.
+     */
     @FXML
     private TextField backgroundImgTextField;
+    /**
+     * The Background scaling text field.
+     */
     @FXML
     private TextField backgroundScalingTextField;
+    /**
+     * The Room exits table.
+     */
     @FXML
     private TableView<Room.Exit> roomExitsTable;
+    /**
+     * The Current room label.
+     */
     @FXML
     private Label currentRoomLabel;
+    /**
+     * The Tile dimension text field.
+     */
     @FXML
     private TextField tileDimTextField;
+    /**
+     * The Exit key row.
+     */
     @FXML
     private TableColumn<Object, String> exitKeyRow;
+    /**
+     * The Exit room row.
+     */
     @FXML
     private TableColumn<Object, String> exitRoomRow;
+    /**
+     * The GameObject type box.
+     */
     @FXML
     private ComboBox<String> gameObjectTypeBox;
+    /**
+     * The Current position label.
+     */
     @FXML
     private Label currentPosLabel;
+    /**
+     * The Draw grid toggle button.
+     */
     @FXML
     private ToggleButton drawGridToggleButton;
+    /**
+     * The pane displaying the game background and entities.
+     */
     @FXML
     private Pane roomPane;
 
 
+    /**
+     * The Game tile dimension.
+     */
     private int gameTileDim = defaultGameTileDim;
+    /**
+     * The Background scaling.
+     */
     private int backgroundScaling = defaultBackgroundScaling;
+    /**
+     * The instance of Game being modified.
+     */
     private Game model;
+    /**
+     * The loaded images.
+     */
     private HashMap<String, Image> loadedImages;
+    /**
+     * The Currently editing position.
+     */
     private Vector currentlyEditingPos;
+    /**
+     * The Current GameObject being selected.
+     */
     private GameObject currentGameObject;
 
     @Override
@@ -110,6 +185,11 @@ public class EditorController implements Initializable {
     }
 
 
+    /**
+     * Add listeners.
+     *
+     * Adds listeners to various JavaFX nodes and binds them to relevant properties.
+     */
     private void addListeners() {
 
         roomExitsTable.itemsProperty().bindBidirectional(model.getRoom().exitStringsProperty());
@@ -132,6 +212,11 @@ public class EditorController implements Initializable {
     }
 
 
+    /**
+     * Change room.
+     *
+     * Changes room dependent on the selected item of {@link EditorController#roomSelector}.
+     */
     public void changeRoom() {
         Room clickedElement = roomSelector.getSelectionModel().getSelectedItem();
         if (clickedElement != null && clickedElement != model.getRoom()) {
@@ -152,6 +237,11 @@ public class EditorController implements Initializable {
         }
     }
 
+    /**
+     * Change type.
+     *
+     * Replaces the {@link EditorController#currentGameObject} with the selected item from {@link EditorController#gameObjectTypeBox}.
+     */
     public void changeType() {
         if (model.getRoom().getGridGameObject(currentlyEditingPos) != currentGameObject) {
             return;
@@ -200,10 +290,9 @@ public class EditorController implements Initializable {
     }
 
 
-
-
-
-
+    /**
+     * Loads game from JSON-file specified by {@link EditorController#configFileName} and replaces {@link EditorController#model}.
+     */
     private void loadGame() {
 
 
@@ -221,6 +310,9 @@ public class EditorController implements Initializable {
     }
 
 
+    /**
+     * Draws images relevant to {@link EditorController#roomPane}.
+     */
     private void drawRoom() {
         roomPane.getChildren().clear();
 
@@ -240,10 +332,20 @@ public class EditorController implements Initializable {
     }
 
 
+    /**
+     * Sets background of {@link EditorController#roomPane}.
+     *
+     * @param room the room
+     */
     private void setBackground(Room room) {
         setBackground(loadedImages.get(room.getBackgroundImage()));
     }
 
+    /**
+     * Sets background of {@link EditorController#roomPane}.
+     *
+     * @param backgroundImage the background image.
+     */
     private void setBackground(Image backgroundImage) {
         if (backgroundImage == null) {
             return;
@@ -258,15 +360,32 @@ public class EditorController implements Initializable {
     }
 
 
+    /**
+     * Gets background tile dim {@link EditorController#roomPane} when dividing using {@link EditorController#gameTileDim} and {@link EditorController#backgroundScaling}.
+     *
+     * @return the background tile dim
+     */
     private double getBackgroundTileDim() {
         return roomPane.getMinWidth() / getBackgroundRowCount();
     }
 
+    /**
+     * Gets background row count of {@link EditorController#roomPane} when dividing using {@link EditorController#gameTileDim} and {@link EditorController#backgroundScaling}.
+     *
+     * @return the background row count
+     */
     private double getBackgroundRowCount() {
         return (roomPane.getMinWidth() / backgroundScaling) / gameTileDim;
     }
 
 
+    /**
+     * Select game object for editing.
+     *
+     * Selects a GameObject for editing and opens appropriate {@link EditorController#propertyEditorPane}
+     *
+     * @param gameObject the game object
+     */
     private void selectGameObject(GameObject gameObject) {
         if (gameObject != currentGameObject) {
             currentGameObject = gameObject;
@@ -311,6 +430,11 @@ public class EditorController implements Initializable {
     }
 
 
+    /**
+     * Export {@link EditorController#model}.
+     *
+     * Pastes serialized instance of {@link EditorController#model} to clipboard.
+     */
     public void exportGame() {
         final Clipboard clipboard = Clipboard.getSystemClipboard();
         final ClipboardContent content = new ClipboardContent();
@@ -320,32 +444,60 @@ public class EditorController implements Initializable {
 
     }
 
+    /**
+     * Calls {@link EditorController#drawRoom()}
+     */
     public void redrawGame() {
 
 
         drawRoom();
     }
 
+    /**
+     * Adds new exit entry to current room of {@link EditorController#model}
+     */
     public void addExitRow() {
         model.getRoom().exitStringsProperty().add(new Room.Exit("Empty", "Empty"));
     }
 
 
+    /**
+     * Change exit key.
+     *
+     * @param cell the cell
+     */
     public void changeExitKey(TableColumn.CellEditEvent<Room.Exit, String> cell) {
         (cell.getTableView().getItems().get(cell.getTablePosition().getRow())).setExitKey(cell.getNewValue());
     }
 
 
+    /**
+     * Change exit value.
+     *
+     * @param cell the cell
+     */
     public void changeExitValue(TableColumn.CellEditEvent<Room.Exit, String> cell) {
         (cell.getTableView().getItems().get(cell.getTablePosition().getRow())).setExitValue(cell.getNewValue());
     }
 
+    /**
+     * Delete exit row.
+     *
+     * @param keyEvent the key event
+     */
     public void deleteExitRow(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.DELETE) {
             model.getRoom().exitsProperty().remove(roomExitsTable.getSelectionModel().getSelectedItem());
         }
     }
 
+    /**
+     * {@link EditorController#roomPane} clicked.
+     *
+     * When clicked calls {@link EditorController#selectGameObject(GameObject)} for GameObject at clicked position.
+     *
+     * @param event the event
+     */
     public void paneClicked(MouseEvent event) {
         currentlyEditingPos = positionClickedOnPane(getBackgroundTileDim(), getBackgroundTileDim(), event.getX(), event.getY());
         if (currentlyEditingPos.getX() < 0 || currentlyEditingPos.getY() < 0 || currentlyEditingPos.getX() > getBackgroundRowCount() || currentlyEditingPos.getY() > getBackgroundRowCount()) {
@@ -369,10 +521,20 @@ public class EditorController implements Initializable {
     }
 
 
+    /**
+     * {@link EditorController#propertyEditorPane} mouse moved.
+     */
     public void propertyPaneMouseMoved() {
         drawRoom();
     }
 
+    /**
+     * Start {@link EditorController#roomPane} dragged.
+     *
+     * If secondary mouse button is activated set the colliding field of all GameObject, which mouse is dragged over, to true, if CTRL key is pressed as well, set them to false.
+     *
+     * @param mouseEvent the mouse event
+     */
     public void startPaneDragged(MouseEvent mouseEvent) {
         if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
             roomPane.setOnMouseDragged(ev -> {
@@ -387,6 +549,11 @@ public class EditorController implements Initializable {
         }
     }
 
+    /**
+     * End pane dragged.
+     *
+     * @param mouseEvent the mouse event
+     */
     public void endPaneDragged(MouseEvent mouseEvent) {
         if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
             roomPane.setOnMouseDragged(ev -> {

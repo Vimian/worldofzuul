@@ -11,15 +11,35 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
+/**
+ * The type Sub scene.
+ */
 public class SubScene implements Initializable {
 
+    /**
+     * The Model.
+     */
     private final Game model;
+    /**
+     * The Market scene.
+     */
     public Pane marketScene;
+    /**
+     * The Inventory view.
+     */
     @FXML
     private TableView<Item> inventoryView;
+    /**
+     * The Market view.
+     */
     @FXML
     private TableView<Item> marketView;
 
+    /**
+     * Instantiates a new Sub scene.
+     *
+     * @param game the game
+     */
     public SubScene(Game game) {
         model = game;
     }
@@ -30,18 +50,30 @@ public class SubScene implements Initializable {
         marketView.itemsProperty().bindBidirectional(model.getMarket().stockProperty());
     }
 
+    /**
+     * Inventory clicked.
+     */
     public void inventoryClicked() {
     }
 
+    /**
+     * Sell clicked.
+     */
     public void sellClicked() {
         model.getMarket().sellItem(inventoryView.getSelectionModel().getSelectedItem(), model.getPlayer());
 
     }
 
+    /**
+     * Buy clicked.
+     */
     public void buyClicked() {
         model.getMarket().purchaseItem(marketView.getSelectionModel().getSelectedItem(), model.getPlayer());
     }
 
+    /**
+     * Exit clicked.
+     */
     public void exitClicked() {
         marketScene.setVisible(false);
     }

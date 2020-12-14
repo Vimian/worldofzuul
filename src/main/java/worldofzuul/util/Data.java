@@ -14,8 +14,20 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+/**
+ * The type Data.
+ *
+ * Contains static functions used for file IO.
+ *
+ */
 public class Data {
 
+    /**
+     * Reads all lines in file specified by the pathname {@param configFileName}.
+     *
+     * @param configFileName the config file name
+     * @return the file data
+     */
     public static String readConfigFile(String configFileName) {
         try {
             List<String> strings = Files.readAllLines(Paths.get(configFileName));
@@ -27,6 +39,12 @@ public class Data {
         }
     }
 
+    /**
+     * Serializes instance of game to JSON.
+     *
+     * @param game the game
+     * @return the serialized data of {@param game}
+     */
     public static String gameToJson(Game game) {
         try {
             ObjectWriter ow = new ObjectMapper().writer();
@@ -40,6 +58,12 @@ public class Data {
     }
 
 
+    /**
+     * Deserializes JSON to instance of game.
+     *
+     * @param configJson serialized data of {@link Game}
+     * @return the deserialized game
+     */
     public static Game jsonToGame(String configJson) {
         try {
 
@@ -52,6 +76,15 @@ public class Data {
             return null;
         }
     }
+
+    /**
+     * Json to room game.
+     *
+     * Not used
+     *
+     * @param configJson the config json
+     * @return the game
+     */
     public static Game jsonToRoom(String configJson) {
         try {
 
@@ -64,6 +97,15 @@ public class Data {
             return null;
         }
     }
+
+    /**
+     * Json to market game.
+     *
+     * Not used
+     *
+     * @param configJson the config json
+     * @return the game
+     */
     public static Game jsonToMarket(String configJson) {
         try {
 
@@ -76,6 +118,15 @@ public class Data {
             return null;
         }
     }
+
+    /**
+     * Json to player game.
+     *
+     * Not used
+     *
+     * @param configJson the config json
+     * @return the game
+     */
     public static Game jsonToPlayer(String configJson) {
         try {
 
@@ -88,6 +139,16 @@ public class Data {
             return null;
         }
     }
+
+    /**
+     * Gets images.
+     *
+     * Loads all images in all subdirectories given {@param directory} path.
+     *
+     * @param directory   the directory path
+     * @param CallerClass the JavaFX caller controller class, used to load image files as resources into {@link Image}
+     * @return Hashmap of strings and images, the string keys are the path, from the given {@param directory} path,  to the the image value
+     */
     public static HashMap<String, Image> getImages(String directory, Class<? extends Initializable> CallerClass) {
         URI uri;
         try {
@@ -119,6 +180,16 @@ public class Data {
     }
 
 
+    /**
+     * Cut sprites list.
+     *
+     * Cuts an image into a list of image arrays.
+     * Can be seen of as cutting the a sprite sheet into a grid using the {@param dimension}s.
+     *
+     * @param image     the sprite-sheet to cut
+     * @param dimension the sprite dimensions
+     * @return list of image arrays
+     */
     public static List<Image[]> cutSprites(Image image, int dimension) {
 
         List<Image[]> cutSprites = new ArrayList<>();
@@ -134,6 +205,12 @@ public class Data {
         return cutSprites;
     }
 
+    /**
+     * Adds a single image to an array of image arrays.
+     *
+     * @param image the image
+     * @return the array of image arrays
+     */
     public static Image[][] singleImageToArrays(Image image) {
         LinkedList<Image[]> images = new LinkedList<>();
         images.add(new Image[]{image});

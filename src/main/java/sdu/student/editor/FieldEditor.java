@@ -9,19 +9,45 @@ import java.util.ResourceBundle;
 
 import static worldofzuul.util.Math.tryParse;
 
+/**
+ * The type Field editor.
+ */
 public class FieldEditor extends GameObjectEditor {
 
 
+    /**
+     * The Nutrition text field.
+     */
     public TextField nutritionTextField;
+    /**
+     * The Depletion rate text field.
+     */
     public TextField depletionRateTextField;
+    /**
+     * The Water text field.
+     */
     public TextField waterTextField;
 
 
+    /**
+     * The Max water text field.
+     */
     public TextField maxWaterTextField;
+    /**
+     * The Max nutrition text field.
+     */
     public TextField maxNutritionTextField;
+    /**
+     * The Ph level text field.
+     */
     public TextField phLevelTextField;
 
 
+    /**
+     * Instantiates a new Field editor.
+     *
+     * @param fieldModel the field model
+     */
     public FieldEditor(Field fieldModel) {
         super(fieldModel);
     }

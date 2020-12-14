@@ -21,53 +21,136 @@ import java.util.concurrent.TimeUnit;
 
 import static worldofzuul.util.Math.tryParse;
 
+/**
+ * The type Game.
+ */
 public class Game {
+    /**
+     * The constant updateDelay which determines the amount of times per second to update the game.
+     *
+     * Redundant.
+     *
+     */
     private final static int updateDelay = 60;
+    /**
+     * The Rooms.
+     *
+     * List of all rooms
+     *
+     */
     private final ListProperty<Room> rooms = new SimpleListProperty<>(
             FXCollections.observableArrayList());
+    /**
+     * The Parser.
+     */
     private final Parser parser;
+    /**
+     * The Current room.
+     *
+     * The room that the player is currently in.
+     *
+     */
     private final Property<Room> currentRoom = new SimpleObjectProperty<>();
+    /**
+     * The Player.
+     */
     private Player player;
+    /**
+     * The Scheduled thread pool which manages the game update thread.
+     *
+     * Redundant.
+     *
+     */
     private ScheduledExecutorService scheduledThreadPool;
+    /**
+     * The Market.
+     */
     private Market market = new Market();
 
+    /**
+     * Instantiates a new Game.
+     */
     public Game() {
         parser = new Parser();
 
     }
 
+    /**
+     * Gets player.
+     *
+     * @return the player
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * Gets room.
+     *
+     * @return the room
+     */
     @JsonIgnore
     public Room getRoom() {
         return currentRoom.getValue();
     }
 
+    /**
+     * Sets room.
+     *
+     * @param room the room
+     */
     @JsonIgnore
     public void setRoom(Room room) {
         currentRoom.setValue(room);
     }
 
+    /**
+     * Room property property.
+     *
+     * @return the property
+     */
     @JsonIgnore
     public Property<Room> roomProperty() {
         return currentRoom;
     }
 
 
+    /**
+     * Gets market.
+     *
+     * @return the market
+     */
     public Market getMarket() {
         return market;
     }
 
+    /**
+     * Sets market.
+     *
+     * @param market the market
+     */
     public void setMarket(Market market) {
         this.market = market;
     }
 
+    /**
+     * Move.
+     *
+     * @param direction the direction
+     */
     public void move(Direction direction) {
         processCommandInternal(new Command(CommandWord.MOVE, direction.toString()));
     }
 
+    /**
+     * Interact.
+     *
+     * Interacts with the GameObject at the given position of the current rooms {@link Room#getRoomGrid()}.
+     * If {@param useItem} is true then the player will interact upon the GameObject using the players {@link Inventory#getSelectedItem()}.
+     *
+     * @param gameObjectPos the game object pos
+     * @param useItem       the use item
+     */
     public void interact(Vector gameObjectPos, boolean useItem) {
         Command[] commands;
         if (useItem) {
@@ -88,6 +171,12 @@ public class Game {
     }
 
 
+    /**
+     * Reconfigure rooms.
+     *
+     * Reconnects the rooms {@link Room#exitsProperty()} after serialization using {@link Room#exitStringsProperty()}.
+     *
+     */
     public void reconfigureRooms() {
         for (Room room : rooms) {
             if (room.getExitStrings().size() <= 0) {
@@ -112,6 +201,12 @@ public class Game {
         setRoom(getRooms().get(0));
     }
 
+    /**
+     * Find room using {@link Room#getShortDescription()}.
+     *
+     * @param shortDescription the short description
+     * @return the room
+     */
     private Room findRoom(String shortDescription) {
         for (Room room : rooms) {
             if (room.getDescription().equals(shortDescription)) {
@@ -122,6 +217,12 @@ public class Game {
         return null;
     }
 
+    /**
+     * Create rooms.
+     *
+     * Redundant.
+     *
+     */
     public void createRooms() {
         Room outside, theatre, pub, lab, office;
 
@@ -170,6 +271,12 @@ public class Game {
         setRoom(outside);
     }
 
+    /**
+     * Parse command line interface input as {@link Command}.
+     *
+     * Redundant.
+     *
+     */
     public void play() {
         MessageHelper.Info.welcomeMessage(getRoom().getLongDescription());
 
@@ -185,17 +292,35 @@ public class Game {
         MessageHelper.Info.exitMessage();
     }
 
+    /**
+     * Enable game updater.
+     *
+     * Redundant.
+     *
+     */
     private void enableGameUpdater() {
         scheduledThreadPool = Executors.newScheduledThreadPool(1);
         long delay = 1000000 / updateDelay;
         scheduledThreadPool.scheduleAtFixedRate(this::update, 0, delay, TimeUnit.MICROSECONDS);
     }
 
+    /**
+     * Update all rooms.
+     *
+     * Calls the {@link Room#update()} in all rooms that exist in {@link Game#rooms} processes the commands using {@link Game#processCommandInternal(Command[])}
+     *
+     */
     public void update() {
         rooms.forEach(room -> room.update().forEach(this::processCommandInternal));
     }
 
 
+    /**
+     * Process command boolean.
+     *
+     * @param command the command
+     * @return the boolean
+     */
     private boolean processCommand(Command command) {
         boolean wantToQuit = false;
 
@@ -222,6 +347,15 @@ public class Game {
         return wantToQuit;
     }
 
+    /**
+     * Select item.
+     *
+     * Processes the {@link CommandWord#SELECT} command.
+     * If {@link Command#getSecondWord()} is not null and is a valid integer, the players selected item will be the one at the given index in their inventory.
+     * Sets the selected player item to {@link Command#getItem()} if one is present.
+     *
+     * @param command the command
+     */
     private void selectItem(Command command) {
         if (!command.hasSecondWord()) {
             MessageHelper.Command.unknownArgumentWhat(CommandWord.SELECT.toString());
@@ -247,6 +381,13 @@ public class Game {
 
     }
 
+    /**
+     * Process command internal.
+     *
+     * Meant for processing commands that the player ought not have access to.
+     *
+     * @param command the command
+     */
     private void processCommandInternal(Command command) {
 
         CommandWord commandWord = command.getCommandWord();
@@ -268,12 +409,24 @@ public class Game {
 
     }
 
+    /**
+     * Add item.
+     *
+     * @param command the command
+     */
     private void addItem(Command command) {
         if (command.hasItem()) {
             player.getInventory().addItem(command.getItem());
         }
     }
 
+    /**
+     * Process command internal.
+     * 
+     * Calls {@link Game#processCommand(Command)}
+     *
+     * @param commands the commands
+     */
     private void processCommandInternal(Command[] commands) {
         if (commands != null && commands.length > 0) {
             for (Command command : commands) {
@@ -284,6 +437,12 @@ public class Game {
         }
     }
 
+    /**
+     * Interact player.
+     *
+     * Interact with the GameObject the player resides in.
+     *
+     */
     private void interactPlayer() {
 
         Item item = player.getInventory().getSelectedItem();
@@ -303,6 +462,11 @@ public class Game {
         processCommandInternal(commands);
     }
 
+    /**
+     * Remove item.
+     *
+     * @param command the command
+     */
     private void removeItem(Command command) {
         if (command.hasItem()) {
             player.getInventory().removeItem(command.getItem());
@@ -317,11 +481,21 @@ public class Game {
 
     }
 
+    /**
+     * Print help.
+     */
     private void printHelp() {
         MessageHelper.Info.helpCommands();
         parser.showCommands();
     }
 
+    /**
+     * Go room.
+     *
+     * Changes the current room the the one that corresponds the the value defined in their {@link Room#exitsProperty()} using the parameters {@link Command#getSecondWord()} as the key.
+     *
+     * @param command the command
+     */
     private void goRoom(Command command) {
         if (!command.hasSecondWord()) {
             MessageHelper.Command.unknownArgumentWhere(CommandWord.GO.toString());
@@ -341,6 +515,14 @@ public class Game {
     }
 
 
+    /**
+     * Move player.
+     *
+     * Constructs a {@link Direction} using the {@link Command#getSecondWord()} and moves the player in that direction.
+     * If one cannot be constructed or the the {@link Game#canPlayerMoveToPoint(int, int)} is false, nothing will happen.
+     *
+     * @param command the command
+     */
     private void movePlayer(Command command) {
         if (!command.hasSecondWord()) {
             MessageHelper.Command.unknownArgumentWhere(CommandWord.MOVE.toString());
@@ -370,6 +552,14 @@ public class Game {
         }
     }
 
+    /**
+     * Teleport player.
+     *
+     * Constructs a {@link Vector} using the parameters {@link Command#getSecondWord()} and attempts to teleport the player to the {@link Vector} position.
+     * If one cannot be constructed or the the {@link Game#canPlayerMoveToPoint(int, int)} is false, nothing will happen.
+     *
+     * @param command the command
+     */
     private void teleportPlayer(Command command) {
         if (!command.hasSecondWord()) {
             MessageHelper.Command.unknownArgumentWhere(CommandWord.TELEPORT.name());
@@ -384,6 +574,13 @@ public class Game {
         }
     }
 
+    /**
+     * Sets player position.
+     *
+     * Handles entry and exit of GameObjects.
+     *
+     * @param position the position
+     */
     private void setPlayerPosition(Vector position) {
 
         GameObject currentTile = player.getCurrentGameObject();
@@ -398,6 +595,13 @@ public class Game {
         processCommandInternal(newTile.uponEntry(currentTile));
     }
 
+    /**
+     * Can player move to point boolean.
+     *
+     * @param x the x
+     * @param y the y
+     * @return the boolean
+     */
     private boolean canPlayerMoveToPoint(int x, int y) {
         int roomDimensionsY = getRoom().getRoomGrid().length;
         int roomDimensionsX = getRoom().getRoomGrid()[0].length;
@@ -415,6 +619,12 @@ public class Game {
         return !targetPosition.isColliding();
     }
 
+    /**
+     * Quit boolean.
+     *
+     * @param command the command
+     * @return the boolean
+     */
     private boolean quit(Command command) {
         if (command.hasSecondWord()) {
             MessageHelper.Command.unknownArgumentWhere(CommandWord.QUIT.toString());
@@ -424,11 +634,21 @@ public class Game {
         }
     }
 
+    /**
+     * Gets rooms.
+     *
+     * @return the rooms
+     */
     @JsonGetter
     public ObservableList<Room> getRooms() {
         return rooms.get();
     }
 
+    /**
+     * Sets rooms.
+     *
+     * @param rooms the rooms
+     */
     @JsonSetter
     public void setRooms(Room[] rooms) {
         ObservableList<Room> temp = new SimpleListProperty<>(
@@ -439,11 +659,21 @@ public class Game {
         this.rooms.set(temp);
     }
 
+    /**
+     * Sets rooms.
+     *
+     * @param observableRooms the observable rooms
+     */
     @JsonIgnore
     public void setRooms(ObservableList<Room> observableRooms) {
         this.rooms.set(observableRooms);
     }
 
+    /**
+     * Rooms property list property.
+     *
+     * @return the list property
+     */
     @JsonIgnore
     public ListProperty<Room> roomsProperty() {
         return rooms;

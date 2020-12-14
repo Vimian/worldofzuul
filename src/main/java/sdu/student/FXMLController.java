@@ -41,41 +41,145 @@ import static worldofzuul.util.Data.*;
 import static worldofzuul.util.Drawing.*;
 import static worldofzuul.util.Math.*;
 
+/**
+ * The type Fxml controller.
+ *
+ * Controller for the primary Game scene.
+ *
+ */
 public class FXMLController implements Initializable {
+    /**
+     * The constant name of the game configuration json-file.
+     */
     private static final String configFileName = "gameConfig.json";
+    /**
+     * The constant for the spite directory.
+     */
     private static final String spriteDirectory = "sprites";
+    /**
+     * The constant paneTransDelayCoefficient determining the speed of moving {@link FXMLController#roomPane}.
+     */
     private static final double paneTransDelayCoefficient = 1.2;
+    /**
+     * The constant timers per second at which to update {@link FXMLController#model}.
+     */
     private static final int updateDelay = 60;
+    /**
+     * The constant nightChangeOpacity which determines the darkness of {@link FXMLController#nightLayerPane}.
+     */
     private static final double nightChangeOpacity = 0.6;
+    /**
+     * The constant delay at which to switch the opacity of {@link FXMLController#nightLayerPane}.
+     */
     private static final int nightChangeFadeDelay = 6000;
+    /**
+     * The constant delay at which text notifications in {@link FXMLController#textDisplayBox} becomes deleted.
+     */
     private static final int textDisplayDeletionDelay = 8000;
+    /**
+     * The constant delay at which text notifications in {@link FXMLController#textDisplayBox} becomes hidden.
+     */
     private static final int textDisplayFadeDelay = 1500;
+    /**
+     * The constant maximal distance of which the player can interact with a GameObject.
+     */
     private static final int playerInteractDistance = 1;
+    /**
+     * The Print stream.
+     */
     private final CustomPrintStream printStream = new CustomPrintStream(System.out);
+    /**
+     * The Stage.
+     */
     private final Stage stage;
+    /**
+     * The Pane containing display of the game and entities.
+     */
     public StackPane gameContainerPane;
+    /**
+     * The Box displaying prints from {@link FXMLController#printStream}.
+     */
     public VBox textDisplayBox;
+    /**
+     * The Root node.
+     */
     public StackPane mainPane;
+    /**
+     * The Environment layer pane.
+     */
     public Pane environmentLayerPane;
+    /**
+     * The Night layer pane.
+     */
     public Pane nightLayerPane;
+    /**
+     * The Rain image pane.
+     */
     public Pane rainImagePane;
+    /**
+     * The Inventory table view.
+     */
     public TableView<Item> inventoryTableView;
+    /**
+     * The Currently selected item label.
+     */
     public Label currentlySelectedItemLabel;
+    /**
+     * The Player balance label.
+     */
     public Label playerBalanceLabel;
+    /**
+     * The Time label.
+     */
     public Label timeLabel;
+    /**
+     * The Market button.
+     */
     public Button marketButton;
+    /**
+     * The instance of Game.
+     */
     public Game model;
+    /**
+     * The background tile dimension.
+     */
     private int gameTileDim = 64;
+    /**
+     * The Background scaling.
+     */
     private int backgroundScaling = 2;
+    /**
+     * The Room pane.
+     */
     @FXML
     private Pane roomPane;
+    /**
+     * The Image view displaying the Player animations.
+     */
     @FXML
     private ImageView imageView;
+    /**
+     * The {@link FXMLController#roomPane} translation.
+     */
     private TranslateTransition paneTranslation;
+    /**
+     * All loaded images from {@link FXMLController#spriteDirectory}.
+     */
     private HashMap<String, Image> loadedImages;
+    /**
+     * The Selected game position.
+     */
     private Vector selectedGamePosition;
+    /**
+     * The Scheduled thread pool containing the {@link FXMLController#model} update thread.
+     */
     private ScheduledExecutorService scheduledThreadPool;
 
+    /**
+     * Instantiates a new Fxml controller.
+     *
+     * @param stage the stage
+     */
     public FXMLController(Stage stage) {
         this.stage = stage;
     }
@@ -100,12 +204,20 @@ public class FXMLController implements Initializable {
     }
 
 
+    /**
+     * Reload scene.
+     */
     public void reloadScene() {
         scheduledThreadPool.shutdown();
         loadGameScene(stage, getClass(), this);
     }
 
 
+    /**
+     * Enable game updater.
+     *
+     * Creates thread to update {@link FXMLController#model} at the interval set by {@link FXMLController#updateDelay}.
+     */
     private void enableGameUpdater() {
 
         scheduledThreadPool = Executors.newScheduledThreadPool(1, r -> {
@@ -119,7 +231,9 @@ public class FXMLController implements Initializable {
     }
 
 
-
+    /**
+     * Loads game from JSON-file specified by {@link FXMLController#configFileName} and replaces {@link FXMLController#model}.
+     */
     private void loadGame() {
 
         var game = new Game();
@@ -137,6 +251,11 @@ public class FXMLController implements Initializable {
         model.getRoom().setPrintingEnabled(true);
     }
 
+    /**
+     * Configure animations.
+     *
+     * Configures animations for GameObjects and Items in {@link FXMLController#model}.
+     */
     private void configureAnimations() {
 
         Image playerSpriteSheet = loadedImages.get("sprites/player/walkCycle.png");
@@ -176,10 +295,21 @@ public class FXMLController implements Initializable {
 
     }
 
+    /**
+     * Subscribe to {@link FXMLController#model} player movement.
+     */
     private void subscribeToPlayerMovement() {
         model.getPlayer().getPos().vectorValueProperty().addListener((observable, oldValue, newValue) -> repositionPlayer(new Vector(oldValue), new Vector(newValue)));
     }
 
+    /**
+     * Reposition player.
+     *
+     * Moves {@link FXMLController#roomPane} in relation to the new player position, giving the illusion of movement.
+     *
+     * @param pos  the pos
+     * @param pos2 the pos 2
+     */
     private void repositionPlayer(Vector pos, Vector pos2) {
         setPaneTranslation(pos);
         if (vectorDifference(pos, pos2) > 1) {
@@ -192,6 +322,13 @@ public class FXMLController implements Initializable {
         repositionPlayer(vectorDirection(pos, pos2));
     }
 
+    /**
+     * Reposition player.
+     *
+     * Plays walk animation of player {@link FXMLController#imageView} in {@param direction}
+     *
+     * @param direction the direction
+     */
     private void repositionPlayer(Direction direction) {
         model.getPlayer().playAnimation(1, direction);
 
@@ -223,6 +360,11 @@ public class FXMLController implements Initializable {
         paneTranslation.play();
     }
 
+    /**
+     * Sets {@link FXMLController#roomPane} translation.
+     *
+     * @param pos the pos
+     */
     private void setPaneTranslation(Vector pos) {
         double cubeDim = (getBackgroundTileDim());
 
@@ -243,6 +385,9 @@ public class FXMLController implements Initializable {
 
     }
 
+    /**
+     * Draw GameObjects or other images relevant to {@link FXMLController#roomPane}.
+     */
     private void drawRoom() {
         roomPane.getChildren().clear();
         if (model.getRoom().getBackgroundImage() != null && loadedImages.containsKey(model.getRoom().getBackgroundImage())) {
@@ -254,6 +399,9 @@ public class FXMLController implements Initializable {
         drawGameObjects(model.getRoom(), loadedImages, roomPane, getBackgroundTileDim(), getClass(), selectedGamePosition, false);
     }
 
+    /**
+     * Bind {@link FXMLController#model} properties to JavaFX controls and add listeners.
+     */
     private void bindProperties() {
 
         inventoryTableView.itemsProperty().bindBidirectional(model.getPlayer().getInventory().itemsProperty());
@@ -277,16 +425,37 @@ public class FXMLController implements Initializable {
 
     }
 
+    /**
+     * Subscribe to room environment changes.
+     *
+     * Adds listeners to call {@link FXMLController#changeNightStage(boolean)} and {@link FXMLController#changeRainState(boolean)} upon update of {@param environment}'s property {@link Environment#nightStateProperty()} and {@link Environment#rainStateProperty()} respectively.
+     *
+     * @param environment the environment
+     */
     private void subscribeToEnvironmentChanges(Environment environment) {
         environment.rainStateProperty().addListener((observable1, oldValue1, newValue1) -> changeRainState(newValue1));
         environment.nightStateProperty().addListener((observable1, oldValue1, newValue1) -> changeNightStage(newValue1));
     }
 
+    /**
+     * Unsubscribe to environment changes.
+     *
+     * Removes listeners added by {@link FXMLController#subscribeToEnvironmentChanges(Environment)}.
+     *
+     * @param environment the environment
+     */
     private void unsubscribeToEnvironmentChanges(Environment environment) {
         environment.rainStateProperty().removeListener((observable1, oldValue1, newValue1) -> changeRainState(newValue1));
         environment.nightStateProperty().removeListener((observable1, oldValue1, newValue1) -> changeNightStage(newValue1));
     }
 
+    /**
+     * Change rain state.
+     *
+     * Displays or hides rain animation contained in {@link FXMLController#rainImagePane}.
+     *
+     * @param isRaining the is raining
+     */
     private void changeRainState(boolean isRaining) {
         FadeTransition ft = new FadeTransition(Duration.millis(nightChangeFadeDelay), rainImagePane);
         if (isRaining) {
@@ -301,6 +470,13 @@ public class FXMLController implements Initializable {
 
     }
 
+    /**
+     * Change night stage.
+     *
+     * Displays or hides {@link FXMLController#nightLayerPane}.
+     *
+     * @param isNight the is night
+     */
     private void changeNightStage(boolean isNight) {
         FadeTransition ft = new FadeTransition(Duration.millis(nightChangeFadeDelay), nightLayerPane);
         if (isNight) {
@@ -314,10 +490,20 @@ public class FXMLController implements Initializable {
         ft.play();
     }
 
+    /**
+     * Sets background of {@link FXMLController#roomPane}.
+     *
+     * @param room the room
+     */
     private void setBackground(Room room) {
         setBackground(loadedImages.get(room.getBackgroundImage()));
     }
 
+    /**
+     * Sets background of {@link FXMLController#roomPane}.
+     *
+     * @param backgroundImage the background image
+     */
     private void setBackground(Image backgroundImage) {
         if (backgroundImage == null) {
             return;
@@ -331,30 +517,47 @@ public class FXMLController implements Initializable {
         roomPane.setBackground(new Background(myBI));
     }
 
+    /**
+     * Calls {@link Game#move(Direction)} in {@link FXMLController#model} with the north direction.
+     */
     public void moveNorth() {
         if (isPlayerNotMoving()) {
             model.move(Direction.NORTH);
         }
     }
 
+    /**
+     * Calls {@link Game#move(Direction)} in {@link FXMLController#model} with the south direction.
+     */
     public void moveSouth() {
         if (isPlayerNotMoving()) {
             model.move(Direction.SOUTH);
         }
     }
 
+    /**
+     * Calls {@link Game#move(Direction)} in {@link FXMLController#model} with the east direction.
+     */
     public void moveEast() {
         if (isPlayerNotMoving()) {
             model.move(Direction.EAST);
         }
     }
 
+    /**
+     * Calls {@link Game#move(Direction)} in {@link FXMLController#model} with the west direction.
+     */
     public void moveWest() {
         if (isPlayerNotMoving()) {
             model.move(Direction.WEST);
         }
     }
 
+    /**
+     * Open market.
+     *
+     * Adds a new {@link SubScene} to {@link FXMLController#gameContainerPane}.
+     */
     public void openMarket() {
 
         FXMLLoader loader = new FXMLLoader();
@@ -370,6 +573,11 @@ public class FXMLController implements Initializable {
     }
 
 
+    /**
+     * Is player movement animation not active.
+     *
+     * @return the boolean
+     */
     private boolean isPlayerNotMoving() {
         if (model.getPlayer().getAnimationTimeline() != null) {
             return !model.getPlayer().isAnimationActive();
@@ -377,14 +585,29 @@ public class FXMLController implements Initializable {
         return true;
     }
 
+    /**
+     * Gets background tile dim {@link FXMLController#roomPane} when dividing using {@link FXMLController#gameTileDim} and {@link FXMLController#backgroundScaling}.
+     *
+     * @return the background tile dim
+     */
     private double getBackgroundTileDim() {
         return roomPane.getMinWidth() / getBackgroundRowCount();
     }
 
+    /**
+     * Gets background row count of {@link FXMLController#roomPane} when dividing using {@link FXMLController#gameTileDim} and {@link FXMLController#backgroundScaling}.
+     *
+     * @return the background row count
+     */
     private double getBackgroundRowCount() {
         return (roomPane.getMinWidth() / backgroundScaling) / gameTileDim;
     }
 
+    /**
+     * Add text message to {@link FXMLController#textDisplayBox}.
+     *
+     * @param text the text
+     */
     private void displayTextMessage(String text) {
 
         Label newLabel = new Label(text);
@@ -418,6 +641,15 @@ public class FXMLController implements Initializable {
 
     }
 
+    /**
+     * {@link FXMLController#roomPane} clicked.
+     *
+     * If {@link MouseEvent#getButton()} is {@link javafx.scene.input.MouseButton#PRIMARY} button is clicked interact with GameObject without an Item if target GameObject is within {@link FXMLController#playerInteractDistance}.
+     *
+     * If {@link MouseEvent#getButton()} is {@link javafx.scene.input.MouseButton#SECONDARY} button is clicked interact with GameObject with the players selected Item if target GameObject is within {@link FXMLController#playerInteractDistance}
+     *
+     * @param mouseEvent the mouse event
+     */
     public void roomPaneClicked(MouseEvent mouseEvent) {
 
         selectedGamePosition = positionClickedOnPane(getBackgroundTileDim(), getBackgroundTileDim(), mouseEvent.getX(), mouseEvent.getY());
@@ -440,10 +672,20 @@ public class FXMLController implements Initializable {
 
     }
 
+    /**
+     * Face direction.
+     *
+     * Display image in {@link FXMLController#imageView} corresponding to correct direction using images defined in {@link FXMLController#model}'s player.
+     *
+     * @param vectorDirection the vector direction
+     */
     private void faceDirection(Direction vectorDirection) {
         model.getPlayer().setDefaultImage(vectorDirection);
     }
 
+    /**
+     * Set {@link FXMLController#model}'s player item to be the item selected in {@link FXMLController#inventoryTableView}.
+     */
     public void selectItem() {
         model.getPlayer().getInventory().setSelectedItem(inventoryTableView.getSelectionModel().getSelectedItem());
     }

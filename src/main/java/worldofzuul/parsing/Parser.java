@@ -4,15 +4,32 @@ import worldofzuul.util.MessageHelper;
 
 import java.util.Scanner;
 
+/**
+ * The type Parser.
+ */
 public class Parser {
+    /**
+     * The Commands.
+     */
     private final CommandWords commands;
+    /**
+     * The Reader.
+     */
     private final Scanner reader;
 
+    /**
+     * Instantiates a new Parser.
+     */
     public Parser() {
         commands = new CommandWords();
         reader = new Scanner(System.in);
     }
 
+    /**
+     * Gets command.
+     *
+     * @return the command
+     */
     public Command getCommand() {
         String inputLine;
         String word1 = null;
@@ -33,6 +50,9 @@ public class Parser {
         return new Command(commands.getCommandWord(word1), word2);
     }
 
+    /**
+     * Show commands.
+     */
     public void showCommands() {
         commands.showAll();
     }

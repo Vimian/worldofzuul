@@ -12,12 +12,32 @@ import java.util.ResourceBundle;
 
 import static worldofzuul.util.Math.tryParse;
 
+/**
+ * The type Game object editor.
+ */
 public abstract class GameObjectEditor implements Initializable {
+    /**
+     * The Model.
+     */
     private final GameObject model;
+    /**
+     * The Image file text field.
+     */
     public TextField imageFileTextField;
+    /**
+     * The Animation length text field.
+     */
     public TextField animationLengthTextField;
+    /**
+     * The Toggle button.
+     */
     public ToggleButton toggleButton;
 
+    /**
+     * Instantiates a new Game object editor.
+     *
+     * @param model the model
+     */
     public GameObjectEditor(GameObject model) {
         this.model = model;
 
@@ -28,6 +48,9 @@ public abstract class GameObjectEditor implements Initializable {
         bindProperties();
     }
 
+    /**
+     * Bind properties.
+     */
     public void bindProperties() {
         toggleButton.setSelected(model.isColliding());
         imageFileTextField.textProperty().bindBidirectional(this.model.defaultImageFileProperty());
@@ -41,10 +64,20 @@ public abstract class GameObjectEditor implements Initializable {
         });
     }
 
+    /**
+     * Toggle colliding.
+     *
+     * @param actionEvent the action event
+     */
     public void toggleColliding(ActionEvent actionEvent) {
         model.setColliding(!model.isColliding());
     }
 
+    /**
+     * Gets model.
+     *
+     * @return the model
+     */
     public GameObject getModel() {
         return model;
     }

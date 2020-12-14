@@ -9,11 +9,28 @@ import java.util.ResourceBundle;
 
 import static worldofzuul.util.Math.tryParse;
 
+/**
+ * The type Door editor.
+ */
 public class DoorEditor extends GameObjectEditor {
+    /**
+     * The Textfield bound to the Door's exit property.
+     */
     public TextField exitStringTextField;
+    /**
+     * The textfield bound to the the Door's LinkedY property.
+     */
     public TextField linkedXCoordTextField;
+    /**
+     * The textfield bound to the the Door's LinkedX property.
+     */
     public TextField linkedYCoordTextField;
 
+    /**
+     * Instantiates a new Door editor.
+     *
+     * @param model the model
+     */
     public DoorEditor(Door model) {
         super(model);
     }

@@ -14,12 +14,36 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * The type Menu controller.
+ */
 public class MenuController implements Initializable {
+    /**
+     * The constant instructionsShowDelay.
+     */
     private final static int instructionsShowDelay = 2000;
+    /**
+     * The Editor button.
+     */
     public Button editorButton;
+    /**
+     * The Game button.
+     */
     public Button gameButton;
+    /**
+     * The Instructions pane.
+     */
     public GridPane instructionsPane;
 
+    /**
+     * Load game scene.
+     *
+     * Sets scene to be a new instance of {@link FXMLController}
+     *
+     * @param stage           the stage
+     * @param controllerClass the controller class
+     * @param fxmlController  the fxml controller
+     */
     public static void loadGameScene(Stage stage, Class<?> controllerClass, FXMLController fxmlController) {
 
         if (fxmlController != null) {
@@ -65,6 +89,9 @@ public class MenuController implements Initializable {
 
     }
 
+    /**
+     * Change scene to {@link EditorController}.
+     */
     public void changeSceneEditor() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("gameEditor.fxml"));
@@ -76,6 +103,9 @@ public class MenuController implements Initializable {
         }
     }
 
+    /**
+     * Change scene game.
+     */
     public void changeSceneGame() {
         Stage stage = (Stage) gameButton.getScene().getWindow();
 
@@ -83,6 +113,9 @@ public class MenuController implements Initializable {
 
     }
 
+    /**
+     * Show instructions.
+     */
     public void showInstructions() {
 
         instructionsPane.setVisible(true);

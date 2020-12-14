@@ -21,47 +21,109 @@ package worldofzuul.parsing;
 
 import worldofzuul.item.Item;
 
+/**
+ * The type Command.
+ *
+ */
 public class Command {
+    /**
+     * The Command word.
+     */
     private final CommandWord commandWord;
+    /**
+     * The Second word.
+     */
     private String secondWord;
+    /**
+     * The Item.
+     */
     private Item item;
 
+    /**
+     * Instantiates a new Command.
+     *
+     * @param commandWord the command word
+     */
     public Command(CommandWord commandWord) {
         this.commandWord = commandWord;
     }
 
+    /**
+     * Instantiates a new Command.
+     *
+     * @param commandWord the command word
+     * @param secondWord  the second word
+     */
     public Command(CommandWord commandWord, String secondWord) {
         this(commandWord);
         this.secondWord = secondWord;
     }
 
+    /**
+     * Instantiates a new Command.
+     *
+     * @param commandWord the command word
+     * @param secondWord  the second word
+     * @param item        the item
+     */
     public Command(CommandWord commandWord, String secondWord, Item item) {
         this(commandWord, secondWord);
         this.item = item;
     }
 
+    /**
+     * Instantiates a new Command.
+     *
+     * @param commandWord the command word
+     * @param item        the item
+     */
     public Command(CommandWord commandWord, Item item) {
         this(commandWord);
         this.item = item;
     }
 
 
+    /**
+     * Gets command word.
+     *
+     * @return the command word
+     */
     public CommandWord getCommandWord() {
         return commandWord;
     }
 
+    /**
+     * Gets second word.
+     *
+     * @return the second word
+     */
     public String getSecondWord() {
         return secondWord;
     }
 
+    /**
+     * Gets item.
+     *
+     * @return the item
+     */
     public Item getItem() {
         return item;
     }
 
+    /**
+     * Has second word boolean.
+     *
+     * @return the boolean
+     */
     public boolean hasSecondWord() {
         return (secondWord != null);
     }
 
+    /**
+     * Has item boolean.
+     *
+     * @return the boolean
+     */
     public boolean hasItem() {
         return (item != null);
     }
