@@ -110,7 +110,7 @@ public abstract class SpriteAnimation extends Sprite {
     /**
      * Play animation.
      *
-     * Plays an animation for the amount of cycles given by {@param cycles} using the default {@link SpriteAnimation#getImageView()}.
+     * Plays an animation for the amount of cycles given by the amount of cycles using the default {@link SpriteAnimation#getImageView()}.
      *
      * @param cycles       the cycles
      * @param animationKey the animation key
@@ -126,8 +126,8 @@ public abstract class SpriteAnimation extends Sprite {
     /**
      * Play animation.
      *
-     * Plays an animation for the amount of cycles given by {@param cycles} using the given {@param imageView}.
-     * With the images that correspond to the {@param animationKey} turned into a string using {@link SpriteAnimation#getAnimationString(Object)} in {@link SpriteAnimation#imageAnimations}.
+     * Plays an animation for the amount of cycles given by the amount of cycles using the given param imageView.
+     * With the images that correspond to the param animation key object turned into a string using {@link SpriteAnimation#getAnimationString(Object)} in {@link SpriteAnimation#imageAnimations}.
      *
      * @param view         the view
      * @param cycles       the cycles
@@ -145,7 +145,7 @@ public abstract class SpriteAnimation extends Sprite {
     /**
      * Play animation.
      *
-     * Plays an animation of {@param images} cycling over {@link SpriteAnimation#getAnimationCycleLengthMillis()} milliseconds for the amount of cycles given by {@param cycles} using the given {@param imageView}.
+     * Plays an animation of param images cycling over {@link SpriteAnimation#getAnimationCycleLengthMillis()} milliseconds for the amount of cycles given by param cycles using the given param imageView.
      *
      * @param view   the view
      * @param cycles the cycles

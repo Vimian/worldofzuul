@@ -27,7 +27,7 @@ public class Drawing {
     /**
      * Translate transition.
      *
-     * Translates the position of a node to the given parameters, {@param x}, {@param y}, {@param z}, while delaying the process by the time given by {@param translationTime}.
+     * Translates the position of a node to the given parameters, param x, param y, param z, while delaying the process by the time given by the translation time.
      *
      * @param node            the node to move
      * @param x               the x
@@ -72,7 +72,7 @@ public class Drawing {
     /**
      * Sets node position to vector corner.
      *
-     * Sets the position of a node to be in the corner of a cube defined by the {@param tileDim}
+     * Sets the position of a node to be in the corner of a cube defined by the given tile dimensions.
      *
      * @param node     the node to reposition
      * @param position the position
@@ -86,8 +86,8 @@ public class Drawing {
     /**
      * Draw game objects.
      *
-     * Adds ImageViews to places that need it in {@param roomPane} as defined in {@param room}.
-     * If {@param highlight} is true then rectangles with different colored strokes will be added to highlight individual GameObjects.
+     * Adds ImageViews to places that need it in the pane node as defined in {the room.
+     * If the highlight boolean is true then rectangles with different colored strokes will be added to highlight individual GameObjects.
      *
      * @param room              the room
      * @param loadedImages      the loaded images
@@ -162,7 +162,7 @@ public class Drawing {
     /**
      * Append field info bar.
      *
-     * Adds a new instance of a {@link FieldInfoBarController} node to {@param roomPane} at the {@param position}
+     * Adds a new instance of a {@link FieldInfoBarController} node to the pane node at the given position.
      *
      * @param field            the field that is to be described by {@link FieldInfoBarController}
      * @param pane             the pane
@@ -181,7 +181,7 @@ public class Drawing {
     /**
      * Draw game object image.
      *
-     * Adds an ImageView to {@param roomPane} using the one defined in {@param object} if one exists there, else a new one will be created and added to both.
+     * Adds an ImageView to the pane node using the one defined in the GameObject if one exists there, else a new one will be created and added to both.
      *
      * @param loadedImages the loaded images
      * @param roomPane     the room pane

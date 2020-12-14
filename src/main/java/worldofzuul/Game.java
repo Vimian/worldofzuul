@@ -146,7 +146,7 @@ public class Game {
      * Interact.
      *
      * Interacts with the GameObject at the given position of the current rooms {@link Room#getRoomGrid()}.
-     * If {@param useItem} is true then the player will interact upon the GameObject using the players {@link Inventory#getSelectedItem()}.
+     * If param useItem is true then the player will interact upon the GameObject using the players {@link Inventory#getSelectedItem()}.
      *
      * @param gameObjectPos the game object pos
      * @param useItem       the use item

@@ -15,7 +15,7 @@ public class Math {
      * Tries to parse an integer using a string value.
      *
      * @param value      the value to be parsed
-     * @param defaultVal value to return if integer {@param value} could not be parsed.
+     * @param defaultVal value to return if the string could not be parsed.
      * @return the int
      */
     public static int tryParse(String value, int defaultVal) {
@@ -29,7 +29,7 @@ public class Math {
     /**
      * Vector direction.
      *
-     * Determines the direction in which the vector is going from the {@param oldOne} to {@param newOne}
+     * Determines the direction in which the vector is going from the the old one to the new one.
      *
      * @param oldVector the old vector
      * @param newVector the new vector

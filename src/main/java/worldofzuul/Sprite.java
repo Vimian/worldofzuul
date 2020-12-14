@@ -102,7 +102,7 @@ public abstract class Sprite {
     /**
      * Display.
      *
-     * Sets the image of {@param imageView} to be {@link Sprite#image}.
+     * Sets the image of given the image view to be {@link Sprite#image}.
      *
      * @param imageView the image view
      */

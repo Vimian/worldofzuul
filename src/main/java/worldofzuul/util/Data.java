@@ -23,7 +23,7 @@ import java.util.*;
 public class Data {
 
     /**
-     * Reads all lines in file specified by the pathname {@param configFileName}.
+     * Reads all lines in file specified by the pathname param configFileName.
      *
      * @param configFileName the config file name
      * @return the file data
@@ -43,7 +43,7 @@ public class Data {
      * Serializes instance of game to JSON.
      *
      * @param game the game
-     * @return the serialized data of {@param game}
+     * @return the serialized data of param game
      */
     public static String gameToJson(Game game) {
         try {
@@ -143,11 +143,11 @@ public class Data {
     /**
      * Gets images.
      *
-     * Loads all images in all subdirectories given {@param directory} path.
+     * Loads all images in all subdirectories given the directory path.
      *
      * @param directory   the directory path
      * @param CallerClass the JavaFX caller controller class, used to load image files as resources into {@link Image}
-     * @return Hashmap of strings and images, the string keys are the path, from the given {@param directory} path,  to the the image value
+     * @return Hashmap of strings and images, the string keys are the path, from the given directory path,  to the the image value
      */
     public static HashMap<String, Image> getImages(String directory, Class<? extends Initializable> CallerClass) {
         URI uri;
@@ -184,7 +184,7 @@ public class Data {
      * Cut sprites list.
      *
      * Cuts an image into a list of image arrays.
-     * Can be seen of as cutting the a sprite sheet into a grid using the {@param dimension}s.
+     * Can be seen of as cutting the a sprite sheet into a grid using the the given dimensions.
      *
      * @param image     the sprite-sheet to cut
      * @param dimension the sprite dimensions

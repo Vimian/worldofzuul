@@ -221,7 +221,7 @@ public class Field extends GameObject {
     /**
      * Use Seed item.
      *
-     * Calls {@link Field#plantSeed(Seed)} using the {@param item}
+     * Calls {@link Field#plantSeed(Seed)} using param item.
      *
      * @param item the seed item
      * @return command to remove item if {@link Item#getRemaining()} becomes 0.

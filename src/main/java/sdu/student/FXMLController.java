@@ -325,7 +325,7 @@ public class FXMLController implements Initializable {
     /**
      * Reposition player.
      *
-     * Plays walk animation of player {@link FXMLController#imageView} in {@param direction}
+     * Plays walk animation of player {@link FXMLController#imageView} in param direction.
      *
      * @param direction the direction
      */
@@ -428,7 +428,7 @@ public class FXMLController implements Initializable {
     /**
      * Subscribe to room environment changes.
      *
-     * Adds listeners to call {@link FXMLController#changeNightStage(boolean)} and {@link FXMLController#changeRainState(boolean)} upon update of {@param environment}'s property {@link Environment#nightStateProperty()} and {@link Environment#rainStateProperty()} respectively.
+     * Adds listeners to call {@link FXMLController#changeNightStage(boolean)} and {@link FXMLController#changeRainState(boolean)} upon update of param environment's property {@link Environment#nightStateProperty()} and {@link Environment#rainStateProperty()} respectively.
      *
      * @param environment the environment
      */
